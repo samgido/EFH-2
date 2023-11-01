@@ -19,13 +19,14 @@ using Windows.Foundation.Collections;
 namespace EFH_2
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class IntroPage : Page
     {
-        public MainWindow()
+        public IntroPage()
         {
             this.InitializeComponent();
+
         }
     }
 }
