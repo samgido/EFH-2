@@ -8,11 +8,157 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel
+        Orientation="Vertical">
+
+        <MenuBar>
+            <MenuBarItem Title="File"
+                         AccessKey="F">
+                <MenuFlyoutItem Text="New"
+                                AccessKey="N"/>
+                <MenuFlyoutItem Text="Open..."
+                                AccessKey="O"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Recalculate"
+                                AccessKey="R"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Save"
+                                AccessKey="S"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Export Hydrograph(s)"
+                                AccessKey="E"/>
+                <MenuFlyoutItem Text="Print..."
+                                AccessKey="P"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Exit"
+                                AccessKey="X"/>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Edit"
+                         AccessKey="E">
+                <MenuFlyoutItem Text="Cut"
+                                AccessKey="T"/>
+                <MenuFlyoutItem Text="Copy"
+                                AccessKey="C"/>
+                <MenuFlyoutItem Text="Paste"
+                                AccessKey="P"/>
+            </MenuBarItem>
+
+            <MenuBarItem Title="View"
+                        AccessKey="V">
+                <ToggleMenuFlyoutItem Text="Toolbar"
+                                      AccessKey="T"/>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Tools"
+                         AccessKey="T">
+                <MenuFlyoutItem Text="Average Slope Calculator"
+                                AccessKey="A"/>
+                <MenuFlyoutItem Text="Hydrologic Soil Groups"
+                                IsEnabled="False"
+                                AccessKey="H"/>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Help"
+                         AccessKey="H">
+                <MenuFlyoutItem Text="Help Contents (chm)"
+                                AccessKey="H"/>
+                <MenuFlyoutItem Text="User Manual (pdf)"
+                                AccessKey="U"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="About"
+                                AccessKey="A"/>
+            </MenuBarItem>
+        </MenuBar>
+
+        <CommandBar
+            FlowDirection="LeftToRight"
+            ClosedDisplayMode="Compact">
+
+            <AppBarButton
+                Icon="Page"
+                Label="New"/>
+
+            <AppBarButton
+                Icon="OpenFile"
+                Label="Open"/>
+
+            <AppBarButton
+                Icon="Save"
+                Label="Save"/>
+
+            <AppBarSeparator/>
+
+            <AppBarButton
+                Icon="Print"
+                Label="Print"/>
+
+            <AppBarSeparator/>
+
+            <AppBarButton
+                Icon="Cut"
+                Label="Cut"/>
+
+            <AppBarButton
+                Icon="Copy"
+                Label="Copy"/>
+
+            <AppBarButton
+                Icon="Paste"
+                Label="Paste"/>
+
+            <AppBarSeparator/>
+
+            <AppBarButton
+                />
+
+            <AppBarButton
+                />
+
+            <AppBarSeparator/>
+
+            <AppBarButton
+                Icon="Help"
+                Label="Help"/>
+
+        </CommandBar>
+        
         <NavigationView
             PaneDisplayMode="Top"
             x:Name="Tabs"
+            IsBackButtonVisible="Collapsed" 
+            IsSettingsVisible="False"
             >
+            <NavigationView.MenuItems>
+                <NavigationViewItem 
+                    Content="Introduction" 
+                    Tag="IntroPage"  
+                    x:Name="IntroPage">
+                </NavigationViewItem>
+
+                <NavigationViewItem 
+                    Content="Basic Data"
+                    Tag="BasicDataPage"
+                    x:Name="BasicDataPage">
+                </NavigationViewItem>
+
+                <NavigationViewItem
+                    Content="Rainfall/Discharge Data"
+                    Tag="RDDataPage"
+                    x:Name="RDDataPage">
+                </NavigationViewItem>
+
+                <NavigationViewItem
+                    Content="RCN"
+                    Tag="RCNPage"
+                    x:Name="RCNPage">
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <Frame
+                x:Name="contentFrame">
+            </Frame>
+
         </NavigationView>
-    </Grid>
+    </StackPanel>
 </Window>

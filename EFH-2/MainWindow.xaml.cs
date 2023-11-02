@@ -27,5 +27,9 @@ namespace EFH_2
         {
             this.InitializeComponent();
         }
+
+        private void Tabs_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+        }
     }
 }
