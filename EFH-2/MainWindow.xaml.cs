@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -30,6 +31,18 @@ namespace EFH_2
 
         private void Tabs_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
+            Type target;
+
+            target = typeof(IntroPage);
+
+            var selectedItem = (NavigationViewItem)args.SelectedItem;
+            if (selectedItem != null)
+            {
+                string selectedItemTag = ((string)selectedItem.Tag);
+                target = Type.GetType("EFH_2." + selectedItemTag);
+
+                contentFrame.Navigate(target);
+            }
         }
     }
 }
