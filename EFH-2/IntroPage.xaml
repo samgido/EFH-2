@@ -10,11 +10,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Name="root">
-        <TextBlock 
+        <TextBlock
+            x:Name="topParagraph"     
             Text="Peak discharge is determined by procedures contained by NRCS 210-National Engineering Handbook, Part 630, Hydrology to compute full hydrographs and report the peak discharge. Information needed to use this procedure include watershed characteristics (drainage area, curve number, watershed length, watershed slope) and rainfall amount and rainfall distribution." 
             TextWrapping="Wrap"/>
-
-        <TextBlock xml:space="preserve" TextWrapping="Wrap">
+        
+        <TextBlock 
+            x:Name="everythingElse"
+            xml:space="preserve" 
+            TextWrapping="Wrap">
             <TextBlock.Text>
                 The method applies when: 
 	                - Watershed is accurately represented by a single runoff curve number between 40 and 98.

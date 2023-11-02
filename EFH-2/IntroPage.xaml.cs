@@ -27,6 +27,11 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
+            Thickness t = new();
+            t.Left = 50;
+            t.Right = 50;
+
+            topParagraph.Padding = t; 
         }
     }
 }

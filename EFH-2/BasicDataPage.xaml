@@ -9,7 +9,36 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <StackPanel>
 
-    </Grid>
+        <StackPanel
+            Orientation="Horizontal">
+
+            <TextBox
+                Header="Client:"
+                Margin="50,0,0,0"
+                />
+            
+        </StackPanel>
+
+        <TextBox
+            Header="Practice:"
+            Margin="50,0,0,0"/>
+
+        <RelativePanel>
+
+            <TextBox
+                x:Name="byBox"
+                Header="By:"
+                Margin="50,0,0,0"/>
+
+            <DatePicker
+                x:Name="dataPicker"
+                Header="Date:"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                Margin="300,0,0,0"/>
+        </RelativePanel>
+
+    </StackPanel>
 </Page>
