@@ -27,32 +27,19 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
-            List<string> duhNames = new();
-
-            try
+            using (StreamReader input = new("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
             {
-                using (StreamReader input = new("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
+                string? line = input.ReadLine();
+                while (!line.Equals(""))
                 {
-                    string? line = input.ReadLine();
-                    while (!line.Equals(""))
-                    {
-                        char[] seperator = { ' ', '\n', '\r' };
-                        string[] words = line.Split(seperator);
+                    char[] seperator = { ' ', '\n', '\r' };
+                    string[] words = line.Split(seperator);
 
-                        duhNames.Add(words[0]);
-
-                        ComboBoxItem curr = new();
-                        curr.Content = "words[0]";
-                        uxDUH.Items.Add(curr);
-
-                        line = input.ReadLine();
-                    }
-
+                    line = input.ReadLine();
                 }
+
             }
-            catch (Exception err)
-            {
-            }
+
         }
 
         private void PlotHydrographs(object sender, RoutedEventArgs e)
