@@ -9,7 +9,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Name="root">
+    <StackPanel
+        Padding="0,10,0,0"
+        Background="Transparent">
+
         <TextBlock
             x:Name="topParagraph"     
             Text="Peak discharge is determined by procedures contained by NRCS 210-National Engineering Handbook, Part 630, Hydrology to compute full hydrographs and report the peak discharge. Information needed to use this procedure include watershed characteristics (drainage area, curve number, watershed length, watershed slope) and rainfall amount and rainfall distribution." 
