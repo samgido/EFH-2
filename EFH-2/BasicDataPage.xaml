@@ -61,7 +61,8 @@
         <StackPanel
             Padding="60,30,0,0">
 
-            <RelativePanel>
+            <RelativePanel
+                Padding="0, 5">
 
                 <TextBlock
                     x:Name="uxDrainageAreaLabel"
@@ -84,7 +85,8 @@
                     />
             </RelativePanel>
 
-            <RelativePanel>
+            <RelativePanel
+                Padding="0, 5">
 
                 <TextBlock
                     x:Name="uxRunoffCurveLabel"
@@ -100,7 +102,8 @@
 
             </RelativePanel>
 
-            <RelativePanel>
+            <RelativePanel
+                Padding="0, 5">
 
                 <TextBlock
                     RelativePanel.AlignVerticalCenterWithPanel="True"
@@ -121,7 +124,8 @@
                     />
             </RelativePanel>
 
-            <RelativePanel>
+            <RelativePanel
+                Padding="0, 5">
 
                 <TextBlock
                     RelativePanel.AlignVerticalCenterWithPanel="True"
@@ -142,7 +146,8 @@
                     />
             </RelativePanel>
 
-            <RelativePanel>
+            <RelativePanel
+                Padding="0, 5">
 
                 <TextBlock
                     RelativePanel.AlignVerticalCenterWithPanel="True"

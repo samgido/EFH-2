@@ -9,7 +9,43 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <StackPanel
+        Background="Transparent">
 
-    </Grid>
+        <RelativePanel
+            Background="Transparent"
+            Padding="0,5">
+
+            <TextBlock
+                x:Name="uxRainfallDistTypeLabel"
+                Text="Rainfall Distribution-Type:"
+                Margin="125,0,0,0"
+                />
+
+            <ComboBox
+                x:Name="uxRainfallDistType"
+                RelativePanel.RightOf="uxRainfallDistTypeLabel"
+                Margin="10,0,0,0"
+                Width="175"
+                />
+        </RelativePanel>
+
+        <RelativePanel
+            Padding="0,5">
+
+            <TextBlock
+                x:Name="uxDUHLabel"
+                Text="Dimensionless Unit Hydrograph:"
+                Margin="125,0,0,0"
+                />
+
+            <ComboBox
+                x:Name="uxDUH"
+                RelativePanel.RightOf="uxDUHLabel"
+                Margin="10,0,0,0"
+                Width="175"
+                />
+        </RelativePanel>
+
+    </StackPanel>
 </Page>
