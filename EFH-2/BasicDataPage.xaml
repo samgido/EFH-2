@@ -11,34 +11,160 @@
 
     <StackPanel>
 
+        <RelativePanel>
+
+            <TextBox
+                x:Name="uxClientBox"
+                Header="Client:"
+                Margin="50,0,0,0"
+                Width="300"/>
+
+            <ComboBox
+                x:Name="uxStateBox"
+                Header="State:"
+                RelativePanel.RightOf="uxClientBox"
+                Margin="50,0,0,0"/>
+
+            <ComboBox
+                x:Name="uxCountyBox"
+                Header="County:"
+                RelativePanel.RightOf="uxStateBox"
+                Margin="50,0,0,0"/>
+
+        </RelativePanel>
+
         <StackPanel
             Orientation="Horizontal">
 
             <TextBox
-                Header="Client:"
+                Header="Practice:"
                 Margin="50,0,0,0"
-                />
-            
+                Width="650"/>
+
         </StackPanel>
-
-        <TextBox
-            Header="Practice:"
-            Margin="50,0,0,0"/>
-
+            
         <RelativePanel>
 
             <TextBox
-                x:Name="byBox"
+                x:Name="uxByBox"
                 Header="By:"
                 Margin="50,0,0,0"/>
 
             <DatePicker
-                x:Name="dataPicker"
+                x:Name="uxDatePicker"
                 Header="Date:"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 Margin="300,0,0,0"/>
         </RelativePanel>
 
+        <StackPanel
+            Padding="60,30,0,0">
+
+            <RelativePanel>
+
+                <TextBlock
+                    x:Name="uxDrainageAreaLabel"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="Drainage Area: "
+                    Margin="20,0,0,0"
+                    />
+
+                <TextBox
+                    x:Name="uxDrainageArea"
+                    Margin= "200,0,0,0"
+                    />
+
+                <TextBlock
+                    x:Name="uxAcresLabel"
+                    RelativePanel.RightOf="uxDrainageArea"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="acres"
+                    Margin="10,0,0,0"
+                    />
+            </RelativePanel>
+
+            <RelativePanel>
+
+                <TextBlock
+                    x:Name="uxRunoffCurveLabel"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="Runoff Curve Number:"
+                    Margin="20,0,0,0"
+                    />
+
+                <TextBox
+                    x:Name="uxRunoffCurveNumber"
+                    Margin="200,0,0,0"
+                    />
+
+            </RelativePanel>
+
+            <RelativePanel>
+
+                <TextBlock
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="Watershed Length:"
+                    Margin="20,0,0,0"
+                    />
+
+                <TextBox
+                    x:Name="uxWatershedLength"
+                    Margin="200,0,0,0"
+                    />
+
+                <TextBlock
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    RelativePanel.RightOf="uxWatershedLength"
+                    Text="feet"
+                    Margin="10,0,0,0"
+                    />
+            </RelativePanel>
+
+            <RelativePanel>
+
+                <TextBlock
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="Watershed Slope"
+                    Margin="20,0,0,0"
+                    />
+
+                <TextBox
+                    x:Name="uxWatershedSlope"
+                    Margin="200,0,0,0"
+                    />
+
+                <TextBlock
+                    RelativePanel.RightOf="uxWatershedSlope"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="percent"
+                    Margin="10,0,0,0"
+                    />
+            </RelativePanel>
+
+            <RelativePanel>
+
+                <TextBlock
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Margin="20,0,0,0"
+                    Text="Time of Concentration"
+                    />
+
+                <TextBox
+                    x:Name="uxTimeOfConcentration"
+                    Margin="200,0,0,0"
+                    />
+
+                <TextBlock
+                    RelativePanel.RightOf="uxTimeOfConcentration"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="hours"
+                    Margin="10,0,0,0"
+                    />
+
+            </RelativePanel> 
+            
+
+        </StackPanel>
     </StackPanel>
 </Page>
