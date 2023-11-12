@@ -65,8 +65,8 @@ namespace EFH_2
                 var messageBox = new MessageDialog("something went wrong");
             }
 
-            PopulateComboBox(uxRainfallDistType, _rfTypeNames.ToArray());
-            PopulateComboBox(uxDUH, _duhFieldNames.ToArray());
+            ComboBoxOperations.PopulateComboBox(uxRainfallDistType, _rfTypeNames.ToArray());
+            ComboBoxOperations.PopulateComboBox(uxDUH, _duhFieldNames.ToArray());
             uxDUH.SelectedValuePath = "Item1";
         }
 
@@ -75,16 +75,6 @@ namespace EFH_2
 
         }
 
-        private void PopulateComboBox(ComboBox cb, string[] elements)
-        {
-            
-            foreach (string s in elements)
-            {
-                ComboBoxItem n = new();
-                n.Content = s;
 
-                cb.Items.Add(n);
-            }
-        }
     }
 }

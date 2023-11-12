@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using IronXL;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,9 +24,32 @@ namespace EFH_2
     /// </summary>
     public sealed partial class BasicDataPage : Page
     {
+
+        private Dictionary<string, string> _stateCountyDictionary = new();
+        private List<string> _stateAbbreviations = new();
+
         public BasicDataPage()
         {
             this.InitializeComponent();
+
+            WorkBook wb = WorkBook.Load("C:\\ProgramData\\USDA\\Shared Engineering Data\\RainFall_Data.xlsx");
+            WorkSheet statesSheet = wb.GetWorkSheet("States");
+
+            int i = 2;
+
+            while (!statesSheet["A" + (i).ToString()].IsEmpty)
+            {
+                _stateAbbreviations.Add(statesSheet["B" + i.ToString()].StringValue);
+
+                i++;
+            }
+
+            ComboBoxOperations.PopulateComboBox(uxStateBox, _stateAbbreviations.ToArray());
+        }
+
+        private void uxStateBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

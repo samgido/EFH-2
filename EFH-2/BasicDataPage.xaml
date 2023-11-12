@@ -21,6 +21,7 @@
 
             <ComboBox
                 x:Name="uxStateBox"
+                SelectionChanged="uxStateBox_SelectionChanged"
                 Header="State:"
                 RelativePanel.RightOf="uxClientBox"
                 Margin="50,0,0,0"/>

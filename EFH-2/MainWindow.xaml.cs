@@ -44,5 +44,17 @@ namespace EFH_2
                 contentFrame.Navigate(target);
             }
         }
+
+        public void PopulateComboBox(ComboBox cb, string[] elements)
+        {
+            
+            foreach (string s in elements)
+            {
+                ComboBoxItem n = new();
+                n.Content = s;
+
+                cb.Items.Add(n);
+            }
+        }
     }
 }
