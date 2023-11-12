@@ -30,7 +30,7 @@ namespace EFH_2
         public RDDataPage()
         {
             this.InitializeComponent();
-
+            
             try
             {
                 using (StreamReader input = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
