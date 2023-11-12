@@ -27,5 +27,10 @@ namespace EFH_2
         {
             this.InitializeComponent();
         }
+
+        private void uxPlotHydrographs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

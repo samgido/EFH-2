@@ -1,7 +1,8 @@
 {
   "profiles": {
     "EFH-2 (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
     },
     "EFH-2 (Unpackaged)": {
       "commandName": "Project"
