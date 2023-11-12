@@ -9,8 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel
-        Background="Transparent">
+    <StackPanel>
 
         <RelativePanel
             Background="Transparent"
@@ -44,7 +43,6 @@
             <ComboBox
                 x:Name="uxDUH"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                ItemsSource="{x:Bind }"
                 Margin="0,0,150,0"
                 Width="175"
                 />
@@ -101,7 +99,8 @@
                 RelativePanel.Below="uxFrequencyField1"
                 Margin="125,10,0,0"
                 Width="90"
-                />           
+                />
+          
             <TextBox
                 x:Name="uxFrequencyField3"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
@@ -308,13 +307,13 @@
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField3"
                 Margin="175,5,0,0"
                 />
-             <ToggleSwitch
+            <ToggleSwitch
                 x:Name="uxSelectHydroButton4"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton3"
                 RelativePanel.Below="uxSelectHydroButton3"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField4"
                 Margin="175,5,0,0"
-                />           
+                />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton5"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton4"
@@ -339,7 +338,7 @@
 
             <Button
                 x:Name="uxPlotHydrographs"
-                Click="PlotHydrographs"
+                Click="uxPlotHydrographs_Click"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroLabel"
                 RelativePanel.Below="uxSelectHydroButton7"
                 Height="50"
@@ -358,3 +357,5 @@ Hydrograph(s)
 
     </StackPanel>
 </Page>
+
+    
