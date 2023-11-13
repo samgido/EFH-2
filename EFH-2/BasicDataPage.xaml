@@ -23,6 +23,7 @@
             <ComboBox
                 x:Name="uxStateBox"
                 Header="State:"
+                SelectionChanged="uxStateBox_SelectionChanged"
                 RelativePanel.RightOf="uxClientBox"
                 Margin="50,0,0,0"/>
 
@@ -30,6 +31,7 @@
                 x:Name="uxCountyBox"
                 Header="County:"
                 RelativePanel.RightOf="uxStateBox"
+                Width="250"
                 Margin="50,0,0,0"/>
 
         </RelativePanel>

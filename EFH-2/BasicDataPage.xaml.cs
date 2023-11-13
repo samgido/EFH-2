@@ -24,32 +24,62 @@ namespace EFH_2
     /// </summary>
     public sealed partial class BasicDataPage : Page
     {
-
-        private Dictionary<string, string> _stateCountyDictionary = new();
+        private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
         private List<string> _stateAbbreviations = new();
-
-        private string _clientEntry = "";
-
-        private string _practiceEntry = "";
-
-        private string _byEntry = "";
-
-        private DateTime _dateEntry = new();
 
         public BasicDataPage()
         {
             this.InitializeComponent();
 
-            WorkBook wb = WorkBook.Load("C:\\ProgramData\\USDA\\Shared Engineering Data\\RainFall_Data.xlsx");
-            WorkSheet statesSheet = wb.GetWorkSheet("States");
-
-            for (int i = 2; !statesSheet["A" + i.ToString()].IsEmpty; i++)
+            using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\States.csv"))
             {
-                _stateAbbreviations.Add(statesSheet["B" + i.ToString()].StringValue);
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+
+                    char[] seperator = { ',' };
+                    string[] elements = line.Split(seperator);
+
+                    _stateAbbreviations.Add(elements[1]);
+                }
             }
 
+            for (int i = 1; i < _stateAbbreviations.Count; i++)
+            {
+                string state = _stateAbbreviations[i];
+
+                if(state == "VIL") { state = "VI"; } 
+                _stateCountyDictionary.Add(_stateAbbreviations[i], new());
+            }
+
+            using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+
+                    char[] seperator = { ',' };
+                    string[] elements = line.Split(seperator);
+
+                    string county = elements[2].Trim('"');
+
+                    if (_stateCountyDictionary.ContainsKey(elements[1]))
+                    {
+                        _stateCountyDictionary[elements[1]].Add(county);
+                    }
+                }
+            }
+
+            _stateAbbreviations.RemoveAt(0);
             ComboBoxOperations.PopulateComboBox(uxStateBox, _stateAbbreviations.ToArray());
+        }
+
+        private void uxStateBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string state = (e.AddedItems[0] as ComboBoxItem).Content as string;
+
+            ComboBoxOperations.PopulateComboBox(uxCountyBox, _stateCountyDictionary[state].ToArray());
         }
     }
 }

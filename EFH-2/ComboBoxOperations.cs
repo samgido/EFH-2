@@ -11,6 +11,7 @@ namespace EFH_2
     {
         public static void PopulateComboBox(ComboBox cb, string[] elements)
         {
+            cb.Items.Clear();
             
             foreach (string s in elements)
             {
