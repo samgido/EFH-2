@@ -24,18 +24,15 @@ namespace EFH_2
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-
-        private BasicDataPage _basicDataPage = new();
-
-        private IntroPage _introPage = new();
-
-        private RCNPage _rcnPage = new();
-
-        private RDDataPage _rdDataPage = new();
-
         public MainWindow()
         {
             this.InitializeComponent();
+
+            contentFrame.Navigate(typeof(IntroPage));
+            Tabs.SelectedItem = uxIntroPageNav;
+
+            uxSlopeCalulatorButton.IsEnabled = false;
+            uxHSGButton.IsEnabled = false;
         }
 
         private void Tabs_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -50,26 +47,10 @@ namespace EFH_2
                 string selectedItemTag = ((string)selectedItem.Tag);
                 target = Type.GetType("EFH_2." + selectedItemTag);
 
-                var reference = new Page();
+                uxHSGButton.IsEnabled = (target == typeof(RCNPage));
+                uxSlopeCalulatorButton.IsEnabled = (target == typeof(BasicDataPage));
 
-                if (target == typeof(BasicDataPage))
-                {
-                    reference = _basicDataPage;
-                }
-                else if (target == typeof(RDDataPage))
-                {
-                    reference = _rdDataPage;
-                }
-                else if (target == typeof(RCNPage))
-                {
-                    reference = _rcnPage;
-                }
-                else 
-                {
-                    reference = _introPage; 
-                }
-
-                contentFrame.Navigate(target, reference);
+                contentFrame.Navigate(target);
             }
         }
     }

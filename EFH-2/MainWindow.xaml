@@ -110,10 +110,20 @@
             <AppBarSeparator/>
 
             <AppBarButton
-                />
+                x:Name="uxSlopeCalulatorButton"
+                Label="Slope Calculator">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xEB3C;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
             <AppBarButton
-                />
+                x:Name="uxHSGButton"
+                Label="Hydrologic Soil Group">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE773;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
 
             <AppBarSeparator/>
 

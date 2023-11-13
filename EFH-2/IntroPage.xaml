@@ -15,23 +15,22 @@
         Background="Transparent">
 
         <TextBlock
-            x:Name="topParagraph"     
             Text="Peak discharge is determined by procedures contained by NRCS 210-National Engineering Handbook, Part 630, Hydrology to compute full hydrographs and report the peak discharge. Information needed to use this procedure include watershed characteristics (drainage area, curve number, watershed length, watershed slope) and rainfall amount and rainfall distribution." 
             TextWrapping="Wrap"/>
-        
+
         <TextBlock 
             x:Name="everythingElse"
             xml:space="preserve" 
             TextWrapping="Wrap">
             <TextBlock.Text>
                 The method applies when: 
-	                - Watershed is accurately represented by a single runoff curve number between 40 and 98.
-                	- Watershed area is between 1 and 2000 acres.
-	                - Watershed hydraulic length is between 200 and 26000 feet.
-	                - Average watershed slope is between 0.5 and 64 percent.
-	                - No valley or reservoir routing is required.
-	                - Maximum rainfall is between 0 and 26 inches.
-	                - Urban land use within the watershed does not exceed 10%.
+                    - Watershed is accurately represented by a single runoff curve number between 40 and 98.
+                    - Watershed area is between 1 and 2000 acres.
+                    - Watershed hydraulic length is between 200 and 26000 feet.
+                    - Average watershed slope is between 0.5 and 64 percent.
+                    - No valley or reservoir routing is required.
+                    - Maximum rainfall is between 0 and 26 inches.
+                    - Urban land use within the watershed does not exceed 10%.
             </TextBlock.Text>
         </TextBlock>
 

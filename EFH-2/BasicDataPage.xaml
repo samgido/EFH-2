@@ -132,7 +132,7 @@
 
                 <TextBlock
                     RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Text="Watershed Slope"
+                    Text="Watershed Slope:"
                     Margin="20,0,0,0"
                     />
 
@@ -155,7 +155,7 @@
                 <TextBlock
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Margin="20,0,0,0"
-                    Text="Time of Concentration"
+                    Text="Time of Concentration:"
                     />
 
                 <TextBox
