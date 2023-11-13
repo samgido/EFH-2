@@ -134,30 +134,31 @@
                 <NavigationViewItem 
                     Content="Introduction" 
                     Tag="IntroPage"  
-                    x:Name="IntroPage">
+                    x:Name="uxIntroPageNav">
                 </NavigationViewItem>
 
                 <NavigationViewItem 
                     Content="Basic Data"
                     Tag="BasicDataPage"
-                    x:Name="BasicDataPage">
+                    x:Name="uxBasicDataPageNav">
                 </NavigationViewItem>
 
                 <NavigationViewItem
                     Content="Rainfall/Discharge Data"
                     Tag="RDDataPage"
-                    x:Name="RDDataPage">
+                    x:Name="uxRDDataPageNav">
                 </NavigationViewItem>
 
                 <NavigationViewItem
                     Content="RCN"
                     Tag="RCNPage"
-                    x:Name="RCNPage">
+                    x:Name="uxRCNPageNav">
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <Frame
-                x:Name="contentFrame">
+                x:Name="contentFrame"
+                CacheSize="5">
             </Frame>
 
         </NavigationView>

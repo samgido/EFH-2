@@ -24,6 +24,15 @@ namespace EFH_2
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+
+        private BasicDataPage _basicDataPage = new();
+
+        private IntroPage _introPage = new();
+
+        private RCNPage _rcnPage = new();
+
+        private RDDataPage _rdDataPage = new();
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -41,19 +50,26 @@ namespace EFH_2
                 string selectedItemTag = ((string)selectedItem.Tag);
                 target = Type.GetType("EFH_2." + selectedItemTag);
 
-                contentFrame.Navigate(target);
-            }
-        }
+                var reference = new Page();
 
-        public void PopulateComboBox(ComboBox cb, string[] elements)
-        {
-            
-            foreach (string s in elements)
-            {
-                ComboBoxItem n = new();
-                n.Content = s;
+                if (target == typeof(BasicDataPage))
+                {
+                    reference = _basicDataPage;
+                }
+                else if (target == typeof(RDDataPage))
+                {
+                    reference = _rdDataPage;
+                }
+                else if (target == typeof(RCNPage))
+                {
+                    reference = _rcnPage;
+                }
+                else 
+                {
+                    reference = _introPage; 
+                }
 
-                cb.Items.Add(n);
+                contentFrame.Navigate(target, reference);
             }
         }
     }

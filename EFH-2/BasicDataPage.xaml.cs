@@ -26,7 +26,16 @@ namespace EFH_2
     {
 
         private Dictionary<string, string> _stateCountyDictionary = new();
+
         private List<string> _stateAbbreviations = new();
+
+        private string _clientEntry = "";
+
+        private string _practiceEntry = "";
+
+        private string _byEntry = "";
+
+        private DateTime _dateEntry = new();
 
         public BasicDataPage()
         {
@@ -35,21 +44,12 @@ namespace EFH_2
             WorkBook wb = WorkBook.Load("C:\\ProgramData\\USDA\\Shared Engineering Data\\RainFall_Data.xlsx");
             WorkSheet statesSheet = wb.GetWorkSheet("States");
 
-            int i = 2;
-
-            while (!statesSheet["A" + (i).ToString()].IsEmpty)
+            for (int i = 2; !statesSheet["A" + i.ToString()].IsEmpty; i++)
             {
                 _stateAbbreviations.Add(statesSheet["B" + i.ToString()].StringValue);
-
-                i++;
             }
 
             ComboBoxOperations.PopulateComboBox(uxStateBox, _stateAbbreviations.ToArray());
-        }
-
-        private void uxStateBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
