@@ -16,7 +16,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Popups;
+using WinRT;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,6 +31,7 @@ namespace EFH_2
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -41,9 +45,7 @@ namespace EFH_2
 
         private void TabsSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            Type target;
-
-            target = typeof(IntroPage);
+            Type target = typeof(IntroPage);
 
             var selectedItem = (NavigationViewItem)args.SelectedItem;
             if (selectedItem != null)
@@ -53,9 +55,39 @@ namespace EFH_2
 
                 uxHSGButton.IsEnabled = (target == typeof(RCNPage));
                 uxSlopeCalulatorButton.IsEnabled = (target == typeof(BasicDataPage));
-
-                contentFrame.Navigate(target);
             }
+
+            
+
+            contentFrame.Navigate(target);
         }
+
+        private async void SaveClick(object sender, RoutedEventArgs e)
+        {
+
+            FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.FileTypeChoices.Add("efm", new List<string> { ".efm" });
+
+            var window = new Microsoft.UI.Xaml.Window();
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                using (StreamWriter writer = new(file.Path))
+                {
+                    WriteEntry(writer, BasicDataPage.StateSelection);
+                }
+            }
+
+        }
+        
+        private void WriteEntry(StreamWriter writer, string content)
+        {
+            writer.WriteLine('"' + content + '"');
+        }
+
     }
 }

@@ -38,6 +38,14 @@ namespace EFH_2
         /// </summary>
         private List<string> _stateAbbreviations = new();
 
+        public static string StateSelection
+        {
+            get
+            {
+                return uxStateBox.Name;
+            }
+        }
+
         public BasicDataPage()
         {
             this.InitializeComponent();

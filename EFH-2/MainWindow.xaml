@@ -8,6 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    
+    
     <StackPanel
         Orientation="Vertical">
 
@@ -23,6 +25,7 @@
                                 AccessKey="R"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Save"
+                                Click="SaveClick"
                                 AccessKey="S"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Export Hydrograph(s)"
@@ -85,7 +88,8 @@
 
             <AppBarButton
                 Icon="Save"
-                Label="Save"/>
+                Label="Save"
+                Click="SaveClick"/>
 
             <AppBarSeparator/>
 
