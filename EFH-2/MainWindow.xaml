@@ -138,7 +138,7 @@
             x:Name="Tabs"
             IsBackButtonVisible="Collapsed" 
             IsSettingsVisible="False"
-            SelectionChanged="Tabs_SelectionChanged"
+            SelectionChanged="TabsSelectionChanged"
             >
             <NavigationView.MenuItems>
                 <NavigationViewItem 
@@ -168,6 +168,7 @@
 
             <Frame
                 x:Name="contentFrame"
+                Background="Transparent"
                 CacheSize="5">
             </Frame>
 

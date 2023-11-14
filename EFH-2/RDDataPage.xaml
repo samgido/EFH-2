@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
 
     <StackPanel>
@@ -94,6 +93,13 @@
                 Margin="125,10,0,0"
                 Width="90"
                 />
+
+            <TextBlock
+                Text="Storm #1"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField1"
+                Padding="50,10,0,0"
+                />
+
             <TextBox
                 x:Name="uxFrequencyField2"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField1"
@@ -102,6 +108,12 @@
                 Width="90"
                 />
           
+            <TextBlock
+                Text="Storm #2"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField2"
+                Padding="50,10,0,0"
+                />
+            
             <TextBox
                 x:Name="uxFrequencyField3"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
@@ -109,6 +121,13 @@
                 Margin="125,10,0,0"
                 Width="90"
                 />
+
+            <TextBlock
+                Text="Storm #3"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField3"
+                Padding="50,10,0,0"
+                />
+
             <TextBox
                 x:Name="uxFrequencyField4"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField3"
@@ -116,6 +135,13 @@
                 Margin="125,10,0,0"
                 Width="90"
                 />
+
+            <TextBlock
+                Text="Storm #4"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField4"
+                Padding="50,10,0,0"
+                />
+
             <TextBox
                 x:Name="uxFrequencyField5"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField4"
@@ -123,6 +149,13 @@
                 Margin="125,10,0,0"
                 Width="90"
                 />
+
+            <TextBlock
+                Text="Storm #5"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField5"
+                Padding="50,10,0,0"
+                />
+
             <TextBox
                 x:Name="uxFrequencyField6"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField5"
@@ -130,12 +163,25 @@
                 Margin="125,10,0,0"
                 Width="90"
                 />
+
+            <TextBlock
+                Text="Storm #6"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField6"
+                Padding="50,10,0,0"
+                />
+
             <TextBox
                 x:Name="uxFrequencyField7"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField6"
                 RelativePanel.Below="uxFrequencyField6"
                 Margin="125,10,0,0"
                 Width="90"
+                />
+
+            <TextBlock
+                Text="Storm #7"
+                RelativePanel.AlignVerticalCenterWith="uxFrequencyField7"
+                Padding="50,10,0,0"
                 />
 
             <TextBox
@@ -339,7 +385,7 @@
 
             <Button
                 x:Name="uxPlotHydrographs"
-                Click="uxPlotHydrographs_Click"
+                Click="PlotHydrographsClick"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroLabel"
                 RelativePanel.Below="uxSelectHydroButton7"
                 Height="50"

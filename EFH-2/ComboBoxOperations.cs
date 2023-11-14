@@ -9,6 +9,11 @@ namespace EFH_2
 {
     class ComboBoxOperations
     {
+        /// <summary>
+        /// Adds all elements from an array to a combo box
+        /// </summary>
+        /// <param name="cb">The target combo box</param>
+        /// <param name="elements"></param>
         public static void PopulateComboBox(ComboBox cb, string[] elements)
         {
             cb.Items.Clear();

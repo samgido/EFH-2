@@ -1,3 +1,7 @@
+/* BasicDataPage.xaml.cs
+ * Author: Samuel Gido
+ */
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -24,8 +28,14 @@ namespace EFH_2
     /// </summary>
     public sealed partial class BasicDataPage : Page
     {
+        /// <summary>
+        /// Contains each state's available counties 
+        /// </summary>
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
+        /// <summary>
+        /// Available state abbreviations
+        /// </summary>
         private List<string> _stateAbbreviations = new();
 
         public BasicDataPage()
@@ -75,7 +85,8 @@ namespace EFH_2
             ComboBoxOperations.PopulateComboBox(uxStateBox, _stateAbbreviations.ToArray());
         }
 
-        private void uxStateBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string state = (e.AddedItems[0] as ComboBoxItem).Content as string;
 

@@ -1,3 +1,7 @@
+/* MainWindow.xaml.cs
+ * Author: Samuel Gido
+ */
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -35,7 +39,7 @@ namespace EFH_2
             uxHSGButton.IsEnabled = false;
         }
 
-        private void Tabs_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void TabsSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             Type target;
 

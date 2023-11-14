@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
 
     <StackPanel>
@@ -23,7 +22,7 @@
             <ComboBox
                 x:Name="uxStateBox"
                 Header="State:"
-                SelectionChanged="uxStateBox_SelectionChanged"
+                SelectionChanged="StateSelectionChanged"
                 RelativePanel.RightOf="uxClientBox"
                 Margin="50,0,0,0"/>
 
@@ -56,9 +55,9 @@
             <DatePicker
                 x:Name="uxDatePicker"
                 Header="Date:"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Margin="300,0,0,0"/>
+                RelativePanel.AlignVerticalCenterWith="uxByBox"
+                RelativePanel.RightOf="uxByBox"
+                Margin="200,5,0,0"/>
         </RelativePanel>
 
         <StackPanel

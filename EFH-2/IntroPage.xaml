@@ -7,16 +7,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
 
     <StackPanel
         Padding="0,10,0,0"
-        Background="Transparent">
+        >
 
         <TextBlock
             Text="Peak discharge is determined by procedures contained by NRCS 210-National Engineering Handbook, Part 630, Hydrology to compute full hydrographs and report the peak discharge. Information needed to use this procedure include watershed characteristics (drainage area, curve number, watershed length, watershed slope) and rainfall amount and rainfall distribution." 
-            TextWrapping="Wrap"/>
+            TextWrapping="Wrap"
+            Padding="50,0,50,0"
+            />
 
         <TextBlock 
             x:Name="everythingElse"

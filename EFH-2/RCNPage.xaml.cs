@@ -1,3 +1,7 @@
+/* RCNPage.xaml.cs
+ * Author: Samuel Gido
+ */
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;

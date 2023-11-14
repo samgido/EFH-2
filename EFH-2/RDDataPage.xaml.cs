@@ -1,3 +1,7 @@
+/* RDDataPage.xaml.cs
+ * Author: Samuel Gido
+ */
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -24,7 +28,14 @@ namespace EFH_2
     /// </summary>
     public sealed partial class RDDataPage : Page
     {
+        /// <summary>
+        /// All names of the dimensionless unit hydrographs
+        /// </summary>
         private List<string> _duhFieldNames = new();
+
+        /// <summary>
+        /// All names of the Rainfall Distribution-Types
+        /// </summary>
         private List<string> _rfTypeNames = new();
 
         public RDDataPage()
@@ -70,11 +81,9 @@ namespace EFH_2
             uxDUH.SelectedValuePath = "Item1";
         }
 
-        private void uxPlotHydrographs_Click(object sender, RoutedEventArgs e)
+        private void PlotHydrographsClick(object sender, RoutedEventArgs e)
         {
 
         }
-
-
     }
 }
