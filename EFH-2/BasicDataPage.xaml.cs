@@ -17,6 +17,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
+using System.Text.RegularExpressions;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,14 +39,6 @@ namespace EFH_2
         /// Available state abbreviations
         /// </summary>
         private List<string> _stateAbbreviations = new();
-
-        public static string StateSelection
-        {
-            get
-            {
-                return uxStateBox.Name;
-            }
-        }
 
         public BasicDataPage()
         {
@@ -99,6 +93,72 @@ namespace EFH_2
             string state = (e.AddedItems[0] as ComboBoxItem).Content as string;
 
             ComboBoxOperations.PopulateComboBox(uxCountyBox, _stateCountyDictionary[state].ToArray());
+
+            var window = (Application.Current as App).Window as MainWindow;
+
+            window.VM.State = state;
+        }
+
+        private void uxClientBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.Client = uxClientBox.Text;
+        }
+
+        private void uxCountyBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.County = (e.AddedItems[0] as ComboBoxItem).Content as string;
+        }
+
+        private void uxByBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.By = uxByBox.Text;
+        }
+
+        private void uxDatePicker_SelectedDateChanged(DatePicker sender, DatePickerSelectedValueChangedEventArgs args)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.Date = (DateTimeOffset)uxDatePicker.SelectedDate;
+        }
+
+        private void uxDrainageArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.DrainageArea = Int32.Parse(uxDrainageArea.Text);
+        }
+
+        private void uxRunoffCurveNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.CurveNumber= Int32.Parse(uxRunoffCurveNumber.Text);
+        }
+
+        private void uxWatershedLength_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.WatershedLength = Int32.Parse(uxWatershedLength.Text);
+        }
+
+        private void uxWatershedSlope_TextChanged(object sender, TextChangedEventArgs e)
+        { 
+            ((Application.Current as App)?.Window as MainWindow).VM.WatershedSlope = float.Parse(uxWatershedSlope.Text);
+        }
+
+        private void uxTimeOfConcentration_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = float.Parse(uxTimeOfConcentration.Text);
+        }
+
+        private void TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            var text = ((TextBox)sender).Text;
+
+            var regex = new Regex("^[0-9]*$");
+
+            if (!regex.IsMatch(text))
+            {
+                ((TextBox)sender).Undo();
+            }
+        }
+
+        private void IsNumber()
+        {
+
         }
     }
 }

@@ -85,5 +85,19 @@ namespace EFH_2
         {
 
         }
+
+        private void uxRainfallDistType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var window = (Application.Current as App)?.Window as MainWindow;
+
+            window.VM.RainfallDistType = (e.AddedItems[0] as ComboBoxItem).Content as string;
+        }
+
+        private void uxDUH_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var window = (Application.Current as App)?.Window as MainWindow;
+
+            window.VM.DUHType = (e.AddedItems[0] as ComboBoxItem).Content as string;
+        }
     }
 }

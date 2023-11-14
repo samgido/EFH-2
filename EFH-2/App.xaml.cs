@@ -46,5 +46,7 @@ namespace EFH_2
         }
 
         private Window m_window;
+
+        public Window Window => m_window;
     }
 }

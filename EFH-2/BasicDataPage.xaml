@@ -15,6 +15,7 @@
 
             <TextBox
                 x:Name="uxClientBox"
+                TextChanged="uxClientBox_TextChanged"
                 Header="Client:"
                 Margin="50,0,0,0"
                 Width="300"/>
@@ -28,6 +29,7 @@
 
             <ComboBox
                 x:Name="uxCountyBox"
+                SelectionChanged="uxCountyBox_SelectionChanged"
                 Header="County:"
                 RelativePanel.RightOf="uxStateBox"
                 Width="250"
@@ -49,12 +51,14 @@
 
             <TextBox
                 x:Name="uxByBox"
+                TextChanged="uxByBox_TextChanged"
                 Header="By:"
                 Margin="50,0,0,0"/>
 
             <DatePicker
                 x:Name="uxDatePicker"
                 Header="Date:"
+                SelectedDateChanged="uxDatePicker_SelectedDateChanged"
                 RelativePanel.AlignVerticalCenterWith="uxByBox"
                 RelativePanel.RightOf="uxByBox"
                 Margin="200,5,0,0"/>
@@ -75,6 +79,9 @@
 
                 <TextBox
                     x:Name="uxDrainageArea"
+                    TextChanged="uxDrainageArea_TextChanged"
+                    TextChanging="TextChanging"
+                    InputScope="Number"
                     Margin= "200,0,0,0"
                     />
 
@@ -99,6 +106,7 @@
 
                 <TextBox
                     x:Name="uxRunoffCurveNumber"
+                    TextChanged="uxRunoffCurveNumber_TextChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -115,6 +123,7 @@
 
                 <TextBox
                     x:Name="uxWatershedLength"
+                    TextChanged="uxWatershedLength_TextChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -137,6 +146,7 @@
 
                 <TextBox
                     x:Name="uxWatershedSlope"
+                    TextChanged="uxWatershedSlope_TextChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -159,6 +169,7 @@
 
                 <TextBox
                     x:Name="uxTimeOfConcentration"
+                    TextChanged="uxTimeOfConcentration_TextChanged"
                     Margin="200,0,0,0"
                     />
 

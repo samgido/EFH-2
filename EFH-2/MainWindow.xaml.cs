@@ -32,6 +32,10 @@ namespace EFH_2
     public sealed partial class MainWindow : Window
     {
 
+        public const int _numberOfStorms = 7; 
+
+        public ViewModel VM { get; set; }
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -41,6 +45,8 @@ namespace EFH_2
 
             uxSlopeCalulatorButton.IsEnabled = false;
             uxHSGButton.IsEnabled = false;
+
+            VM = new();
         }
 
         private void TabsSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -56,8 +62,6 @@ namespace EFH_2
                 uxHSGButton.IsEnabled = (target == typeof(RCNPage));
                 uxSlopeCalulatorButton.IsEnabled = (target == typeof(BasicDataPage));
             }
-
-            
 
             contentFrame.Navigate(target);
         }
@@ -78,15 +82,10 @@ namespace EFH_2
             {
                 using (StreamWriter writer = new(file.Path))
                 {
-                    WriteEntry(writer, BasicDataPage.StateSelection);
+                    VM.SaveToFile(writer);
                 }
             }
 
-        }
-        
-        private void WriteEntry(StreamWriter writer, string content)
-        {
-            writer.WriteLine('"' + content + '"');
         }
 
     }

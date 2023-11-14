@@ -24,6 +24,7 @@
 
             <ComboBox
                 x:Name="uxRainfallDistType"
+                SelectionChanged="uxRainfallDistType_SelectionChanged"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 Margin="0,0,150,0"
                 Width="175"
@@ -42,6 +43,7 @@
                 
             <ComboBox
                 x:Name="uxDUH"
+                SelectionChanged="uxDUH_SelectionChanged"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 Margin="0,0,150,0"
                 Width="175"
