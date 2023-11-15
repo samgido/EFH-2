@@ -41,7 +41,9 @@
             Orientation="Horizontal">
 
             <TextBox
+                x:Name="uxPracticeBox"
                 Header="Practice:"
+                TextChanged="uxPracticeBox_TextChanged"
                 Margin="50,0,0,0"
                 Width="650"/>
 
@@ -77,11 +79,9 @@
                     Margin="20,0,0,0"
                     />
 
-                <TextBox
+                <NumberBox
                     x:Name="uxDrainageArea"
-                    TextChanged="uxDrainageArea_TextChanged"
-                    TextChanging="TextChanging"
-                    InputScope="Number"
+                    ValueChanged="uxDrainageArea_ValueChanged"
                     Margin= "200,0,0,0"
                     />
 
@@ -91,6 +91,15 @@
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Text="acres"
                     Margin="10,0,0,0"
+                    />
+
+                <TextBlock
+                    x:Name="uxDrainageAreaStatus"
+                    RelativePanel.RightOf="uxDrainageArea"
+                    RelativePanel.AlignVerticalCenterWith="uxDrainageArea"
+                    Text=""
+                    Padding="75,0,0,0"
+                    Foreground="HotPink"
                     />
             </RelativePanel>
 
@@ -104,12 +113,20 @@
                     Margin="20,0,0,0"
                     />
 
-                <TextBox
+                <NumberBox
                     x:Name="uxRunoffCurveNumber"
-                    TextChanged="uxRunoffCurveNumber_TextChanged"
+                    ValueChanged="uxRunoffCurveNumber_ValueChanged"
                     Margin="200,0,0,0"
                     />
 
+                <TextBlock
+                    x:Name="uxRunoffCurveStatus"
+                    RelativePanel.RightOf="uxRunoffCurveNumber"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffCurveNumber"
+                    Text=""
+                    Padding="75,0,0,0"
+                    Foreground="HotPink"
+                    />
             </RelativePanel>
 
             <RelativePanel
@@ -121,9 +138,9 @@
                     Margin="20,0,0,0"
                     />
 
-                <TextBox
+                <NumberBox
                     x:Name="uxWatershedLength"
-                    TextChanged="uxWatershedLength_TextChanged"
+                    ValueChanged="uxWatershedLength_ValueChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -132,6 +149,15 @@
                     RelativePanel.RightOf="uxWatershedLength"
                     Text="feet"
                     Margin="10,0,0,0"
+                    />
+
+                <TextBlock
+                    x:Name="uxWatershedLengthStatus"
+                    RelativePanel.RightOf="uxWatershedLength"
+                    RelativePanel.AlignVerticalCenterWith="uxWatershedLength"
+                    Text=""
+                    Padding="75,0,0,0"
+                    Foreground="HotPink"
                     />
             </RelativePanel>
 
@@ -144,9 +170,9 @@
                     Margin="20,0,0,0"
                     />
 
-                <TextBox
+                <NumberBox
                     x:Name="uxWatershedSlope"
-                    TextChanged="uxWatershedSlope_TextChanged"
+                    ValueChanged="uxWatershedSlope_ValueChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -155,6 +181,15 @@
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Text="percent"
                     Margin="10,0,0,0"
+                    />
+
+                <TextBlock
+                    x:Name="uxWatershedSlopeStatus"
+                    RelativePanel.RightOf="uxWatershedSlope"
+                    RelativePanel.AlignVerticalCenterWith="uxWatershedSlope"
+                    Text=""
+                    Padding="75,0,0,0"
+                    Foreground="HotPink"
                     />
             </RelativePanel>
 
@@ -167,9 +202,9 @@
                     Text="Time of Concentration:"
                     />
 
-                <TextBox
+                <NumberBox
                     x:Name="uxTimeOfConcentration"
-                    TextChanged="uxTimeOfConcentration_TextChanged"
+                    ValueChanged="uxTimeOfConcentration_ValueChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -179,7 +214,6 @@
                     Text="hours"
                     Margin="10,0,0,0"
                     />
-
             </RelativePanel> 
             
 

@@ -99,5 +99,14 @@ namespace EFH_2
 
             window.VM.DUHType = (e.AddedItems[0] as ComboBoxItem).Content as string;
         }
+
+        private void uxSelectHydroButton2_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ToggleSwitch t = (sender as ToggleSwitch);
+
+            int index = Int32.Parse(t.Tag.ToString());
+
+            ((Application.Current as App)?.Window as MainWindow).VM._selectedGraphs[index - 1] ^= true;
+        }
     }
 }

@@ -119,46 +119,72 @@ namespace EFH_2
             ((Application.Current as App)?.Window as MainWindow).VM.Date = (DateTimeOffset)uxDatePicker.SelectedDate;
         }
 
-        private void uxDrainageArea_TextChanged(object sender, TextChangedEventArgs e)
+        private void uxDrainageArea_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            ((Application.Current as App)?.Window as MainWindow).VM.DrainageArea = Int32.Parse(uxDrainageArea.Text);
-        }
+            int value = (int)sender.Value;
 
-        private void uxRunoffCurveNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.CurveNumber= Int32.Parse(uxRunoffCurveNumber.Text);
-        }
-
-        private void uxWatershedLength_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.WatershedLength = Int32.Parse(uxWatershedLength.Text);
-        }
-
-        private void uxWatershedSlope_TextChanged(object sender, TextChangedEventArgs e)
-        { 
-            ((Application.Current as App)?.Window as MainWindow).VM.WatershedSlope = float.Parse(uxWatershedSlope.Text);
-        }
-
-        private void uxTimeOfConcentration_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = float.Parse(uxTimeOfConcentration.Text);
-        }
-
-        private void TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
-        {
-            var text = ((TextBox)sender).Text;
-
-            var regex = new Regex("^[0-9]*$");
-
-            if (!regex.IsMatch(text))
+            if (value >= 1 && value <= 2000)
             {
-                ((TextBox)sender).Undo();
+                ((Application.Current as App)?.Window as MainWindow).VM.DrainageArea = value;
+                uxDrainageAreaStatus.Text = "";
+            }
+            else
+            {
+                uxDrainageAreaStatus.Text = "Drainage area must be in the range 1 to 2000 acres!";
             }
         }
 
-        private void IsNumber()
+        private void uxRunoffCurveNumber_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            int value = (int)sender.Value;
+            if (value >= 40 && value <= 98)
+            {
+                ((Application.Current as App)?.Window as MainWindow).VM.CurveNumber = value;
+                uxRunoffCurveStatus.Text = "";
+            }
+            else
+            {
+                uxRunoffCurveStatus.Text = "Curve number must be in the range 40 to 98!";
+            }
+        }
 
+        private void uxWatershedLength_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            int value = (int)sender.Value;
+            if (value >= 200 && value <= 26000)
+            {
+                ((Application.Current as App)?.Window as MainWindow).VM.WatershedLength = value;
+                uxWatershedLengthStatus.Text = "";
+            }
+            else
+            {
+                uxWatershedLengthStatus.Text = "Watershed length must be in the range 200 to 26000 feet!";
+            }
+        }
+
+        private void uxWatershedSlope_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            float value = (float)sender.Value;
+
+            if (value >= .5 && value <= 64.0)
+            {
+                ((Application.Current as App)?.Window as MainWindow).VM.WatershedSlope = value;
+                uxWatershedSlopeStatus.Text = "";
+            }
+            else
+            {
+                uxWatershedSlopeStatus.Text = "Watershed slope must be the range 0.5 and 64 percent!";
+            }
+        }
+
+        private void uxTimeOfConcentration_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = (float)sender.Value;
+        }
+
+        private void uxPracticeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((Application.Current as App)?.Window as MainWindow).VM.Practice = ((TextBox)sender).Text;
         }
     }
 }

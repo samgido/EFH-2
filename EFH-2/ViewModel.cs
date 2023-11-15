@@ -19,6 +19,8 @@ namespace EFH_2
 
         public string County { get; set; }
 
+        public string Practice { get; set; }
+
         public string By { get; set; }
 
         public DateTimeOffset Date { get; set; }
@@ -33,22 +35,23 @@ namespace EFH_2
 
         public float TimeOfConcentration { get; set; }
 
-        private List<string> BasicDataString
+        private List<object> BasicDataString
         {
             get
             {
-                List<string> l = new();
+                List<object> l = new();
 
                 l.Add(By);
-                l.Add(Date.ToString());
+                l.Add(Date);
                 l.Add(Client);
                 l.Add(County);
                 l.Add(State);
-                l.Add(DrainageArea.ToString());
-                l.Add(CurveNumber.ToString());
-                l.Add(WatershedLength.ToString());
-                l.Add(WatershedSlope.ToString());
-                l.Add(TimeOfConcentration.ToString());
+                l.Add(Practice);
+                l.Add(DrainageArea);
+                l.Add(CurveNumber);
+                l.Add(WatershedLength);
+                l.Add(WatershedSlope);
+                l.Add(TimeOfConcentration);
 
                 return l;
             }
@@ -58,7 +61,7 @@ namespace EFH_2
 
         public string DUHType { get; set; }
 
-        public int[] _years = new int[MainWindow._numberOfStorms];
+        public int[] _freq = new int[MainWindow._numberOfStorms];
 
         public float[] _dayRain = new float[MainWindow._numberOfStorms];
 
@@ -68,12 +71,21 @@ namespace EFH_2
 
         public bool[] _selectedGraphs = new bool[MainWindow._numberOfStorms];
 
-        private List<string> RainfallDistData
+        private List<object> RainfallDistData
         {
             get
             {
-                List<string> l = new();
+                List<object> l = new();
 
+                l.Add(RainfallDistType + ',' + DUHType);
+
+                for (int i = 0; i < _freq.Length; i++)
+                {
+                    l.Add(_freq[i]);
+                    l.Add(_dayRain[i]);
+                }
+
+                l.Add("");
 
 
                 return l;
@@ -87,17 +99,43 @@ namespace EFH_2
             writer = w;
             //Version # here
 
-            foreach (string s in BasicDataString)
+            foreach (object s in BasicDataString)
             {
-                Write(s);
+                WriteLine(s);
             }
 
+            WriteLine("");
+            WriteLine("");
+            WriteLine("");
+
+
+            // Last bit
+
+            for (int i = 0; i < _freq.Length; i++)
+            {
+                Write(_freq[i]);
+                writer.Write(',');
+                Write(_dayRain[i]);
+                writer.Write(',');
+                Write(_peakFlow[i]);
+                writer.Write(',');
+                WriteLine(_runoff[i]);
+            }
 
         }
 
-        private void Write(string s)
+        private void WriteLine(object s)
         {
-            writer.WriteLine('"' + s + '"');
+            if (s == null) { s = ""; }
+            writer.WriteLine('"' + s.ToString() + '"');
         }
+
+        private void Write(object s)
+        {
+            if (s == null) { s = ""; }
+            writer.Write('"' + s.ToString() + '"');
+        }
+
+
     }
 }
