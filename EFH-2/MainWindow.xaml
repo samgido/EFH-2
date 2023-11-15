@@ -75,7 +75,7 @@
         </MenuBar>
 
         <CommandBar
-            FlowDirection="RightToLeft"
+            FlowDirection="LeftToRight"
             DefaultLabelPosition="Bottom"
             >
 

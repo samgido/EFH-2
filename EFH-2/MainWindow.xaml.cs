@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Windowing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.UI.Popups;
 using WinRT;
 
@@ -39,6 +41,9 @@ namespace EFH_2
         public MainWindow()
         {
             this.InitializeComponent();
+
+            this.Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
+            this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
 
             contentFrame.Navigate(typeof(IntroPage));
             Tabs.SelectedItem = uxIntroPageNav;
