@@ -126,7 +126,7 @@ namespace EFH_2
             if (value >= 1 && value <= 2000)
             {
                 ((Application.Current as App)?.Window as MainWindow).VM.DrainageArea = value;
-                uxDrainageAreaStatus.Text = "";
+                uxDrainageAreaStatus.Text = "User entered.";
             }
             else
             {
@@ -140,7 +140,7 @@ namespace EFH_2
             if (value >= 40 && value <= 98)
             {
                 ((Application.Current as App)?.Window as MainWindow).VM.CurveNumber = value;
-                uxRunoffCurveStatus.Text = "";
+                uxRunoffCurveStatus.Text = "User entered.";
             }
             else
             {
@@ -154,7 +154,7 @@ namespace EFH_2
             if (value >= 200 && value <= 26000)
             {
                 ((Application.Current as App)?.Window as MainWindow).VM.WatershedLength = value;
-                uxWatershedLengthStatus.Text = "";
+                uxWatershedLengthStatus.Text = "User entered.";
             }
             else
             {
@@ -169,7 +169,7 @@ namespace EFH_2
             if (value >= .5 && value <= 64.0)
             {
                 ((Application.Current as App)?.Window as MainWindow).VM.WatershedSlope = value;
-                uxWatershedSlopeStatus.Text = "";
+                uxWatershedSlopeStatus.Text = "User entered";
             }
             else
             {
@@ -183,7 +183,7 @@ namespace EFH_2
             if (value > .1 && value < 10.0)
             {
                 ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = value;
-                uxTimeOfConcentrationStatus.Text = "";
+                uxTimeOfConcentrationStatus.Text = "User entered";
             }
             else
             {

@@ -13,9 +13,14 @@ namespace EFH_2
 {
     public class ViewModel
     {
-        public string Client { get; set; }
+        public string Client { get; 
+            set
+            {
+                Client = value;
+            }
+        }
 
-        public string State { get; set; }
+    public string State { get; set; }
 
         public string County { get; set; }
 
@@ -92,50 +97,54 @@ namespace EFH_2
             }
         }
 
-        private StreamWriter writer;
-
         public void SaveToFile(StreamWriter w)
         {
-            writer = w;
             //Version # here
 
             foreach (object s in BasicDataString)
             {
-                WriteLine(s);
+                WriteLine(s, w);
             }
 
-            WriteLine("");
-            WriteLine("");
-            WriteLine("");
+            WriteLine("", w);
+            WriteLine("", w);
+            WriteLine("", w);
 
 
             // Last bit
 
             for (int i = 0; i < _freq.Length; i++)
             {
-                Write(_freq[i]);
-                writer.Write(',');
-                Write(_dayRain[i]);
-                writer.Write(',');
-                Write(_peakFlow[i]);
-                writer.Write(',');
-                WriteLine(_runoff[i]);
+                Write(_freq[i], w);
+                w.Write(',');
+                Write(_dayRain[i], w);
+                w.Write(',');
+                Write(_peakFlow[i], w);
+                w.Write(',');
+                WriteLine(_runoff[i], w);
             }
 
         }
 
-        private void WriteLine(object s)
+        private void WriteLine(object s, StreamWriter writer)
         {
             if (s == null) { s = ""; }
             writer.WriteLine('"' + s.ToString() + '"');
         }
 
-        private void Write(object s)
+        private void Write(object s, StreamWriter writer)
         {
             if (s == null) { s = ""; }
             writer.Write('"' + s.ToString() + '"');
         }
 
-
+        public void OpenFile(string fn)
+        {
+            using (StreamReader reader = new StreamReader(fn))
+            {
+                string _ = reader.ReadLine();
+                By = reader.ReadLine();
+            }
+        }
     }
 }
