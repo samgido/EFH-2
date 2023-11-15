@@ -236,102 +236,116 @@
                 Width="100"
                 />
 
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField1"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowLabel"
                 RelativePanel.Below="uxPeakFlowLabel"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField2"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField1"
                 RelativePanel.Below="uxPeakFlowField1"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField3"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField2"
                 RelativePanel.Below="uxPeakFlowField2"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField4"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField3"
                 RelativePanel.Below="uxPeakFlowField3"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField5"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField4"
                 RelativePanel.Below="uxPeakFlowField4"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField6"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField5"
                 RelativePanel.Below="uxPeakFlowField5"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxPeakFlowField7"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField6"
                 RelativePanel.Below="uxPeakFlowField6"
+                IsReadOnly="True"
                 Margin="100,10,0,0"
                 Width="100"
                 />
 
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField1"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffLabel"
                 RelativePanel.Below="uxRunoffLabel"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField2"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField1"
                 RelativePanel.Below="uxRunoffField1"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField3"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField2"
                 RelativePanel.Below="uxRunoffField2"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField4"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField3"
                 RelativePanel.Below="uxRunoffField3"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField5"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField4"
                 RelativePanel.Below="uxRunoffField4"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField6"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField5"
                 RelativePanel.Below="uxRunoffField5"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />
-            <NumberBox
+            <TextBox
                 x:Name="uxRunoffField7"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField6"
                 RelativePanel.Below="uxRunoffField6"
+                IsReadOnly="True"
                 Margin="50,10,0,0"
                 Width="100"
                 />

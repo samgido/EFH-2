@@ -179,7 +179,16 @@ namespace EFH_2
 
         private void uxTimeOfConcentration_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = (float)sender.Value;
+            float value = (float)sender.Value;
+            if (value > .1 && value < 10.0)
+            {
+                ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = value;
+                uxTimeOfConcentrationStatus.Text = "";
+            }
+            else
+            {
+                uxTimeOfConcentrationStatus.Text = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
+            }
         }
 
         private void uxPracticeBox_TextChanged(object sender, TextChangedEventArgs e)

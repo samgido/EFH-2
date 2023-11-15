@@ -214,9 +214,17 @@
                     Text="hours"
                     Margin="10,0,0,0"
                     />
-            </RelativePanel> 
-            
 
+                <TextBlock
+                    x:Name="uxTimeOfConcentrationStatus"
+                    RelativePanel.RightOf="uxTimeOfConcentration"
+                    RelativePanel.AlignVerticalCenterWith="uxTimeOfConcentration"
+                    TextWrapping="Wrap"
+                    Text=""
+                    Padding="75,0,0,0"
+                    Foreground="HotPink"
+                    />
+            </RelativePanel> 
         </StackPanel>
     </StackPanel>
 </Page>
