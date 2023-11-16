@@ -33,12 +33,16 @@ namespace EFH_2
         /// <summary>
         /// Contains each state's available counties 
         /// </summary>
-        private Dictionary<string, List<string>> _stateCountyDictionary = new();
+        private Dictionary<string, List<string>> _stateCountyDict = new();
 
         /// <summary>
         /// Available state abbreviations
         /// </summary>
         private List<string> _stateAbbreviations = new();
+
+        public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
+
+        public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
 
         public BasicDataPage()
         {
@@ -62,7 +66,7 @@ namespace EFH_2
                 string state = _stateAbbreviations[i];
 
                 if(state == "VIL") { state = "VI"; } 
-                _stateCountyDictionary.Add(_stateAbbreviations[i], new());
+                _stateCountyDict.Add(_stateAbbreviations[i], new());
             }
 
             using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
@@ -76,47 +80,49 @@ namespace EFH_2
 
                     string county = elements[2].Trim('"');
 
-                    if (_stateCountyDictionary.ContainsKey(elements[1]))
+                    if (_stateCountyDict.ContainsKey(elements[1]))
                     {
-                        _stateCountyDictionary[elements[1]].Add(county);
+                        _stateCountyDict[elements[1]].Add(county);
                     }
                 }
             }
 
             _stateAbbreviations.RemoveAt(0);
-            ComboBoxOperations.PopulateComboBox(uxStateBox, _stateAbbreviations.ToArray());
+            ComboBoxOperations.PopulateComboBox(BasicVM.States, _stateAbbreviations.ToArray());
         }
 
+        public void SetStateAndCountySelection(string state, string county)
+        {
+            foreach (ComboBoxItem s in uxStateBox.Items)
+            {
+                if (s.Content.ToString() == state)
+                {
+                    uxStateBox.SelectedItem = s;
+                    BasicVM.SelectedState = state;
+
+                    List<String> counties = _stateCountyDict[state];
+                    ComboBoxOperations.PopulateComboBox(uxCountyBox, counties.ToArray());
+
+                    foreach (ComboBoxItem c in uxCountyBox.Items)
+                    {
+                        if (c.Content.ToString() == county)
+                        {
+                            uxCountyBox.SelectedItem = c;
+                            BasicVM.SelectedCounty = county;
+                        }
+                    }
+                    
+
+                    return;
+                }
+            }
+        }
 
         private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string state = (e.AddedItems[0] as ComboBoxItem).Content as string;
 
-            ComboBoxOperations.PopulateComboBox(uxCountyBox, _stateCountyDictionary[state].ToArray());
-
-            var window = (Application.Current as App).Window as MainWindow;
-
-            window.VM.State = state;
-        }
-
-        private void uxClientBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.Client = uxClientBox.Text;
-        }
-
-        private void uxCountyBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.County = (e.AddedItems[0] as ComboBoxItem).Content as string;
-        }
-
-        private void uxByBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.By = uxByBox.Text;
-        }
-
-        private void uxDatePicker_SelectedDateChanged(DatePicker sender, DatePickerSelectedValueChangedEventArgs args)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.Date = (DateTimeOffset)uxDatePicker.SelectedDate;
+            ComboBoxOperations.PopulateComboBox(BasicVM.Counties, _stateCountyDict[state].ToArray());
         }
 
         private void uxDrainageArea_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
@@ -125,7 +131,6 @@ namespace EFH_2
 
             if (value >= 1 && value <= 2000)
             {
-                ((Application.Current as App)?.Window as MainWindow).VM.DrainageArea = value;
                 uxDrainageAreaStatus.Text = "User entered.";
             }
             else
@@ -139,7 +144,6 @@ namespace EFH_2
             int value = (int)sender.Value;
             if (value >= 40 && value <= 98)
             {
-                ((Application.Current as App)?.Window as MainWindow).VM.CurveNumber = value;
                 uxRunoffCurveStatus.Text = "User entered.";
             }
             else
@@ -153,7 +157,6 @@ namespace EFH_2
             int value = (int)sender.Value;
             if (value >= 200 && value <= 26000)
             {
-                ((Application.Current as App)?.Window as MainWindow).VM.WatershedLength = value;
                 uxWatershedLengthStatus.Text = "User entered.";
             }
             else
@@ -168,7 +171,6 @@ namespace EFH_2
 
             if (value >= .5 && value <= 64.0)
             {
-                ((Application.Current as App)?.Window as MainWindow).VM.WatershedSlope = value;
                 uxWatershedSlopeStatus.Text = "User entered";
             }
             else
@@ -182,7 +184,6 @@ namespace EFH_2
             float value = (float)sender.Value;
             if (value > .1 && value < 10.0)
             {
-                ((Application.Current as App)?.Window as MainWindow).VM.TimeOfConcentration = value;
                 uxTimeOfConcentrationStatus.Text = "User entered";
             }
             else
@@ -191,9 +192,5 @@ namespace EFH_2
             }
         }
 
-        private void uxPracticeBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ((Application.Current as App)?.Window as MainWindow).VM.Practice = ((TextBox)sender).Text;
-        }
     }
 }

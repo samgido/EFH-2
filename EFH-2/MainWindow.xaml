@@ -85,7 +85,8 @@
 
             <AppBarButton
                 Icon="OpenFile"
-                Label="Open"/>
+                Label="Open"
+                Click="OpenClick"/>
 
             <AppBarButton
                 Icon="Save"

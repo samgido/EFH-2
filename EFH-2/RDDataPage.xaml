@@ -9,6 +9,10 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required">
 
+    <UserControl.Resources>
+        <local:ComboBoxItemToString x:Key="CBToStringConverter"/>
+    </UserControl.Resources>
+
     <StackPanel>
 
         <RelativePanel
@@ -25,6 +29,8 @@
             <ComboBox
                 x:Name="uxRainfallDistType"
                 SelectionChanged="uxRainfallDistType_SelectionChanged"
+                ItemsSource="{x:Bind Path=RainfallVM.RainfallDistributionTypes, Mode=TwoWay}"
+                SelectedItem="{x:Bind Path=RainfallVM.SelectedRainfallDistributionType, Converter={StaticResource CBToStringConverter}}"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 Margin="0,0,150,0"
                 Width="175"
@@ -44,6 +50,8 @@
             <ComboBox
                 x:Name="uxDUH"
                 SelectionChanged="uxDUH_SelectionChanged"
+                ItemsSource="{x:Bind Path=RainfallVM.DUHTypes, Mode=TwoWay}"
+                SelectedItem="{x:Bind Path=RainfallVM.SelectedDUHType, Converter={StaticResource CBToStringConverter}}"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 Margin="0,0,150,0"
                 Width="175"

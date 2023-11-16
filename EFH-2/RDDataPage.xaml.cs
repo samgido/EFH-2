@@ -38,6 +38,10 @@ namespace EFH_2
         /// </summary>
         private List<string> _rfTypeNames = new();
 
+        public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
+
+        public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
+
         public RDDataPage()
         {
             this.InitializeComponent();
@@ -76,8 +80,8 @@ namespace EFH_2
                 var messageBox = new MessageDialog("something went wrong");
             }
 
-            ComboBoxOperations.PopulateComboBox(uxRainfallDistType, _rfTypeNames.ToArray());
-            ComboBoxOperations.PopulateComboBox(uxDUH, _duhFieldNames.ToArray());
+            ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rfTypeNames.ToArray());
+            ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhFieldNames.ToArray());
             uxDUH.SelectedValuePath = "Item1";
         }
 
@@ -86,18 +90,46 @@ namespace EFH_2
 
         }
 
+        public void SetRainfallDistType(string s)
+        {
+            foreach (ComboBoxItem c in uxRainfallDistType.Items)
+            {
+                if (c.Content.ToString() == s)
+                {
+                    uxRainfallDistType.SelectedItem = c;
+                    RainfallVM.SelectedRainfallDistributionType = s;
+
+                    return;
+                }
+            }
+        }
+
         private void uxRainfallDistType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var window = (Application.Current as App)?.Window as MainWindow;
 
-            window.VM.RainfallDistType = (e.AddedItems[0] as ComboBoxItem).Content as string;
+            window.RainfallVM.SelectedRainfallDistributionType = (e.AddedItems[0] as ComboBoxItem).Content as string;
+        }
+
+        public void SetDUHType(string s)
+        {
+            foreach (ComboBoxItem c in uxDUH.Items)
+            {
+                if (c.Content.ToString() == s)
+                {
+                    uxDUH.SelectedItem = c;
+                    RainfallVM.SelectedDUHType = s;
+
+                    return;
+                }
+            }
         }
 
         private void uxDUH_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var window = (Application.Current as App)?.Window as MainWindow;
 
-            window.VM.DUHType = (e.AddedItems[0] as ComboBoxItem).Content as string;
+            window.RainfallVM.SelectedDUHType = (e.AddedItems[0] as ComboBoxItem).Content as string;
         }
 
         private void uxSelectHydroButton2_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -106,7 +138,7 @@ namespace EFH_2
 
             int index = Int32.Parse(t.Tag.ToString());
 
-            ((Application.Current as App)?.Window as MainWindow).VM._selectedGraphs[index - 1] ^= true;
+            ((Application.Current as App)?.Window as MainWindow).RainfallVM._selectedGraphs[index - 1] ^= true;
         }
     }
 }

@@ -36,7 +36,9 @@ namespace EFH_2
 
         public const int _numberOfStorms = 7; 
 
-        public ViewModel VM { get; set; }
+        public BasicDataViewModel BasicVM { get; set; }
+
+        public RainfallDataViewModel RainfallVM { get; set; }
 
         public MainWindow()
         {
@@ -51,7 +53,8 @@ namespace EFH_2
             uxSlopeCalulatorButton.IsEnabled = false;
             uxHSGButton.IsEnabled = false;
 
-            VM = new();
+            BasicVM = new();
+            RainfallVM = new();
         }
 
         private void TabsSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -87,11 +90,39 @@ namespace EFH_2
             {
                 using (StreamWriter writer = new(file.Path))
                 {
-                    VM.SaveToFile(writer);
+                    Writer w = new(writer);
+                    // version
+
+                    // basic data
+                    foreach (object o in BasicVM.Summary)
+                    {
+                        w.Write(o, true);
+                    }
                 }
             }
 
         }
 
+        private void OpenClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+    }
+
+    internal class Writer
+    {
+        private StreamWriter _w;
+
+        public Writer(StreamWriter w)
+        {
+            this._w = w;
+        }
+
+        public void Write(object s, bool next)
+        {
+            string content = '"' + s.ToString() + '"';
+            this._w.Write(content);
+            if(next) { _w.WriteLine(""); }
+        }
     }
 }

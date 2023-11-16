@@ -9,27 +9,34 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required">
 
+    <UserControl.Resources>
+        <local:ComboBoxItemToString x:Key="CBoxToStringConverter"/>
+    </UserControl.Resources>
+
     <StackPanel>
 
         <RelativePanel>
 
             <TextBox
                 x:Name="uxClientBox"
-                TextChanged="uxClientBox_TextChanged"
                 Header="Client:"
+                Text="{x:Bind Path=BasicVM.Client, Mode=TwoWay}"
                 Margin="50,0,0,0"
                 Width="300"/>
 
             <ComboBox
                 x:Name="uxStateBox"
-                Header="State:"
                 SelectionChanged="StateSelectionChanged"
+                ItemsSource="{x:Bind Path=BasicVM.States, Mode=TwoWay}"
+                SelectedItem="{x:Bind Path=BasicVM.SelectedState, Converter={StaticResource CBoxToStringConverter}, Mode=TwoWay}"
+                Header="State:"
                 RelativePanel.RightOf="uxClientBox"
                 Margin="50,0,0,0"/>
 
             <ComboBox
                 x:Name="uxCountyBox"
-                SelectionChanged="uxCountyBox_SelectionChanged"
+                ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=TwoWay}"
+                SelectedItem="{x:Bind Path=BasicVM.SelectedCounty, Converter={StaticResource CBoxToStringConverter}, Mode=TwoWay}"
                 Header="County:"
                 RelativePanel.RightOf="uxStateBox"
                 Width="250"
@@ -42,8 +49,8 @@
 
             <TextBox
                 x:Name="uxPracticeBox"
+                Text="{x:Bind Path=BasicVM.Practice, Mode=TwoWay}"
                 Header="Practice:"
-                TextChanged="uxPracticeBox_TextChanged"
                 Margin="50,0,0,0"
                 Width="650"/>
 
@@ -53,14 +60,13 @@
 
             <TextBox
                 x:Name="uxByBox"
-                TextChanged="uxByBox_TextChanged"
+                Text="{x:Bind Path=BasicVM.By, Mode=TwoWay}"
                 Header="By:"
                 Margin="50,0,0,0"/>
 
             <DatePicker
                 x:Name="uxDatePicker"
                 Header="Date:"
-                SelectedDateChanged="uxDatePicker_SelectedDateChanged"
                 RelativePanel.AlignVerticalCenterWith="uxByBox"
                 RelativePanel.RightOf="uxByBox"
                 Margin="200,5,0,0"/>
@@ -81,6 +87,7 @@
 
                 <NumberBox
                     x:Name="uxDrainageArea"
+                    Value="{x:Bind Path=BasicVM.DrainageArea, Mode=TwoWay}"
                     ValueChanged="uxDrainageArea_ValueChanged"
                     Margin= "200,0,0,0"
                     />
@@ -115,6 +122,7 @@
 
                 <NumberBox
                     x:Name="uxRunoffCurveNumber"
+                    Value="{x:Bind Path=BasicVM.CurveNumber, Mode=TwoWay}"
                     ValueChanged="uxRunoffCurveNumber_ValueChanged"
                     Margin="200,0,0,0"
                     />
@@ -140,6 +148,7 @@
 
                 <NumberBox
                     x:Name="uxWatershedLength"
+                    Value="{x:Bind Path=BasicVM.WatershedLength, Mode=TwoWay}"
                     ValueChanged="uxWatershedLength_ValueChanged"
                     Margin="200,0,0,0"
                     />
@@ -172,6 +181,7 @@
 
                 <NumberBox
                     x:Name="uxWatershedSlope"
+                    Value="{x:Bind Path=BasicVM.WatershedSlope, Mode=TwoWay}"
                     ValueChanged="uxWatershedSlope_ValueChanged"
                     Margin="200,0,0,0"
                     />
@@ -204,6 +214,7 @@
 
                 <NumberBox
                     x:Name="uxTimeOfConcentration"
+                    Text="{x:Bind Path=BasicVM.TimeOfConcentration, Mode=TwoWay}"
                     ValueChanged="uxTimeOfConcentration_ValueChanged"
                     Margin="200,0,0,0"
                     />
