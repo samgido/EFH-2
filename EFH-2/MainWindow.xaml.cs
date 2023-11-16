@@ -105,7 +105,7 @@ namespace EFH_2
 
         private void OpenClick(object sender, RoutedEventArgs e)
         {
-            
+            BasicVM.SelectedState = "KS";
         }
     }
 

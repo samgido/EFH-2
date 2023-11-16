@@ -76,13 +76,13 @@ namespace EFH_2
                 }
             }
             catch
-            {
+            { 
                 var messageBox = new MessageDialog("something went wrong");
             }
 
             ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rfTypeNames.ToArray());
             ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhFieldNames.ToArray());
-            uxDUH.SelectedValuePath = "Item1";
+            uxDUH.SelectedIndex = 0;
         }
 
         private void PlotHydrographsClick(object sender, RoutedEventArgs e)
