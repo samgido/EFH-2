@@ -161,7 +161,7 @@ namespace EFH_2
                 List<object> l = new();
 
                 l.Add(By);
-                l.Add(Date);
+                l.Add(Date.Date.ToString("MM/dd/yyyy"));
                 l.Add(Client);
                 l.Add(SelectedCounty);
                 l.Add(SelectedState);
@@ -174,6 +174,11 @@ namespace EFH_2
 
                 return l;
             }
+        }
+
+        public BasicDataViewModel()
+        {
+            Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
         }
 
         private void WriteLine(object s, StreamWriter writer)

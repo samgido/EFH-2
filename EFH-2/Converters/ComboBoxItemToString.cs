@@ -22,7 +22,7 @@ namespace EFH_2
         // from UI -> program
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if(value == null) { return ""; }
+            if (value == null) { return ""; }
             ComboBoxItem c = value as ComboBoxItem;
 
             return c.Content.ToString();

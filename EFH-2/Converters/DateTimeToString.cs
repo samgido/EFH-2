@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
-    public class StringToDouble : IValueConverter
+    public class DateTimeToString : IValueConverter
     {
-        // double -> string
+        // string -> datetime
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value.ToString();    
+            return DateTime.Parse((string)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return double.Parse((value as string));
+            DateTime dt = (DateTime)value;
+
+            return dt.Date.ToString("MM/dd/yyyy");
         }
     }
 }

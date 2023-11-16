@@ -67,6 +67,7 @@
             <DatePicker
                 x:Name="uxDatePicker"
                 Header="Date:"
+                Date="{x:Bind Path=BasicVM.Date, Mode=TwoWay}"
                 RelativePanel.AlignVerticalCenterWith="uxByBox"
                 RelativePanel.RightOf="uxByBox"
                 Margin="200,5,0,0"/>

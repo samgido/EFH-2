@@ -5,11 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EFH_2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:f="using:Windows.Globalization.NumberFormatting"
     mc:Ignorable="d"
     NavigationCacheMode="Required">
 
     <UserControl.Resources>
+        <f:DecimalFormatter x:Key="DecimalFormatter"/>
         <local:ComboBoxItemToString x:Key="CBToStringConverter"/>
         <local:StringToDouble x:Key="StringToDoubleConverter"/>
     </UserControl.Resources>
@@ -38,6 +39,15 @@
                 Width="175"
                 />
 
+            <TextBlock
+                x:Name="uxRainfallDistStatus"
+                RelativePanel.AlignVerticalCenterWith="uxRainfallDistType"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                Text=""
+                Padding="100,0,0,0"
+                Foreground="HotPink"
+                />
+
         </RelativePanel>
 
         <RelativePanel>
@@ -58,6 +68,15 @@
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 Margin="0,0,150,0"
                 Width="175"
+                />
+                
+            <TextBlock
+                x:Name="uxDUHStatus"
+                RelativePanel.AlignVerticalCenterWith="uxDUH"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                Text=""
+                Padding="100,0,0,0"
+                Foreground="HotPink"
                 />
 
         </RelativePanel>
@@ -102,6 +121,7 @@
             <NumberBox
                 x:Name="uxFrequencyField1"
                 Value="{x:Bind Path=RainfallVM.Storm1.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.Below="uxFrequencyLabel"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
                 Margin="125,10,0,0"
@@ -117,6 +137,7 @@
             <NumberBox
                 x:Name="uxFrequencyField2"
                 Value="{x:Bind Path=RainfallVM.Storm2.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField1"
                 RelativePanel.Below="uxFrequencyField1"
                 Margin="125,10,0,0"
@@ -132,6 +153,7 @@
             <NumberBox
                 x:Name="uxFrequencyField3"
                 Value="{x:Bind Path=RainfallVM.Storm3.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
                 RelativePanel.Below="uxFrequencyField2"
                 Margin="125,10,0,0"
@@ -147,6 +169,7 @@
             <NumberBox
                 x:Name="uxFrequencyField4"
                 Value="{x:Bind Path=RainfallVM.Storm4.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField3"
                 RelativePanel.Below="uxFrequencyField3"
                 Margin="125,10,0,0"
@@ -162,6 +185,7 @@
             <NumberBox
                 x:Name="uxFrequencyField5"
                 Value="{x:Bind Path=RainfallVM.Storm5.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField4"
                 RelativePanel.Below="uxFrequencyField4"
                 Margin="125,10,0,0"
@@ -177,6 +201,7 @@
             <NumberBox
                 x:Name="uxFrequencyField6"
                 Value="{x:Bind Path=RainfallVM.Storm6.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField5"
                 RelativePanel.Below="uxFrequencyField5"
                 Margin="125,10,0,0"
@@ -192,6 +217,7 @@
             <NumberBox
                 x:Name="uxFrequencyField7"
                 Value="{x:Bind Path=RainfallVM.Storm7.Frequency, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField6"
                 RelativePanel.Below="uxFrequencyField6"
                 Margin="125,10,0,0"
@@ -207,6 +233,7 @@
             <NumberBox
                 x:Name="uxRainField1"
                 Value="{x:Bind Path=RainfallVM.Storm1.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainLabel"
                 RelativePanel.Below="uxRainLabel"
                 Margin="50,10,0,0"
@@ -215,6 +242,7 @@
             <NumberBox
                 x:Name="uxRainField2"
                 Value="{x:Bind Path=RainfallVM.Storm2.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField1"
                 RelativePanel.Below="uxRainField1"
                 Margin="50,10,0,0"
@@ -223,6 +251,7 @@
             <NumberBox
                 x:Name="uxRainField3"
                 Value="{x:Bind Path=RainfallVM.Storm3.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField2"
                 RelativePanel.Below="uxRainField2"
                 Margin="50,10,0,0"
@@ -231,6 +260,7 @@
             <NumberBox
                 x:Name="uxRainField4"
                 Value="{x:Bind Path=RainfallVM.Storm4.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField3"
                 RelativePanel.Below="uxRainField3"
                 Margin="50,10,0,0"
@@ -239,6 +269,7 @@
             <NumberBox
                 x:Name="uxRainField5"
                 Value="{x:Bind Path=RainfallVM.Storm5.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField4"
                 RelativePanel.Below="uxRainField4"
                 Margin="50,10,0,0"
@@ -247,6 +278,7 @@
             <NumberBox
                 x:Name="uxRainField6"
                 Value="{x:Bind Path=RainfallVM.Storm6.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField5"
                 RelativePanel.Below="uxRainField5"
                 Margin="50,10,0,0"
@@ -255,6 +287,7 @@
             <NumberBox
                 x:Name="uxRainField7"
                 Value="{x:Bind Path=RainfallVM.Storm7.DayRain, Mode=TwoWay}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField6"
                 RelativePanel.Below="uxRainField6"
                 Margin="50,10,0,0"

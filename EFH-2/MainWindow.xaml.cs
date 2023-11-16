@@ -115,7 +115,12 @@ namespace EFH_2
         private void OpenClick(object sender, RoutedEventArgs e)
         {
             RainfallVM.Storms[0].DisplayHydrograph = true;
-            RainfallVM.Storms[0].PeakFlow = 5.0;
+            RainfallVM.Storms[0].PeakFlow = 5.05;
+
+            DateTimeOffset dt = DateTimeOffset.Parse("01/02/0003");
+            BasicVM.Date = dt;
+
+            
         }
     }
 

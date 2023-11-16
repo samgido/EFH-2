@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
-    public class Storm : BindableBase
+    public class StormModel : BindableBase
     {
 
         private int _frequency = 0;

@@ -92,8 +92,8 @@ namespace EFH_2
             set { this.SetProperty(ref this._frequency, value); }
         }
 
-        private Storm[] _storms = new Storm[MainWindow._numberOfStorms];
-        public Storm[] Storms
+        private StormModel[] _storms = new StormModel[MainWindow._numberOfStorms];
+        public StormModel[] Storms
         {
             get
             {
@@ -101,31 +101,31 @@ namespace EFH_2
             }
         }
 
-        public Storm Storm1
+        public StormModel Storm1
         {
             get { return this._storms[0]; }
         }
-        public Storm Storm2
+        public StormModel Storm2
         {
             get { return this._storms[1]; }
         }
-        public Storm Storm3
+        public StormModel Storm3
         {
             get { return this._storms[2]; }
         }
-        public Storm Storm4
+        public StormModel Storm4
         {
             get { return this._storms[3]; }
         }
-        public Storm Storm5
+        public StormModel Storm5
         {
             get { return this._storms[4]; }
         }
-        public Storm Storm6
+        public StormModel Storm6
         {
             get { return this._storms[5]; }
         }
-        public Storm Storm7
+        public StormModel Storm7
         {
             get { return this._storms[6]; }
         }
@@ -136,13 +136,35 @@ namespace EFH_2
             {
                 List<object> list = new();
 
+                // Rainfall / duh type
                 string type = _selectedRainfallDistributionType;
-                if (_selectedDUHType != "")
+                if (_selectedDUHType.Trim() != "<standard>")
                 {
                     type += ", " + _selectedDUHType;
                 }
-
                 list.Add(type);
+
+                for (int i = 0; i < MainWindow._numberOfStorms; i++)
+                {
+                    StringBuilder s = new();
+                    StormModel storm = Storms[i];
+
+                    s.Append(storm.Frequency);
+                    s.Append('"');
+                    s.Append(',');
+                    s.Append('"');
+                    s.Append(storm.DayRain);
+                    s.Append('"');
+                    s.Append(',');
+                    s.Append('"');
+                    s.Append(storm.PeakFlow);
+                    s.Append('"');
+                    s.Append(',');
+                    s.Append('"');
+                    s.Append(storm.Runoff);
+
+                    list.Add(s);
+                }
 
                 return list;
             }
