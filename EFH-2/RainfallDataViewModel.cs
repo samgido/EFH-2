@@ -14,8 +14,8 @@ namespace EFH_2
         public string SelectedRainfallDistributionType
         {
             get { return this._selectedRainfallDistributionType; }
-            set 
-            { 
+            set
+            {
                 this.SetProperty(ref this._selectedRainfallDistributionType, value);
 
                 int i = 0;
@@ -52,8 +52,8 @@ namespace EFH_2
         public string SelectedDUHType
         {
             get { return this._selectedDUHType; }
-            set 
-            { 
+            set
+            {
                 this.SetProperty(ref this._selectedDUHType, value);
 
                 int i = 0;
@@ -85,15 +85,39 @@ namespace EFH_2
             set { this.SetProperty(ref this._duhTypes, value); }
         }
 
-        public int[] _freq = new int[MainWindow._numberOfStorms];
+        private int[] _frequency = new int[MainWindow._numberOfStorms];
+        public int[] Frequency
+        {
+            get { return this._frequency; }
+            set { this.SetProperty(ref this._frequency, value); }
+        }
 
-        public float[] _dayRain = new float[MainWindow._numberOfStorms];
-
-        public float[] _peakFlow = new float[MainWindow._numberOfStorms];
-
-        public float[] _runoff = new float[MainWindow._numberOfStorms];
+        public Storm _storm1 = new();
+        public Storm _storm2 = new();
+        public Storm _storm3 = new();
+        public Storm _storm4 = new();
+        public Storm _storm5 = new();
+        public Storm _storm6 = new();
+        public Storm _storm7 = new();
 
         public bool[] _selectedGraphs = new bool[MainWindow._numberOfStorms];
 
+        public List<object> Summary
+        {
+            get
+            {
+                List<object> list = new();
+
+                string type = _selectedRainfallDistributionType;
+                if (_selectedDUHType != "")
+                {
+                    type += ", " + _selectedDUHType;
+                }
+
+                list.Add(type);
+
+                return list;
+            }
+        }
     }
 }

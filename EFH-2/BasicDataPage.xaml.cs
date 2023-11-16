@@ -91,33 +91,6 @@ namespace EFH_2
             ComboBoxOperations.PopulateComboBox(BasicVM.States, _stateAbbreviations.ToArray());
         }
 
-        public void SetStateAndCountySelection(string state, string county)
-        {
-            foreach (ComboBoxItem s in uxStateBox.Items)
-            {
-                if (s.Content.ToString() == state)
-                {
-                    uxStateBox.SelectedItem = s;
-                    BasicVM.SelectedState = state;
-
-                    List<String> counties = _stateCountyDict[state];
-                    ComboBoxOperations.PopulateComboBox(uxCountyBox, counties.ToArray());
-
-                    foreach (ComboBoxItem c in uxCountyBox.Items)
-                    {
-                        if (c.Content.ToString() == county)
-                        {
-                            uxCountyBox.SelectedItem = c;
-                            BasicVM.SelectedCounty = county;
-                        }
-                    }
-                    
-
-                    return;
-                }
-            }
-        }
-
         private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string state = (e.AddedItems[0] as ComboBoxItem).Content as string;

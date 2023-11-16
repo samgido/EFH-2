@@ -98,6 +98,15 @@ namespace EFH_2
                     {
                         w.Write(o, true);
                     }
+
+                    w.Write("", true);
+                    w.Write("", true);
+                    w.Write("", true);
+
+                    foreach (object o in RainfallVM.Summary)
+                    {
+                        w.Write(o, true);
+                    }
                 }
             }
 
@@ -105,8 +114,7 @@ namespace EFH_2
 
         private void OpenClick(object sender, RoutedEventArgs e)
         {
-            BasicVM.SelectedState = "KS";
-            BasicVM.SelectedCountyIndex = 4;
+            RainfallVM._storm1.Frequency = 4;
         }
     }
 

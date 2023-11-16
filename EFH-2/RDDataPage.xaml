@@ -98,8 +98,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField1"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
+                Value="{x:Bind Path=RainfallVM._storm1.Frequency, Mode=TwoWay}"
                 RelativePanel.Below="uxFrequencyLabel"
+                RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
                 Margin="125,10,0,0"
                 Width="90"
                 />
