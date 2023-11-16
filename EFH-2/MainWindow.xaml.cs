@@ -114,7 +114,8 @@ namespace EFH_2
 
         private void OpenClick(object sender, RoutedEventArgs e)
         {
-            RainfallVM._storm1.Frequency = 4;
+            RainfallVM.Storms[0].DisplayHydrograph = true;
+            RainfallVM.Storms[0].PeakFlow = 5.0;
         }
     }
 

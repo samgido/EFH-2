@@ -36,5 +36,12 @@ namespace EFH_2
             get { return this._runoff; }
             set { this.SetProperty(ref this._runoff, value); }
         }
+
+        private bool _displayHydrograph = false;
+        public bool DisplayHydrograph
+        {
+            get { return this._displayHydrograph; }
+            set { this.SetProperty(ref this._displayHydrograph, value); }
+        }
     }
 }

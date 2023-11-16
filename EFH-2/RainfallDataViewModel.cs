@@ -92,15 +92,43 @@ namespace EFH_2
             set { this.SetProperty(ref this._frequency, value); }
         }
 
-        public Storm _storm1 = new();
-        public Storm _storm2 = new();
-        public Storm _storm3 = new();
-        public Storm _storm4 = new();
-        public Storm _storm5 = new();
-        public Storm _storm6 = new();
-        public Storm _storm7 = new();
+        private Storm[] _storms = new Storm[MainWindow._numberOfStorms];
+        public Storm[] Storms
+        {
+            get
+            {
+                return this._storms;
+            }
+        }
 
-        public bool[] _selectedGraphs = new bool[MainWindow._numberOfStorms];
+        public Storm Storm1
+        {
+            get { return this._storms[0]; }
+        }
+        public Storm Storm2
+        {
+            get { return this._storms[1]; }
+        }
+        public Storm Storm3
+        {
+            get { return this._storms[2]; }
+        }
+        public Storm Storm4
+        {
+            get { return this._storms[3]; }
+        }
+        public Storm Storm5
+        {
+            get { return this._storms[4]; }
+        }
+        public Storm Storm6
+        {
+            get { return this._storms[5]; }
+        }
+        public Storm Storm7
+        {
+            get { return this._storms[6]; }
+        }
 
         public List<object> Summary
         {
@@ -117,6 +145,14 @@ namespace EFH_2
                 list.Add(type);
 
                 return list;
+            }
+        }
+
+        public RainfallDataViewModel()
+        {
+            for (int i = 0; i < MainWindow._numberOfStorms; i++)
+            {
+                this.Storms[i] = new();
             }
         }
     }

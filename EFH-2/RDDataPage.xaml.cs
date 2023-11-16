@@ -135,10 +135,6 @@ namespace EFH_2
         private void uxSelectHydroButton2_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ToggleSwitch t = (sender as ToggleSwitch);
-
-            int index = Int32.Parse(t.Tag.ToString());
-
-            ((Application.Current as App)?.Window as MainWindow).RainfallVM._selectedGraphs[index - 1] ^= true;
         }
     }
 }
