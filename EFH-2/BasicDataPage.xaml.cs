@@ -108,7 +108,7 @@ namespace EFH_2
                         if (c.Content.ToString() == county)
                         {
                             uxCountyBox.SelectedItem = c;
-                            BasicVM.SelectedCounty = c;
+                            BasicVM.SelectedCounty = county;
                         }
                     }
                     

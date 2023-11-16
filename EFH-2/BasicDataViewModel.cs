@@ -38,13 +38,12 @@ namespace EFH_2
                     if (c.Content as string == value)
                     {
                         SelectedStateIndex = i;
-                        break;
+                        return;
                     }
-
                     i++;
                 }
 
-                SelectedStateIndex = i;
+                SelectedStateIndex = 0;
             }
         }
 
@@ -62,11 +61,34 @@ namespace EFH_2
             set { this.SetProperty(ref this._states, value); }
         }
 
-        private ComboBoxItem _selectedCounty = new();
-        public ComboBoxItem SelectedCounty
+        private string _selectedCounty = "";
+        public string SelectedCounty
         {
             get { return this._selectedCounty; }
-            set { this.SetProperty(ref this._selectedCounty, value); }
+            set 
+            { 
+                this.SetProperty(ref this._selectedCounty, value);
+
+                int i = 0; 
+                foreach (ComboBoxItem c in _counties)
+                {
+                    if (c.Content as string == value)
+                    {
+                        SelectedCountyIndex = i;
+                        return;
+                    }
+                    i++;
+                }
+
+                SelectedCountyIndex = 0;
+            }
+        }
+
+        private int _selectedCountyIndex = 0;
+        public int SelectedCountyIndex
+        {
+            get { return this._selectedCountyIndex; }
+            set { this.SetProperty(ref this._selectedCountyIndex, value); }
         }
 
         private ObservableCollection<ComboBoxItem> _counties = new();
