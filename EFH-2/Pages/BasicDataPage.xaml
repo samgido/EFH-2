@@ -28,6 +28,7 @@
                 x:Name="uxStateBox"
                 SelectionChanged="StateSelectionChanged"
                 ItemsSource="{x:Bind Path=BasicVM.States, Mode=TwoWay}"
+                SelectedItem="{x:Bind Path=BasicVM.SelectedState, Mode=TwoWay, Converter={StaticResource CBoxToStringConverter}}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedStateIndex, Mode=TwoWay}"
                 Header="State:"
                 RelativePanel.RightOf="uxClientBox"
@@ -36,6 +37,7 @@
             <ComboBox
                 x:Name="uxCountyBox"
                 ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=TwoWay}"
+                SelectedItem="{x:Bind Path=BasicVM.SelectedCounty, Mode=TwoWay, Converter={StaticResource CBoxToStringConverter}}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedCountyIndex, Mode=TwoWay}"
                 Header="County:"
                 RelativePanel.RightOf="uxStateBox"
@@ -124,7 +126,7 @@
                 <NumberBox
                     x:Name="uxRunoffCurveNumber"
                     Value="{x:Bind Path=BasicVM.CurveNumber, Mode=TwoWay}"
-                    ValueChanged="uxRunoffCurveNumber_ValueChanged"
+                    ValueChanged="RunoffCurveNumberChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -150,7 +152,7 @@
                 <NumberBox
                     x:Name="uxWatershedLength"
                     Value="{x:Bind Path=BasicVM.WatershedLength, Mode=TwoWay}"
-                    ValueChanged="uxWatershedLength_ValueChanged"
+                    ValueChanged="WatershedLengthChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -183,7 +185,7 @@
                 <NumberBox
                     x:Name="uxWatershedSlope"
                     Value="{x:Bind Path=BasicVM.WatershedSlope, Mode=TwoWay}"
-                    ValueChanged="uxWatershedSlope_ValueChanged"
+                    ValueChanged="WatershedSlopeChanged"
                     Margin="200,0,0,0"
                     />
 
@@ -216,7 +218,7 @@
                 <NumberBox
                     x:Name="uxTimeOfConcentration"
                     Text="{x:Bind Path=BasicVM.TimeOfConcentration, Mode=TwoWay}"
-                    ValueChanged="uxTimeOfConcentration_ValueChanged"
+                    ValueChanged="TimeOfConcentrationChanged"
                     Margin="200,0,0,0"
                     />
 

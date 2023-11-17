@@ -40,8 +40,14 @@ namespace EFH_2
         /// </summary>
         private List<string> _stateAbbreviations = new();
 
+        /// <summary>
+        /// The BasicDataViewModel of the parent, main window
+        /// </summary>
         public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
 
+        /// <summary>
+        /// The RainfallDataViewModel of the parent, main window
+        /// </summary>
         public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
 
         public BasicDataPage()
@@ -91,6 +97,11 @@ namespace EFH_2
             ComboBoxOperations.PopulateComboBox(BasicVM.States, _stateAbbreviations.ToArray());
         }
 
+        /// <summary>
+        /// Changes the contents of the county ComboBox when the state is changed
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="e">Object that holds information about the event</param>
         private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string state = (e.AddedItems[0] as ComboBoxItem).Content as string;
@@ -112,7 +123,12 @@ namespace EFH_2
             }
         }
 
-        private void uxRunoffCurveNumber_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        /// <summary>
+        /// Updates the status of the runoff curve number field
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="args">Object that holds information about the event</param>
+        private void RunoffCurveNumberChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             int value = (int)sender.Value;
             if (value >= 40 && value <= 98)
@@ -125,7 +141,12 @@ namespace EFH_2
             }
         }
 
-        private void uxWatershedLength_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        /// <summary>
+        /// Updates the status of the watershed length field
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="args">Object that holds information about the event</param>
+        private void WatershedLengthChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             int value = (int)sender.Value;
             if (value >= 200 && value <= 26000)
@@ -138,7 +159,12 @@ namespace EFH_2
             }
         }
 
-        private void uxWatershedSlope_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        /// <summary>
+        /// Updates the status of the watershed slope field
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="args">Object that holds information about the event</param>
+        private void WatershedSlopeChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             float value = (float)sender.Value;
 
@@ -152,7 +178,12 @@ namespace EFH_2
             }
         }
 
-        private void uxTimeOfConcentration_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        /// <summary>
+        /// Updates the status of the time of contentration field
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="args">Object that holds information about the event</param>
+        private void TimeOfConcentrationChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             float value = (float)sender.Value;
             if (value > .1 && value < 10.0)

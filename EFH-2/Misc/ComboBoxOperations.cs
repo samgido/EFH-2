@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
+    /// <summary>
+    /// Holds methods for combo boxes
+    /// </summary>
     class ComboBoxOperations
     {
         /// <summary>
         /// Adds all elements from an array to a combo box
         /// </summary>
         /// <param name="cb">The target combo box</param>
-        /// <param name="elements"></param>
+        /// <param name="elements">The elements to be added to the ComboBox</param>
         public static void PopulateComboBox(ComboBox cb, string[] elements)
         {
             cb.Items.Clear();
@@ -28,6 +31,11 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// Adds all elements from an array to a collection of ComboBoxItems
+        /// </summary>
+        /// <param name="coll">The collection</param>
+        /// <param name="elements">The elements to be added to the collection</param>
         public static void PopulateComboBox(ObservableCollection<ComboBoxItem> coll, string[] elements)
         {
             coll.Clear();

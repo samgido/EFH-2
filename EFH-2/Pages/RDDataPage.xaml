@@ -30,7 +30,6 @@
 
             <ComboBox
                 x:Name="uxRainfallDistType"
-                SelectionChanged="uxRainfallDistType_SelectionChanged"
                 ItemsSource="{x:Bind Path=RainfallVM.RainfallDistributionTypes, Mode=TwoWay}"
                 SelectedItem="{x:Bind Path=RainfallVM.SelectedRainfallDistributionType, Converter={StaticResource CBToStringConverter}}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedRainfallDistributionTypeIndex, Mode=TwoWay}"
@@ -61,7 +60,6 @@
                 
             <ComboBox
                 x:Name="uxDUH"
-                SelectionChanged="uxDUH_SelectionChanged"
                 ItemsSource="{x:Bind Path=RainfallVM.DUHTypes, Mode=TwoWay}"
                 SelectedItem="{x:Bind Path=RainfallVM.SelectedDUHType, Converter={StaticResource CBToStringConverter}}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedDUHTypeIndex, Mode=TwoWay}"

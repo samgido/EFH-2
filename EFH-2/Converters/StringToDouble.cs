@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
+    /// <summary>
+    /// Converts a string to a double and vice versa
+    /// </summary>
     public class StringToDouble : IValueConverter
     {
-        // double -> string
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             return value.ToString();

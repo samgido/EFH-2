@@ -39,8 +39,14 @@ namespace EFH_2
         /// </summary>
         private List<string> _rfTypeNames = new();
 
+        /// <summary>
+        /// The BasicDataViewModel of the parent, main window
+        /// </summary>
         public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
 
+        /// <summary>
+        /// The RainfallDataViewModel of the parent, main window
+        /// </summary>
         public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
 
         public RDDataPage()
@@ -86,56 +92,14 @@ namespace EFH_2
             uxDUH.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Plots the hydrograph(s)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlotHydrographsClick(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        public void SetRainfallDistType(string s)
-        {
-            foreach (ComboBoxItem c in uxRainfallDistType.Items)
-            {
-                if (c.Content.ToString() == s)
-                {
-                    uxRainfallDistType.SelectedItem = c;
-                    RainfallVM.SelectedRainfallDistributionType = s;
-
-                    return;
-                }
-            }
-        }
-
-        private void uxRainfallDistType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var window = (Application.Current as App)?.Window as MainWindow;
-
-            window.RainfallVM.SelectedRainfallDistributionType = (e.AddedItems[0] as ComboBoxItem).Content as string;
-        }
-
-        public void SetDUHType(string s)
-        {
-            foreach (ComboBoxItem c in uxDUH.Items)
-            {
-                if (c.Content.ToString() == s)
-                {
-                    uxDUH.SelectedItem = c;
-                    RainfallVM.SelectedDUHType = s;
-
-                    return;
-                }
-            }
-        }
-
-        private void uxDUH_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var window = (Application.Current as App)?.Window as MainWindow;
-
-            window.RainfallVM.SelectedDUHType = (e.AddedItems[0] as ComboBoxItem).Content as string;
-        }
-
-        private void uxSelectHydroButton2_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ToggleSwitch t = (sender as ToggleSwitch);
         }
     }
 }

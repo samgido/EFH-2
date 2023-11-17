@@ -15,8 +15,14 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
+    /// <summary>
+    /// View model for the basic data page
+    /// </summary>
     public class BasicDataViewModel : BindableBase
     {
+        /// <summary>
+        /// The client's title
+        /// </summary>
         private string _client = "";
         public string Client
         {
@@ -24,6 +30,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._client, value); }
         }
 
+        /// <summary>
+        /// The selected state in the state ComboBox
+        /// </summary>
         private string _selectedState = "";
         public string SelectedState
         {
@@ -47,6 +56,9 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// The selected index in the state ComboBox
+        /// </summary>
         private int _selectedStateIndex = 0;
         public int SelectedStateIndex
         {
@@ -54,6 +66,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._selectedStateIndex, value); }
         }
 
+        /// <summary>
+        /// All abbbreviated states as ComboBoxItems
+        /// </summary>
         private ObservableCollection<ComboBoxItem> _states = new();
         public ObservableCollection<ComboBoxItem> States
         {
@@ -61,6 +76,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._states, value); }
         }
 
+        /// <summary>
+        /// The selected county in the county ComboBox
+        /// </summary>
         private string _selectedCounty = "";
         public string SelectedCounty
         {
@@ -84,6 +102,9 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// The selected index of the county ComboBox
+        /// </summary>
         private int _selectedCountyIndex = 0;
         public int SelectedCountyIndex
         {
@@ -91,6 +112,11 @@ namespace EFH_2
             set { this.SetProperty(ref this._selectedCountyIndex, value); }
         }
 
+        /// <summary>
+        /// All counties as ComboBoxItems
+        /// 
+        /// This collection changes when the state selection changes
+        /// </summary>
         private ObservableCollection<ComboBoxItem> _counties = new();
         public ObservableCollection<ComboBoxItem> Counties
         {
@@ -98,6 +124,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._counties, value); }
         }
 
+        /// <summary>
+        /// The practice field
+        /// </summary>
         private string _practice = "";
         public string Practice
         {
@@ -105,6 +134,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._practice, value); }
         }
 
+        /// <summary>
+        /// The title of who entered the data
+        /// </summary>
         private string _by = "";
         public string By
         {
@@ -112,6 +144,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._by, value); }
         }
 
+        /// <summary>
+        /// The date field
+        /// </summary>
         private DateTimeOffset _date = new();
         public DateTimeOffset Date
         {
@@ -119,6 +154,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._date, value); }
         }
 
+        /// <summary>
+        /// The drainge area field 
+        /// </summary>
         private int _drainageArea = 0;
         public int DrainageArea
         {
@@ -126,6 +164,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._drainageArea, value); }
         }
 
+        /// <summary>
+        /// The curve number field
+        /// </summary>
         private float _curveNumber = 0;
         public float CurveNumber
         {
@@ -133,6 +174,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._curveNumber, value); }
         }
 
+        /// <summary>
+        /// The watershed length field
+        /// </summary>
         private int _watershedLength = 0;
         public int WatershedLength
         {
@@ -140,6 +184,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._watershedLength, value); }
         }
 
+        /// <summary>
+        /// The watershed slope field
+        /// </summary>
         private float _watershedSlope = 0;
         public float WatershedSlope
         {
@@ -147,6 +194,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._watershedSlope, value); }
         }
 
+        /// <summary>
+        /// The time of concentration field
+        /// </summary>
         private float _timeOfConcentration = 0;
         public float TimeOfConcentration
         {
@@ -154,6 +204,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._timeOfConcentration, value); }
         }
 
+        /// <summary>
+        /// Summarizes the data into a list of objects
+        /// </summary>
         public List<object> Summary
         {
             get

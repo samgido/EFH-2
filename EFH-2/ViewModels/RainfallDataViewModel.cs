@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
+    /// <summary>
+    /// View model for the rainfall/discharge page
+    /// </summary>
     public class RainfallDataViewModel : BindableBase
     {
+        /// <summary>
+        /// The selected rainfall distribution type
+        /// </summary>
         private string _selectedRainfallDistributionType = "";
         public string SelectedRainfallDistributionType
         {
@@ -34,6 +40,9 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// The selected index of the rainfall distribution type combo box 
+        /// </summary>
         private int _selectedRainfallDistributionTypeIndex = 0;
         public int SelectedRainfallDistributionTypeIndex
         {
@@ -41,6 +50,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value); }
         }
 
+        /// <summary>
+        /// Collection that holds the rainfall distribution types as ComboBoxItems
+        /// </summary>
         private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
         public ObservableCollection<ComboBoxItem> RainfallDistributionTypes
         {
@@ -48,6 +60,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._rainfallDistributionTypes, value); }
         }
 
+        /// <summary>
+        /// The selected dimensionless unit hydrograph type
+        /// </summary>
         private string _selectedDUHType = "";
         public string SelectedDUHType
         {
@@ -71,6 +86,9 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// The selected index of the duh type combo box
+        /// </summary>
         private int _selectedDUHTypeIndex = 0;
         public int SelectedDUHTypeIndex
         {
@@ -78,6 +96,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._selectedDUHTypeIndex, value); }
         }
 
+        /// <summary>
+        /// Collection that holds the duh types as ComboBoxItems
+        /// </summary>
         private ObservableCollection<ComboBoxItem> _duhTypes = new();
         public ObservableCollection<ComboBoxItem> DUHTypes
         {
@@ -85,14 +106,10 @@ namespace EFH_2
             set { this.SetProperty(ref this._duhTypes, value); }
         }
 
-        private int[] _frequency = new int[MainWindow._numberOfStorms];
-        public int[] Frequency
-        {
-            get { return this._frequency; }
-            set { this.SetProperty(ref this._frequency, value); }
-        }
-
-        private StormModel[] _storms = new StormModel[MainWindow._numberOfStorms];
+        /// <summary>
+        /// Array holding the StormModels for the page
+        /// </summary>
+        private StormModel[] _storms = new StormModel[MainWindow.NumberOfStorms];
         public StormModel[] Storms
         {
             get
@@ -130,6 +147,9 @@ namespace EFH_2
             get { return this._storms[6]; }
         }
 
+        /// <summary>
+        /// Summarizes the data in this page to a list of objects
+        /// </summary>
         public List<object> Summary
         {
             get
@@ -144,7 +164,15 @@ namespace EFH_2
                 }
                 list.Add(type);
 
-                for (int i = 0; i < MainWindow._numberOfStorms; i++)
+                for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                {
+                    list.Add(Storms[i].Frequency);
+                    list.Add(Storms[i].DayRain);
+                }
+
+                list.Add("");
+
+                for (int i = 0; i < MainWindow.NumberOfStorms; i++)
                 {
                     StringBuilder s = new();
                     StormModel storm = Storms[i];
@@ -172,7 +200,7 @@ namespace EFH_2
 
         public RainfallDataViewModel()
         {
-            for (int i = 0; i < MainWindow._numberOfStorms; i++)
+            for (int i = 0; i < MainWindow.NumberOfStorms; i++)
             {
                 this.Storms[i] = new();
             }

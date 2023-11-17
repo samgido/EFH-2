@@ -8,9 +8,19 @@ using System.Threading.Tasks;
 
 namespace EFH_2
 {
+    /// <summary>
+    /// Converts ComboBoxItems to strings and vice versa
+    /// </summary>
     public class ComboBoxItemToString : IValueConverter
     {
-        // from program -> UI
+        /// <summary>
+        /// Converts string to ComboBoxItem
+        /// </summary>
+        /// <param name="value">The string</param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns>A ComboBoxItem with contents matching the string</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             ComboBoxItem c = new();
@@ -19,7 +29,14 @@ namespace EFH_2
             return c;
         }
 
-        // from UI -> program
+        /// <summary>
+        /// Converts a ComboBoxItem to a string
+        /// </summary>
+        /// <param name="value">The ComboBoxItem</param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="language"></param>
+        /// <returns>The content of that ComboBoxItem</returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             if (value == null) { return ""; }

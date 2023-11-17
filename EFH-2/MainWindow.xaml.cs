@@ -34,10 +34,19 @@ namespace EFH_2
     public sealed partial class MainWindow : Window
     {
 
-        public const int _numberOfStorms = 7; 
+        /// <summary>
+        /// How many storms are available in the Rainfall/Discharge Data sheet
+        /// </summary>
+        public const int NumberOfStorms = 7; 
 
+        /// <summary>
+        /// View model for the basic data page
+        /// </summary>
         public BasicDataViewModel BasicVM { get; set; }
 
+        /// <summary>
+        /// View model for the rainfall/discharge page
+        /// </summary>
         public RainfallDataViewModel RainfallVM { get; set; }
 
         public MainWindow()
@@ -57,6 +66,11 @@ namespace EFH_2
             RainfallVM = new();
         }
 
+        /// <summary>
+        /// Changes the contents of contentFrame to whichever page the user selects
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="args">Object that holds information about the event</param>
         private void TabsSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             Type target = typeof(IntroPage);
@@ -74,6 +88,11 @@ namespace EFH_2
             contentFrame.Navigate(target);
         }
 
+        /// <summary>
+        /// Saves the data currently stored in the application to a .efm file 
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="e">Object that holds information about the event</param>
         private async void SaveClick(object sender, RoutedEventArgs e)
         {
 
@@ -96,48 +115,70 @@ namespace EFH_2
                     // basic data
                     foreach (object o in BasicVM.Summary)
                     {
-                        w.Write(o, true);
+                        w.WriteQuoted(o, true);
                     }
 
-                    w.Write("", true);
-                    w.Write("", true);
-                    w.Write("", true);
+                    w.WriteQuoted("", true);
+                    w.WriteQuoted("", true);
+                    w.WriteQuoted("", true);
 
                     foreach (object o in RainfallVM.Summary)
                     {
-                        w.Write(o, true);
+                        w.WriteQuoted(o, true);
                     }
                 }
             }
 
         }
 
+        /// <summary>
+        /// Opens a file dialog so user can import data to the application
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="e">Object that holds information about the event</param>
         private void OpenClick(object sender, RoutedEventArgs e)
         {
-            RainfallVM.Storms[0].DisplayHydrograph = true;
-            RainfallVM.Storms[0].PeakFlow = 5.05;
-
-            DateTimeOffset dt = DateTimeOffset.Parse("01/02/0003");
-            BasicVM.Date = dt;
-
-            
         }
     }
 
+    /// <summary>
+    /// Helper class that writes to the save file
+    /// </summary>
     internal class Writer
     {
-        private StreamWriter _w;
+        /// <summary>
+        /// Writes to a file
+        /// </summary>
+        private StreamWriter _writer;
 
         public Writer(StreamWriter w)
         {
-            this._w = w;
+            this._writer = w;
         }
 
-        public void Write(object s, bool next)
+        /// <summary>
+        /// Writes an object's .ToString(), wrapped with quotes, to the file,
+        /// optionally moves the writer to the next line
+        /// </summary>
+        /// <param name="s">Object who's ToString will be written</param>
+        /// <param name="next">Whether or not the writer moves to the next line</param>
+        public void WriteQuoted(object s, bool next)
         {
             string content = '"' + s.ToString() + '"';
-            this._w.Write(content);
-            if(next) { _w.WriteLine(""); }
+            this._writer.Write(content);
+            if(next) { _writer.WriteLine(""); }
+        }
+
+        /// <summary>
+        /// Writes an object's .ToString() to the file,
+        /// optionally moves the writer to the next line
+        /// </summary>
+        /// <param name="s">Object who's ToString will be written</param>
+        /// <param name="next">Whether or not the writer moves to the next line</param>
+        public void Write(object s, bool next)
+        {
+            this._writer.Write(s.ToString());
+            if(next) { _writer.WriteLine(""); }
         }
     }
 }
