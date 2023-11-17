@@ -95,7 +95,6 @@ namespace EFH_2
         /// <param name="e">Object that holds information about the event</param>
         private async void SaveClick(object sender, RoutedEventArgs e)
         {
-
             FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.FileTypeChoices.Add("efm", new List<string> { ".efm" });
 
@@ -136,8 +135,64 @@ namespace EFH_2
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
         /// <param name="e">Object that holds information about the event</param>
-        private void OpenClick(object sender, RoutedEventArgs e)
+        private async void OpenClick(object sender, RoutedEventArgs e)
         {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.FileTypeFilter.Add(".efm");
+
+            var window = new Microsoft.UI.Xaml.Window();
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
+
+            StorageFile file = await openPicker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                using (StreamReader reader = new(file.Path))
+                {
+                    Reader r = new(reader);
+                    string version = r.ReadQuoted();
+
+                    string by = r.ReadQuoted();
+                    //DateTimeOffset date = DateTimeOffset.Parse(r.ReadQuoted());
+                    string a = r.ReadQuoted();
+                    string client = r.ReadQuoted();
+                    string county = r.ReadQuoted();
+                    string state = r.ReadQuoted();
+                    string practice = r.ReadQuoted();
+                    int drainageArea = r.ParseInt(r.ReadQuoted());
+                    float curveNumber = r.ParseFloat(r.ReadQuoted());
+                    float watershedLength = r.ParseFloat(r.ReadQuoted());
+                    float watershedSlope = r.ParseFloat(r.ReadQuoted());
+                    float timeOfConcentration = r.ParseFloat(r.ReadQuoted());
+
+                    BasicVM.By = by;
+                    BasicVM.Date = DateTimeOffset.Parse("11/16/2023");
+
+                    // not sure what these are 
+                    string _ = r.Read();
+                    _ = r.Read();
+                    _ = r.Read();
+
+                    string type = r.ReadQuoted();
+
+                    string[] types = type.Split(", ");
+                    string rdType = types[0];
+                    string duhType = "";
+                    if(types.Length == 2) { duhType = types[1]; }
+                    else { duhType = "<standard>"; }
+
+                    int[] frequencies = new int[MainWindow.NumberOfStorms];
+                    double[] dayRains = new double[MainWindow.NumberOfStorms];
+
+                    for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                    {
+                        frequencies[i] = r.ParseInt(r.ReadQuoted());
+                        dayRains[i] = r.ParseDouble(r.ReadQuoted());
+                    }
+
+                }
+            }
         }
     }
 
@@ -179,6 +234,66 @@ namespace EFH_2
         {
             this._writer.Write(s.ToString());
             if(next) { _writer.WriteLine(""); }
+        }
+    }
+
+    internal class Reader
+    {
+        private StreamReader _r;
+
+        public Reader(StreamReader r)
+        {
+            _r = r;
+        }
+
+        /// <summary>
+        /// Reads a line from the reader, but removes at the beginning and end of the line
+        /// </summary>
+        /// <returns>The unquoted line</returns>
+        public string ReadQuoted()
+        {
+            string line = this._r.ReadLine();
+
+            line.Remove(0);
+            line.Remove(line.Length - 1);
+
+            return line.Trim();
+        }
+
+        /// <summary>
+        /// Reads a line from the reader
+        /// </summary>
+        /// <returns></returns>
+        public string Read()
+        {
+            return this._r.ReadLine().Trim();
+        }
+
+        public int ParseInt(string s)
+        {
+            if (Int32.TryParse(s, out var temp))
+            {
+                return temp;
+            }
+            else { return 0; }
+        }
+
+        public double ParseDouble(string s)
+        {
+            if (double.TryParse(s, out var temp))
+            {
+                return temp;
+            }
+            else { return 0; }
+        }
+
+        public float ParseFloat(string s)
+        {
+            if (float.TryParse(s, out var temp))
+            {
+                return temp;
+            }
+            else { return 0; }
         }
     }
 }

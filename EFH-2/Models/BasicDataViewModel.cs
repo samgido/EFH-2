@@ -1,4 +1,4 @@
-﻿/* ViewModel.cs
+﻿/* BasicDataViewModel.cs
  * Author: Samuel Gido
  */
 
