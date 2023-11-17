@@ -110,6 +110,7 @@ namespace EFH_2
             set { this.SetProperty(ref this._duhTypes, value); }
         }
 
+        /*
         /// <summary>
         /// Array holding the StormModels for the page
         /// </summary>
@@ -121,7 +122,11 @@ namespace EFH_2
                 return this._storms;
             }
         }
+        */
 
+        public ObservableCollection<StormModel> Storms { get; set; }
+
+        /*
         public StormModel Storm1
         {
             get { return this._storms[0]; }
@@ -150,6 +155,7 @@ namespace EFH_2
         {
             get { return this._storms[6]; }
         }
+        */
 
         /// <summary>
         /// Summarizes the data in this page to a list of objects
@@ -202,11 +208,13 @@ namespace EFH_2
             }
         }
 
+        
+
         public RainfallDataViewModel()
         {
             for (int i = 0; i < MainWindow.NumberOfStorms; i++)
             {
-                this.Storms[i] = new();
+                this.Storms.Add(new());
             }
         }
     }

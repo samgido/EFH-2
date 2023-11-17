@@ -39,6 +39,8 @@ namespace EFH_2
         /// </summary>
         private List<string> _rfTypeNames = new();
 
+        private DecimalFormatter _formatter = new();
+
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
@@ -86,6 +88,16 @@ namespace EFH_2
             { 
                 var messageBox = new MessageDialog("something went wrong");
             }
+
+            _formatter.FractionDigits = 2;
+
+            uxRainField1.NumberFormatter = _formatter;
+            uxRainField2.NumberFormatter = _formatter;
+            uxRainField3.NumberFormatter = _formatter;
+            uxRainField4.NumberFormatter = _formatter;
+            //uxRainField5.NumberFormatter = _formatter;
+            uxRainField6.NumberFormatter = _formatter;
+            uxRainField7.NumberFormatter = _formatter;
 
             ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rfTypeNames.ToArray());
             ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhFieldNames.ToArray());

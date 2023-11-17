@@ -153,42 +153,37 @@ namespace EFH_2
                     Reader r = new(reader);
                     string version = r.ReadQuoted();
 
-                    string by = r.ReadQuoted();
-                    //DateTimeOffset date = DateTimeOffset.Parse(r.ReadQuoted());
-                    string a = r.ReadQuoted();
-                    string client = r.ReadQuoted();
-                    string county = r.ReadQuoted();
-                    string state = r.ReadQuoted();
-                    string practice = r.ReadQuoted();
-                    int drainageArea = r.ParseInt(r.ReadQuoted());
-                    float curveNumber = r.ParseFloat(r.ReadQuoted());
-                    float watershedLength = r.ParseFloat(r.ReadQuoted());
-                    float watershedSlope = r.ParseFloat(r.ReadQuoted());
-                    float timeOfConcentration = r.ParseFloat(r.ReadQuoted());
-
-                    BasicVM.By = by;
-                    BasicVM.Date = DateTimeOffset.Parse("11/16/2023");
+                    BasicVM.By = r.ReadQuoted();
+                    BasicVM.Date = DateTimeOffset.Parse(r.ReadQuoted());
+                    BasicVM.Client = r.ReadQuoted();
+                    BasicVM.SelectedCounty = r.ReadQuoted();
+                    BasicVM.SelectedState = r.ReadQuoted();
+                    BasicVM.Practice = r.ReadQuoted();
+                    BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
+                    BasicVM.CurveNumber = r.ParseFloat(r.ReadQuoted());
+                    BasicVM.WatershedLength = r.ParseInt(r.ReadQuoted());
+                    BasicVM.WatershedSlope = r.ParseFloat(r.ReadQuoted());
+                    BasicVM.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
 
                     // not sure what these are 
-                    string _ = r.Read();
-                    _ = r.Read();
-                    _ = r.Read();
+                    string line13 = r.Read();
+                    string line14 = r.Read();
+                    string line15 = r.Read();
 
                     string type = r.ReadQuoted();
 
                     string[] types = type.Split(", ");
-                    string rdType = types[0];
-                    string duhType = "";
-                    if(types.Length == 2) { duhType = types[1]; }
-                    else { duhType = "<standard>"; }
+                    RainfallVM.SelectedRainfallDistributionType = types[0];
+                    if(types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
+                    else { RainfallVM.SelectedDUHType = "<standard>"; }
 
                     int[] frequencies = new int[MainWindow.NumberOfStorms];
-                    double[] dayRains = new double[MainWindow.NumberOfStorms];
+                    float[] dayRains = new float[MainWindow.NumberOfStorms];
 
                     for (int i = 0; i < MainWindow.NumberOfStorms; i++)
                     {
-                        frequencies[i] = r.ParseInt(r.ReadQuoted());
-                        dayRains[i] = r.ParseDouble(r.ReadQuoted());
+                        RainfallVM.Storms[i].Frequency = r.ParseInt(r.ReadQuoted());
+                        RainfallVM.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
                     }
 
                 }
@@ -256,6 +251,8 @@ namespace EFH_2
 
             line.Remove(0);
             line.Remove(line.Length - 1);
+
+            line = line.Replace("\"", "");
 
             return line.Trim();
         }

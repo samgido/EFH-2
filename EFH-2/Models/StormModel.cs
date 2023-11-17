@@ -24,18 +24,21 @@ namespace EFH_2
         /// <summary>
         /// The storm's "24-HR Rain" field
         /// </summary>
-        private double _dayRain = 0;
-        public double DayRain
+        private float _dayRain = 0;
+        public float DayRain
         {
             get { return this._dayRain; }
-            set { this.SetProperty(ref this._dayRain, value); }
+            set
+            {
+                this.SetProperty(ref this._dayRain, value);
+            } 
         }
 
         /// <summary>
         /// The storm's peak flow field
         /// </summary>
-        private double _peakFlow = 0;
-        public double PeakFlow
+        private float _peakFlow = 0;
+        public float PeakFlow
         {
             get { return this._peakFlow; }
             set { this.SetProperty(ref this._peakFlow, value); }
@@ -44,8 +47,8 @@ namespace EFH_2
         /// <summary>
         /// The storm's runoff field
         /// </summary>
-        private double _runoff = 0;
-        public double Runoff
+        private float _runoff = 0;
+        public float Runoff
         {
             get { return this._runoff; }
             set { this.SetProperty(ref this._runoff, value); }

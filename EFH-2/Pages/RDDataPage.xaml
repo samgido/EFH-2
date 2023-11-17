@@ -10,9 +10,9 @@
     NavigationCacheMode="Required">
 
     <UserControl.Resources>
-        <f:DecimalFormatter x:Key="DecimalFormatter"/>
         <local:ComboBoxItemToString x:Key="CBToStringConverter"/>
         <local:StringToDouble x:Key="StringToDoubleConverter"/>
+        <f:DecimalFormatter x:Key="formatter" SignificantDigits="3"/>
     </UserControl.Resources>
 
     <StackPanel>
@@ -118,8 +118,8 @@
 
             <NumberBox
                 x:Name="uxFrequencyField1"
-                Value="{x:Bind Path=RainfallVM.Storm1.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[0].Frequency, Mode=TwoWay}"
+                
                 RelativePanel.Below="uxFrequencyLabel"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
                 Margin="125,10,0,0"
@@ -134,8 +134,8 @@
 
             <NumberBox
                 x:Name="uxFrequencyField2"
-                Value="{x:Bind Path=RainfallVM.Storm2.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[1].Frequency, Mode=TwoWay}"
+                
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField1"
                 RelativePanel.Below="uxFrequencyField1"
                 Margin="125,10,0,0"
@@ -150,8 +150,8 @@
             
             <NumberBox
                 x:Name="uxFrequencyField3"
-                Value="{x:Bind Path=RainfallVM.Storm3.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[2].Frequency, Mode=TwoWay}"
+                
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
                 RelativePanel.Below="uxFrequencyField2"
                 Margin="125,10,0,0"
@@ -166,8 +166,8 @@
 
             <NumberBox
                 x:Name="uxFrequencyField4"
-                Value="{x:Bind Path=RainfallVM.Storm4.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[3].Frequency, Mode=TwoWay}"
+                
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField3"
                 RelativePanel.Below="uxFrequencyField3"
                 Margin="125,10,0,0"
@@ -182,8 +182,8 @@
 
             <NumberBox
                 x:Name="uxFrequencyField5"
-                Value="{x:Bind Path=RainfallVM.Storm5.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[4].Frequency, Mode=TwoWay}"
+                
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField4"
                 RelativePanel.Below="uxFrequencyField4"
                 Margin="125,10,0,0"
@@ -198,8 +198,8 @@
 
             <NumberBox
                 x:Name="uxFrequencyField6"
-                Value="{x:Bind Path=RainfallVM.Storm6.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[5].Frequency, Mode=TwoWay}"
+                
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField5"
                 RelativePanel.Below="uxFrequencyField5"
                 Margin="125,10,0,0"
@@ -214,8 +214,7 @@
 
             <NumberBox
                 x:Name="uxFrequencyField7"
-                Value="{x:Bind Path=RainfallVM.Storm7.Frequency, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[6].Frequency, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField6"
                 RelativePanel.Below="uxFrequencyField6"
                 Margin="125,10,0,0"
@@ -230,8 +229,7 @@
 
             <NumberBox
                 x:Name="uxRainField1"
-                Value="{x:Bind Path=RainfallVM.Storm1.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[0].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainLabel"
                 RelativePanel.Below="uxRainLabel"
                 Margin="50,10,0,0"
@@ -239,8 +237,7 @@
                 />
             <NumberBox
                 x:Name="uxRainField2"
-                Value="{x:Bind Path=RainfallVM.Storm2.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[1].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField1"
                 RelativePanel.Below="uxRainField1"
                 Margin="50,10,0,0"
@@ -248,8 +245,7 @@
                 />
             <NumberBox
                 x:Name="uxRainField3"
-                Value="{x:Bind Path=RainfallVM.Storm3.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[2].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField2"
                 RelativePanel.Below="uxRainField2"
                 Margin="50,10,0,0"
@@ -257,8 +253,7 @@
                 />
             <NumberBox
                 x:Name="uxRainField4"
-                Value="{x:Bind Path=RainfallVM.Storm4.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[3].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField3"
                 RelativePanel.Below="uxRainField3"
                 Margin="50,10,0,0"
@@ -266,8 +261,7 @@
                 />
             <NumberBox
                 x:Name="uxRainField5"
-                Value="{x:Bind Path=RainfallVM.Storm5.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[4].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField4"
                 RelativePanel.Below="uxRainField4"
                 Margin="50,10,0,0"
@@ -275,8 +269,7 @@
                 />
             <NumberBox
                 x:Name="uxRainField6"
-                Value="{x:Bind Path=RainfallVM.Storm6.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[5].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField5"
                 RelativePanel.Below="uxRainField5"
                 Margin="50,10,0,0"
@@ -284,8 +277,7 @@
                 />
             <NumberBox
                 x:Name="uxRainField7"
-                Value="{x:Bind Path=RainfallVM.Storm7.DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
+                Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField6"
                 RelativePanel.Below="uxRainField6"
                 Margin="50,10,0,0"
@@ -294,7 +286,7 @@
 
             <TextBox
                 x:Name="uxPeakFlowField1"
-                Text="{x:Bind Path=RainfallVM.Storm1.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[0].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowLabel"
                 RelativePanel.Below="uxPeakFlowLabel"
                 IsReadOnly="True"
@@ -303,7 +295,7 @@
                 />
             <TextBox
                 x:Name="uxPeakFlowField2"
-                Text="{x:Bind Path=RainfallVM.Storm2.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[1].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField1"
                 RelativePanel.Below="uxPeakFlowField1"
                 IsReadOnly="True"
@@ -312,7 +304,7 @@
                 />
             <TextBox
                 x:Name="uxPeakFlowField3"
-                Text="{x:Bind Path=RainfallVM.Storm3.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[2].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField2"
                 RelativePanel.Below="uxPeakFlowField2"
                 IsReadOnly="True"
@@ -321,7 +313,7 @@
                 />
             <TextBox
                 x:Name="uxPeakFlowField4"
-                Text="{x:Bind Path=RainfallVM.Storm4.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[3].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField3"
                 RelativePanel.Below="uxPeakFlowField3"
                 IsReadOnly="True"
@@ -330,7 +322,7 @@
                 />
             <TextBox
                 x:Name="uxPeakFlowField5"
-                Text="{x:Bind Path=RainfallVM.Storm5.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[4].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField4"
                 RelativePanel.Below="uxPeakFlowField4"
                 IsReadOnly="True"
@@ -339,7 +331,7 @@
                 />
             <TextBox
                 x:Name="uxPeakFlowField6"
-                Text="{x:Bind Path=RainfallVM.Storm6.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[5].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField5"
                 RelativePanel.Below="uxPeakFlowField5"
                 IsReadOnly="True"
@@ -348,7 +340,7 @@
                 />
             <TextBox
                 x:Name="uxPeakFlowField7"
-                Text="{x:Bind Path=RainfallVM.Storm7.PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[6].PeakFlow, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField6"
                 RelativePanel.Below="uxPeakFlowField6"
                 IsReadOnly="True"
@@ -358,7 +350,7 @@
 
             <TextBox
                 x:Name="uxRunoffField1"
-                Text="{x:Bind Path=RainfallVM.Storm1.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[0].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffLabel"
                 RelativePanel.Below="uxRunoffLabel"
                 IsReadOnly="True"
@@ -367,7 +359,7 @@
                 />
             <TextBox
                 x:Name="uxRunoffField2"
-                Text="{x:Bind Path=RainfallVM.Storm2.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[1].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField1"
                 RelativePanel.Below="uxRunoffField1"
                 IsReadOnly="True"
@@ -376,7 +368,7 @@
                 />
             <TextBox
                 x:Name="uxRunoffField3"
-                Text="{x:Bind Path=RainfallVM.Storm3.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[2].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField2"
                 RelativePanel.Below="uxRunoffField2"
                 IsReadOnly="True"
@@ -385,7 +377,7 @@
                 />
             <TextBox
                 x:Name="uxRunoffField4"
-                Text="{x:Bind Path=RainfallVM.Storm4.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[3].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField3"
                 RelativePanel.Below="uxRunoffField3"
                 IsReadOnly="True"
@@ -394,7 +386,7 @@
                 />
             <TextBox
                 x:Name="uxRunoffField5"
-                Text="{x:Bind Path=RainfallVM.Storm5.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[4].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField4"
                 RelativePanel.Below="uxRunoffField4"
                 IsReadOnly="True"
@@ -403,7 +395,7 @@
                 />
             <TextBox
                 x:Name="uxRunoffField6"
-                Text="{x:Bind Path=RainfallVM.Storm6.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[5].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField5"
                 RelativePanel.Below="uxRunoffField5"
                 IsReadOnly="True"
@@ -412,7 +404,7 @@
                 />
             <TextBox
                 x:Name="uxRunoffField7"
-                Text="{x:Bind Path=RainfallVM.Storm7.Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                Text="{x:Bind Path=RainfallVM.Storms[6].Runoff, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                 RelativePanel.AlignHorizontalCenterWith="uxRunoffField6"
                 RelativePanel.Below="uxRunoffField6"
                 IsReadOnly="True"
@@ -422,14 +414,14 @@
 
             <ToggleSwitch
                 x:Name="uxSelectHydroButton1"
-                IsOn="{x:Bind Path=RainfallVM.Storm1.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[0].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroLabel"
                 RelativePanel.Below="uxSelectHydroLabel"
                 Margin="175,5,0,0"
                 />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton2"
-                IsOn="{x:Bind Path=RainfallVM.Storm2.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[1].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton1"
                 RelativePanel.Below="uxSelectHydroButton1"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField2"
@@ -437,7 +429,7 @@
                 />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton3"
-                IsOn="{x:Bind Path=RainfallVM.Storm3.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[2].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton2"
                 RelativePanel.Below="uxSelectHydroButton2"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField3"
@@ -445,7 +437,7 @@
                 />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton4"
-                IsOn="{x:Bind Path=RainfallVM.Storm4.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[3].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton3"
                 RelativePanel.Below="uxSelectHydroButton3"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField4"
@@ -453,7 +445,7 @@
                 />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton5"
-                IsOn="{x:Bind Path=RainfallVM.Storm5.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[4].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton4"
                 RelativePanel.Below="uxSelectHydroButton4"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField5"
@@ -461,7 +453,7 @@
                 />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton6"
-                IsOn="{x:Bind Path=RainfallVM.Storm6.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[5].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton5"
                 RelativePanel.Below="uxSelectHydroButton5"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField6"
@@ -469,7 +461,7 @@
                 />
             <ToggleSwitch
                 x:Name="uxSelectHydroButton7"
-                IsOn="{x:Bind Path=RainfallVM.Storm7.DisplayHydrograph, Mode=TwoWay}"
+                IsOn="{x:Bind Path=RainfallVM.Storms[6].DisplayHydrograph, Mode=TwoWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydroButton6"
                 RelativePanel.Below="uxSelectHydroButton6"
                 RelativePanel.AlignVerticalCenterWith="uxRunoffField7"
