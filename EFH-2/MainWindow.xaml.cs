@@ -194,7 +194,7 @@ namespace EFH_2
                     RainfallVM.SelectedRainfallDistributionType = types[0];
                     if(types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
                     else { RainfallVM.SelectedDUHType = "<standard>"; }
-                    RainfallVM.RainfallTypeStatus = _importedStatusMessage;
+                    RainfallVM.RainfallDistributionTypeStatus = _importedStatusMessage;
                     RainfallVM.DUHTypeStatus = _importedStatusMessage;
 
                     // lines 17 - 30
@@ -207,6 +207,35 @@ namespace EFH_2
                         RainfallVM.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
                     }
 
+                    string line31 = r.Read();
+                    string line32 = r.Read();
+                    string line33 = r.Read();
+                    string line34 = r.Read();
+                    string line35 = r.Read();
+                    string line36 = r.Read();
+                    string line37 = r.Read();
+                    string line38 = r.Read();
+
+                    // Line with selected hydrograph
+                    string line39 = r.Read();
+
+                    string[] line39Split = line39.Split(',');
+                    string asterisks = line39Split[2].Trim('"');
+
+                    for (int i = 5; i < MainWindow.NumberOfStorms + 5; i++)
+                    {
+                        RainfallVM.Storms[i-5].DisplayHydrograph = asterisks[i] == '*';
+                    }
+
+                    // lines 40 - end
+                    for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                    {
+                        string line = r.ReadQuoted();
+                        string[] splitLine = line.Split(',');
+
+                        RainfallVM.Storms[i].PeakFlow = r.ParseDouble(splitLine[2].Trim('"'));
+                        RainfallVM.Storms[i].Runoff = r.ParseDouble(splitLine[3].Trim('"'));
+                    }
                 }
             }
         }

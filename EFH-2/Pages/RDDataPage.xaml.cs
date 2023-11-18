@@ -71,6 +71,8 @@ namespace EFH_2
                 {
                     string line = input.ReadLine();
 
+                    _rainfallDistributionTypeNames.Add("");
+
                     while (line != "")
                     {
                         char[] sep = { ','};
@@ -100,6 +102,26 @@ namespace EFH_2
         private void PlotHydrographsClick(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void RainfallDistributionTypeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = RainfallVM.SelectedRainfallDistributionTypeIndex;
+
+            if(selectedIndex != 0)
+            {
+                RainfallVM.RainfallDistributionTypeStatus = "User selected.";
+            }
+        }
+
+        private void DUHTypeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = RainfallVM.SelectedDUHTypeIndex;
+
+            if (selectedIndex != 0)
+            {
+                RainfallVM.DUHTypeStatus = "User selected.";
+            }
         }
     }
 }

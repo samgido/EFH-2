@@ -109,7 +109,7 @@ namespace EFH_2
             ComboBoxOperations.PopulateComboBox(BasicVM.Counties, _stateCountyDict[state].ToArray());
         }
 
-        private void uxDrainageArea_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             int value = (int)sender.Value;
 

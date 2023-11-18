@@ -163,11 +163,11 @@ namespace EFH_2
             }
         }
 
-        private string _rdTypeStatus = "";
-        public string RainfallTypeStatus
+        private string _rainfallDistributionTypeStatus = "";
+        public string RainfallDistributionTypeStatus
         {
-            get { return this._rdTypeStatus; }
-            set { this.SetProperty(ref this._rdTypeStatus, value); }
+            get { return this._rainfallDistributionTypeStatus; }
+            set { this.SetProperty(ref this._rainfallDistributionTypeStatus, value); }
         }
 
         private string _duhTypeStatus = "";

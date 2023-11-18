@@ -91,7 +91,8 @@
                 <NumberBox
                     x:Name="uxDrainageArea"
                     Value="{x:Bind Path=BasicVM.DrainageArea, Mode=TwoWay}"
-                    ValueChanged="uxDrainageArea_ValueChanged"
+                    ValueChanged="DrainageAreaChanged"
+                    PlaceholderText="" 
                     Margin= "200,0,0,0"
                     />
 
