@@ -212,6 +212,8 @@ namespace EFH_2
 
         public RainfallDataViewModel()
         {
+            Storms = new ObservableCollection<StormModel>();
+
             for (int i = 0; i < MainWindow.NumberOfStorms; i++)
             {
                 this.Storms.Add(new());

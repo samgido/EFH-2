@@ -95,7 +95,7 @@ namespace EFH_2
             uxRainField2.NumberFormatter = _formatter;
             uxRainField3.NumberFormatter = _formatter;
             uxRainField4.NumberFormatter = _formatter;
-            //uxRainField5.NumberFormatter = _formatter;
+            uxRainField5.NumberFormatter = _formatter;
             uxRainField6.NumberFormatter = _formatter;
             uxRainField7.NumberFormatter = _formatter;
 

@@ -262,6 +262,7 @@
             <NumberBox
                 x:Name="uxRainField5"
                 Value="{x:Bind Path=RainfallVM.Storms[4].DayRain, Mode=TwoWay}"
+                NumberFormatter="{x:Bind Path=_formatter, Mode=OneWay}"
                 RelativePanel.AlignHorizontalCenterWith="uxRainField4"
                 RelativePanel.Below="uxRainField4"
                 Margin="50,10,0,0"

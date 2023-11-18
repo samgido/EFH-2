@@ -115,11 +115,11 @@ namespace EFH_2
 
             if (value >= 1 && value <= 2000)
             {
-                uxDrainageAreaStatus.Text = "User entered.";
+                sender.Text = "User entered.";
             }
             else
             {
-                uxDrainageAreaStatus.Text = "Drainage area must be in the range 1 to 2000 acres!";
+                sender.Text = "Drainage area must be in the range 1 to 2000 acres!";
             }
         }
 

@@ -22,6 +22,7 @@ using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Popups;
 using WinRT;
+using Microsoft.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -52,6 +53,7 @@ namespace EFH_2
         public MainWindow()
         {
             this.InitializeComponent();
+            this.Activated += MainWindow_Activated;
 
             this.Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
             this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
@@ -64,6 +66,14 @@ namespace EFH_2
 
             BasicVM = new();
             RainfallVM = new();
+        }
+
+        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+            appWindow.SetIcon(@"Assets\EFH2.ico");
         }
 
         /// <summary>
@@ -170,6 +180,7 @@ namespace EFH_2
                     string line14 = r.Read();
                     string line15 = r.Read();
 
+                    // line 16
                     string type = r.ReadQuoted();
 
                     string[] types = type.Split(", ");
@@ -177,6 +188,7 @@ namespace EFH_2
                     if(types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
                     else { RainfallVM.SelectedDUHType = "<standard>"; }
 
+                    // lines 17 - 30
                     int[] frequencies = new int[MainWindow.NumberOfStorms];
                     float[] dayRains = new float[MainWindow.NumberOfStorms];
 

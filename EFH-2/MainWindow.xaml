@@ -77,6 +77,7 @@
         <CommandBar
             FlowDirection="LeftToRight"
             DefaultLabelPosition="Bottom"
+            Height="35"
             >
 
             <AppBarButton
