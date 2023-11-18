@@ -38,7 +38,9 @@ namespace EFH_2
         /// <summary>
         /// How many storms are available in the Rainfall/Discharge Data sheet
         /// </summary>
-        public const int NumberOfStorms = 7; 
+        public const int NumberOfStorms = 7;
+
+        private const string _importedStatusMessage = "Imported from file.";
 
         /// <summary>
         /// View model for the basic data page
@@ -170,10 +172,15 @@ namespace EFH_2
                     BasicVM.SelectedState = r.ReadQuoted();
                     BasicVM.Practice = r.ReadQuoted();
                     BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
+                    BasicVM.DrainageStatus = _importedStatusMessage;
                     BasicVM.CurveNumber = r.ParseFloat(r.ReadQuoted());
+                    BasicVM.CurveNumberStatus = _importedStatusMessage;
                     BasicVM.WatershedLength = r.ParseInt(r.ReadQuoted());
+                    BasicVM.WatershedLengthStatus = _importedStatusMessage;
                     BasicVM.WatershedSlope = r.ParseFloat(r.ReadQuoted());
+                    BasicVM.WatershedSlopeStatus = _importedStatusMessage;
                     BasicVM.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
+                    BasicVM.TimeOfConcentrationStatus = _importedStatusMessage;
 
                     // not sure what these are 
                     string line13 = r.Read();
@@ -187,6 +194,8 @@ namespace EFH_2
                     RainfallVM.SelectedRainfallDistributionType = types[0];
                     if(types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
                     else { RainfallVM.SelectedDUHType = "<standard>"; }
+                    RainfallVM.RainfallTypeStatus = _importedStatusMessage;
+                    RainfallVM.DUHTypeStatus = _importedStatusMessage;
 
                     // lines 17 - 30
                     int[] frequencies = new int[MainWindow.NumberOfStorms];
@@ -211,7 +220,7 @@ namespace EFH_2
         /// <summary>
         /// Writes to a file
         /// </summary>
-        private StreamWriter _writer;
+        private readonly StreamWriter _writer;
 
         public Writer(StreamWriter w)
         {

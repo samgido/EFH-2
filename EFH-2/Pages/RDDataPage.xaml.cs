@@ -32,14 +32,12 @@ namespace EFH_2
         /// <summary>
         /// All names of the dimensionless unit hydrographs
         /// </summary>
-        private List<string> _duhFieldNames = new();
+        private List<string> _duhTypeNames = new();
 
         /// <summary>
         /// All names of the Rainfall Distribution-Types
         /// </summary>
-        private List<string> _rfTypeNames = new();
-
-        private DecimalFormatter _formatter = new();
+        private List<string> _rainfallDistributionTypeNames = new();
 
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
@@ -63,7 +61,7 @@ namespace EFH_2
 
                     while (line != "")
                     {
-                        _duhFieldNames.Add(line);
+                        _duhTypeNames.Add(line);
 
                         line = input.ReadLine();
                     }
@@ -78,7 +76,7 @@ namespace EFH_2
                         char[] sep = { ','};
                         string[] splitLine = line.Split(sep);
 
-                        _rfTypeNames.Add(splitLine[0].Trim('"'));
+                        _rainfallDistributionTypeNames.Add(splitLine[0].Trim('"'));
 
                         line = input.ReadLine();
                     }
@@ -89,19 +87,9 @@ namespace EFH_2
                 var messageBox = new MessageDialog("something went wrong");
             }
 
-            _formatter.FractionDigits = 2;
-
-            uxRainField1.NumberFormatter = _formatter;
-            uxRainField2.NumberFormatter = _formatter;
-            uxRainField3.NumberFormatter = _formatter;
-            uxRainField4.NumberFormatter = _formatter;
-            uxRainField5.NumberFormatter = _formatter;
-            uxRainField6.NumberFormatter = _formatter;
-            uxRainField7.NumberFormatter = _formatter;
-
-            ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rfTypeNames.ToArray());
-            ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhFieldNames.ToArray());
-            uxDUH.SelectedIndex = 0;
+            ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rainfallDistributionTypeNames.ToArray());
+            ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhTypeNames.ToArray());
+            uxDUHType.SelectedIndex = 0;
         }
 
         /// <summary>

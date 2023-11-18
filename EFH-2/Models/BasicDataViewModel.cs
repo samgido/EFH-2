@@ -229,30 +229,44 @@ namespace EFH_2
             }
         }
 
+        private string _drainageStatus = "";
+        public string DrainageStatus
+        {
+            get { return this._drainageStatus; }
+            set { this.SetProperty(ref this._drainageStatus, value); }
+        }
+
+        private string _curveNumberStatus = "";
+        public string CurveNumberStatus
+        {
+            get { return this._curveNumberStatus; }
+            set { this.SetProperty(ref this._curveNumberStatus, value); }
+        }
+
+        private string _watershedLengthStatus = "";
+        public string WatershedLengthStatus
+        {
+            get { return this._watershedLengthStatus; }
+            set { this.SetProperty(ref this._watershedLengthStatus, value); }
+        }
+
+        private string _watershedSlopeStatus = "";
+        public string WatershedSlopeStatus
+        {
+            get { return this._watershedSlopeStatus; }
+            set { this.SetProperty(ref this._watershedSlopeStatus, value); }
+        }
+
+        private string _timeOfConcentrationStatus = "";
+        public string TimeOfConcentrationStatus
+        {
+            get { return this._timeOfConcentrationStatus; }
+            set { this.SetProperty(ref this._timeOfConcentrationStatus, value); }
+        }
+
         public BasicDataViewModel()
         {
             Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
-        }
-
-        private void WriteLine(object s, StreamWriter writer)
-        {
-            if (s == null) { s = ""; }
-            writer.WriteLine('"' + s.ToString() + '"');
-        }
-
-        private void Write(object s, StreamWriter writer)
-        {
-            if (s == null) { s = ""; }
-            writer.Write('"' + s.ToString() + '"');
-        }
-
-        public void OpenFile(string fn)
-        {
-            using (StreamReader reader = new StreamReader(fn))
-            {
-                string _ = reader.ReadLine();
-                By = reader.ReadLine();
-            }
         }
     }
 }

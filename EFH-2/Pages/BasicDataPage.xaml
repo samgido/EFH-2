@@ -107,7 +107,7 @@
                     x:Name="uxDrainageAreaStatus"
                     RelativePanel.RightOf="uxDrainageArea"
                     RelativePanel.AlignVerticalCenterWith="uxDrainageArea"
-                    Text=""
+                    Text="{x:Bind Path=BasicVM.DrainageStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -117,7 +117,7 @@
                 Padding="0, 5">
 
                 <TextBlock
-                    x:Name="uxRunoffCurveLabel"
+                    x:Name="uxRunoffCurveNumberLabel"
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Text="Runoff Curve Number:"
                     Margin="20,0,0,0"
@@ -131,10 +131,10 @@
                     />
 
                 <TextBlock
-                    x:Name="uxRunoffCurveStatus"
+                    x:Name="uxRunoffCurveNumberStatus"
                     RelativePanel.RightOf="uxRunoffCurveNumber"
                     RelativePanel.AlignVerticalCenterWith="uxRunoffCurveNumber"
-                    Text=""
+                    Text="{x:Bind Path=BasicVM.CurveNumberStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -167,7 +167,7 @@
                     x:Name="uxWatershedLengthStatus"
                     RelativePanel.RightOf="uxWatershedLength"
                     RelativePanel.AlignVerticalCenterWith="uxWatershedLength"
-                    Text=""
+                    Text="{x:Bind Path=BasicVM.WatershedLengthStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -200,7 +200,7 @@
                     x:Name="uxWatershedSlopeStatus"
                     RelativePanel.RightOf="uxWatershedSlope"
                     RelativePanel.AlignVerticalCenterWith="uxWatershedSlope"
-                    Text=""
+                    Text="{x:Bind Path=BasicVM.WatershedSlopeStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -234,7 +234,7 @@
                     RelativePanel.RightOf="uxTimeOfConcentration"
                     RelativePanel.AlignVerticalCenterWith="uxTimeOfConcentration"
                     TextWrapping="Wrap"
-                    Text=""
+                    Text="{x:Bind Path=BasicVM.TimeOfConcentrationStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />

@@ -110,52 +110,7 @@ namespace EFH_2
             set { this.SetProperty(ref this._duhTypes, value); }
         }
 
-        /*
-        /// <summary>
-        /// Array holding the StormModels for the page
-        /// </summary>
-        private StormModel[] _storms = new StormModel[MainWindow.NumberOfStorms];
-        public StormModel[] Storms
-        {
-            get
-            {
-                return this._storms;
-            }
-        }
-        */
-
         public ObservableCollection<StormModel> Storms { get; set; }
-
-        /*
-        public StormModel Storm1
-        {
-            get { return this._storms[0]; }
-        }
-        public StormModel Storm2
-        {
-            get { return this._storms[1]; }
-        }
-        public StormModel Storm3
-        {
-            get { return this._storms[2]; }
-        }
-        public StormModel Storm4
-        {
-            get { return this._storms[3]; }
-        }
-        public StormModel Storm5
-        {
-            get { return this._storms[4]; }
-        }
-        public StormModel Storm6
-        {
-            get { return this._storms[5]; }
-        }
-        public StormModel Storm7
-        {
-            get { return this._storms[6]; }
-        }
-        */
 
         /// <summary>
         /// Summarizes the data in this page to a list of objects
@@ -208,7 +163,19 @@ namespace EFH_2
             }
         }
 
-        
+        private string _rdTypeStatus = "";
+        public string RainfallTypeStatus
+        {
+            get { return this._rdTypeStatus; }
+            set { this.SetProperty(ref this._rdTypeStatus, value); }
+        }
+
+        private string _duhTypeStatus = "";
+        public string DUHTypeStatus
+        {
+            get { return this._duhTypeStatus; }
+            set { this.SetProperty(ref this._duhTypeStatus, value); }
+        }
 
         public RainfallDataViewModel()
         {

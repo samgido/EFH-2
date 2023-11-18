@@ -115,11 +115,11 @@ namespace EFH_2
 
             if (value >= 1 && value <= 2000)
             {
-                sender.Text = "User entered.";
+                BasicVM.DrainageStatus = "User entered.";
             }
             else
             {
-                sender.Text = "Drainage area must be in the range 1 to 2000 acres!";
+                BasicVM.DrainageStatus = "Drainage area must be in the range 1 to 2000 acres!";
             }
         }
 
@@ -133,11 +133,11 @@ namespace EFH_2
             int value = (int)sender.Value;
             if (value >= 40 && value <= 98)
             {
-                uxRunoffCurveStatus.Text = "User entered.";
+                BasicVM.CurveNumberStatus = "User entered.";
             }
             else
             {
-                uxRunoffCurveStatus.Text = "Curve number must be in the range 40 to 98!";
+                BasicVM.CurveNumberStatus = "Curve number must be in the range 40 to 98!";
             }
         }
 
@@ -151,11 +151,11 @@ namespace EFH_2
             int value = (int)sender.Value;
             if (value >= 200 && value <= 26000)
             {
-                uxWatershedLengthStatus.Text = "User entered.";
+                BasicVM.WatershedLengthStatus = "User entered.";
             }
             else
             {
-                uxWatershedLengthStatus.Text = "Watershed length must be in the range 200 to 26000 feet!";
+                BasicVM.WatershedLengthStatus = "Watershed length must be in the range 200 to 26000 feet!";
             }
         }
 
@@ -170,11 +170,11 @@ namespace EFH_2
 
             if (value >= .5 && value <= 64.0)
             {
-                uxWatershedSlopeStatus.Text = "User entered";
+                BasicVM.WatershedSlopeStatus = "User entered";
             }
             else
             {
-                uxWatershedSlopeStatus.Text = "Watershed slope must be the range 0.5 and 64 percent!";
+                BasicVM.WatershedSlopeStatus = "Watershed slope must be the range 0.5 and 64 percent!";
             }
         }
 
@@ -188,11 +188,11 @@ namespace EFH_2
             float value = (float)sender.Value;
             if (value > .1 && value < 10.0)
             {
-                uxTimeOfConcentrationStatus.Text = "User entered";
+                BasicVM.TimeOfConcentrationStatus = "User entered";
             }
             else
             {
-                uxTimeOfConcentrationStatus.Text = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
+                BasicVM.TimeOfConcentrationStatus = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
             }
         }
 
