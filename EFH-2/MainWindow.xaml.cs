@@ -23,6 +23,7 @@ using Windows.System;
 using Windows.UI.Popups;
 using WinRT;
 using Microsoft.UI;
+using System.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -39,6 +40,10 @@ namespace EFH_2
         /// How many storms are available in the Rainfall/Discharge Data sheet
         /// </summary>
         public const int NumberOfStorms = 7;
+
+        public const string ChooseMessage = "Choose...";
+
+        public const string ClearedMessage = "Cleared.";
 
         private const string _importedStatusMessage = "Imported from file.";
 
@@ -122,21 +127,59 @@ namespace EFH_2
                 {
                     Writer w = new(writer);
                     // version
+                    w.WriteQuoted("version", true);
 
                     // basic data
+                    // lines 2 - 12
                     foreach (object o in BasicVM.Summary)
                     {
                         w.WriteQuoted(o, true);
                     }
 
+                    // lines 13 - 15
                     w.WriteQuoted("", true);
                     w.WriteQuoted("", true);
                     w.WriteQuoted("", true);
 
-                    foreach (object o in RainfallVM.Summary)
+                    // lines 16 - 30
+                    foreach (object o in RainfallVM.Summary1)
                     {
                         w.WriteQuoted(o, true);
                     }
+
+                    // line 31 
+                    w.WriteQuoted("", true);
+                    
+                    // lines 32 - 38
+                    for (int i = 0; i < 7; i++)
+                    {
+                        w.WriteQuoted("", true);
+                    }
+
+                    // line 39
+                    StringBuilder selectedHydrographs = new("\"     ");
+
+                    for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                    {
+                        char enabled = ' ';
+                        if (RainfallVM.Storms[i].DisplayHydrograph) { enabled = '*'; }
+
+                        selectedHydrographs.Append(enabled);
+                    }
+                    selectedHydrographs.Append(" \"");
+
+                    StringBuilder line38 = new();
+                    line38.Append("0,0,");
+                    line38.Append(selectedHydrographs);
+
+                    w.Write(line38, true);
+
+                    // lines 40 - 46 
+                    foreach (object o in RainfallVM.Summary2)
+                    {
+                        w.WriteQuoted(o, true);
+                    }
+
                 }
             }
 
@@ -172,9 +215,9 @@ namespace EFH_2
                     BasicVM.SelectedState = r.ReadQuoted();
                     BasicVM.Practice = r.ReadQuoted();
                     BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
-                    BasicVM.DrainageStatus = _importedStatusMessage;
-                    BasicVM.CurveNumber = r.ParseFloat(r.ReadQuoted());
-                    BasicVM.CurveNumberStatus = _importedStatusMessage;
+                    BasicVM.DrainageAreaStatus = _importedStatusMessage;
+                    BasicVM.RunoffCurveNumber = r.ParseFloat(r.ReadQuoted());
+                    BasicVM.RunoffCurveNumberStatus = _importedStatusMessage;
                     BasicVM.WatershedLength = r.ParseInt(r.ReadQuoted());
                     BasicVM.WatershedLengthStatus = _importedStatusMessage;
                     BasicVM.WatershedSlope = r.ParseFloat(r.ReadQuoted());
@@ -238,6 +281,12 @@ namespace EFH_2
                     }
                 }
             }
+        }
+
+        private void NewClick(object sender, RoutedEventArgs e)
+        {
+            BasicVM.Default();
+            RainfallVM.Default();
         }
     }
 

@@ -82,7 +82,8 @@
 
             <AppBarButton
                 Icon="Page"
-                Label="New"/>
+                Label="New"
+                Click="NewClick"/>
 
             <AppBarButton
                 Icon="OpenFile"

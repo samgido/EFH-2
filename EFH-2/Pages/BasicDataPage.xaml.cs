@@ -36,11 +36,6 @@ namespace EFH_2
         private Dictionary<string, List<string>> _stateCountyDict = new();
 
         /// <summary>
-        /// Available state abbreviations
-        /// </summary>
-        private List<string> _stateAbbreviations = new();
-
-        /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
         public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
@@ -54,6 +49,10 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
+            List<string> stateAbbreviations = new();
+
+            _stateCountyDict.Add(MainWindow.ChooseMessage, new());
+
             using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\States.csv"))
             {
                 while (!reader.EndOfStream)
@@ -63,16 +62,16 @@ namespace EFH_2
                     char[] seperator = { ',' };
                     string[] elements = line.Split(seperator);
 
-                    _stateAbbreviations.Add(elements[1]);
+                    stateAbbreviations.Add(elements[1]);
                 }
             }
 
-            for (int i = 1; i < _stateAbbreviations.Count; i++)
+            for (int i = 1; i < stateAbbreviations.Count; i++)
             {
-                string state = _stateAbbreviations[i];
+                string state = stateAbbreviations[i];
 
                 if(state == "VIL") { state = "VI"; } 
-                _stateCountyDict.Add(_stateAbbreviations[i], new());
+                _stateCountyDict.Add(stateAbbreviations[i], new());
             }
 
             using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
@@ -93,8 +92,8 @@ namespace EFH_2
                 }
             }
 
-            _stateAbbreviations.RemoveAt(0);
-            ComboBoxOperations.PopulateComboBox(BasicVM.States, _stateAbbreviations.ToArray());
+            stateAbbreviations.RemoveAt(0);
+            ComboBoxOperations.PopulateComboBox(BasicVM.States, stateAbbreviations.ToArray());
         }
 
         /// <summary>
@@ -115,11 +114,11 @@ namespace EFH_2
 
             if (value >= 1 && value <= 2000)
             {
-                BasicVM.DrainageStatus = "User entered.";
+                BasicVM.DrainageAreaStatus = "User entered.";
             }
             else
             {
-                BasicVM.DrainageStatus = "Drainage area must be in the range 1 to 2000 acres!";
+                BasicVM.DrainageAreaStatus = "Drainage area must be in the range 1 to 2000 acres!";
             }
         }
 
@@ -133,11 +132,11 @@ namespace EFH_2
             int value = (int)sender.Value;
             if (value >= 40 && value <= 98)
             {
-                BasicVM.CurveNumberStatus = "User entered.";
+                BasicVM.RunoffCurveNumberStatus = "User entered.";
             }
             else
             {
-                BasicVM.CurveNumberStatus = "Curve number must be in the range 40 to 98!";
+                BasicVM.RunoffCurveNumberStatus = "Curve number must be in the range 40 to 98!";
             }
         }
 

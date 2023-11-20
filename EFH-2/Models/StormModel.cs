@@ -63,5 +63,15 @@ namespace EFH_2
             get { return this._displayHydrograph; }
             set { this.SetProperty(ref this._displayHydrograph, value); }
         }
+
+        public void Default()
+        {
+            Frequency = 0;
+            DayRain = 0;
+            PeakFlow = 0;
+            Runoff = 0;
+
+            DisplayHydrograph = false;
+        }
     }
 }

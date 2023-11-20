@@ -108,7 +108,7 @@
                     x:Name="uxDrainageAreaStatus"
                     RelativePanel.RightOf="uxDrainageArea"
                     RelativePanel.AlignVerticalCenterWith="uxDrainageArea"
-                    Text="{x:Bind Path=BasicVM.DrainageStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.DrainageAreaStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -126,7 +126,7 @@
 
                 <NumberBox
                     x:Name="uxRunoffCurveNumber"
-                    Value="{x:Bind Path=BasicVM.CurveNumber, Mode=TwoWay}"
+                    Value="{x:Bind Path=BasicVM.RunoffCurveNumber, Mode=TwoWay}"
                     ValueChanged="RunoffCurveNumberChanged"
                     Margin="200,0,0,0"
                     />
@@ -135,7 +135,7 @@
                     x:Name="uxRunoffCurveNumberStatus"
                     RelativePanel.RightOf="uxRunoffCurveNumber"
                     RelativePanel.AlignVerticalCenterWith="uxRunoffCurveNumber"
-                    Text="{x:Bind Path=BasicVM.CurveNumberStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.RunoffCurveNumberStatus, Mode=OneWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />

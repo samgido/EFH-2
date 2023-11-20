@@ -115,7 +115,7 @@ namespace EFH_2
         /// <summary>
         /// Summarizes the data in this page to a list of objects
         /// </summary>
-        public List<object> Summary
+        public List<object> Summary1
         {
             get
             {
@@ -135,30 +135,32 @@ namespace EFH_2
                     list.Add(Storms[i].DayRain);
                 }
 
-                list.Add("");
+                return list;
+            }
+        }
 
-                for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+        public List<object> Summary2
+        {
+            get
+            {
+                List<object> list = new();
+
+                // lines 39 - 45
+                foreach(StormModel storm in Storms)
                 {
-                    StringBuilder s = new();
-                    StormModel storm = Storms[i];
+                    StringBuilder line = new();
 
-                    s.Append(storm.Frequency);
-                    s.Append('"');
-                    s.Append(',');
-                    s.Append('"');
-                    s.Append(storm.DayRain);
-                    s.Append('"');
-                    s.Append(',');
-                    s.Append('"');
-                    s.Append(storm.PeakFlow);
-                    s.Append('"');
-                    s.Append(',');
-                    s.Append('"');
-                    s.Append(storm.Runoff);
+                    line.Append(storm.Frequency.ToString());
+                    line.Append("\",\"");
+                    line.Append(storm.DayRain.ToString());
+                    line.Append("\",\"");
+                    line.Append(storm.PeakFlow.ToString());
+                    line.Append("\",\"");
+                    line.Append(storm.Runoff.ToString());
 
-                    list.Add(s);
+                    list.Add(line);
                 }
-
+                
                 return list;
             }
         }
@@ -184,6 +186,19 @@ namespace EFH_2
             for (int i = 0; i < MainWindow.NumberOfStorms; i++)
             {
                 this.Storms.Add(new());
+            }
+        }
+
+        public void Default()
+        {
+            SelectedRainfallDistributionType = MainWindow.ChooseMessage;
+            RainfallDistributionTypeStatus = MainWindow.ClearedMessage;
+            SelectedDUHType = MainWindow.ChooseMessage;
+            DUHTypeStatus = MainWindow.ClearedMessage;
+
+            foreach (StormModel storm in Storms)
+            {
+                storm.Default();
             }
         }
     }

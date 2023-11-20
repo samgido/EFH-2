@@ -71,8 +71,6 @@ namespace EFH_2
                 {
                     string line = input.ReadLine();
 
-                    _rainfallDistributionTypeNames.Add("");
-
                     while (line != "")
                     {
                         char[] sep = { ','};

@@ -168,7 +168,7 @@ namespace EFH_2
         /// The curve number field
         /// </summary>
         private float _curveNumber = 0;
-        public float CurveNumber
+        public float RunoffCurveNumber
         {
             get { return this._curveNumber; }
             set { this.SetProperty(ref this._curveNumber, value); }
@@ -220,7 +220,7 @@ namespace EFH_2
                 l.Add(SelectedState);
                 l.Add(Practice);
                 l.Add(DrainageArea);
-                l.Add(CurveNumber);
+                l.Add(RunoffCurveNumber);
                 l.Add(WatershedLength);
                 l.Add(WatershedSlope);
                 l.Add(TimeOfConcentration);
@@ -230,14 +230,14 @@ namespace EFH_2
         }
 
         private string _drainageStatus = "";
-        public string DrainageStatus
+        public string DrainageAreaStatus
         {
             get { return this._drainageStatus; }
             set { this.SetProperty(ref this._drainageStatus, value); }
         }
 
         private string _curveNumberStatus = "";
-        public string CurveNumberStatus
+        public string RunoffCurveNumberStatus
         {
             get { return this._curveNumberStatus; }
             set { this.SetProperty(ref this._curveNumberStatus, value); }
@@ -267,6 +267,27 @@ namespace EFH_2
         public BasicDataViewModel()
         {
             Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
+        }
+
+        public void Default()
+        {
+            Client = "";
+            SelectedState = MainWindow.ChooseMessage;
+            SelectedCounty = MainWindow.ChooseMessage;
+            Practice = ""; 
+            Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
+            By = "";
+
+            DrainageArea = 0;
+            DrainageAreaStatus = MainWindow.ClearedMessage;
+            RunoffCurveNumber = 0;
+            RunoffCurveNumberStatus = MainWindow.ClearedMessage;
+            WatershedLength = 0;
+            WatershedLengthStatus = MainWindow.ClearedMessage;
+            WatershedSlope = 0;
+            WatershedSlopeStatus = MainWindow.ClearedMessage;
+            TimeOfConcentration = 0;
+            TimeOfConcentrationStatus = MainWindow.ClearedMessage;
         }
     }
 }

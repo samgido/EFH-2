@@ -39,6 +39,11 @@ namespace EFH_2
         public static void PopulateComboBox(ObservableCollection<ComboBoxItem> coll, string[] elements)
         {
             coll.Clear();
+
+            ComboBoxItem defaultItem = new();
+            defaultItem.Content = MainWindow.ChooseMessage;
+
+            coll.Add(defaultItem);
                 
             foreach (string s in elements)
             {
