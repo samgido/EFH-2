@@ -68,7 +68,7 @@ namespace EFH_2
             contentFrame.Navigate(typeof(IntroPage));
             uxNavigationView.SelectedItem = uxIntroPageNav;
 
-            uxSlopeCalulatorButton.IsEnabled = false;
+            uxAverageSlopeCalulatorButton.IsEnabled = false;
             uxHSGButton.IsEnabled = false;
             uxToolbarToggle.IsChecked = true;
 
@@ -101,7 +101,9 @@ namespace EFH_2
                 target = Type.GetType("EFH_2." + selectedItemTag);
 
                 uxHSGButton.IsEnabled = (target == typeof(RCNPage));
-                uxSlopeCalulatorButton.IsEnabled = (target == typeof(BasicDataPage));
+                uxHSGFlyout.IsEnabled = (target == typeof(RCNPage));
+                uxAverageSlopeCalulatorButton.IsEnabled = (target == typeof(BasicDataPage));
+                uxAverageSlopeCalculatorFlyout.IsEnabled = (target == typeof(BasicDataPage));
             }
 
             contentFrame.Navigate(target);

@@ -39,6 +39,7 @@
 
             <ComboBox
                 x:Name="uxRainfallDistributionType"
+                ToolTipService.ToolTip="Rainfall distribution - choose from the list"
                 ItemsSource="{x:Bind Path=RainfallVM.RainfallDistributionTypes, Mode=TwoWay}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedRainfallDistributionTypeIndex, Mode=TwoWay}"
                 SelectionChanged="RainfallDistributionTypeChanged"
@@ -68,6 +69,7 @@
                 
             <ComboBox
                 x:Name="uxDUHType"
+                ToolTipService.ToolTip="Rainfall distribution - choose from the list"
                 ItemsSource="{x:Bind Path=RainfallVM.DUHTypes, Mode=OneTime}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedDUHTypeIndex, Mode=TwoWay}"
                 SelectionChanged="DUHTypeChanged"
@@ -116,7 +118,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField1"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #1"
                 Value="{x:Bind Path=RainfallVM.Storms[0].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.Below="uxFrequencyLabel"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
                 Margin="125,10,0,0"
@@ -131,7 +135,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField2"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #2"
                 Value="{x:Bind Path=RainfallVM.Storms[1].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField1"
                 RelativePanel.Below="uxFrequencyField1"
                 Margin="125,10,0,0"
@@ -146,7 +152,9 @@
             
             <NumberBox
                 x:Name="uxFrequencyField3"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #3"
                 Value="{x:Bind Path=RainfallVM.Storms[2].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
                 RelativePanel.Below="uxFrequencyField2"
                 Margin="125,10,0,0"
@@ -161,7 +169,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField4"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #4"
                 Value="{x:Bind Path=RainfallVM.Storms[3].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField3"
                 RelativePanel.Below="uxFrequencyField3"
                 Margin="125,10,0,0"
@@ -176,7 +186,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField5"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #5"
                 Value="{x:Bind Path=RainfallVM.Storms[4].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField4"
                 RelativePanel.Below="uxFrequencyField4"
                 Margin="125,10,0,0"
@@ -191,7 +203,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField6"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #6"
                 Value="{x:Bind Path=RainfallVM.Storms[5].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField5"
                 RelativePanel.Below="uxFrequencyField5"
                 Margin="125,10,0,0"
@@ -206,7 +220,9 @@
 
             <NumberBox
                 x:Name="uxFrequencyField7"
+                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #7"
                 Value="{x:Bind Path=RainfallVM.Storms[6].Frequency, Mode=TwoWay}"
+                Minimum="0"
                 RelativePanel.AlignHorizontalCenterWith="uxFrequencyField6"
                 RelativePanel.Below="uxFrequencyField6"
                 Margin="125,10,0,0"
@@ -221,8 +237,11 @@
 
             <NumberBox
                 x:Name="uxDayRainField1"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #1 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[0].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainLabel"
                 RelativePanel.Below="uxDayRainLabel"
                 Margin="50,10,0,0"
@@ -230,8 +249,11 @@
                 />
             <NumberBox
                 x:Name="uxDayRainField2"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #2 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[1].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField1"
                 RelativePanel.Below="uxDayRainField1"
                 Margin="50,10,0,0"
@@ -239,8 +261,11 @@
                 />
             <NumberBox
                 x:Name="uxDayRainField3"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #3 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[2].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField2"
                 RelativePanel.Below="uxDayRainField2"
                 Margin="50,10,0,0"
@@ -248,8 +273,11 @@
                 />
             <NumberBox
                 x:Name="uxDayRainField4"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #4 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[3].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField3"
                 RelativePanel.Below="uxDayRainField3"
                 Margin="50,10,0,0"
@@ -257,8 +285,11 @@
                 />
             <NumberBox
                 x:Name="uxDayRainField5"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #5 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[4].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField4"
                 RelativePanel.Below="uxDayRainField4"
                 Margin="50,10,0,0"
@@ -266,8 +297,11 @@
                 />
             <NumberBox
                 x:Name="uxDayRainField6"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #6 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[5].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField5"
                 RelativePanel.Below="uxDayRainField5"
                 Margin="50,10,0,0"
@@ -275,8 +309,11 @@
                 />
             <NumberBox
                 x:Name="uxDayRainField7"
+                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #7 event frequency"
                 Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
                 NumberFormatter="{StaticResource DecimalFormatter}"
+                Minimum="0"
+                Maximum="26"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField6"
                 RelativePanel.Below="uxDayRainField6"
                 Margin="50,10,0,0"

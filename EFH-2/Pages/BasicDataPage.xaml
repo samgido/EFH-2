@@ -17,6 +17,7 @@
             <TextBox
                 x:Name="uxClientBox"
                 Header="Client:"
+                ToolTipService.ToolTip="Identifies property owner"
                 Text="{x:Bind Path=BasicVM.Client, Mode=TwoWay}"
                 Margin="50,0,0,0"
                 Width="300"/>
@@ -32,6 +33,7 @@
 
             <ComboBox
                 x:Name="uxCountyBox"
+                ToolTipService.ToolTip="Project county or parish - used to retrieve rainfall-frequency data"
                 ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=OneWay}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedCountyIndex, Mode=TwoWay}"
                 Header="County:"
@@ -46,6 +48,7 @@
 
             <TextBox
                 x:Name="uxPracticeBox"
+                ToolTipService.ToolTip="Description of associated conservation measure"
                 Text="{x:Bind Path=BasicVM.Practice, Mode=TwoWay}"
                 Header="Practice:"
                 Margin="50,0,0,0"
@@ -57,12 +60,14 @@
 
             <TextBox
                 x:Name="uxByBox"
+                ToolTipService.ToolTip="Initials of data enterer"
                 Text="{x:Bind Path=BasicVM.By, Mode=TwoWay}"
                 Header="By:"
                 Margin="50,0,0,0"/>
 
             <DatePicker
                 x:Name="uxDatePicker"
+                ToolTipService.ToolTip="Today's date"
                 Header="Date:"
                 Date="{x:Bind Path=BasicVM.Date, Mode=TwoWay}"
                 RelativePanel.AlignVerticalCenterWith="uxByBox"
@@ -85,6 +90,7 @@
 
                 <NumberBox
                     x:Name="uxDrainageArea"
+                    ToolTipService.ToolTip="Watershed area in acres (limits 1 to 2000)"
                     Value="{x:Bind Path=BasicVM.DrainageArea, Mode=TwoWay}"
                     ValueChanged="DrainageAreaChanged"
                     PlaceholderText="" 
@@ -121,6 +127,7 @@
 
                 <NumberBox
                     x:Name="uxRunoffCurveNumber"
+                    ToolTipService.ToolTip="Weighted NRCS watershed curve number (limits 40 to 98)"
                     Value="{x:Bind Path=BasicVM.RunoffCurveNumber, Mode=TwoWay}"
                     ValueChanged="RunoffCurveNumberChanged"
                     Margin="200,0,0,0"
@@ -147,6 +154,7 @@
 
                 <NumberBox
                     x:Name="uxWatershedLength"
+                    ToolTipService.ToolTip="Length in feet along the flow path from the hydraulically most distant point to point of interest (limits 200 to 26000)"
                     Value="{x:Bind Path=BasicVM.WatershedLength, Mode=TwoWay}"
                     ValueChanged="WatershedLengthChanged"
                     Margin="200,0,0,0"
@@ -180,6 +188,7 @@
 
                 <NumberBox
                     x:Name="uxWatershedSlope"
+                    ToolTipService.ToolTip="Average watershed slope in percent (limits 0.5 to 64)"
                     Value="{x:Bind Path=BasicVM.WatershedSlope, Mode=TwoWay}"
                     ValueChanged="WatershedSlopeChanged"
                     Margin="200,0,0,0"
@@ -213,6 +222,7 @@
 
                 <NumberBox
                     x:Name="uxTimeOfConcentration"
+                    ToolTipService.ToolTip="Time of concentration, in hours, is calculated from Watershed Length and Slope using Tc Lag Method"
                     Text="{x:Bind Path=BasicVM.TimeOfConcentration, Mode=TwoWay}"
                     ValueChanged="TimeOfConcentrationChanged"
                     Margin="200,0,0,0"
