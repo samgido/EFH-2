@@ -11,15 +11,14 @@
     NavigationCacheMode="Required">
 
     <UserControl.Resources>
-        <local:ComboBoxItemToString x:Key="CBToStringConverter"/>
         <local:StringToDouble x:Key="StringToDoubleConverter"/>
-        <local:DoubleFormatter x:Key="df"/>
+        <local:DoubleFormatter x:Key="DecimalFormatter"/>
     </UserControl.Resources>
 
-    <StackPanel>
+    <StackPanel
+        Background="Black">
 
         <RelativePanel
-            Background="Transparent"
             Padding="0,15,0,15">
 
             <TextBlock
@@ -223,7 +222,7 @@
             <NumberBox
                 x:Name="uxDayRainField1"
                 Value="{x:Bind Path=RainfallVM.Storms[0].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainLabel"
                 RelativePanel.Below="uxDayRainLabel"
                 Margin="50,10,0,0"
@@ -232,7 +231,7 @@
             <NumberBox
                 x:Name="uxDayRainField2"
                 Value="{x:Bind Path=RainfallVM.Storms[1].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField1"
                 RelativePanel.Below="uxDayRainField1"
                 Margin="50,10,0,0"
@@ -241,7 +240,7 @@
             <NumberBox
                 x:Name="uxDayRainField3"
                 Value="{x:Bind Path=RainfallVM.Storms[2].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField2"
                 RelativePanel.Below="uxDayRainField2"
                 Margin="50,10,0,0"
@@ -250,7 +249,7 @@
             <NumberBox
                 x:Name="uxDayRainField4"
                 Value="{x:Bind Path=RainfallVM.Storms[3].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField3"
                 RelativePanel.Below="uxDayRainField3"
                 Margin="50,10,0,0"
@@ -259,7 +258,7 @@
             <NumberBox
                 x:Name="uxDayRainField5"
                 Value="{x:Bind Path=RainfallVM.Storms[4].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField4"
                 RelativePanel.Below="uxDayRainField4"
                 Margin="50,10,0,0"
@@ -268,7 +267,7 @@
             <NumberBox
                 x:Name="uxDayRainField6"
                 Value="{x:Bind Path=RainfallVM.Storms[5].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField5"
                 RelativePanel.Below="uxDayRainField5"
                 Margin="50,10,0,0"
@@ -277,7 +276,7 @@
             <NumberBox
                 x:Name="uxDayRainField7"
                 Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource df}"
+                NumberFormatter="{StaticResource DecimalFormatter}"
                 RelativePanel.AlignHorizontalCenterWith="uxDayRainField6"
                 RelativePanel.Below="uxDayRainField6"
                 Margin="50,10,0,0"

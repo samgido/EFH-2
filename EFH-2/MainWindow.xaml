@@ -11,22 +11,25 @@
     
     
     <StackPanel
-        Orientation="Vertical">
+        Orientation="Vertical"
+        Background="Black">
 
         <MenuBar>
             <MenuBarItem Title="File"
                          AccessKey="F">
                 <MenuFlyoutItem Text="New"
-                                AccessKey="N"/>
+                                AccessKey="N"
+                                Click="NewClicked"/>
                 <MenuFlyoutItem Text="Open..."
-                                AccessKey="O"/>
+                                AccessKey="O"
+                                Click="OpenClicked"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Recalculate"
                                 AccessKey="R"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Save"
-                                Click="SaveClick"
-                                AccessKey="S"/>
+                                AccessKey="S"
+                                Click="SaveClicked"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Export Hydrograph(s)"
                                 AccessKey="E"/>
@@ -34,7 +37,8 @@
                                 AccessKey="P"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Exit"
-                                AccessKey="X"/>
+                                AccessKey="X"
+                                Click="ExitClicked"/>
             </MenuBarItem>
 
             <MenuBarItem Title="Edit"
@@ -50,7 +54,9 @@
             <MenuBarItem Title="View"
                         AccessKey="V">
                 <ToggleMenuFlyoutItem Text="Toolbar"
-                                      AccessKey="T"/>
+                                      x:Name="uxToolbarToggle"
+                                      AccessKey="T"
+                                      Click="ToggleToolbarClicked"/>
             </MenuBarItem>
 
             <MenuBarItem Title="Tools"
@@ -75,25 +81,25 @@
         </MenuBar>
 
         <CommandBar
+            x:Name="uxToolbar"
             FlowDirection="LeftToRight"
             DefaultLabelPosition="Bottom"
-            Height="35"
             >
 
             <AppBarButton
                 Icon="Page"
                 Label="New"
-                Click="NewClick"/>
+                Click="NewClicked"/>
 
             <AppBarButton
                 Icon="OpenFile"
                 Label="Open"
-                Click="OpenClick"/>
+                Click="OpenClicked"/>
 
             <AppBarButton
                 Icon="Save"
                 Label="Save"
-                Click="SaveClick"/>
+                Click="SaveClicked"/>
 
             <AppBarSeparator/>
 
@@ -147,12 +153,14 @@
             IsBackButtonVisible="Collapsed" 
             IsSettingsVisible="False"
             SelectionChanged="NavigationViewSelectionChanged"
+            Background="Transparent"
             >
             <NavigationView.MenuItems>
                 <NavigationViewItem 
-                    Content="Introduction" 
+                    Content="Introduction"
                     Tag="IntroPage"  
-                    x:Name="uxIntroPageNav">
+                    x:Name="uxIntroPageNav"
+                    Background="Transparent">
                 </NavigationViewItem>
 
                 <NavigationViewItem 
@@ -176,8 +184,8 @@
 
             <Frame
                 x:Name="contentFrame"
-                Background="Transparent"
-                CacheSize="5">
+                Background="Black"
+                CacheSize="4">
             </Frame>
 
         </NavigationView>

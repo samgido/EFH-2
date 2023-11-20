@@ -60,7 +60,7 @@ namespace EFH_2
         public MainWindow()
         {
             this.InitializeComponent();
-            this.Activated += MainWindow_Activated;
+            this.Activated += MainWindowActivated;
 
             this.Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
             this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
@@ -70,13 +70,14 @@ namespace EFH_2
 
             uxSlopeCalulatorButton.IsEnabled = false;
             uxHSGButton.IsEnabled = false;
+            uxToolbarToggle.IsChecked = true;
 
             BasicVM = new();
             RainfallVM = new();
 
         }
 
-        private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+        private void MainWindowActivated(object sender, WindowActivatedEventArgs args)
         {
             IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
             WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
@@ -111,7 +112,7 @@ namespace EFH_2
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
         /// <param name="e">Object that holds information about the event</param>
-        private async void SaveClick(object sender, RoutedEventArgs e)
+        private async void SaveClicked(object sender, RoutedEventArgs e)
         {
             FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.FileTypeChoices.Add("efm", new List<string> { ".efm" });
@@ -191,7 +192,7 @@ namespace EFH_2
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
         /// <param name="e">Object that holds information about the event</param>
-        private async void OpenClick(object sender, RoutedEventArgs e)
+        private async void OpenClicked(object sender, RoutedEventArgs e)
         {
             contentFrame.Navigate(typeof(RDDataPage));
             contentFrame.Navigate(typeof(BasicDataPage));
@@ -269,11 +270,11 @@ namespace EFH_2
                     string line39 = r.Read();
 
                     string[] line39Split = line39.Split(',');
-                    string asterisks = line39Split[2].Trim('"');
+                    string hydrographs = line39Split[2].Trim('"');
 
                     for (int i = 5; i < MainWindow.NumberOfStorms + 5; i++)
                     {
-                        RainfallVM.Storms[i-5].DisplayHydrograph = asterisks[i] == '*';
+                        RainfallVM.Storms[i-5].DisplayHydrograph = hydrographs[i] == '*';
                     }
 
                     // lines 40 - end
@@ -289,10 +290,29 @@ namespace EFH_2
             }
         }
 
-        private void NewClick(object sender, RoutedEventArgs e)
+        private void NewClicked(object sender, RoutedEventArgs e)
         {
             BasicVM.Default();
             RainfallVM.Default();
+        }
+
+        private void ToggleToolbarClicked(object sender, RoutedEventArgs e)
+        {
+            ToggleMenuFlyoutItem toggle = (ToggleMenuFlyoutItem)sender;    
+
+            if (toggle.IsChecked)
+            {
+                uxToolbar.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                uxToolbar.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ExitClicked(object sender, RoutedEventArgs e)
+        {
+            App.Current.Exit();
         }
     }
 

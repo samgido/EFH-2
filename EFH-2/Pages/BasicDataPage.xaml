@@ -9,11 +9,8 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required">
 
-    <UserControl.Resources>
-        <local:ComboBoxItemToString x:Key="CBoxToStringConverter"/>
-    </UserControl.Resources>
-
-    <StackPanel>
+    <StackPanel
+        Background="Black">
 
         <RelativePanel>
 
