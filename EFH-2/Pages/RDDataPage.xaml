@@ -41,7 +41,6 @@
             <ComboBox
                 x:Name="uxRainfallDistributionType"
                 ItemsSource="{x:Bind Path=RainfallVM.RainfallDistributionTypes, Mode=TwoWay}"
-                SelectedItem="{x:Bind Path=RainfallVM.SelectedRainfallDistributionType, Converter={StaticResource CBToStringConverter}, Mode=TwoWay}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedRainfallDistributionTypeIndex, Mode=TwoWay}"
                 SelectionChanged="RainfallDistributionTypeChanged"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
@@ -71,7 +70,6 @@
             <ComboBox
                 x:Name="uxDUHType"
                 ItemsSource="{x:Bind Path=RainfallVM.DUHTypes, Mode=OneTime}"
-                SelectedItem="{x:Bind Path=RainfallVM.SelectedDUHType, Converter={StaticResource CBToStringConverter}, Mode=TwoWay}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedDUHTypeIndex, Mode=TwoWay}"
                 SelectionChanged="DUHTypeChanged"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"

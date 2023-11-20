@@ -66,13 +66,14 @@ namespace EFH_2
             this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
 
             contentFrame.Navigate(typeof(IntroPage));
-            Tabs.SelectedItem = uxIntroPageNav;
+            uxNavigationView.SelectedItem = uxIntroPageNav;
 
             uxSlopeCalulatorButton.IsEnabled = false;
             uxHSGButton.IsEnabled = false;
 
             BasicVM = new();
             RainfallVM = new();
+
         }
 
         private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
@@ -88,7 +89,7 @@ namespace EFH_2
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
         /// <param name="args">Object that holds information about the event</param>
-        private void TabsSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             Type target = typeof(IntroPage);
 
@@ -192,6 +193,10 @@ namespace EFH_2
         /// <param name="e">Object that holds information about the event</param>
         private async void OpenClick(object sender, RoutedEventArgs e)
         {
+            contentFrame.Navigate(typeof(RDDataPage));
+            contentFrame.Navigate(typeof(BasicDataPage));
+            uxNavigationView.SelectedItem = uxBasicDataPageNav;
+
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.FileTypeFilter.Add(".efm");
 
@@ -211,8 +216,9 @@ namespace EFH_2
                     BasicVM.By = r.ReadQuoted();
                     BasicVM.Date = DateTimeOffset.Parse(r.ReadQuoted());
                     BasicVM.Client = r.ReadQuoted();
-                    BasicVM.SelectedCounty = r.ReadQuoted();
+                    string county = r.ReadQuoted();
                     BasicVM.SelectedState = r.ReadQuoted();
+                    BasicVM.SelectedCounty = county;
                     BasicVM.Practice = r.ReadQuoted();
                     BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
                     BasicVM.DrainageAreaStatus = _importedStatusMessage;

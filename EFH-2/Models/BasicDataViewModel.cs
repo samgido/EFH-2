@@ -33,23 +33,19 @@ namespace EFH_2
         /// <summary>
         /// The selected state in the state ComboBox
         /// </summary>
-        private string _selectedState = "";
         public string SelectedState
         {
-            get { return this._selectedState; }
+            get { return this.SelectedState; }
             set 
             { 
-                this.SetProperty(ref this._selectedState, value);
-
-                int i = 0; 
-                foreach (ComboBoxItem c in _states)
+                for(int i = 0; i < _states.Count; i++)
                 {
+                    var c = _states[i];
                     if (c.Content as string == value)
                     {
                         SelectedStateIndex = i;
                         return;
                     }
-                    i++;
                 }
 
                 SelectedStateIndex = 0;
@@ -79,23 +75,19 @@ namespace EFH_2
         /// <summary>
         /// The selected county in the county ComboBox
         /// </summary>
-        private string _selectedCounty = "";
         public string SelectedCounty
         {
-            get { return this._selectedCounty; }
+            get { return this.SelectedCounty; }
             set 
             { 
-                this.SetProperty(ref this._selectedCounty, value);
-
-                int i = 0; 
-                foreach (ComboBoxItem c in _counties)
+                for(int i = 0; i < _counties.Count; i++)
                 {
+                    var c = _counties[i];
                     if (c.Content as string == value)
                     {
                         SelectedCountyIndex = i;
                         return;
                     }
-                    i++;
                 }
 
                 SelectedCountyIndex = 0;
@@ -274,6 +266,7 @@ namespace EFH_2
             Client = "";
             SelectedState = MainWindow.ChooseMessage;
             SelectedCounty = MainWindow.ChooseMessage;
+            SelectedCountyIndex = 0;
             Practice = ""; 
             Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
             By = "";

@@ -27,8 +27,7 @@
             <ComboBox
                 x:Name="uxStateBox"
                 SelectionChanged="StateSelectionChanged"
-                ItemsSource="{x:Bind Path=BasicVM.States, Mode=TwoWay}"
-                SelectedItem="{x:Bind Path=BasicVM.SelectedState, Mode=TwoWay, Converter={StaticResource CBoxToStringConverter}}"
+                ItemsSource="{x:Bind Path=BasicVM.States, Mode=OneWay}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedStateIndex, Mode=TwoWay}"
                 Header="State:"
                 RelativePanel.RightOf="uxClientBox"
@@ -36,8 +35,7 @@
 
             <ComboBox
                 x:Name="uxCountyBox"
-                ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=TwoWay}"
-                SelectedItem="{x:Bind Path=BasicVM.SelectedCounty, Mode=TwoWay, Converter={StaticResource CBoxToStringConverter}}"
+                ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=OneWay}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedCountyIndex, Mode=TwoWay}"
                 Header="County:"
                 RelativePanel.RightOf="uxStateBox"

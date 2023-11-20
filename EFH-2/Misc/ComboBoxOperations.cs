@@ -38,7 +38,10 @@ namespace EFH_2
         /// <param name="elements">The elements to be added to the collection</param>
         public static void PopulateComboBox(ObservableCollection<ComboBoxItem> coll, string[] elements)
         {
-            coll.Clear();
+            if(coll.Count != 0) 
+            {
+                coll.Clear();
+            }
 
             ComboBoxItem defaultItem = new();
             defaultItem.Content = MainWindow.ChooseMessage;

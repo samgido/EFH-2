@@ -143,10 +143,10 @@
         
         <NavigationView
             PaneDisplayMode="Top"
-            x:Name="Tabs"
+            x:Name="uxNavigationView"
             IsBackButtonVisible="Collapsed" 
             IsSettingsVisible="False"
-            SelectionChanged="TabsSelectionChanged"
+            SelectionChanged="NavigationViewSelectionChanged"
             >
             <NavigationView.MenuItems>
                 <NavigationViewItem 

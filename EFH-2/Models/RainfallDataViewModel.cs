@@ -20,24 +20,20 @@ namespace EFH_2
         /// <summary>
         /// The selected rainfall distribution type
         /// </summary>
-        private string _selectedRainfallDistributionType = "";
         public string SelectedRainfallDistributionType
         {
-            get { return this._selectedRainfallDistributionType; }
+            get { return this.SelectedRainfallDistributionType; }
             set
             {
-                this.SetProperty(ref this._selectedRainfallDistributionType, value);
-
-                int i = 0;
-                foreach (ComboBoxItem c in _rainfallDistributionTypes)
+                for (int i = 0; i < _rainfallDistributionTypes.Count; i++)
                 {
+                    var c = _rainfallDistributionTypes[i];
                     if (c.Content as string == value)
                     {
                         SelectedRainfallDistributionTypeIndex = i;
 
                         return;
                     }
-                    i++;
                 }
 
                 SelectedRainfallDistributionTypeIndex = 0;
@@ -67,23 +63,19 @@ namespace EFH_2
         /// <summary>
         /// The selected dimensionless unit hydrograph type
         /// </summary>
-        private string _selectedDUHType = "";
         public string SelectedDUHType
         {
-            get { return this._selectedDUHType; }
+            get { return this.SelectedDUHType; }
             set
             {
-                this.SetProperty(ref this._selectedDUHType, value);
-
-                int i = 0;
-                foreach (ComboBoxItem c in _duhTypes)
+                for(int i = 0; i < _duhTypes.Count; i++)
                 {
+                    var c = _duhTypes[i];
                     if (c.Content as string == value)
                     {
                         SelectedDUHTypeIndex = i;
                         return;
                     }
-                    i++;
                 }
 
                 SelectedDUHTypeIndex = 0;
@@ -122,10 +114,10 @@ namespace EFH_2
                 List<object> list = new();
 
                 // Rainfall / duh type
-                string type = _selectedRainfallDistributionType;
-                if (_selectedDUHType.Trim() != "<standard>")
+                string type = SelectedRainfallDistributionType;
+                if (SelectedDUHType.Trim() != "<standard>")
                 {
-                    type += ", " + _selectedDUHType;
+                    type += ", " + SelectedDUHType;
                 }
                 list.Add(type);
 
