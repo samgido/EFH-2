@@ -16,7 +16,8 @@
     </UserControl.Resources>
 
     <StackPanel
-        Background="Black">
+        Background="Black"
+        x:Name="uxRootPanel">
 
         <RelativePanel
             Padding="0,15,0,15">

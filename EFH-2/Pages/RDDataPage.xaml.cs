@@ -52,7 +52,12 @@ namespace EFH_2
         public RDDataPage()
         {
             this.InitializeComponent();
-            
+
+            ReadData();
+        }
+
+        private async void ReadData()
+        {
             try
             {
                 using (StreamReader input = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
@@ -81,15 +86,36 @@ namespace EFH_2
                         line = input.ReadLine();
                     }
                 }
-            }
-            catch
-            { 
-                var messageBox = new MessageDialog("something went wrong");
-            }
 
-            ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rainfallDistributionTypeNames.ToArray());
-            ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhTypeNames.ToArray());
-            uxDUHType.SelectedIndex = 0;
+                ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rainfallDistributionTypeNames.ToArray());
+                ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhTypeNames.ToArray());
+                uxDUHType.SelectedIndex = 0;
+            }
+            catch (Exception err)
+            {
+                ContentDialog dialog = new ContentDialog();
+
+                dialog.XamlRoot = uxRootPanel.XamlRoot;
+                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "An error occured while reading the program data.";
+                dialog.CloseButtonText = "Close";
+                dialog.PrimaryButtonText = "Show full error";
+
+                var result = await dialog.ShowAsync();
+        
+                if (result == ContentDialogResult.Primary)
+                {
+                    ContentDialog fullError = new ContentDialog();
+
+                    fullError.XamlRoot = uxRootPanel.XamlRoot;
+                    fullError.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                    fullError.CloseButtonText = "Close";
+
+                    fullError.Content = err.ToString();
+
+                    var _ = await fullError.ShowAsync();
+                }
+            }
         }
 
         /// <summary>
@@ -102,6 +128,11 @@ namespace EFH_2
 
         }
 
+        /// <summary>
+        /// Updates the rainfall distribution type status when it's changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RainfallDistributionTypeChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = RainfallVM.SelectedRainfallDistributionTypeIndex;
@@ -112,6 +143,11 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// Updates the DUH type status when it's changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DUHTypeChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = RainfallVM.SelectedDUHTypeIndex;

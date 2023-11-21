@@ -302,7 +302,7 @@ namespace EFH_2
 
                 dialog.XamlRoot = uxRootPanel.XamlRoot;
                 dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "Error occured while opening the file.";
+                dialog.Title = "An error occured while opening the file.";
                 dialog.CloseButtonText = "Close";
                 dialog.PrimaryButtonText = "Show full error";
 
