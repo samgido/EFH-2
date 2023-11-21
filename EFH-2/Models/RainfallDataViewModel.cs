@@ -17,6 +17,9 @@ namespace EFH_2
     /// </summary>
     public class RainfallDataViewModel : BindableBase
     {
+
+        public int DayRainMax => 26;
+        
         /// <summary>
         /// The selected rainfall distribution type
         /// </summary>

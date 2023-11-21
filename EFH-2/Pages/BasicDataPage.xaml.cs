@@ -110,20 +110,8 @@ namespace EFH_2
 
         public void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            int value = (int)sender.Value;
-            MainWindow.CheckDrainageArea(value);
-        }
-
-        public void CheckDrainageArea(int value)
-        {
-            if (value >= 1 && value <= 2000)
-            {
-                BasicVM.DrainageAreaStatus = "User entered.";
-            }
-            else
-            {
-                BasicVM.DrainageAreaStatus = "Drainage area must be in the range 1 to 2000 acres!";
-            }
+            BasicVM.DrainageArea = (int)sender.Value;
+            BasicVM.CheckDrainageArea();
         }
 
         /// <summary>
@@ -133,21 +121,11 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void RunoffCurveNumberChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            int value = (int)sender.Value;
-            CheckRunoffCurveNumber(value);
+            BasicVM.RunoffCurveNumber = (int)sender.Value;
+            BasicVM.CheckRunoffCurveNumber();
         }
 
-        public void CheckRunoffCurveNumber(int value)
-        {
-            if (value >= 40 && value <= 98)
-            {
-                BasicVM.RunoffCurveNumberStatus = "User entered.";
-            }
-            else
-            {
-                BasicVM.RunoffCurveNumberStatus = "Curve number must be in the range 40 to 98!";
-            }
-        }
+
 
         /// <summary>
         /// Updates the status of the watershed length field
@@ -156,15 +134,8 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void WatershedLengthChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            int value = (int)sender.Value;
-            if (value >= 200 && value <= 26000)
-            {
-                BasicVM.WatershedLengthStatus = "User entered.";
-            }
-            else
-            {
-                BasicVM.WatershedLengthStatus = "Watershed length must be in the range 200 to 26000 feet!";
-            }
+            BasicVM.WatershedLength = (int)sender.Value;
+            BasicVM.CheckWatershedLength();
         }
 
         /// <summary>
@@ -174,16 +145,8 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void WatershedSlopeChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            float value = (float)sender.Value;
-
-            if (value >= .5 && value <= 64.0)
-            {
-                BasicVM.WatershedSlopeStatus = "User entered";
-            }
-            else
-            {
-                BasicVM.WatershedSlopeStatus = "Watershed slope must be the range 0.5 and 64 percent!";
-            }
+            BasicVM.WatershedSlope = (double)sender.Value;
+            BasicVM.CheckWatershedSlope();
         }
 
         /// <summary>
@@ -193,16 +156,8 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void TimeOfConcentrationChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            float value = (float)sender.Value;
-            if (value > .1 && value < 10.0)
-            {
-                BasicVM.TimeOfConcentrationStatus = "User entered";
-            }
-            else
-            {
-                BasicVM.TimeOfConcentrationStatus = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
-            }
+            BasicVM.TimeOfConcentration = (double)sender.Value;
+            BasicVM.CheckTimeOfConcentration();
         }
-
     }
 }

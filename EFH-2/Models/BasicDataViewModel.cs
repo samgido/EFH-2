@@ -153,11 +153,30 @@ namespace EFH_2
         public int DrainageArea
         {
             get { return this._drainageArea; }
-            set 
-            { 
-                this.SetProperty(ref this._drainageArea, value);
-            }
+            set { this.SetProperty(ref this._drainageArea, value); }
         }
+
+        public void CheckDrainageArea()
+        {
+            if (DrainageArea >= DrainageAreaMin && DrainageArea <= DrainageAreaMax)
+            {
+                DrainageAreaStatus = "User entered.";
+                return;
+            }
+            else if(DrainageArea > DrainageAreaMax)
+            {
+                DrainageArea = DrainageAreaMax;
+            }
+            else
+            {
+                DrainageArea = 0;
+            }
+
+            DrainageAreaStatus = "Drainage area must be in the range 1 to 2000 acres!";
+        }
+
+        public static int DrainageAreaMin => 1;
+        public static int DrainageAreaMax => 2000;
 
         /// <summary>
         /// The curve number field
@@ -169,6 +188,28 @@ namespace EFH_2
             set { this.SetProperty(ref this._curveNumber, value); }
         }
 
+        public void CheckRunoffCurveNumber()
+        {
+            if (RunoffCurveNumber >= RunoffCurveNumberMin && RunoffCurveNumber <= RunoffCurveNumberMax)
+            {
+                RunoffCurveNumberStatus = "User entered.";
+                return;
+            }
+            else if(RunoffCurveNumber > RunoffCurveNumberMax)
+            {
+                RunoffCurveNumber = RunoffCurveNumberMax;
+            }
+            else
+            {
+                RunoffCurveNumber = 0;
+            }
+
+            RunoffCurveNumberStatus = "Curve number must be in the range 40 to 98!";
+        }
+
+        public static int RunoffCurveNumberMin => 40;
+        public static int RunoffCurveNumberMax => 98;
+
         /// <summary>
         /// The watershed length field
         /// </summary>
@@ -179,25 +220,91 @@ namespace EFH_2
             set { this.SetProperty(ref this._watershedLength, value); }
         }
 
+        public void CheckWatershedLength()
+        {
+            if (WatershedLength >= WatershedLengthMin && WatershedLength <= WatershedLengthMax)
+            {
+                WatershedLengthStatus = "User entered.";
+                return;
+            }
+            else if(WatershedLength > WatershedLengthMax)
+            {
+                WatershedLength = WatershedLengthMax;
+            }
+            else
+            {
+                WatershedLength = 0;
+            }
+            
+            WatershedLengthStatus = "Watershed length must be in the range 200 to 26000 feet!";
+        }
+
+        public static int WatershedLengthMin => 200;
+        public static int WatershedLengthMax => 26000;
+
         /// <summary>
         /// The watershed slope field
         /// </summary>
-        private float _watershedSlope = 0;
-        public float WatershedSlope
+        private double _watershedSlope = 0;
+        public double WatershedSlope
         {
             get { return this._watershedSlope; }
             set { this.SetProperty(ref this._watershedSlope, value); }
         }
 
+        public void CheckWatershedSlope()
+        {
+            if (WatershedSlope >= WatershedSlopeMin && WatershedSlope <= WatershedSlopeMax)
+            {
+                WatershedSlopeStatus = "User entered";
+                return;
+            }
+            else if(WatershedSlope > WatershedSlopeMax)
+            {
+                WatershedSlope = WatershedSlopeMax;
+            }
+            else
+            {
+                WatershedSlope = 0;
+            }
+            
+            WatershedSlopeStatus = "Watershed slope must be the range 0.5 and 64 percent!";
+        }
+
+        public static double WatershedSlopeMin => 0.5;
+        public static double WatershedSlopeMax => 64;
+
         /// <summary>
         /// The time of concentration field
         /// </summary>
-        private float _timeOfConcentration = 0;
-        public float TimeOfConcentration
+        private double _timeOfConcentration = 0;
+        public double TimeOfConcentration
         {
             get { return this._timeOfConcentration; }
             set { this.SetProperty(ref this._timeOfConcentration, value); }
         }
+
+        public void CheckTimeOfConcentration()
+        {
+            if (TimeOfConcentration >= TimeOfConcentrationMin && TimeOfConcentration <= TimeOfConcentrationMax)
+            {
+                TimeOfConcentrationStatus = "User entered";
+                return;
+            }
+            else if(TimeOfConcentration > TimeOfConcentrationMax)
+            {
+                TimeOfConcentration = TimeOfConcentrationMax;
+            }
+            else
+            {
+                TimeOfConcentration = 0;
+            }
+
+            TimeOfConcentrationStatus = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
+        }
+
+        public static double TimeOfConcentrationMin => 0.1;
+        public static double TimeOfConcentrationMax => 10;
 
         /// <summary>
         /// Summarizes the data into a list of objects

@@ -77,17 +77,6 @@ namespace EFH_2
 
         }
 
-        public static void CheckDrainageArea(int value, BasicDataViewModel VM)
-        {
-            if (value >= 1 && value <= 2000)
-            {
-                VM.DrainageAreaStatus = "User entered.";
-            }
-            else
-            {
-                VM.DrainageAreaStatus = "Drainage area must be in the range 1 to 2000 acres!";
-            }
-        }
 
 
 
