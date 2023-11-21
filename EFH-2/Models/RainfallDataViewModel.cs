@@ -184,14 +184,19 @@ namespace EFH_2
         public void Default()
         {
             SelectedRainfallDistributionType = MainWindow.ChooseMessage;
-            RainfallDistributionTypeStatus = MainWindow.ClearedMessage;
             SelectedDUHType = MainWindow.ChooseMessage;
-            DUHTypeStatus = MainWindow.ClearedMessage;
 
             foreach (StormModel storm in Storms)
             {
                 storm.Default();
             }
+        }
+
+        public void Clear()
+        {
+            Default();
+            DUHTypeStatus = MainWindow.ClearedMessage;
+            RainfallDistributionTypeStatus = MainWindow.ClearedMessage;
         }
     }
 }

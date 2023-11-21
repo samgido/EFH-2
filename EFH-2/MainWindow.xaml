@@ -11,6 +11,7 @@
     
     
     <StackPanel
+        x:Name="uxRootPanel"
         Orientation="Vertical"
         Background="Black">
 

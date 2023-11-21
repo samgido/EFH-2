@@ -25,7 +25,7 @@
             <ComboBox
                 x:Name="uxStateBox"
                 SelectionChanged="StateSelectionChanged"
-                ItemsSource="{x:Bind Path=BasicVM.States, Mode=OneWay}"
+                ItemsSource="{x:Bind Path=BasicVM.States, Mode=TwoWay}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedStateIndex, Mode=TwoWay}"
                 Header="State:"
                 RelativePanel.RightOf="uxClientBox"
@@ -34,7 +34,7 @@
             <ComboBox
                 x:Name="uxCountyBox"
                 ToolTipService.ToolTip="Project county or parish - used to retrieve rainfall-frequency data"
-                ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=OneWay}"
+                ItemsSource="{x:Bind Path=BasicVM.Counties, Mode=TwoWay}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedCountyIndex, Mode=TwoWay}"
                 Header="County:"
                 RelativePanel.RightOf="uxStateBox"
@@ -109,7 +109,7 @@
                     x:Name="uxDrainageAreaStatus"
                     RelativePanel.RightOf="uxDrainageArea"
                     RelativePanel.AlignVerticalCenterWith="uxDrainageArea"
-                    Text="{x:Bind Path=BasicVM.DrainageAreaStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.DrainageAreaStatus, Mode=TwoWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -137,7 +137,7 @@
                     x:Name="uxRunoffCurveNumberStatus"
                     RelativePanel.RightOf="uxRunoffCurveNumber"
                     RelativePanel.AlignVerticalCenterWith="uxRunoffCurveNumber"
-                    Text="{x:Bind Path=BasicVM.RunoffCurveNumberStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.RunoffCurveNumberStatus, Mode=TwoWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -171,7 +171,7 @@
                     x:Name="uxWatershedLengthStatus"
                     RelativePanel.RightOf="uxWatershedLength"
                     RelativePanel.AlignVerticalCenterWith="uxWatershedLength"
-                    Text="{x:Bind Path=BasicVM.WatershedLengthStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.WatershedLengthStatus, Mode=TwoWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -205,7 +205,7 @@
                     x:Name="uxWatershedSlopeStatus"
                     RelativePanel.RightOf="uxWatershedSlope"
                     RelativePanel.AlignVerticalCenterWith="uxWatershedSlope"
-                    Text="{x:Bind Path=BasicVM.WatershedSlopeStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.WatershedSlopeStatus, Mode=TwoWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />
@@ -240,7 +240,7 @@
                     RelativePanel.RightOf="uxTimeOfConcentration"
                     RelativePanel.AlignVerticalCenterWith="uxTimeOfConcentration"
                     TextWrapping="Wrap"
-                    Text="{x:Bind Path=BasicVM.TimeOfConcentrationStatus, Mode=OneWay}"
+                    Text="{x:Bind Path=BasicVM.TimeOfConcentrationStatus, Mode=TwoWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />

@@ -77,6 +77,20 @@ namespace EFH_2
 
         }
 
+        public static void CheckDrainageArea(int value, BasicDataViewModel VM)
+        {
+            if (value >= 1 && value <= 2000)
+            {
+                VM.DrainageAreaStatus = "User entered.";
+            }
+            else
+            {
+                VM.DrainageAreaStatus = "Drainage area must be in the range 1 to 2000 acres!";
+            }
+        }
+
+
+
         private void MainWindowActivated(object sender, WindowActivatedEventArgs args)
         {
             IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
@@ -209,93 +223,124 @@ namespace EFH_2
 
             StorageFile file = await openPicker.PickSingleFileAsync();
 
-            if (file != null)
+            try
             {
-                using (StreamReader reader = new(file.Path))
+                if (file != null)
                 {
-                    Reader r = new(reader);
-                    string version = r.ReadQuoted();
-
-                    BasicVM.By = r.ReadQuoted();
-                    BasicVM.Date = DateTimeOffset.Parse(r.ReadQuoted());
-                    BasicVM.Client = r.ReadQuoted();
-                    string county = r.ReadQuoted();
-                    BasicVM.SelectedState = r.ReadQuoted();
-                    BasicVM.SelectedCounty = county;
-                    BasicVM.Practice = r.ReadQuoted();
-                    BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
-                    BasicVM.DrainageAreaStatus = _importedStatusMessage;
-                    BasicVM.RunoffCurveNumber = r.ParseFloat(r.ReadQuoted());
-                    BasicVM.RunoffCurveNumberStatus = _importedStatusMessage;
-                    BasicVM.WatershedLength = r.ParseInt(r.ReadQuoted());
-                    BasicVM.WatershedLengthStatus = _importedStatusMessage;
-                    BasicVM.WatershedSlope = r.ParseFloat(r.ReadQuoted());
-                    BasicVM.WatershedSlopeStatus = _importedStatusMessage;
-                    BasicVM.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
-                    BasicVM.TimeOfConcentrationStatus = _importedStatusMessage;
-
-                    // not sure what these are 
-                    string line13 = r.Read();
-                    string line14 = r.Read();
-                    string line15 = r.Read();
-
-                    // line 16
-                    string type = r.ReadQuoted();
-
-                    string[] types = type.Split(", ");
-                    RainfallVM.SelectedRainfallDistributionType = types[0];
-                    if(types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
-                    else { RainfallVM.SelectedDUHType = "<standard>"; }
-                    RainfallVM.RainfallDistributionTypeStatus = _importedStatusMessage;
-                    RainfallVM.DUHTypeStatus = _importedStatusMessage;
-
-                    // lines 17 - 30
-                    int[] frequencies = new int[MainWindow.NumberOfStorms];
-                    float[] dayRains = new float[MainWindow.NumberOfStorms];
-
-                    for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                    using (StreamReader reader = new(file.Path))
                     {
-                        RainfallVM.Storms[i].Frequency = r.ParseInt(r.ReadQuoted());
-                        RainfallVM.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
+                        Reader r = new(reader);
+                        string version = r.ReadQuoted();
+
+                        BasicVM.By = r.ReadQuoted();
+                        BasicVM.Date = DateTimeOffset.Parse(r.ReadQuoted());
+                        BasicVM.Client = r.ReadQuoted();
+                        string county = r.ReadQuoted();
+                        BasicVM.SelectedState = r.ReadQuoted();
+                        BasicVM.SelectedCounty = county;
+                        BasicVM.Practice = r.ReadQuoted();
+                        BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
+                        BasicVM.DrainageAreaStatus = _importedStatusMessage;
+                        BasicVM.RunoffCurveNumber = r.ParseFloat(r.ReadQuoted());
+                        BasicVM.RunoffCurveNumberStatus = _importedStatusMessage;
+                        BasicVM.WatershedLength = r.ParseInt(r.ReadQuoted());
+                        BasicVM.WatershedLengthStatus = _importedStatusMessage;
+                        BasicVM.WatershedSlope = r.ParseFloat(r.ReadQuoted());
+                        BasicVM.WatershedSlopeStatus = _importedStatusMessage;
+                        BasicVM.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
+                        BasicVM.TimeOfConcentrationStatus = _importedStatusMessage;
+
+                        // not sure what these are 
+                        string line13 = r.Read();
+                        string line14 = r.Read();
+                        string line15 = r.Read();
+
+                        // line 16
+                        string type = r.ReadQuoted();
+
+                        string[] types = type.Split(", ");
+                        RainfallVM.SelectedRainfallDistributionType = types[0];
+                        if (types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
+                        else { RainfallVM.SelectedDUHType = "<standard>"; }
+                        RainfallVM.RainfallDistributionTypeStatus = _importedStatusMessage;
+                        RainfallVM.DUHTypeStatus = _importedStatusMessage;
+
+                        // lines 17 - 30
+                        int[] frequencies = new int[MainWindow.NumberOfStorms];
+                        float[] dayRains = new float[MainWindow.NumberOfStorms];
+
+                        for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                        {
+                            RainfallVM.Storms[i].Frequency = r.ParseInt(r.ReadQuoted());
+                            RainfallVM.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
+                        }
+
+                        string line31 = r.Read();
+                        string line32 = r.Read();
+                        string line33 = r.Read();
+                        string line34 = r.Read();
+                        string line35 = r.Read();
+                        string line36 = r.Read();
+                        string line37 = r.Read();
+                        string line38 = r.Read();
+
+                        // Line with selected hydrograph
+                        string line39 = r.Read();
+
+                        string[] line39Split = line39.Split(',');
+                        string hydrographs = line39Split[2].Trim('"');
+
+                        for (int i = 5; i < MainWindow.NumberOfStorms + 5; i++)
+                        {
+                            RainfallVM.Storms[i - 5].DisplayHydrograph = hydrographs[i] == '*';
+                        }
+
+                        // lines 40 - end
+                        for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+                        {
+                            string line = r.ReadQuoted();
+                            string[] splitLine = line.Split(',');
+
+                            RainfallVM.Storms[i].PeakFlow = r.ParseDouble(splitLine[2].Trim('"'));
+                            RainfallVM.Storms[i].Runoff = r.ParseDouble(splitLine[3].Trim('"'));
+                        }
                     }
+                }
+            }
+            catch (Exception err)
+            {
+                ContentDialog dialog = new ContentDialog();
 
-                    string line31 = r.Read();
-                    string line32 = r.Read();
-                    string line33 = r.Read();
-                    string line34 = r.Read();
-                    string line35 = r.Read();
-                    string line36 = r.Read();
-                    string line37 = r.Read();
-                    string line38 = r.Read();
+                dialog.XamlRoot = uxRootPanel.XamlRoot;
+                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "Error occured while opening the file.";
+                dialog.CloseButtonText = "Close";
+                dialog.PrimaryButtonText = "Show full error";
 
-                    // Line with selected hydrograph
-                    string line39 = r.Read();
+                var result = await dialog.ShowAsync();
 
-                    string[] line39Split = line39.Split(',');
-                    string hydrographs = line39Split[2].Trim('"');
+                if (result == ContentDialogResult.Primary)
+                {
+                    ContentDialog fullError = new ContentDialog();
 
-                    for (int i = 5; i < MainWindow.NumberOfStorms + 5; i++)
-                    {
-                        RainfallVM.Storms[i-5].DisplayHydrograph = hydrographs[i] == '*';
-                    }
+                    fullError.XamlRoot = uxRootPanel.XamlRoot;
+                    fullError.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                    fullError.CloseButtonText = "Close";
 
-                    // lines 40 - end
-                    for (int i = 0; i < MainWindow.NumberOfStorms; i++)
-                    {
-                        string line = r.ReadQuoted();
-                        string[] splitLine = line.Split(',');
+                    fullError.Content = err.ToString();
 
-                        RainfallVM.Storms[i].PeakFlow = r.ParseDouble(splitLine[2].Trim('"'));
-                        RainfallVM.Storms[i].Runoff = r.ParseDouble(splitLine[3].Trim('"'));
-                    }
+                    var _ = await fullError.ShowAsync();
+
+                    BasicVM.Default();
+                    RainfallVM.Default();
                 }
             }
         }
 
         private void NewClicked(object sender, RoutedEventArgs e)
         {
-            BasicVM.Default();
-            RainfallVM.Default();
+            BasicVM.Clear();
+            RainfallVM.Clear();
         }
 
         private void ToggleToolbarClicked(object sender, RoutedEventArgs e)

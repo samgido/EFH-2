@@ -108,10 +108,14 @@ namespace EFH_2
             ComboBoxOperations.PopulateComboBox(BasicVM.Counties, _stateCountyDict[state].ToArray());
         }
 
-        private void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        public void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             int value = (int)sender.Value;
+            MainWindow.CheckDrainageArea(value);
+        }
 
+        public void CheckDrainageArea(int value)
+        {
             if (value >= 1 && value <= 2000)
             {
                 BasicVM.DrainageAreaStatus = "User entered.";
@@ -130,6 +134,11 @@ namespace EFH_2
         private void RunoffCurveNumberChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             int value = (int)sender.Value;
+            CheckRunoffCurveNumber(value);
+        }
+
+        public void CheckRunoffCurveNumber(int value)
+        {
             if (value >= 40 && value <= 98)
             {
                 BasicVM.RunoffCurveNumberStatus = "User entered.";

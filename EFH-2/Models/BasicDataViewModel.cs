@@ -153,7 +153,10 @@ namespace EFH_2
         public int DrainageArea
         {
             get { return this._drainageArea; }
-            set { this.SetProperty(ref this._drainageArea, value); }
+            set 
+            { 
+                this.SetProperty(ref this._drainageArea, value);
+            }
         }
 
         /// <summary>
@@ -272,15 +275,21 @@ namespace EFH_2
             By = "";
 
             DrainageArea = 0;
-            DrainageAreaStatus = MainWindow.ClearedMessage;
             RunoffCurveNumber = 0;
-            RunoffCurveNumberStatus = MainWindow.ClearedMessage;
             WatershedLength = 0;
-            WatershedLengthStatus = MainWindow.ClearedMessage;
             WatershedSlope = 0;
-            WatershedSlopeStatus = MainWindow.ClearedMessage;
             TimeOfConcentration = 0;
+        }
+
+        public void Clear()
+        {
+            Default();
+
             TimeOfConcentrationStatus = MainWindow.ClearedMessage;
+            WatershedSlopeStatus = MainWindow.ClearedMessage;
+            WatershedLengthStatus = MainWindow.ClearedMessage;
+            RunoffCurveNumberStatus = MainWindow.ClearedMessage;
+            DrainageAreaStatus = MainWindow.ClearedMessage;
         }
     }
 }
