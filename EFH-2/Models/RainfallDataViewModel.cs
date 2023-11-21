@@ -43,20 +43,20 @@ namespace EFH_2
             }
         }
 
+        private int _selectedRainfallDistributionTypeIndex = 0;
         /// <summary>
         /// The selected index of the rainfall distribution type combo box 
         /// </summary>
-        private int _selectedRainfallDistributionTypeIndex = 0;
         public int SelectedRainfallDistributionTypeIndex
         {
             get { return this._selectedRainfallDistributionTypeIndex; }
             set { this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value); }
         }
 
+        private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
         /// <summary>
         /// Collection that holds the rainfall distribution types as ComboBoxItems
         /// </summary>
-        private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
         public ObservableCollection<ComboBoxItem> RainfallDistributionTypes
         {
             get { return this._rainfallDistributionTypes; }
@@ -85,20 +85,20 @@ namespace EFH_2
             }
         }
 
+        private int _selectedDUHTypeIndex = 0;
         /// <summary>
         /// The selected index of the duh type combo box
         /// </summary>
-        private int _selectedDUHTypeIndex = 0;
         public int SelectedDUHTypeIndex
         {
             get { return this._selectedDUHTypeIndex; }
             set { this.SetProperty(ref this._selectedDUHTypeIndex, value); }
         }
 
+        private ObservableCollection<ComboBoxItem> _duhTypes = new();
         /// <summary>
         /// Collection that holds the duh types as ComboBoxItems
         /// </summary>
-        private ObservableCollection<ComboBoxItem> _duhTypes = new();
         public ObservableCollection<ComboBoxItem> DUHTypes
         {
             get { return this._duhTypes; }
@@ -161,6 +161,9 @@ namespace EFH_2
         }
 
         private string _rainfallDistributionTypeStatus = "";
+        /// <summary>
+        /// The current status of the rainfall distribution type field
+        /// </summary>
         public string RainfallDistributionTypeStatus
         {
             get { return this._rainfallDistributionTypeStatus; }
@@ -168,6 +171,9 @@ namespace EFH_2
         }
 
         private string _duhTypeStatus = "";
+        /// <summary>
+        /// The current status of the rainfall distribution type field
+        /// </summary>
         public string DUHTypeStatus
         {
             get { return this._duhTypeStatus; }
@@ -184,6 +190,9 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// Sets all fields the values their default values
+        /// </summary>
         public void Default()
         {
             SelectedRainfallDistributionType = MainWindow.ChooseMessage;
@@ -195,6 +204,9 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// Defaults all fields and displays a clear message to all status labels
+        /// </summary>
         public void Clear()
         {
             Default();

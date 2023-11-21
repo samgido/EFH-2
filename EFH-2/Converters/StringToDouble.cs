@@ -1,4 +1,8 @@
-﻿using Microsoft.UI.Xaml.Data;
+﻿/* StringToDouble.cs
+ * Author: Samuel Gido 
+ */
+
+using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +13,8 @@ namespace EFH_2
 {
     /// <summary>
     /// Converts a string to a double and vice versa
+    /// 
+    /// Used for Xaml conversions
     /// </summary>
     public class StringToDouble : IValueConverter
     {

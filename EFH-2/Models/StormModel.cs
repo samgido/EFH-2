@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* StormModel.cs
+ * Author: Samuel Gido
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,6 +68,9 @@ namespace EFH_2
             set { this.SetProperty(ref this._displayHydrograph, value); }
         }
 
+        /// <summary>
+        /// Sets all values to their defualt state
+        /// </summary>
         public void Default()
         {
             Frequency = 0;
