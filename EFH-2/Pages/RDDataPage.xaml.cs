@@ -119,16 +119,6 @@ namespace EFH_2
         }
 
         /// <summary>
-        /// Plots the hydrograph(s)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PlotHydrographsClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// Updates the rainfall distribution type status when it's changed
         /// </summary>
         /// <param name="sender"></param>

@@ -35,15 +35,17 @@ namespace EFH_2
         /// </summary>
         private Dictionary<string, List<string>> _stateCountyDict = new();
 
+        private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
+
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
-        public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
+        public BasicDataViewModel BasicVM => _mainWindow.BasicVM;
 
         /// <summary>
         /// The RainfallDataViewModel of the parent, main window
         /// </summary>
-        public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
+        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallVM;
 
         public BasicDataPage()
         {

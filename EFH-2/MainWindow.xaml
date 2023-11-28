@@ -45,11 +45,14 @@
             <MenuBarItem Title="Edit"
                          AccessKey="E">
                 <MenuFlyoutItem Text="Cut"
-                                AccessKey="T"/>
+                                AccessKey="T"
+                                Click="CutClicked"/>
                 <MenuFlyoutItem Text="Copy"
-                                AccessKey="C"/>
+                                AccessKey="C"
+                                Click="CopyClicked"/>
                 <MenuFlyoutItem Text="Paste"
-                                AccessKey="P"/>
+                                AccessKey="P"
+                                Click="PasteClicked"/>
             </MenuBarItem>
 
             <MenuBarItem Title="View"
@@ -117,15 +120,18 @@
 
             <AppBarButton
                 Icon="Cut"
-                Label="Cut"/>
+                Label="Cut"
+                Click="CutClicked"/>
 
             <AppBarButton
                 Icon="Copy"
-                Label="Copy"/>
+                Label="Copy"
+                Click="CopyClicked"/>
 
             <AppBarButton
                 Icon="Paste"
-                Label="Paste"/>
+                Label="Paste"
+                Click="PasteClicked"/>
 
             <AppBarSeparator/>
 

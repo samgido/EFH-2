@@ -99,7 +99,7 @@
             <TextBlock
                 x:Name="uxPeakFlowLabel"
                 RelativePanel.RightOf="uxDayRainLabel"
-                Text="Peak Flow"
+                Text="Peak Flow (cfs)"
                 Margin="100,0,0,0"
                 />
 
@@ -507,7 +507,6 @@
 
             <Button
                 x:Name="uxPlotHydrographs"
-                Click="PlotHydrographsClick"
                 RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographLabel"
                 RelativePanel.Below="uxSelectHydrographButton7"
                 Height="50"

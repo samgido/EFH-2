@@ -24,6 +24,7 @@ using Windows.UI.Popups;
 using WinRT;
 using Microsoft.UI;
 using System.Text;
+using Windows.ApplicationModel.DataTransfer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -47,6 +48,10 @@ namespace EFH_2
 
         private const string _importedStatusMessage = "Imported from file.";
 
+        public TextBox? _previousFocusedTextBox { get; set; }
+
+        public NumberBox? _previousFocusedNumberBox { get; set; }
+
         /// <summary>
         /// View model for the basic data page
         /// </summary>
@@ -61,6 +66,7 @@ namespace EFH_2
         {
             this.InitializeComponent();
             this.Activated += MainWindowActivated;
+            FocusManager.GotFocus += FocusManager_GotFocus;
 
             this.Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
             this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
@@ -77,8 +83,20 @@ namespace EFH_2
 
         }
 
+        private void FocusManager_GotFocus(object sender, FocusManagerGotFocusEventArgs e)
+        { 
+             if (e.NewFocusedElement is TextBox textBox)
+             {
+                _previousFocusedTextBox = textBox;
+                _previousFocusedNumberBox = null;
 
-
+             }       
+             else if (e.NewFocusedElement is NumberBox numberBox)
+            {
+                _previousFocusedNumberBox = numberBox;
+                _previousFocusedTextBox = null;
+            }
+        }
 
         private void MainWindowActivated(object sender, WindowActivatedEventArgs args)
         {
@@ -349,6 +367,68 @@ namespace EFH_2
         private void ExitClicked(object sender, RoutedEventArgs e)
         {
             App.Current.Exit();
+        }
+
+        private void CutClicked(object sender, RoutedEventArgs e)
+        {
+            DataPackage dataPackage = new();
+            dataPackage.RequestedOperation = DataPackageOperation.Move;
+
+            string text = "";
+            if (_previousFocusedNumberBox != null)
+            {
+                text = _previousFocusedNumberBox.Value.ToString();
+
+                string numText = _previousFocusedNumberBox.Value.ToString();
+                numText.Replace(text, "");
+
+                double val = 0;
+                double.TryParse(numText, out val);
+                _previousFocusedNumberBox.Value = val;
+
+            }
+            else if (_previousFocusedTextBox != null)
+            {
+                text = _previousFocusedTextBox.SelectedText;
+                int index = _previousFocusedTextBox.Text.IndexOf(text);
+
+                _previousFocusedTextBox.Text = _previousFocusedTextBox.Text.Replace(text, "");
+                _previousFocusedTextBox.Select(index, 0);
+            }
+            dataPackage.SetText(text);
+            Clipboard.SetContent(dataPackage);
+        }
+
+        private void CopyClicked(object sender, RoutedEventArgs e)
+        {
+            DataPackage dataPackage = new();
+            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            dataPackage.SetText(_previousFocusedTextBox.SelectedText);
+            Clipboard.SetContent(dataPackage);
+        }
+
+        private async void PasteClicked(object sender, RoutedEventArgs e)
+        {
+            DataPackageView dataPackageView = Clipboard.GetContent();
+
+            if (dataPackageView.Contains(StandardDataFormats.Text) is true)
+            {
+                int index = _previousFocusedTextBox.SelectionStart;
+                string replace = await dataPackageView.GetTextAsync();
+
+                if (_previousFocusedTextBox.SelectionLength == 0)
+                {
+                    _previousFocusedTextBox.Text = _previousFocusedTextBox.Text.Insert(index, replace);
+                }
+                else
+                {
+                    string initial = _previousFocusedTextBox.Text;
+                    initial = initial.Replace(_previousFocusedTextBox.SelectedText, replace);
+
+                    _previousFocusedTextBox.Text = initial;
+                }
+                _previousFocusedTextBox.SelectionStart = index + replace.Length;
+            }
         }
     }
 
