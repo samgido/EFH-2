@@ -146,11 +146,11 @@ namespace EFH_2
             set { this.SetProperty(ref this._date, value); }
         }
 
-        private int _drainageArea = 0;
+        private double _drainageArea = 0;
         /// <summary>
         /// The drainge area field 
         /// </summary>
-        public int DrainageArea
+        public double DrainageArea
         {
             get { return this._drainageArea; }
             set { this.SetProperty(ref this._drainageArea, value); }
@@ -187,11 +187,11 @@ namespace EFH_2
         /// </summary>
         public static int DrainageAreaMax => 2000;
 
-        private float _curveNumber = 0;
+        private double _curveNumber = 0;
         /// <summary>
         /// The curve number field
         /// </summary>
-        public float RunoffCurveNumber
+        public double RunoffCurveNumber
         {
             get { return this._curveNumber; }
             set { this.SetProperty(ref this._curveNumber, value); }
@@ -228,11 +228,11 @@ namespace EFH_2
         /// </summary>
         public static int RunoffCurveNumberMax => 98;
 
-        private int _watershedLength = 0;
+        private double _watershedLength = 0;
         /// <summary>
         /// The watershed length field
         /// </summary>
-        public int WatershedLength
+        public double WatershedLength
         {
             get { return this._watershedLength; }
             set { this.SetProperty(ref this._watershedLength, value); }

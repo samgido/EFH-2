@@ -25,6 +25,11 @@ using WinRT;
 using Microsoft.UI;
 using System.Text;
 using Windows.ApplicationModel.DataTransfer;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using QuestPDF.Previewer;
+using EFH_2.Misc;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,8 +54,6 @@ namespace EFH_2
         private const string _importedStatusMessage = "Imported from file.";
 
         public TextBox? _previousFocusedTextBox { get; set; }
-
-        public NumberBox? _previousFocusedNumberBox { get; set; }
 
         /// <summary>
         /// View model for the basic data page
@@ -84,17 +87,10 @@ namespace EFH_2
         }
 
         private void FocusManager_GotFocus(object sender, FocusManagerGotFocusEventArgs e)
-        { 
-             if (e.NewFocusedElement is TextBox textBox)
-             {
-                _previousFocusedTextBox = textBox;
-                _previousFocusedNumberBox = null;
-
-             }       
-             else if (e.NewFocusedElement is NumberBox numberBox)
+        {
+            if (e.NewFocusedElement is TextBox textBox)
             {
-                _previousFocusedNumberBox = numberBox;
-                _previousFocusedTextBox = null;
+                _previousFocusedTextBox = textBox;
             }
         }
 
@@ -375,19 +371,7 @@ namespace EFH_2
             dataPackage.RequestedOperation = DataPackageOperation.Move;
 
             string text = "";
-            if (_previousFocusedNumberBox != null)
-            {
-                text = _previousFocusedNumberBox.Value.ToString();
-
-                string numText = _previousFocusedNumberBox.Value.ToString();
-                numText.Replace(text, "");
-
-                double val = 0;
-                double.TryParse(numText, out val);
-                _previousFocusedNumberBox.Value = val;
-
-            }
-            else if (_previousFocusedTextBox != null)
+            if (_previousFocusedTextBox != null)
             {
                 text = _previousFocusedTextBox.SelectedText;
                 int index = _previousFocusedTextBox.Text.IndexOf(text);
@@ -430,108 +414,11 @@ namespace EFH_2
                 _previousFocusedTextBox.SelectionStart = index + replace.Length;
             }
         }
-    }
 
-    /// <summary>
-    /// Helper class that writes to the save file
-    /// </summary>
-    internal class Writer
-    {
-        /// <summary>
-        /// Writes to a file
-        /// </summary>
-        private readonly StreamWriter _writer;
-
-        public Writer(StreamWriter w)
+        private void PrintClicked(object sender, RoutedEventArgs e)
         {
-            this._writer = w;
-        }
-
-        /// <summary>
-        /// Writes an object's .ToString(), wrapped with quotes, to the file,
-        /// optionally moves the writer to the next line
-        /// </summary>
-        /// <param name="s">Object who's ToString will be written</param>
-        /// <param name="next">Whether or not the writer moves to the next line</param>
-        public void WriteQuoted(object s, bool next)
-        {
-            string content = '"' + s.ToString() + '"';
-            this._writer.Write(content);
-            if(next) { _writer.WriteLine(""); }
-        }
-
-        /// <summary>
-        /// Writes an object's .ToString() to the file,
-        /// optionally moves the writer to the next line
-        /// </summary>
-        /// <param name="s">Object who's ToString will be written</param>
-        /// <param name="next">Whether or not the writer moves to the next line</param>
-        public void Write(object s, bool next)
-        {
-            this._writer.Write(s.ToString());
-            if(next) { _writer.WriteLine(""); }
+            FileOperations.PrintData(BasicVM, RainfallVM);
         }
     }
 
-    internal class Reader
-    {
-        private StreamReader _r;
-
-        public Reader(StreamReader r)
-        {
-            _r = r;
-        }
-
-        /// <summary>
-        /// Reads a line from the reader, but removes at the beginning and end of the line
-        /// </summary>
-        /// <returns>The unquoted line</returns>
-        public string ReadQuoted()
-        {
-            string line = this._r.ReadLine();
-
-            line.Remove(0);
-            line.Remove(line.Length - 1);
-
-            line = line.Replace("\"", "");
-
-            return line.Trim();
-        }
-
-        /// <summary>
-        /// Reads a line from the reader
-        /// </summary>
-        /// <returns></returns>
-        public string Read()
-        {
-            return this._r.ReadLine().Trim();
-        }
-
-        public int ParseInt(string s)
-        {
-            if (Int32.TryParse(s, out var temp))
-            {
-                return temp;
-            }
-            else { return 0; }
-        }
-
-        public double ParseDouble(string s)
-        {
-            if (double.TryParse(s, out var temp))
-            {
-                return temp;
-            }
-            else { return 0; }
-        }
-
-        public float ParseFloat(string s)
-        {
-            if (float.TryParse(s, out var temp))
-            {
-                return temp;
-            }
-            else { return 0; }
-        }
-    }
 }

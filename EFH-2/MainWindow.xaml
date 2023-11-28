@@ -114,7 +114,8 @@
 
             <AppBarButton
                 Icon="Print"
-                Label="Print"/>
+                Label="Print"
+                Click="PrintClicked"/>
 
             <AppBarSeparator/>
 

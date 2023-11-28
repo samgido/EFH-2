@@ -15,20 +15,20 @@ namespace EFH_2
     /// </summary>
     public class StormModel : BindableBase
     {
+        private double _frequency = 0;
         /// <summary>
         /// The storm's frequency field
         /// </summary>
-        private int _frequency = 0;
-        public int Frequency
+        public double Frequency
         {
             get { return this._frequency; }
             set { this.SetProperty(ref this._frequency, value); }
         }
 
+        private double _dayRain = 0;
         /// <summary>
         /// The storm's "24-HR Rain" field
         /// </summary>
-        private double _dayRain = 0;
         public double DayRain
         {
             get { return this._dayRain; }
@@ -38,30 +38,30 @@ namespace EFH_2
             } 
         }
 
+        private double _peakFlow = 0;
         /// <summary>
         /// The storm's peak flow field
         /// </summary>
-        private double _peakFlow = 0;
         public double PeakFlow
         {
             get { return this._peakFlow; }
             set { this.SetProperty(ref this._peakFlow, value); }
         }
 
+        private double _runoff = 0;
         /// <summary>
         /// The storm's runoff field
         /// </summary>
-        private double _runoff = 0;
         public double Runoff
         {
             get { return this._runoff; }
             set { this.SetProperty(ref this._runoff, value); }
         }
 
+        private bool _displayHydrograph = false;
         /// <summary>
         /// Whether or not this storm will be displayed on the hydrograph
         /// </summary>
-        private bool _displayHydrograph = false;
         public bool DisplayHydrograph
         {
             get { return this._displayHydrograph; }
