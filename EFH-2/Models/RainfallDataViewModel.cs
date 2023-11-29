@@ -19,15 +19,17 @@ namespace EFH_2
     {
 
         public int DayRainMax => 26;
-        
+
+        private string _selectedRainfallDistributionType = "";
         /// <summary>
         /// The selected rainfall distribution type
         /// </summary>
         public string SelectedRainfallDistributionType
         {
-            get { return this.SelectedRainfallDistributionType; }
+            get { return this._selectedRainfallDistributionType; }
             set
             {
+                _selectedRainfallDistributionType = value;
                 for (int i = 0; i < _rainfallDistributionTypes.Count; i++)
                 {
                     var c = _rainfallDistributionTypes[i];
@@ -63,14 +65,17 @@ namespace EFH_2
             set { this.SetProperty(ref this._rainfallDistributionTypes, value); }
         }
 
+        private string _selectedDUHType = "";
         /// <summary>
         /// The selected dimensionless unit hydrograph type
         /// </summary>
         public string SelectedDUHType
         {
-            get { return this.SelectedDUHType; }
+            get { return this._selectedDUHType; }
             set
             {
+                _selectedDUHType = value;
+
                 for(int i = 0; i < _duhTypes.Count; i++)
                 {
                     var c = _duhTypes[i];

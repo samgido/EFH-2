@@ -30,14 +30,16 @@ namespace EFH_2
             set { this.SetProperty(ref this._client, value); }
         }
 
+        private string _selectedState = "";
         /// <summary>
         /// The selected state in the state ComboBox
         /// </summary>
         public string SelectedState
         {
-            get { return this.SelectedState; }
+            get { return this._selectedState; }
             set 
-            { 
+            {
+                _selectedState = value;
                 for(int i = 0; i < _states.Count; i++)
                 {
                     var c = _states[i];
@@ -72,12 +74,13 @@ namespace EFH_2
             set { this.SetProperty(ref this._states, value); }
         }
 
+        private string _selectedCounty = "";
         /// <summary>
         /// The selected county in the county ComboBox
         /// </summary>
         public string SelectedCounty
         {
-            get { return this.SelectedCounty; }
+            get { return this._selectedCounty; }
             set 
             { 
                 for(int i = 0; i < _counties.Count; i++)
