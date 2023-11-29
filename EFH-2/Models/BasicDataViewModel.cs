@@ -20,6 +20,7 @@ namespace EFH_2
     /// </summary>
     public class BasicDataViewModel : BindableBase
     {
+
         private string _client = "";
         /// <summary>
         /// The client's title
@@ -189,7 +190,7 @@ namespace EFH_2
                 DrainageArea = 0;
             }
 
-            DrainageAreaStatus = "Drainage area must be in the range 1 to 2000 acres!";
+            DrainageAreaStatus = MainWindow.DrainageAreaInvalidEntryMessage;
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace EFH_2
                 RunoffCurveNumber = 0;
             }
 
-            RunoffCurveNumberStatus = "Curve number must be in the range 40 to 98!";
+            RunoffCurveNumberStatus = MainWindow.RunoffCurveNumberInvalidEntryMessage;
         }
 
         /// <summary>
@@ -271,7 +272,7 @@ namespace EFH_2
                 WatershedLength = 0;
             }
             
-            WatershedLengthStatus = "Watershed length must be in the range 200 to 26000 feet!";
+            WatershedLengthStatus = MainWindow.WatershedLengthInvalidEntryMessage;
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace EFH_2
                 WatershedSlope = 0;
             }
             
-            WatershedSlopeStatus = "Watershed slope must be the range 0.5 and 64 percent!";
+            WatershedSlopeStatus = MainWindow.WatershedSlopeInvalidEntryMessage;
         }
 
         /// <summary>
@@ -353,7 +354,7 @@ namespace EFH_2
                 TimeOfConcentration = 0;
             }
 
-            TimeOfConcentrationStatus = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
+            TimeOfConcentrationStatus = MainWindow.TimeOfConcentrationInvalidEntryMessage;
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ namespace EFH_2.Misc
 
     public class FileOperations
     {
+        private const string InvalidEntryReplacerMessage = "Invalid Entry";
 
         public static void PrintData(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM, string fn)
         {
@@ -78,7 +79,6 @@ namespace EFH_2.Misc
 
                         page.Content().Layers(layers =>
                         {
-
                             layers.PrimaryLayer();
 
                             layers.Layer().Table(table =>
@@ -334,43 +334,58 @@ namespace EFH_2.Misc
                                 table.Cell().Row(8).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span(BasicVM.DrainageAreaStatus);
+                                    string msg = BasicVM.DrainageAreaStatus;
+
+                                    if(msg == MainWindow.DrainageAreaInvalidEntryMessage) { msg = InvalidEntryReplacerMessage; }
+                                    text.Span("(" + msg + ")");
                                 });
 
                                 table.Cell().Row(9).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span(BasicVM.RunoffCurveNumberStatus);
+                                    string msg = BasicVM.RunoffCurveNumberStatus;
+
+                                    if(msg == MainWindow.RunoffCurveNumberInvalidEntryMessage) { msg = InvalidEntryReplacerMessage; }
+                                    text.Span("(" + msg + ")");
                                 });
 
                                 table.Cell().Row(10).Column(5).ColumnSpan(2).Text(text =>
                                 {
-                                    text.AlignLeft();
-                                    text.Span(BasicVM.WatershedLengthStatus);
+                                    text.AlignLeft(); 
+                                    string msg = BasicVM.WatershedLengthStatus;
+
+                                    if(msg == MainWindow.WatershedLengthInvalidEntryMessage) { msg = InvalidEntryReplacerMessage; }
+                                    text.Span("(" + msg + ")");
                                 });
 
                                 table.Cell().Row(11).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span(BasicVM.WatershedSlopeStatus);
+                                    string msg = BasicVM.WatershedSlopeStatus;
+
+                                    if(msg == MainWindow.WatershedSlopeInvalidEntryMessage) { msg = InvalidEntryReplacerMessage; }
+                                    text.Span("(" + msg + ")");
                                 });
 
                                 table.Cell().Row(12).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span(BasicVM.TimeOfConcentrationStatus);
+                                    string msg = BasicVM.TimeOfConcentrationStatus;
+
+                                    if(msg == MainWindow.TimeOfConcentrationInvalidEntryMessage) { msg = InvalidEntryReplacerMessage; }
+                                    text.Span("(" + msg + ")");
                                 });
 
                                 table.Cell().Row(13).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span(RainfallVM.RainfallDistributionTypeStatus);
+                                    text.Span("(" + RainfallVM.RainfallDistributionTypeStatus + ")");
                                 });
 
                                 table.Cell().Row(14).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span(RainfallVM.DUHTypeStatus);
+                                    text.Span("(" + RainfallVM.DUHTypeStatus + ")");
                                 });
 
                             });
