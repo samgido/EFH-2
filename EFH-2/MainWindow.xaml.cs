@@ -415,9 +415,18 @@ namespace EFH_2
             }
         }
 
-        private void PrintClicked(object sender, RoutedEventArgs e)
+        private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-            FileOperations.PrintData(BasicVM, RainfallVM);
+            FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.FileTypeChoices.Add("pdf", new List<string> { ".pdf" });
+
+            var window = new Microsoft.UI.Xaml.Window();
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+
+            FileOperations.PrintData(BasicVM, RainfallVM, file.Path);
         }
     }
 

@@ -15,11 +15,14 @@ namespace EFH_2.Misc
     public class FileOperations
     {
 
-        public static void PrintData(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM)
+        public static void PrintData(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM, string fn)
         {
             QuestPDF.Settings.License = LicenseType.Community;
             
-            Document.Merge(GeneratePageOne(BasicVM, RainfallVM), GeneratePageTwo(BasicVM, RainfallVM)).GeneratePdf("C:\\Users\\samue\\Downloads\\tesf.pdf");
+            Document.Merge(
+                GeneratePageOne(BasicVM, RainfallVM), 
+                GeneratePageTwo(BasicVM, RainfallVM))
+                .GeneratePdf(fn);
 
 
             static Document GeneratePageOne(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM)
@@ -146,49 +149,52 @@ namespace EFH_2.Misc
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("Samual Gido");
+                                    text.Span(BasicVM.Client);
                                 });
 
                                 table.Cell().Row(2).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("County Field");
+                                    text.Span(BasicVM.SelectedCounty);
                                 });
 
                                 table.Cell().Row(3).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("Practice Field");
+                                    text.Span(BasicVM.Practice);
                                 });
 
                                 table.Cell().Row(4).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("By Field");
+                                    text.Span(BasicVM.By);
                                 });
 
                                 table.Cell().Row(5).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("Checked by field");
+                                    text.Span("_____________");
                                 });
 
                                 table.Cell().Row(2).Column(6).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("state field");
+                                    text.Span(BasicVM.SelectedState);
                                 });
 
                                 table.Cell().Row(4).Column(6).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("date field");
+
+                                    DateTime date = BasicVM.Date.Date;
+
+                                    text.Span(date.ToString("MM/dd/yyyy"));
                                 });
 
                                 table.Cell().Row(5).Column(6).Text(text =>
@@ -250,43 +256,47 @@ namespace EFH_2.Misc
                                 table.Cell().Row(8).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("DA field");
+                                    text.Span(BasicVM.DrainageArea.ToString());
                                 });
 
                                 table.Cell().Row(9).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("curve num field");
+                                    text.Span(BasicVM.RunoffCurveNumber.ToString());
                                 });
 
                                 table.Cell().Row(10).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("wshed length field");
+                                    text.Span(BasicVM.WatershedLength.ToString());
                                 });
 
                                 table.Cell().Row(11).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("wshed slope field");
+                                    text.Span(BasicVM.WatershedSlope.ToString());
                                 });
 
                                 table.Cell().Row(12).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("TOC field");
+
+                                    double toc = BasicVM.TimeOfConcentration;
+                                    toc = Math.Round(toc, 3);
+
+                                    text.Span(toc.ToString());
                                 });
 
                                 table.Cell().Row(13).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("rd type field");
+                                    text.Span(RainfallVM.SelectedRainfallDistributionType);
                                 });
 
                                 table.Cell().Row(14).Column(2).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignRight();
-                                    text.Span("duh type field");
+                                    text.Span(RainfallVM.SelectedDUHType);
                                 });
 
                                 // basic data unit labels
@@ -324,43 +334,43 @@ namespace EFH_2.Misc
                                 table.Cell().Row(8).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("DA label");
+                                    text.Span(BasicVM.DrainageAreaStatus);
                                 });
 
                                 table.Cell().Row(9).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("Curve label");
+                                    text.Span(BasicVM.RunoffCurveNumberStatus);
                                 });
 
                                 table.Cell().Row(10).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("wshed length label");
+                                    text.Span(BasicVM.WatershedLengthStatus);
                                 });
 
                                 table.Cell().Row(11).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("wshed slope label");
+                                    text.Span(BasicVM.WatershedSlopeStatus);
                                 });
 
                                 table.Cell().Row(12).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("TOC label");
+                                    text.Span(BasicVM.TimeOfConcentrationStatus);
                                 });
 
                                 table.Cell().Row(13).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("rd type label");
+                                    text.Span(RainfallVM.RainfallDistributionTypeStatus);
                                 });
 
                                 table.Cell().Row(14).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("duh type label");
+                                    text.Span(RainfallVM.DUHTypeStatus);
                                 });
 
                             });
@@ -443,12 +453,18 @@ namespace EFH_2.Misc
                                         text.ParagraphSpacing(4f);
                                         text.AlignRight();
 
-                                        text.Span("freq");
+                                        double freq = RainfallVM.Storms[i].Frequency;
+                                        freq = Math.Round(freq, 3);
+
+                                        text.Span(freq.ToString());
                                         text.Span("  ");
 
                                         text.EmptyLine();
 
-                                        text.Span("day");
+                                        double dayRain = RainfallVM.Storms[i].DayRain;
+                                        dayRain = Math.Round(dayRain, 3);
+
+                                        text.Span(dayRain.ToString());
                                         text.Span("  ");
 
                                     });
@@ -461,7 +477,7 @@ namespace EFH_2.Misc
                                         text.ParagraphSpacing(4f);
                                         text.AlignRight();
 
-                                        text.Span("runoff");
+                                        text.Span(RainfallVM.Storms[i].Runoff.ToString());
                                         text.Span("  ");
 
                                         text.EmptyLine();
@@ -474,7 +490,7 @@ namespace EFH_2.Misc
                                     {
                                         text.AlignCenter();
 
-                                        text.Span("cfs");
+                                        text.Span(RainfallVM.Storms[i].PeakFlow.ToString());
                                     });
 
                                 }
@@ -613,49 +629,52 @@ namespace EFH_2.Misc
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("Samual Gido");
+                                    text.Span(BasicVM.Client);
                                 });
 
                                 table.Cell().Row(2).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("County Field");
+                                    text.Span(BasicVM.SelectedCounty);
                                 });
 
                                 table.Cell().Row(3).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("Practice Field");
+                                    text.Span(BasicVM.Practice);
                                 });
 
                                 table.Cell().Row(4).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("By Field");
+                                    text.Span(BasicVM.By);
                                 });
 
                                 table.Cell().Row(5).Column(2).ColumnSpan(3).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("Checked by field");
+                                    text.Span("______________________");
                                 });
 
                                 table.Cell().Row(2).Column(6).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("state field");
+                                    text.Span(BasicVM.SelectedState);
                                 });
 
                                 table.Cell().Row(4).Column(6).Text(text =>
                                 {
                                     text.AlignLeft();
                                     text.Span("  ");
-                                    text.Span("date field");
+
+                                    DateTime date = BasicVM.Date.Date;
+
+                                    text.Span(date.ToString("MM/dd/yyyy"));
                                 });
 
                                 table.Cell().Row(5).Column(6).Text(text =>
@@ -732,7 +751,7 @@ namespace EFH_2.Misc
 
                                     text.EmptyLine();
 
-                                    text.Span("  ");
+                                    text.Span("     ");
                                     text.Span("Row crops");
 
                                     text.Span("                   ");
@@ -764,7 +783,11 @@ namespace EFH_2.Misc
                                     text.Span("-");
                                 });
 
-                                table.Cell().Column(2).Row(9).Border(1).Height(20);
+                                table.Cell().Column(2).Row(9).Border(1).Height(20).Text(text =>
+                                {
+                                    text.AlignCenter();
+                                    text.Span("Total Area (by Hydrological Soil Group");
+                                });
 
                                 table.Cell().Column(3).Row(9).Border(1).Text(text =>
                                 {
