@@ -39,13 +39,13 @@ namespace EFH_2
             get { return this._selectedState; }
             set 
             {
-                _selectedState = value;
                 for(int i = 0; i < _states.Count; i++)
                 {
                     var c = _states[i];
                     if (c.Content as string == value)
                     {
                         SelectedStateIndex = i;
+                        this._selectedState = value;
                         return;
                     }
                 }
@@ -61,7 +61,11 @@ namespace EFH_2
         public int SelectedStateIndex
         {
             get { return this._selectedStateIndex; }
-            set { this.SetProperty(ref this._selectedStateIndex, value); }
+            set 
+            { 
+                this.SetProperty(ref this._selectedStateIndex, value);
+                this._selectedState = _states[_selectedStateIndex].Content.ToString();
+            }
         }
 
         private ObservableCollection<ComboBoxItem> _states = new();
@@ -82,13 +86,15 @@ namespace EFH_2
         {
             get { return this._selectedCounty; }
             set 
-            { 
+            {
+                
                 for(int i = 0; i < _counties.Count; i++)
                 {
                     var c = _counties[i];
                     if (c.Content as string == value)
                     {
                         SelectedCountyIndex = i;
+                        this._selectedCounty = value;
                         return;
                     }
                 }
@@ -104,7 +110,12 @@ namespace EFH_2
         public int SelectedCountyIndex
         {
             get { return this._selectedCountyIndex; }
-            set { this.SetProperty(ref this._selectedCountyIndex, value); }
+            set
+            {
+                this.SetProperty(ref this._selectedCountyIndex, value);
+                if(value == -1) { return; }
+                this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
+            }
         }
 
         private ObservableCollection<ComboBoxItem> _counties = new();
