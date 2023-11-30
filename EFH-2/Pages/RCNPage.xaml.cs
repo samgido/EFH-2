@@ -30,6 +30,7 @@ namespace EFH_2
         public RCNPage()
         {
             this.InitializeComponent();
+
         }
     }
 }

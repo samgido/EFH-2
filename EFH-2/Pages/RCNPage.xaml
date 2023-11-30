@@ -10,7 +10,73 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
 
-    <Grid>
+    <StackPanel
+        Background="Black">
 
-    </Grid>
+        <RadioButtons
+            x:Name="uxCoverDescriptionButtons"
+            MaxColumns="5"
+            Margin="60,0,0,0">
+
+            <RadioButton Content="Urban Area"
+                         />
+            <RadioButton Content="Developing Urban"
+                         />
+            <RadioButton Content="Cultivated Agriculture"
+                         />
+            <RadioButton Content="Other Agriculture"
+                         />
+            <RadioButton Content="Arid Rangeland"
+                         />
+        </RadioButtons>
+
+        
+
+        <RelativePanel>
+
+            <RadioButtons
+                Margin="60,0,0,0"
+                x:Name="uxRCNDataConversionButtons">
+                <RadioButton Content="Acres"
+                             x:Name="uxAcresButton"/>
+                <RadioButton Content="Percentage"/>
+            </RadioButtons>
+
+            <RelativePanel
+                x:Name="labels"
+                RelativePanel.AlignVerticalCenterWith="uxRCNDataConversionButtons"
+                RelativePanel.RightOf="uxRCNDataConversionButtons"
+                Padding="0,8,0,0">
+
+                <TextBlock
+                    x:Name="uxWeightedCurveNumberLabel"
+                    Text="Weighted Curve Number = "/>
+
+                <TextBlock
+                    x:Name="uxAccumulatedAreaLabel"
+                    Text="Accumulated Area (%) = "
+                    RelativePanel.Below="uxWeightedCurveNumberLabel"
+                    Padding="0,22,0,0"/>
+
+            </RelativePanel>
+
+            <Button
+                x:Name="uxAcceptButton"
+                Content="Accept"
+                RelativePanel.RightOf="labels"
+                RelativePanel.AlignVerticalCenterWith="labels"
+                Margin="100,0,0,0"/>
+
+            <Button
+                x:Name="uxClearButton"
+                Content="Clear"
+                RelativePanel.RightOf="uxAcceptButton"
+                RelativePanel.AlignVerticalCenterWith="uxAcceptButton"
+                Margin="100,0,0,0"/>
+
+        </RelativePanel>
+        
+    </StackPanel>
+    
+
 </Page>
