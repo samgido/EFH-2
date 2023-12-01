@@ -71,6 +71,8 @@ namespace EFH_2
         /// </summary>
         public RainfallDataViewModel RainfallVM { get; set; }
 
+        public RCNDataViewModel RCNVM { get; set; }
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -89,6 +91,7 @@ namespace EFH_2
 
             BasicVM = new();
             RainfallVM = new();
+            RCNVM = new();
 
         }
 
@@ -434,6 +437,24 @@ namespace EFH_2
 
             FileOperations.PrintData(BasicVM, RainfallVM, file.Path);
         }
-    }
 
+        private async void ShowSlopeCalculatorClick(object sender, RoutedEventArgs e)
+        {
+            /*
+            Window newWindow = new Window();
+            newWindow.Activate();
+            */
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "Calculator",
+                Content = new SlopeCalcPage(),
+                CloseButtonText = "Cancel",
+                PrimaryButtonText = "OK",
+                XamlRoot = this.Content.XamlRoot
+            };
+
+            await dialog.ShowAsync();
+        }
+    }
 }

@@ -6,17 +6,19 @@
     xmlns:local="using:EFH_2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
 
-    <StackPanel
+    <RelativePanel
         Background="Black">
 
         <RadioButtons
             x:Name="uxCoverDescriptionButtons"
             MaxColumns="5"
-            Margin="60,0,0,0">
+            Margin="60,0,0,0"
+            RelativePanel.AlignTopWithPanel="True">
 
             <RadioButton Content="Urban Area"
                          />
@@ -30,9 +32,20 @@
                          />
         </RadioButtons>
 
-        
+        <Viewbox
+            x:Name="uxdataGridViewBox"
+            RelativePanel.Below="uxCoverDescriptionButtons"
+            RelativePanel.Above="uxConversionSettings">
+            <controls:DataGrid>
+                
+            </controls:DataGrid>
+        </Viewbox>
 
-        <RelativePanel>
+        <RelativePanel
+            x:Name="uxConversionSettings"
+            RelativePanel.AlignBottomWithPanel="True"
+            Padding="0,0,0,10"
+            >
 
             <RadioButtons
                 Margin="60,0,0,0"
@@ -76,7 +89,7 @@
 
         </RelativePanel>
         
-    </StackPanel>
+    </RelativePanel>
     
 
 </Page>

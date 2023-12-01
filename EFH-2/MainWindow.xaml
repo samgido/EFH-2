@@ -10,12 +10,13 @@
 
     
     
-    <StackPanel
+    <RelativePanel
         x:Name="uxRootPanel"
-        Orientation="Vertical"
         Background="Black">
 
-        <MenuBar>
+        <MenuBar
+            x:Name="uxMainWindowMenuBar"
+            RelativePanel.AlignTopWithPanel="True">
             <MenuBarItem Title="File"
                          AccessKey="F">
                 <MenuFlyoutItem Text="New"
@@ -90,6 +91,7 @@
             x:Name="uxToolbar"
             FlowDirection="LeftToRight"
             DefaultLabelPosition="Bottom"
+            RelativePanel.Below="uxMainWindowMenuBar"
             >
 
             <AppBarButton
@@ -138,7 +140,8 @@
 
             <AppBarButton
                 x:Name="uxAverageSlopeCalulatorButton"
-                Label="Slope Calculator">
+                Label="Slope Calculator"
+                Click="ShowSlopeCalculatorClick">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xEB3C;"/>
                 </AppBarButton.Icon>
@@ -166,7 +169,7 @@
             IsBackButtonVisible="Collapsed" 
             IsSettingsVisible="False"
             SelectionChanged="NavigationViewSelectionChanged"
-            Background="Transparent"
+            RelativePanel.Below="uxToolbar"
             >
             <NavigationView.MenuItems>
                 <NavigationViewItem 
@@ -195,12 +198,20 @@
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
-            <Frame
-                x:Name="contentFrame"
-                Background="Black"
-                CacheSize="4">
-            </Frame>
+
 
         </NavigationView>
-    </StackPanel>
+
+        <Frame
+            x:Name="contentFrame"
+            RelativePanel.Below="uxNavigationView"
+            RelativePanel.AlignBottomWithPanel="True"
+            Background="Black"
+            CacheSize="4">
+
+        </Frame>
+
+
+    </RelativePanel>
+
 </Window>

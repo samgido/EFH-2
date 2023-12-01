@@ -9,8 +9,6 @@ namespace EFH_2
     public class RCNDataViewModel : BindableBase
     {
 
-        
-
 
 
     }
