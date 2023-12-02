@@ -443,27 +443,15 @@ namespace EFH_2
             Window newWindow = new Window();
 
             newWindow.Content = new SlopeCalcPage();
+            newWindow.Title = "Average Slope Calculator";
             newWindow.Activate();
+
             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 500, Width = 650 });
 
-            /*
-            SlopeCalcPage calculatorPage = new();
-
-            ContentDialog dialog = new ContentDialog()
-            {
-                Title = "Calculator",
-                Content = calculatorPage,
-                CloseButtonText = "Cancel",
-                PrimaryButtonText = "Ok",
-                XamlRoot = this.Content.XamlRoot
-            };
-
-            await dialog.ShowAsync();
-            */
         }
 
         private async void HSGSearchClicked(object sender, RoutedEventArgs e)
