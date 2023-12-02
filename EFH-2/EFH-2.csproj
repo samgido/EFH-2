@@ -13,6 +13,7 @@
     <ApplicationIcon>Assets\EFH2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="BlankPage1.xaml" />
     <None Remove="Pages\SlopeCalcPage.xaml" />
     <None Remove="RCNPage.xaml" />
     <None Remove="RDDPage.xaml" />
@@ -43,6 +44,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="BlankPage1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="RCNPage.xaml">

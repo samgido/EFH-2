@@ -440,21 +440,35 @@ namespace EFH_2
 
         private async void ShowSlopeCalculatorClick(object sender, RoutedEventArgs e)
         {
-            /*
             Window newWindow = new Window();
+
+            newWindow.Content = new SlopeCalcPage();
             newWindow.Activate();
-            */
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 500, Width = 650 });
+
+            /*
+            SlopeCalcPage calculatorPage = new();
 
             ContentDialog dialog = new ContentDialog()
             {
                 Title = "Calculator",
-                Content = new SlopeCalcPage(),
+                Content = calculatorPage,
                 CloseButtonText = "Cancel",
-                PrimaryButtonText = "OK",
+                PrimaryButtonText = "Ok",
                 XamlRoot = this.Content.XamlRoot
             };
 
             await dialog.ShowAsync();
+            */
+        }
+
+        private void HSGSearchClicked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -3,27 +3,32 @@
     x:Class="EFH_2.SlopeCalcPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:EFH_2.Pages"
+    xmlns:local="using:EFH_2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
 
     <RelativePanel
-        Height="200"
-        Width="400"
+        Padding="0,30,0,0"
+        HorizontalAlignment="Center"
         >
 
         <TextBlock
             x:Name="uxInfoText"
             Text="Step 1 - Measure the lengths of all the contours within the watershed boundary and sum their total."
             TextWrapping="Wrap"
+            HorizontalAlignment="Center"
+            HorizontalTextAlignment="Center"
+            Padding="10,0,10,0"
             />
 
         <TextBlock
             x:Name="uxContourLengthLabel"
             Text="Length of contours"
             RelativePanel.Below="uxInfoText"
+            RelativePanel.LeftOf="uxContourLengthBox"
+            RelativePanel.AlignVerticalCenterWith="uxContourLengthBox"
             Padding="20,20,0,0"
             />
 
@@ -31,6 +36,8 @@
             x:Name="uxContourIntervalLabel"
             Text="Countour Interval"
             RelativePanel.Below="uxContourLengthLabel"
+            RelativePanel.LeftOf="uxContourIntervalBox"
+            RelativePanel.AlignVerticalCenterWith="uxContourIntervalBox"
             Padding="20,20,0,0"
             />
 
@@ -38,6 +45,8 @@
             x:Name="uxDrainageAreaLabel"
             Text="Drainage Area"
             RelativePanel.Below="uxContourIntervalLabel"
+            RelativePanel.LeftOf="uxDrainageAreaBox"
+            RelativePanel.AlignVerticalCenterWith="uxDrainageAreaBox"
             Padding="20,20,0,0"
             />
 
@@ -45,39 +54,42 @@
             x:Name="uxAverageSlopeLabel"
             Text="Average Slope"
             RelativePanel.Below="uxDrainageAreaLabel"
+            RelativePanel.LeftOf="uxAverageSlopeBox"
+            RelativePanel.AlignVerticalCenterWith="uxAverageSlopeBox"
             Padding="20,20,0,0"
             />
 
         <NumberBox
             x:Name="uxContourLengthBox"
             RelativePanel.Below="uxInfoText"
-            RelativePanel.AlignVerticalCenterWith="uxContourLengthLabel"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
+            ValueChanged="NumberBoxesChanged"
             />
 
         <NumberBox
             x:Name="uxContourIntervalBox"
             RelativePanel.Below="uxContourLengthBox"
-            RelativePanel.AlignVerticalCenterWith="uxContourIntervalLabel"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
+            ValueChanged="NumberBoxesChanged"
             />
 
         <NumberBox
             x:Name="uxDrainageAreaBox"
             RelativePanel.Below="uxContourIntervalBox"
-            RelativePanel.AlignVerticalCenterWith="uxDrainageAreaLabel"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
+            Value="{x:Bind Path=BasicVM.DrainageArea, Mode=TwoWay}"
+            ValueChanged="NumberBoxesChanged"
             />
 
         <TextBox
             x:Name="uxAverageSlopeBox"
             RelativePanel.Below="uxDrainageAreaBox"
-            RelativePanel.AlignVerticalCenterWith="uxAverageSlopeLabel"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
+            Text="{x:Bind Path=BasicVM.WatershedSlope, Mode=TwoWay}"
             IsReadOnly="True"
             />
 
@@ -109,10 +121,18 @@
             x:Name="uxAverageSlopeUnitLabel"
             RelativePanel.RightOf="uxAverageSlopeBox"
             RelativePanel.AlignVerticalCenterWith="uxAverageSlopeBox"
+            RelativePanel.Below="uxDrainageAreaUnitLabel"
             Text="percent"
             Margin="20,20,0,0"
-            
             />
+
+        <Button
+            RelativePanel.Below="uxAverageSlopeBox"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Content="Close"
+            Margin="0,15,0,0"
+            />
+
     </RelativePanel>
     
 </Page>

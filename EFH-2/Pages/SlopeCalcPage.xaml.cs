@@ -23,9 +23,38 @@ namespace EFH_2
     /// </summary>
     public sealed partial class SlopeCalcPage : Page
     {
+
+        private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
+
+        /// <summary>
+        /// The BasicDataViewModel of the parent, main window
+        /// </summary>
+        public BasicDataViewModel BasicVM => _mainWindow.BasicVM;
+
+        /// <summary>
+        /// The RainfallDataViewModel of the parent, main window
+        /// </summary>
+        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallVM;
+
         public SlopeCalcPage()
         {
             this.InitializeComponent();
+        }
+
+        private void NumberBoxesChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            if (uxContourLengthBox.Value >= 0.01 && uxContourIntervalBox.Value >= 0.01 && uxDrainageAreaBox.Value >= 0.01)
+            {
+                double contourLength = uxContourLengthBox.Value;
+                double contourInterval = uxContourIntervalBox.Value;
+                double drainageArea = uxDrainageAreaBox.Value;
+
+                double slope = (contourLength * contourInterval) / (drainageArea * 435.6);
+                if (slope > 0 && slope != double.PositiveInfinity)
+                {
+                    BasicVM.WatershedSlope = Math.Round(slope, 2);
+                }
+            }
         }
     }
 }

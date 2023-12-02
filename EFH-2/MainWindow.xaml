@@ -68,7 +68,9 @@
                          AccessKey="T">
                 <MenuFlyoutItem Text="Average Slope Calculator"
                                 x:Name="uxAverageSlopeCalculatorFlyout"
-                                AccessKey="A"/>
+                                AccessKey="A"
+                                Click="ShowSlopeCalculatorClick"/>
+
                 <MenuFlyoutItem Text="Hydrologic Soil Groups"
                                 x:Name="uxHSGFlyout"
                                 IsEnabled="False"
@@ -149,7 +151,8 @@
 
             <AppBarButton
                 x:Name="uxHSGButton"
-                Label="Hydrologic Soil Group">
+                Label="Hydrologic Soil Group"
+                Click="HSGSearchClicked">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE773;" />
                 </AppBarButton.Icon>
