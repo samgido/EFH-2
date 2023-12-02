@@ -466,9 +466,19 @@ namespace EFH_2
             */
         }
 
-        private void HSGSearchClicked(object sender, RoutedEventArgs e)
+        private async void HSGSearchClicked(object sender, RoutedEventArgs e)
         {
+            HSGPage hsgPage = new();
 
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "Search for Hydrologic Soil Group",
+                Content = hsgPage,
+                CloseButtonText = "Close",
+                XamlRoot = this.Content.XamlRoot
+            };
+
+            await dialog.ShowAsync();
         }
     }
 }
