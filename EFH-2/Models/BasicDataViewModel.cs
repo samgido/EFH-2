@@ -81,6 +81,8 @@ namespace EFH_2
             }
         }
 
+        public string SelectedState { get; set; }
+
         private int _selectedStateIndex = 0;
         /// <summary>
         /// The selected index in the state ComboBox
@@ -91,6 +93,7 @@ namespace EFH_2
             set
             {
                 this.SetProperty(ref this._selectedStateIndex, value);
+                
                 this._selectedState = _states[_selectedStateIndex].Content.ToString();
 
                 SetCounties(_stateCountyDictionary[SelectedState]);
@@ -137,7 +140,7 @@ namespace EFH_2
             {
                 this.SetProperty(ref this._selectedCountyIndex, value);
                 if(value == -1) { return; }
-                this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
+                this.SelectedCounty = _counties[_selectedCountyIndex].Content.ToString();
             }
         }
 
