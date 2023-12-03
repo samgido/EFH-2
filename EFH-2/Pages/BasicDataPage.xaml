@@ -24,7 +24,6 @@
 
             <ComboBox
                 x:Name="uxStateBox"
-                SelectionChanged="StateSelectionChanged"
                 ItemsSource="{x:Bind Path=BasicVM.States, Mode=TwoWay}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedStateIndex, Mode=TwoWay}"
                 Header="State:"
