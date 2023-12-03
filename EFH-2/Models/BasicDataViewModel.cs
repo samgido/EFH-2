@@ -81,8 +81,6 @@ namespace EFH_2
             }
         }
 
-        public string SelectedState { get; set; }
-
         private int _selectedStateIndex = 0;
         /// <summary>
         /// The selected index in the state ComboBox
@@ -140,7 +138,7 @@ namespace EFH_2
             {
                 this.SetProperty(ref this._selectedCountyIndex, value);
                 if(value == -1) { return; }
-                this.SelectedCounty = _counties[_selectedCountyIndex].Content.ToString();
+                this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
             }
         }
 
