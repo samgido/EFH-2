@@ -30,16 +30,6 @@ namespace EFH_2
     public sealed partial class RDDataPage : Page
     {
         /// <summary>
-        /// All names of the dimensionless unit hydrographs
-        /// </summary>
-        private List<string> _duhTypeNames = new();
-
-        /// <summary>
-        /// All names of the Rainfall Distribution-Types
-        /// </summary>
-        private List<string> _rainfallDistributionTypeNames = new();
-
-        /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
         public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
@@ -60,36 +50,15 @@ namespace EFH_2
         {
             try
             {
-                using (StreamReader input = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
+                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
                 {
-                    string line = input.ReadLine();
-
-                    while (line != "")
-                    {
-                        _duhTypeNames.Add(line);
-
-                        line = input.ReadLine();
-                    }
+                    RainfallVM.LoadDUHTypes(reader);
                 }
 
-                using (StreamReader input = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\rftype.txt"))
+                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\rftype.txt"))
                 {
-                    string line = input.ReadLine();
-
-                    while (line != "")
-                    {
-                        char[] sep = { ','};
-                        string[] splitLine = line.Split(sep);
-
-                        _rainfallDistributionTypeNames.Add(splitLine[0].Trim('"'));
-
-                        line = input.ReadLine();
-                    }
+                    RainfallVM.LoadRainfallDistributionTypes(reader);
                 }
-
-                ComboBoxOperations.PopulateComboBox(RainfallVM.RainfallDistributionTypes, _rainfallDistributionTypeNames.ToArray());
-                ComboBoxOperations.PopulateComboBox(RainfallVM.DUHTypes, _duhTypeNames.ToArray());
-                uxDUHType.SelectedIndex = 0;
             }
             catch (Exception err)
             {

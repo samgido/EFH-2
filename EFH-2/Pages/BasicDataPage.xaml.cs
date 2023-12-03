@@ -30,11 +30,6 @@ namespace EFH_2
     /// </summary>
     public sealed partial class BasicDataPage : Page
     {
-        /// <summary>
-        /// Contains each state's available counties 
-        /// </summary>
-        private Dictionary<string, List<string>> _stateCountyDict = new();
-
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
         /// <summary>
@@ -51,63 +46,10 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
-            List<string> stateAbbreviations = new();
-
-            _stateCountyDict.Add(MainWindow.ChooseMessage, new());
-
-            using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\States.csv"))
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
             {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-
-                    char[] seperator = { ',' };
-                    string[] elements = line.Split(seperator);
-
-                    stateAbbreviations.Add(elements[1]);
-                }
+                BasicVM.LoadStatesAndCounties(reader);
             }
-
-            for (int i = 1; i < stateAbbreviations.Count; i++)
-            {
-                string state = stateAbbreviations[i];
-
-                if(state == "VIL") { state = "VI"; } 
-                _stateCountyDict.Add(stateAbbreviations[i], new());
-            }
-
-            using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-
-                    char[] seperator = { ',' };
-                    string[] elements = line.Split(seperator);
-
-                    string county = elements[2].Trim('"');
-
-                    if (_stateCountyDict.ContainsKey(elements[1]))
-                    {
-                        _stateCountyDict[elements[1]].Add(county);
-                    }
-                }
-            }
-
-            stateAbbreviations.RemoveAt(0);
-            ComboBoxOperations.PopulateComboBox(BasicVM.States, stateAbbreviations.ToArray());
-        }
-
-        /// <summary>
-        /// Changes the contents of the county ComboBox when the state is changed
-        /// </summary>
-        /// <param name="sender">Object that sent the event</param>
-        /// <param name="e">Object that holds information about the event</param>
-        private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string state = (e.AddedItems[0] as ComboBoxItem).Content as string;
-
-            ComboBoxOperations.PopulateComboBox(BasicVM.Counties, _stateCountyDict[state].ToArray());
         }
 
         public void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
@@ -124,8 +66,6 @@ namespace EFH_2
         {
             BasicVM.CheckRunoffCurveNumber();
         }
-
-
 
         /// <summary>
         /// Updates the status of the watershed length field

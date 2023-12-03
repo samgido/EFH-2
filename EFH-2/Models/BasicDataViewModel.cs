@@ -20,7 +20,6 @@ namespace EFH_2
     /// </summary>
     public class BasicDataViewModel : BindableBase
     {
-
         private string _client = "";
         /// <summary>
         /// The client's title
@@ -31,27 +30,54 @@ namespace EFH_2
             set { this.SetProperty(ref this._client, value); }
         }
 
+        private Dictionary<string, List<string>> _stateCountyDictionary = new();
+
+        public void LoadStatesAndCounties(StreamReader reader)
+        {
+            reader.ReadLine();
+            _stateCountyDictionary.Add("Choose", new List<string>() { "Choose" });
+
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+
+                string[] elements = line.Split(',');
+
+                string state = elements[1];
+                string county = elements[2].Trim('"');
+
+                if (!_stateCountyDictionary.ContainsKey(state))
+                {
+                    _stateCountyDictionary.Add(state, new());
+                }
+
+                _stateCountyDictionary[state].Add(county);
+            }
+
+            foreach (string s in _stateCountyDictionary.Keys)
+            {
+                ComboBoxItem cbox = new();
+                cbox.Content = s;
+
+                States.Add(cbox);
+            }
+        }
+
         private string _selectedState = "";
-        /// <summary>
-        /// The selected state in the state ComboBox
-        /// </summary>
         public string SelectedState
         {
             get { return this._selectedState; }
-            set 
+            set
             {
-                for(int i = 0; i < _states.Count; i++)
+                for (int i = 0; i < States.Count; i++)
                 {
-                    var c = _states[i];
-                    if (c.Content as string == value)
+                    if (States[i].Content as string == value)
                     {
                         SelectedStateIndex = i;
-                        this._selectedState = value;
                         return;
                     }
+                    SelectedStateIndex = 0;
                 }
-
-                SelectedStateIndex = 0;
             }
         }
 
@@ -62,10 +88,12 @@ namespace EFH_2
         public int SelectedStateIndex
         {
             get { return this._selectedStateIndex; }
-            set 
-            { 
+            set
+            {
                 this.SetProperty(ref this._selectedStateIndex, value);
                 this._selectedState = _states[_selectedStateIndex].Content.ToString();
+
+                SetCounties(_stateCountyDictionary[SelectedState]);
             }
         }
 
@@ -80,27 +108,21 @@ namespace EFH_2
         }
 
         private string _selectedCounty = "";
-        /// <summary>
-        /// The selected county in the county ComboBox
-        /// </summary>
+
         public string SelectedCounty
         {
             get { return this._selectedCounty; }
-            set 
+            set
             {
-                
-                for(int i = 0; i < _counties.Count; i++)
+                for (int i = 0; i < Counties.Count; i++)
                 {
-                    var c = _counties[i];
-                    if (c.Content as string == value)
+                    if (Counties[i].Content as string == value)
                     {
                         SelectedCountyIndex = i;
-                        this._selectedCounty = value;
                         return;
                     }
+                    SelectedCountyIndex = 0;
                 }
-
-                SelectedCountyIndex = 0;
             }
         }
 
@@ -117,6 +139,24 @@ namespace EFH_2
                 if(value == -1) { return; }
                 this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
             }
+        }
+
+        private void SetCounties(List<string> list)
+        {
+            Counties.Clear();
+            ComboBoxItem c = new();
+            c.Content = MainWindow.ChooseMessage;
+            Counties.Add(c);
+
+            foreach (string county in list)
+            {
+                ComboBoxItem countyItem = new();
+                countyItem.Content = county;
+
+                Counties.Add(countyItem);
+            }
+
+            SelectedCountyIndex = 0;
         }
 
         private ObservableCollection<ComboBoxItem> _counties = new();
