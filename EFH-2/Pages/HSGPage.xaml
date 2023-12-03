@@ -19,12 +19,14 @@
         <RelativePanel
             VerticalAlignment="Top"
             RelativePanel.Above="uxSearchBoxContainer"
+            RelativePanel.AlignTopWithPanel="True"
             >
             <controls:DataGrid
                 x:Name="uxDataGrid"
                 HeadersVisibility="None"
                 Background="Transparent"
-                ItemsSource="{x:Bind Path=RCNVM.Entries}">
+                ItemsSource="{x:Bind Path=RCNVM.Entries}"
+                RelativePanel.AlignTopWithPanel="True">
             </controls:DataGrid>
         </RelativePanel>
 

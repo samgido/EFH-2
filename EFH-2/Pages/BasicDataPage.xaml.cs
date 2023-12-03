@@ -30,11 +30,6 @@ namespace EFH_2
     /// </summary>
     public sealed partial class BasicDataPage : Page
     {
-        /// <summary>
-        /// Contains each state's available counties 
-        /// </summary>
-        private Dictionary<string, List<string>> _stateCountyDict = new();
-
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
         /// <summary>
@@ -51,7 +46,7 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
-            using (var reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
             {
                 BasicVM.LoadStatesAndCounties(reader);
             }

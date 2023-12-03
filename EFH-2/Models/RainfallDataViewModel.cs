@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,18 +30,14 @@ namespace EFH_2
             get { return this._selectedRainfallDistributionType; }
             set
             {
-                _selectedRainfallDistributionType = value;
-                for (int i = 0; i < _rainfallDistributionTypes.Count; i++)
+                for (int i = 0; i < RainfallDistributionTypes.Count; i++)
                 {
-                    var c = _rainfallDistributionTypes[i];
-                    if (c.Content as string == value)
+                    if (RainfallDistributionTypes[i].Content as string == value)
                     {
                         SelectedRainfallDistributionTypeIndex = i;
-
                         return;
                     }
                 }
-
                 SelectedRainfallDistributionTypeIndex = 0;
             }
         }
@@ -52,7 +49,34 @@ namespace EFH_2
         public int SelectedRainfallDistributionTypeIndex
         {
             get { return this._selectedRainfallDistributionTypeIndex; }
-            set { this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value); }
+            set 
+            { 
+                this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
+                this._selectedRainfallDistributionType = _rainfallDistributionTypes[value].Content as string;
+            }
+        }
+        
+        public void LoadRainfallDistributionTypes(StreamReader reader)
+        {
+            ComboBoxItem c = new();
+            c.Content = "";
+            RainfallDistributionTypes.Clear();
+            RainfallDistributionTypes.Add(c);
+
+            string line = reader.ReadLine();
+            
+            while (line != "")
+            {
+                string[] lineParts = line.Split(',');
+                string type = lineParts[0];
+
+                c = new();
+                c.Content = type.Trim('"');
+
+                RainfallDistributionTypes.Add(c);
+                line = reader.ReadLine();
+            }
+            SelectedRainfallDistributionTypeIndex = 0;
         }
 
         private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
@@ -74,18 +98,14 @@ namespace EFH_2
             get { return this._selectedDUHType; }
             set
             {
-                _selectedDUHType = value;
-
                 for(int i = 0; i < _duhTypes.Count; i++)
                 {
-                    var c = _duhTypes[i];
-                    if (c.Content as string == value)
+                    if (_duhTypes[i].Content as string == value)
                     {
                         SelectedDUHTypeIndex = i;
                         return;
                     }
                 }
-
                 SelectedDUHTypeIndex = 0;
             }
         }
@@ -97,7 +117,27 @@ namespace EFH_2
         public int SelectedDUHTypeIndex
         {
             get { return this._selectedDUHTypeIndex; }
-            set { this.SetProperty(ref this._selectedDUHTypeIndex, value); }
+            set 
+            { 
+                this.SetProperty(ref this._selectedDUHTypeIndex, value);
+                this._selectedDUHType = _duhTypes[value].Content as string;
+            }
+        }
+
+        public void LoadDUHTypes(StreamReader reader)
+        {
+            DUHTypes.Clear();
+            string line = reader.ReadLine();
+
+            while (line != "")
+            {
+                ComboBoxItem c = new();
+                c.Content = line;
+
+                DUHTypes.Add(c);
+                line = reader.ReadLine();
+            }
+            SelectedDUHTypeIndex = 0;
         }
 
         private ObservableCollection<ComboBoxItem> _duhTypes = new();

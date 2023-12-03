@@ -41,7 +41,7 @@
             <ComboBox
                 x:Name="uxRainfallDistributionType"
                 ToolTipService.ToolTip="Rainfall distribution - choose from the list"
-                ItemsSource="{x:Bind Path=RainfallVM.RainfallDistributionTypes, Mode=TwoWay}"
+                ItemsSource="{x:Bind Path=RainfallVM.RainfallDistributionTypes}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedRainfallDistributionTypeIndex, Mode=TwoWay}"
                 SelectionChanged="RainfallDistributionTypeChanged"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"

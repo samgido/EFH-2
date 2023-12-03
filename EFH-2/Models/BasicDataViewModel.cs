@@ -63,6 +63,24 @@ namespace EFH_2
             }
         }
 
+        private string _selectedState = "";
+        public string SelectedState
+        {
+            get { return this._selectedState; }
+            set
+            {
+                for (int i = 0; i < States.Count; i++)
+                {
+                    if (States[i].Content as string == value)
+                    {
+                        SelectedStateIndex = i;
+                        return;
+                    }
+                    SelectedStateIndex = 0;
+                }
+            }
+        }
+
         public string SelectedState { get; set; }
 
         private int _selectedStateIndex = 0;
@@ -75,7 +93,8 @@ namespace EFH_2
             set
             {
                 this.SetProperty(ref this._selectedStateIndex, value);
-                this.SelectedState = _states[_selectedStateIndex].Content.ToString();
+                
+                this._selectedState = _states[_selectedStateIndex].Content.ToString();
 
                 SetCounties(_stateCountyDictionary[SelectedState]);
             }
@@ -91,7 +110,24 @@ namespace EFH_2
             set { this.SetProperty(ref this._states, value); }
         }
 
-        public string SelectedCounty { get; set; }
+        private string _selectedCounty = "";
+
+        public string SelectedCounty
+        {
+            get { return this._selectedCounty; }
+            set
+            {
+                for (int i = 0; i < Counties.Count; i++)
+                {
+                    if (Counties[i].Content as string == value)
+                    {
+                        SelectedCountyIndex = i;
+                        return;
+                    }
+                    SelectedCountyIndex = 0;
+                }
+            }
+        }
 
         private int _selectedCountyIndex = 0;
         /// <summary>
