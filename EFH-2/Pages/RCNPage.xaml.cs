@@ -23,9 +23,6 @@ using Windows.Foundation.Collections;
 
 namespace EFH_2
 {
-
-    
-
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -34,20 +31,29 @@ namespace EFH_2
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
         /// <summary>
-        /// The BasicDataViewModel of the parent, main window
+        /// Gets the BasicDataViewModel of the main window
         /// </summary>
         public BasicDataViewModel BasicVM => _mainWindow.BasicVM;
 
         /// <summary>
-        /// The RainfallDataViewModel of the parent, main window
+        /// Gets the RainfallDataViewModel of the main window
         /// </summary>
         public RainfallDataViewModel RainfallVM => _mainWindow.RainfallVM;
 
+        /// <summary>
+        /// Gets the RCNDataViewModel of main window
+        /// </summary>
         public RCNDataViewModel RCNVM => _mainWindow.RCNVM;
 
         public RCNPage()
         {
             this.InitializeComponent();
+
+            using (StreamReader reader = new("C:\\Users\\samue\\Documents\\EFH-2 project\\source code\\src\\ProgramData\\EFH2\\COVER.txt"))
+            {
+                RCNVM.LoadRCNTableEntries(reader);
+            }
+
         }
     }
 }

@@ -12,7 +12,8 @@
     
     <RelativePanel
         x:Name="uxRootPanel"
-        Background="Black">
+        Background="Black"
+        >
 
         <MenuBar
             x:Name="uxMainWindowMenuBar"
@@ -201,8 +202,6 @@
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
-
-
         </NavigationView>
 
         <Frame
@@ -210,10 +209,9 @@
             RelativePanel.Below="uxNavigationView"
             RelativePanel.AlignBottomWithPanel="True"
             Background="Black"
-            CacheSize="4">
-
-        </Frame>
-
+            CacheSize="4"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"/>
 
     </RelativePanel>
 

@@ -6,13 +6,14 @@
     xmlns:local="using:EFH_2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Required">
 
     <RelativePanel
-        Background="Black">
+        Background="Black"
+        >
 
         <RadioButtons
             x:Name="uxCoverDescriptionButtons"
@@ -32,14 +33,79 @@
                          />
         </RadioButtons>
 
-        <Viewbox
-            x:Name="uxdataGridViewBox"
+
+        <toolkit:DataGrid
+            x:Name="uxDataGrid"
+            AutoGenerateColumns="False"
+            CanUserResizeColumns="False"
             RelativePanel.Below="uxCoverDescriptionButtons"
-            RelativePanel.Above="uxConversionSettings">
-            <controls:DataGrid>
-                
-            </controls:DataGrid>
-        </Viewbox>
+            RelativePanel.Above="uxConversionSettings"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            CanUserReorderColumns="False"
+            ItemsSource="{x:Bind Path=RCNVM.RCNTableEntries}"
+            Width="Auto"
+            >
+
+            <toolkit:DataGrid.Resources>
+                <DataTemplate x:Key="cellTemplate">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MaxWidth="55"/>
+                            <ColumnDefinition MaxWidth="55"/>
+                        </Grid.ColumnDefinitions>
+
+                        <NumberBox
+                            Grid.Column="0">
+                            
+                        </NumberBox>
+
+                        <TextBlock
+                            Grid.Column="1">
+                            
+                        </TextBlock>
+
+                    </Grid>
+                </DataTemplate>
+            </toolkit:DataGrid.Resources>
+            
+            <toolkit:DataGrid.Columns>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [1]}"
+                    />
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [2]}"
+                    />
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [3]}"
+                    />
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [4]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [5]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [6]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [7]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [8]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [9]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [10]}"
+                    MaxWidth="55"/>
+                <toolkit:DataGridTextColumn
+                    Binding="{Binding [11]}"
+                    MaxWidth="55"/>
+            </toolkit:DataGrid.Columns>
+            
+        </toolkit:DataGrid>
 
         <RelativePanel
             x:Name="uxConversionSettings"
