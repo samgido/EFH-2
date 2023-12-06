@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace EFH_2
 {
     /// <summary>
-    /// View model for the rainfall/discharge page
+    /// A class that holds all the data in the rainfall/discharge page
     /// </summary>
     public class RainfallDataViewModel : BindableBase
     {
@@ -23,7 +23,7 @@ namespace EFH_2
 
         private string _selectedRainfallDistributionType = "";
         /// <summary>
-        /// The selected rainfall distribution type
+        /// Gets or sets the selected rainfall distribution type
         /// </summary>
         public string SelectedRainfallDistributionType
         {
@@ -44,7 +44,7 @@ namespace EFH_2
 
         private int _selectedRainfallDistributionTypeIndex = 0;
         /// <summary>
-        /// The selected index of the rainfall distribution type combo box 
+        /// Gets or sets the selected index of the rainfall distribution type combo box 
         /// </summary>
         public int SelectedRainfallDistributionTypeIndex
         {
@@ -81,7 +81,7 @@ namespace EFH_2
 
         private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
         /// <summary>
-        /// Collection that holds the rainfall distribution types as ComboBoxItems
+        /// Gets or sets the collection that holds the rainfall distribution types as ComboBoxItems
         /// </summary>
         public ObservableCollection<ComboBoxItem> RainfallDistributionTypes
         {
@@ -91,7 +91,7 @@ namespace EFH_2
 
         private string _selectedDUHType = "";
         /// <summary>
-        /// The selected dimensionless unit hydrograph type
+        /// Gets or sets the selected dimensionless unit hydrograph type
         /// </summary>
         public string SelectedDUHType
         {
@@ -112,7 +112,7 @@ namespace EFH_2
 
         private int _selectedDUHTypeIndex = 0;
         /// <summary>
-        /// The selected index of the duh type combo box
+        /// Gets or sets the selected index of the duh type combo box
         /// </summary>
         public int SelectedDUHTypeIndex
         {
@@ -142,7 +142,7 @@ namespace EFH_2
 
         private ObservableCollection<ComboBoxItem> _duhTypes = new();
         /// <summary>
-        /// Collection that holds the duh types as ComboBoxItems
+        /// Gets or sets the collection that holds the duh types as ComboBoxItems
         /// </summary>
         public ObservableCollection<ComboBoxItem> DUHTypes
         {
@@ -207,7 +207,7 @@ namespace EFH_2
 
         private string _rainfallDistributionTypeStatus = "";
         /// <summary>
-        /// The current status of the rainfall distribution type field
+        /// Gets or sets the current status of the rainfall distribution type field
         /// </summary>
         public string RainfallDistributionTypeStatus
         {
@@ -217,7 +217,7 @@ namespace EFH_2
 
         private string _duhTypeStatus = "";
         /// <summary>
-        /// The current status of the rainfall distribution type field
+        /// Gets or sets the current status of the rainfall distribution type field
         /// </summary>
         public string DUHTypeStatus
         {

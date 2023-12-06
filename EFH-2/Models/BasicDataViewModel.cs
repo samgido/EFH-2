@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace EFH_2
 {
     /// <summary>
-    /// View model for the basic data page
+    /// A class that holds all the data in the basic data page
     /// </summary>
     public class BasicDataViewModel : BindableBase
     {
@@ -30,8 +30,15 @@ namespace EFH_2
             set { this.SetProperty(ref this._client, value); }
         }
 
+        /// <summary>
+        /// Holds all of the available counties mapped to their respective states
+        /// </summary>
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
+        /// <summary>
+        /// Uses a stream reader to load all of the county and state data into the program
+        /// </summary>
+        /// <param name="reader"></param>
         public void LoadStatesAndCounties(StreamReader reader)
         {
             reader.ReadLine();
@@ -64,6 +71,9 @@ namespace EFH_2
         }
 
         private string _selectedState = "";
+        /// <summary>
+        /// Gets or sets the selected state in the combobox
+        /// </summary>
         public string SelectedState
         {
             get { return this._selectedState; }
@@ -83,7 +93,7 @@ namespace EFH_2
 
         private int _selectedStateIndex = 0;
         /// <summary>
-        /// The selected index in the state ComboBox
+        /// Gets or sets the selected index in the state ComboBox
         /// </summary>
         public int SelectedStateIndex
         {
@@ -100,7 +110,7 @@ namespace EFH_2
 
         private ObservableCollection<ComboBoxItem> _states = new();
         /// <summary>
-        /// All abbbreviated states as ComboBoxItems
+        /// Gets or sets the abbreviated states as ComboBoxItems
         /// </summary>
         public ObservableCollection<ComboBoxItem> States
         {
@@ -109,7 +119,9 @@ namespace EFH_2
         }
 
         private string _selectedCounty = "";
-
+        /// <summary>
+        /// Gets or sets the selected county in the combobox
+        /// </summary>
         public string SelectedCounty
         {
             get { return this._selectedCounty; }
@@ -129,7 +141,7 @@ namespace EFH_2
 
         private int _selectedCountyIndex = 0;
         /// <summary>
-        /// The selected index of the county ComboBox
+        /// Gets or sets the selected index of the county ComboBox
         /// </summary>
         public int SelectedCountyIndex
         {
@@ -142,6 +154,10 @@ namespace EFH_2
             }
         }
 
+        /// <summary>
+        /// Changes the contents of the counties combobox
+        /// </summary>
+        /// <param name="list">The county names that will be loaded into the combobox</param>
         private void SetCounties(List<string> list)
         {
             Counties.Clear();
@@ -162,9 +178,7 @@ namespace EFH_2
 
         private ObservableCollection<ComboBoxItem> _counties = new();
         /// <summary>
-        /// All counties as ComboBoxItems
-        /// 
-        /// This collection changes when the state selection changes
+        /// Gets or sets the counties available in the combobox
         /// </summary>
         public ObservableCollection<ComboBoxItem> Counties
         {
@@ -174,7 +188,7 @@ namespace EFH_2
 
         private string _practice = "";
         /// <summary>
-        /// The practice field
+        /// Gets or sets the practice field
         /// </summary>
         public string Practice
         {
@@ -184,7 +198,7 @@ namespace EFH_2
 
         private string _by = "";
         /// <summary>
-        /// The title of who entered the data
+        /// Gets or sets the title of who entered the data
         /// </summary>
         public string By
         {
@@ -194,7 +208,7 @@ namespace EFH_2
 
         private DateTimeOffset _date = new();
         /// <summary>
-        /// The date field
+        /// Gets or sets the date field
         /// </summary>
         public DateTimeOffset Date
         {
@@ -204,7 +218,7 @@ namespace EFH_2
 
         private double _drainageArea = 0;
         /// <summary>
-        /// The drainge area field 
+        /// Gets or sets drainge area field 
         /// </summary>
         public double DrainageArea
         {
@@ -245,7 +259,7 @@ namespace EFH_2
 
         private double _curveNumber = 0;
         /// <summary>
-        /// The curve number field
+        /// Gets or sets the curve number field
         /// </summary>
         public double RunoffCurveNumber
         {
@@ -286,7 +300,7 @@ namespace EFH_2
 
         private double _watershedLength = 0;
         /// <summary>
-        /// The watershed length field
+        /// Gets or sets the watershed length field
         /// </summary>
         public double WatershedLength
         {
@@ -327,7 +341,7 @@ namespace EFH_2
 
         private double _watershedSlope = 0;
         /// <summary>
-        /// The watershed slope field
+        /// Gets or sets the watershed slope field
         /// </summary>
         public double WatershedSlope
         {
@@ -368,7 +382,7 @@ namespace EFH_2
 
         private double _timeOfConcentration = 0;
         /// <summary>
-        /// The time of concentration field
+        /// Gets or sets the time of concentration field
         /// </summary>
         public double TimeOfConcentration
         {
@@ -434,7 +448,7 @@ namespace EFH_2
 
         private string _drainageStatus = "";
         /// <summary>
-        /// The current status of the drainage area field
+        /// Gets or sets the current status of the drainage area field
         /// </summary>
         public string DrainageAreaStatus
         {
@@ -444,7 +458,7 @@ namespace EFH_2
 
         private string _curveNumberStatus = "";
         /// <summary>
-        /// The current status of the runoff curve number field
+        /// Gets or sets the current status of the runoff curve number field
         /// </summary>
         public string RunoffCurveNumberStatus
         {
@@ -454,7 +468,7 @@ namespace EFH_2
 
         private string _watershedLengthStatus = "";
         /// <summary>
-        /// The current status of the watershed length field
+        /// Gets or sets the current status of the watershed length field
         /// </summary>
         public string WatershedLengthStatus
         {
@@ -464,7 +478,7 @@ namespace EFH_2
 
         private string _watershedSlopeStatus = "";
         /// <summary>
-        /// The current status of the watershed slope field
+        /// Gets or sets the current status of the watershed slope field
         /// </summary>
         public string WatershedSlopeStatus
         {
@@ -474,7 +488,7 @@ namespace EFH_2
 
         private string _timeOfConcentrationStatus = "";
         /// <summary>
-        /// The current status of the time of concentration field
+        /// Gets or sets the current status of the time of concentration field
         /// </summary>
         public string TimeOfConcentrationStatus
         {
