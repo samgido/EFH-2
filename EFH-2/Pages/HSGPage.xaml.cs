@@ -54,7 +54,7 @@ namespace EFH_2
 
                     string[] lineParts = line.Split("\t");
 
-                    RCNVM.AddEntry(lineParts[0], lineParts[1], lineParts[2]);
+                    RCNVM.AddHSGEntry(lineParts[0], lineParts[1], lineParts[2]);
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace EFH_2
 
 
             uxDataGrid.ItemsSource = new ObservableCollection<HSGEntry>(
-                from item in RCNVM.Entries where item.Name.Contains(filter) select item);
+                from item in RCNVM.HSGEntries where item.Name.Contains(filter) select item);
         }
     }
 }
