@@ -15,7 +15,7 @@ namespace EFH_2
     /// </summary>
     public class StormModel : BindableBase
     {
-        private double _frequency = 0;
+        private double _frequency = double.NaN;
         /// <summary>
         /// The storm's frequency field
         /// </summary>
@@ -25,7 +25,7 @@ namespace EFH_2
             set { this.SetProperty(ref this._frequency, value); }
         }
 
-        private double _dayRain = 0;
+        private double _dayRain = double.NaN;
         /// <summary>
         /// The storm's "24-HR Rain" field
         /// </summary>
@@ -34,11 +34,14 @@ namespace EFH_2
             get { return this._dayRain; }
             set
             {
-                this.SetProperty(ref this._dayRain, value);
+                if (value <= 26)
+                {
+                    this.SetProperty(ref this._dayRain, value);
+                }
             } 
         }
 
-        private double _peakFlow = 0;
+        private double _peakFlow = double.NaN;
         /// <summary>
         /// The storm's peak flow field
         /// </summary>
@@ -48,7 +51,7 @@ namespace EFH_2
             set { this.SetProperty(ref this._peakFlow, value); }
         }
 
-        private double _runoff = 0;
+        private double _runoff = double.NaN;
         /// <summary>
         /// The storm's runoff field
         /// </summary>

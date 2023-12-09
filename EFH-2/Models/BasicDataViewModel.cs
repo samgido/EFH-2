@@ -216,7 +216,7 @@ namespace EFH_2
             set { this.SetProperty(ref this._date, value); }
         }
 
-        private double _drainageArea = 0;
+        private double _drainageArea = double.NaN;
         /// <summary>
         /// Gets or sets drainge area field 
         /// </summary>
@@ -236,14 +236,6 @@ namespace EFH_2
                 DrainageAreaStatus = "User entered.";
                 return;
             }
-            else if(DrainageArea > DrainageAreaMax)
-            {
-                DrainageArea = DrainageAreaMax;
-            }
-            else
-            {
-                DrainageArea = 0;
-            }
 
             DrainageAreaStatus = MainWindow.DrainageAreaInvalidEntryMessage;
         }
@@ -257,7 +249,7 @@ namespace EFH_2
         /// </summary>
         public static int DrainageAreaMax => 2000;
 
-        private double _curveNumber = 0;
+        private double _curveNumber = double.NaN;
         /// <summary>
         /// Gets or sets the curve number field
         /// </summary>
@@ -272,18 +264,10 @@ namespace EFH_2
         /// </summary>
         public void CheckRunoffCurveNumber()
         {
-            if (RunoffCurveNumber >= RunoffCurveNumberMin && RunoffCurveNumber <= RunoffCurveNumberMax)
+            if (_curveNumber >= RunoffCurveNumberMin && _curveNumber <= RunoffCurveNumberMax)
             {
                 RunoffCurveNumberStatus = "User entered.";
                 return;
-            }
-            else if(RunoffCurveNumber > RunoffCurveNumberMax)
-            {
-                RunoffCurveNumber = RunoffCurveNumberMax;
-            }
-            else
-            {
-                RunoffCurveNumber = 0;
             }
 
             RunoffCurveNumberStatus = MainWindow.RunoffCurveNumberInvalidEntryMessage;
@@ -298,7 +282,7 @@ namespace EFH_2
         /// </summary>
         public static int RunoffCurveNumberMax => 98;
 
-        private double _watershedLength = 0;
+        private double _watershedLength = double.NaN;
         /// <summary>
         /// Gets or sets the watershed length field
         /// </summary>
@@ -318,14 +302,6 @@ namespace EFH_2
                 WatershedLengthStatus = "User entered.";
                 return;
             }
-            else if(WatershedLength > WatershedLengthMax)
-            {
-                WatershedLength = WatershedLengthMax;
-            }
-            else
-            {
-                WatershedLength = 0;
-            }
             
             WatershedLengthStatus = MainWindow.WatershedLengthInvalidEntryMessage;
         }
@@ -339,7 +315,7 @@ namespace EFH_2
         /// </summary>
         public static int WatershedLengthMax => 26000;
 
-        private double _watershedSlope = 0;
+        private double _watershedSlope = double.NaN;
         /// <summary>
         /// Gets or sets the watershed slope field
         /// </summary>
@@ -359,14 +335,6 @@ namespace EFH_2
                 WatershedSlopeStatus = "User entered";
                 return;
             }
-            else if(WatershedSlope > WatershedSlopeMax)
-            {
-                WatershedSlope = WatershedSlopeMax;
-            }
-            else
-            {
-                WatershedSlope = 0;
-            }
             
             WatershedSlopeStatus = MainWindow.WatershedSlopeInvalidEntryMessage;
         }
@@ -380,7 +348,7 @@ namespace EFH_2
         /// </summary>
         public static double WatershedSlopeMax => 64;
 
-        private double _timeOfConcentration = 0;
+        private double _timeOfConcentration = double.NaN;
         /// <summary>
         /// Gets or sets the time of concentration field
         /// </summary>
@@ -399,14 +367,6 @@ namespace EFH_2
             {
                 TimeOfConcentrationStatus = "User entered";
                 return;
-            }
-            else if(TimeOfConcentration > TimeOfConcentrationMax)
-            {
-                TimeOfConcentration = TimeOfConcentrationMax;
-            }
-            else
-            {
-                TimeOfConcentration = 0;
             }
 
             TimeOfConcentrationStatus = MainWindow.TimeOfConcentrationInvalidEntryMessage;

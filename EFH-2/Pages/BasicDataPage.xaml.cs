@@ -54,6 +54,7 @@ namespace EFH_2
 
         public void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            BasicVM.DrainageArea = sender.Value;
             BasicVM.CheckDrainageArea();
         }
 
@@ -64,6 +65,7 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void RunoffCurveNumberChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            BasicVM.RunoffCurveNumber = sender.Value;
             BasicVM.CheckRunoffCurveNumber();
         }
 
@@ -74,6 +76,7 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void WatershedLengthChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            BasicVM.WatershedLength = sender.Value;
             BasicVM.CheckWatershedLength();
         }
 
@@ -84,6 +87,7 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void WatershedSlopeChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            BasicVM.WatershedSlope = sender.Value;
             BasicVM.CheckWatershedSlope();
         }
 
@@ -94,6 +98,7 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void TimeOfConcentrationChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            BasicVM.TimeOfConcentration = sender.Value;
             BasicVM.CheckTimeOfConcentration();
         }
     }

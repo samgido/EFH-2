@@ -20,7 +20,14 @@ namespace EFH_2
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value.ToString();
+            if (((double)value).Equals(double.NaN))
+            {
+                return "";
+            }
+            else
+            {
+                return value.ToString();
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
