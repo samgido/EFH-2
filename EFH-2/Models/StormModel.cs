@@ -76,10 +76,10 @@ namespace EFH_2
         /// </summary>
         public void Default()
         {
-            Frequency = 0;
-            DayRain = 0;
-            PeakFlow = 0;
-            Runoff = 0;
+            Frequency = double.NaN;
+            DayRain = double.NaN;
+            PeakFlow = double.NaN;
+            Runoff = double.NaN;
 
             DisplayHydrograph = false;
         }

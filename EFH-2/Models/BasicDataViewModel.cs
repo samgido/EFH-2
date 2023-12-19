@@ -474,11 +474,11 @@ namespace EFH_2
             Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
             By = "";
 
-            DrainageArea = 0;
-            RunoffCurveNumber = 0;
-            WatershedLength = 0;
-            WatershedSlope = 0;
-            TimeOfConcentration = 0;
+            DrainageArea = double.NaN;
+            RunoffCurveNumber = double.NaN;
+            WatershedLength = double.NaN;
+            WatershedSlope = double.NaN;
+            TimeOfConcentration = double.NaN;
         }
 
         /// <summary>
