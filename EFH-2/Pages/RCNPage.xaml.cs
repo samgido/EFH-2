@@ -2,6 +2,7 @@
  * Author: Samuel Gido
  */
 
+using CommunityToolkit.WinUI.UI.Controls;
 using EFH_2.Misc;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,6 +13,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -49,11 +51,70 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
-            using (StreamReader reader = new("C:\\Users\\samue\\Documents\\EFH-2 project\\source code\\src\\ProgramData\\EFH2\\COVER.txt"))
+            for(int i = 0; i < 120; i++)
             {
-                RCNVM.LoadRCNTableEntries(reader);
+                RowDefinition rowDef = new RowDefinition();
+                uxInputGrid.RowDefinitions.Add(rowDef);
             }
 
+            ReadRCNTableData();
+
+            PopulateRCNData();
+        }
+
+        private void PopulateRCNData()
+        {
+            List<TextBlock> items = new();
+
+            for(int i = 0; i < 120; i++)
+            {
+                TextBlock label = new();
+                label.Text = RCNVM.RCNTableEntries[0][i];
+                items.Add(label); 
+            }
+
+            for(int i = 0; i < 120; i++)
+            {
+                uxInputGrid.Children.Add(items[i]);
+                Grid.SetColumn(items[i], 0);
+                Grid.SetRow(items[i], i);
+            }
+        }
+
+        private async void ReadRCNTableData()
+        {
+            try
+            {
+                using (StreamReader reader = new("C:\\Users\\samue\\Documents\\EFH-2 project\\source code\\src\\ProgramData\\EFH2\\COVER.txt"))
+                {
+                    RCNVM.LoadRCNTableEntries(reader);
+                }
+            }
+            catch (Exception err)
+            {
+                ContentDialog dialog = new ContentDialog();
+
+                dialog.XamlRoot = _mainWindow.Content.XamlRoot;
+                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "An error occured while reading the program data.";
+                dialog.CloseButtonText = "Close";
+                dialog.PrimaryButtonText = "Show full error";
+
+                var result = await dialog.ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
+                {
+                    ContentDialog fullError = new ContentDialog();
+
+                    fullError.XamlRoot = uxRootPanel.XamlRoot;
+                    fullError.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                    fullError.CloseButtonText = "Close";
+
+                    fullError.Content = err.ToString();
+
+                    var _ = await fullError.ShowAsync();
+                }
+            }
         }
     }
 }

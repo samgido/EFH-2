@@ -65,7 +65,7 @@ namespace EFH_2
 
 
             uxDataGrid.ItemsSource = new ObservableCollection<HSGEntry>(
-                from item in RCNVM.HSGEntries where item.Name.Contains(filter) select item);
+                from item in RCNVM.HSGEntries where item.Column1.Contains(filter) select item);
         }
     }
 }

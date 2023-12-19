@@ -16,16 +16,20 @@ namespace EFH_2
     /// </summary>
     public class RCNDataViewModel : BindableBase
     {
-
         public RCNDataViewModel()
         {
+            RCNTableEntries = new string[7][];
+            for (int i = 0; i < RCNTableEntries.Length; i++)
+            {
+                RCNTableEntries[i] = new string[120];
+            }
         }
 
         public struct HSGEntry
         {
-            public string Name { get; set; }
+            public string Column1 { get; set; }
             public string Column2 { get; set; }
-            public string Group { get; set; }
+            public string Column3 { get; set; }
         }
 
         public ObservableCollection<HSGEntry> HSGEntries { get; } = new();
@@ -34,28 +38,53 @@ namespace EFH_2
         {
             HSGEntries.Add(new()
             {
-                Name = name,
+                Column1 = name,
                 Column2 = column2,
-                Group = group
+                Column3 = group
             });
         }
 
-        public ObservableCollection<List<string>> RCNTableEntries { get; } = new();
+        public string[][] RCNTableEntries { get; }
 
         public void LoadRCNTableEntries(StreamReader reader)
         {
-            while(!reader.EndOfStream)
+            var _ = reader.ReadLine();
+            int lineNumber = 0;
+            while(lineNumber < 118)
             {
                 string line = reader.ReadLine();
                 string[] splitLine = line.Split('\t');
-                List<string> list = new();
-                
-                foreach(string s in splitLine)
+
+                if (splitLine.Length >= 2)
                 {
-                    list.Add(s);
+                    RCNTableEntries[0][lineNumber] = splitLine[1];
+                }
+                if (splitLine.Length >= 3)
+                {
+                    RCNTableEntries[1][lineNumber] = splitLine[2];
+                }
+                if (splitLine.Length >= 4)
+                {
+                    RCNTableEntries[2][lineNumber] = splitLine[3];
+                }
+                if (splitLine.Length >= 6)
+                {
+                    RCNTableEntries[3][lineNumber] = splitLine[5];
+                }
+                if (splitLine.Length >= 8)
+                {
+                    RCNTableEntries[4][lineNumber] = splitLine[7];
+                }
+                if (splitLine.Length >= 10)
+                {
+                    RCNTableEntries[5][lineNumber] = splitLine[9];
+                }
+                if (splitLine.Length >= 12)
+                {
+                    RCNTableEntries[6][lineNumber] = splitLine[11];
                 }
 
-                RCNTableEntries.Add(list);
+                lineNumber++;
             }
         }
     }
