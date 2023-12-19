@@ -99,11 +99,25 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition
                             Width="350"/>
+                        <ColumnDefinition
+                            Width="300"/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition
+                            Width="100"/>
+                        <ColumnDefinition
+                            Width="25"/>
+                        <ColumnDefinition
+                            Width="100"/>
+                        <ColumnDefinition
+                            Width="25"/>
+                        <ColumnDefinition
+                            Width="100"/>
+                        <ColumnDefinition
+                            Width="25"/>
+                        <ColumnDefinition
+                            Width="100"/>
+                        <ColumnDefinition
+                            Width="25"/>
                     </Grid.ColumnDefinitions>
 
                 </Grid>

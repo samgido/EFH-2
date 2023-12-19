@@ -54,6 +54,8 @@ namespace EFH_2
             for(int i = 0; i < 120; i++)
             {
                 RowDefinition rowDef = new RowDefinition();
+                rowDef.Height = new GridLength(25);
+    
                 uxInputGrid.RowDefinitions.Add(rowDef);
             }
 
@@ -64,20 +66,58 @@ namespace EFH_2
 
         private void PopulateRCNData()
         {
-            List<TextBlock> items = new();
-
-            for(int i = 0; i < 120; i++)
+            List<TextBlock>[] labeledColumns = new List<TextBlock>[7];
+            for(int i = 0; i < 7; i++)
             {
-                TextBlock label = new();
-                label.Text = RCNVM.RCNTableEntries[0][i];
-                items.Add(label); 
+                List<TextBlock> items = new();
+
+                for(int j = 0; j < 120; j++)
+                {
+                    TextBlock label = new();
+                    label.Text = RCNVM.RCNTableEntries[i][j];
+                    items.Add(label); 
+                }
+
+                labeledColumns[i] = items;
+
+                //for(int j = 0; j < 120; j++)
+                //{
+                //    items[j].VerticalAlignment = VerticalAlignment.Center;
+                //    uxInputGrid.Children.Add(items[j]);
+                //    Grid.SetColumn(items[j], i);
+                //    Grid.SetRow(items[j], j);
+                //}
             }
 
-            for(int i = 0; i < 120; i++)
+            for(int i = 0; i < 3; i++)
             {
-                uxInputGrid.Children.Add(items[i]);
-                Grid.SetColumn(items[i], 0);
-                Grid.SetRow(items[i], i);
+                for (int j = 0; j < 120; j++)
+                {
+                    TextBlock block = labeledColumns[i][j];
+                    block.VerticalAlignment = VerticalAlignment.Center;
+                    uxInputGrid.Children.Add(block);
+                    Grid.SetColumn(block, i);
+                    Grid.SetRow(block, j);
+                }
+            }
+
+
+            for(int i = 0; i < 4; i++)
+            {
+                for(int j = 0; j < 120; j++)
+                {
+                    TextBlock block = labeledColumns[3+i][j];
+                    block.VerticalAlignment = VerticalAlignment.Center;
+                    block.HorizontalAlignment = HorizontalAlignment.Center;
+                    uxInputGrid.Children.Add(block);
+                    Grid.SetColumn(block, 4 + i*2);
+                    Grid.SetRow(block, j);
+
+                    TextBox textBox = new();
+                    uxInputGrid.Children.Add(textBox);
+                    Grid.SetColumn(textBox, 3 + i * 2);
+                    Grid.SetRow(block, j);
+                }
             }
         }
 
