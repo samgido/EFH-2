@@ -79,14 +79,6 @@ namespace EFH_2
                 }
 
                 labeledColumns[i] = items;
-
-                //for(int j = 0; j < 120; j++)
-                //{
-                //    items[j].VerticalAlignment = VerticalAlignment.Center;
-                //    uxInputGrid.Children.Add(items[j]);
-                //    Grid.SetColumn(items[j], i);
-                //    Grid.SetRow(items[j], j);
-                //}
             }
 
             for(int i = 0; i < 3; i++)
@@ -101,22 +93,35 @@ namespace EFH_2
                 }
             }
 
-
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for(int j = 0; j < 120; j++)
+                int next = 0;
+                for (int j = 0; j < 120; j++)
                 {
-                    TextBlock block = labeledColumns[3+i][j];
-                    block.VerticalAlignment = VerticalAlignment.Center;
-                    block.HorizontalAlignment = HorizontalAlignment.Center;
-                    uxInputGrid.Children.Add(block);
-                    Grid.SetColumn(block, 4 + i*2);
-                    Grid.SetRow(block, j);
+                    TextBlock textBlock = labeledColumns[3 + i][j];
+                    textBlock.VerticalAlignment = VerticalAlignment.Center;
+                    textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                    uxInputGrid.Children.Add(textBlock);
+                    Grid.SetColumn(textBlock, 4 + i * 2);
+                    Grid.SetRow(textBlock, j);
 
-                    TextBox textBox = new();
-                    uxInputGrid.Children.Add(textBox);
-                    Grid.SetColumn(textBox, 3 + i * 2);
-                    Grid.SetRow(block, j);
+                    if(labeledColumns[3+i][j].Text.Trim() != "" && labeledColumns[3 + i][j].Text.Trim() != "**")
+                    {
+                        NumberBox inputBox = new();
+                        uxInputGrid.Children.Add(inputBox);
+                        Grid.SetColumn(inputBox, 3 + i * 2);
+                        Grid.SetRow(inputBox, j);
+
+                        //Binding b = new();
+                        //b.Mode = BindingMode.TwoWay;
+                        //if ( i == 0)
+                        //{
+                        //    b.Source = RCNVM.GroupAInputs[next];
+                        //}
+                        //inputBox.SetBinding(NumberBox.ValueProperty, b);
+
+                        next++;
+                    }
                 }
             }
         }
@@ -155,6 +160,12 @@ namespace EFH_2
                     var _ = await fullError.ShowAsync();
                 }
             }
+        }
+
+        private void ClearButtonClick(object sender, RoutedEventArgs e)
+        {
+            BasicVM.DrainageArea = 5.0;
+            RCNVM.GroupAInputs[0] = 5.0;
         }
     }
 }

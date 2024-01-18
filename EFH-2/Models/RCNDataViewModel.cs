@@ -23,6 +23,11 @@ namespace EFH_2
             {
                 RCNTableEntries[i] = new string[120];
             }
+
+            for (int i = 0; i < 81; i++)
+            {
+                _groupAInputs.Add(double.NaN);
+            }
         }
 
         public struct HSGEntry
@@ -87,5 +92,22 @@ namespace EFH_2
                 lineNumber++;
             }
         }
+
+        private ObservableCollection<double> _groupAInputs = new();
+        public ObservableCollection<double> GroupAInputs
+        {
+            get
+            {
+                return _groupAInputs;
+            }
+            set
+            {
+                this.SetProperty(ref this._groupAInputs, value);
+            }
+        }
+
+        private ObservableCollection<double> _groupBInputs = new();
+
+        private ObservableCollection<double> _groupCInputs = new();
     }
 }

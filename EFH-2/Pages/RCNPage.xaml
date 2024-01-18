@@ -169,7 +169,8 @@
                 Content="Clear"
                 RelativePanel.RightOf="uxAcceptButton"
                 RelativePanel.AlignVerticalCenterWith="uxAcceptButton"
-                Margin="100,0,0,0"/>
+                Margin="100,0,0,0"
+                Click="ClearButtonClick"/>
 
         </RelativePanel>
         

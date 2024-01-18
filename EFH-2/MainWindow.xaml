@@ -209,7 +209,7 @@
             RelativePanel.Below="uxNavigationView"
             RelativePanel.AlignBottomWithPanel="True"
             Background="Black"
-            CacheSize="4"
+            CacheSize="5"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"/>
 
