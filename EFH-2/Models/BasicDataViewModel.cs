@@ -26,8 +26,8 @@ namespace EFH_2
         /// </summary>
         public string Client
         {
-            get { return this._client; }
-            set { this.SetProperty(ref this._client, value); }
+            get => this._client; 
+            set => this.SetProperty(ref this._client, value); 
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace EFH_2
         /// </summary>
         public string SelectedState
         {
-            get { return this._selectedState; }
+            get => this._selectedState; 
             set
             {
                 for (int i = 0; i < States.Count; i++)
@@ -97,7 +97,7 @@ namespace EFH_2
         /// </summary>
         public int SelectedStateIndex
         {
-            get { return this._selectedStateIndex; }
+            get => this._selectedStateIndex; 
             set
             {
                 this.SetProperty(ref this._selectedStateIndex, value);
@@ -114,8 +114,8 @@ namespace EFH_2
         /// </summary>
         public ObservableCollection<ComboBoxItem> States
         {
-            get { return this._states; }
-            set { this.SetProperty(ref this._states, value); }
+            get => this._states; 
+            set => this.SetProperty(ref this._states, value); 
         }
 
         private string _selectedCounty = "";
@@ -124,7 +124,7 @@ namespace EFH_2
         /// </summary>
         public string SelectedCounty
         {
-            get { return this._selectedCounty; }
+            get => this._selectedCounty; 
             set
             {
                 for (int i = 0; i < Counties.Count; i++)
@@ -145,7 +145,7 @@ namespace EFH_2
         /// </summary>
         public int SelectedCountyIndex
         {
-            get { return this._selectedCountyIndex; }
+            get => this._selectedCountyIndex; 
             set
             {
                 this.SetProperty(ref this._selectedCountyIndex, value);
@@ -182,8 +182,8 @@ namespace EFH_2
         /// </summary>
         public ObservableCollection<ComboBoxItem> Counties
         {
-            get { return this._counties; }
-            set { this.SetProperty(ref this._counties, value); }
+            get => this._counties; 
+            set => this.SetProperty(ref this._counties, value); 
         }
 
         private string _practice = "";
@@ -192,8 +192,8 @@ namespace EFH_2
         /// </summary>
         public string Practice
         {
-            get { return this._practice; }
-            set { this.SetProperty(ref this._practice, value); }
+            get => this._practice; 
+            set => this.SetProperty(ref this._practice, value); 
         }
 
         private string _by = "";
@@ -202,8 +202,8 @@ namespace EFH_2
         /// </summary>
         public string By
         {
-            get { return this._by; }
-            set { this.SetProperty(ref this._by, value); }
+            get => this._by; 
+            set => this.SetProperty(ref this._by, value); 
         }
 
         private DateTimeOffset _date = new();
@@ -212,18 +212,18 @@ namespace EFH_2
         /// </summary>
         public DateTimeOffset Date
         {
-            get { return this._date; }
-            set { this.SetProperty(ref this._date, value); }
+            get => this._date; 
+            set => this.SetProperty(ref this._date, value); 
         }
 
         private double _drainageArea = double.NaN;
         /// <summary>
-        /// Gets or sets drainge area field 
+        /// Gets or sets drainage area field 
         /// </summary>
         public double DrainageArea
         {
-            get { return this._drainageArea; }
-            set { this.SetProperty(ref this._drainageArea, value); }
+            get => this._drainageArea; 
+            set => this.SetProperty(ref this._drainageArea, value); 
         }
 
         /// <summary>
@@ -255,8 +255,8 @@ namespace EFH_2
         /// </summary>
         public double RunoffCurveNumber
         {
-            get { return this._curveNumber; }
-            set { this.SetProperty(ref this._curveNumber, value); }
+            get => this._curveNumber; 
+            set => this.SetProperty(ref this._curveNumber, value); 
         }
 
         /// <summary>
@@ -288,8 +288,8 @@ namespace EFH_2
         /// </summary>
         public double WatershedLength
         {
-            get { return this._watershedLength; }
-            set { this.SetProperty(ref this._watershedLength, value); }
+            get => this._watershedLength; 
+            set => this.SetProperty(ref this._watershedLength, value); 
         }
 
         /// <summary>
@@ -321,8 +321,8 @@ namespace EFH_2
         /// </summary>
         public double WatershedSlope
         {
-            get { return this._watershedSlope; }
-            set { this.SetProperty(ref this._watershedSlope, value); }
+            get => this._watershedSlope; 
+            set => this.SetProperty(ref this._watershedSlope, value); 
         }
 
         /// <summary>
@@ -354,8 +354,8 @@ namespace EFH_2
         /// </summary>
         public double TimeOfConcentration
         {
-            get { return this._timeOfConcentration; }
-            set { this.SetProperty(ref this._timeOfConcentration, value); }
+            get => this._timeOfConcentration; 
+            set => this.SetProperty(ref this._timeOfConcentration, value); 
         }
 
         /// <summary>
@@ -412,8 +412,8 @@ namespace EFH_2
         /// </summary>
         public string DrainageAreaStatus
         {
-            get { return this._drainageStatus; }
-            set { this.SetProperty(ref this._drainageStatus, value); }
+            get => this._drainageStatus; 
+            set => this.SetProperty(ref this._drainageStatus, value); 
         }
 
         private string _curveNumberStatus = "";
@@ -422,8 +422,8 @@ namespace EFH_2
         /// </summary>
         public string RunoffCurveNumberStatus
         {
-            get { return this._curveNumberStatus; }
-            set { this.SetProperty(ref this._curveNumberStatus, value); }
+            get => this._curveNumberStatus; 
+            set => this.SetProperty(ref this._curveNumberStatus, value); 
         }
 
         private string _watershedLengthStatus = "";
@@ -432,8 +432,8 @@ namespace EFH_2
         /// </summary>
         public string WatershedLengthStatus
         {
-            get { return this._watershedLengthStatus; }
-            set { this.SetProperty(ref this._watershedLengthStatus, value); }
+            get => this._watershedLengthStatus; 
+            set => this.SetProperty(ref this._watershedLengthStatus, value); 
         }
 
         private string _watershedSlopeStatus = "";
@@ -442,8 +442,8 @@ namespace EFH_2
         /// </summary>
         public string WatershedSlopeStatus
         {
-            get { return this._watershedSlopeStatus; }
-            set { this.SetProperty(ref this._watershedSlopeStatus, value); }
+            get => this._watershedSlopeStatus; 
+            set => this.SetProperty(ref this._watershedSlopeStatus, value); 
         }
 
         private string _timeOfConcentrationStatus = "";
@@ -452,8 +452,8 @@ namespace EFH_2
         /// </summary>
         public string TimeOfConcentrationStatus
         {
-            get { return this._timeOfConcentrationStatus; }
-            set { this.SetProperty(ref this._timeOfConcentrationStatus, value); }
+            get => this._timeOfConcentrationStatus; 
+            set => this.SetProperty(ref this._timeOfConcentrationStatus, value); 
         }
 
         public BasicDataViewModel()

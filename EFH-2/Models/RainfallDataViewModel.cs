@@ -27,7 +27,7 @@ namespace EFH_2
         /// </summary>
         public string SelectedRainfallDistributionType
         {
-            get { return this._selectedRainfallDistributionType; }
+            get => this._selectedRainfallDistributionType; 
             set
             {
                 for (int i = 0; i < RainfallDistributionTypes.Count; i++)
@@ -48,7 +48,7 @@ namespace EFH_2
         /// </summary>
         public int SelectedRainfallDistributionTypeIndex
         {
-            get { return this._selectedRainfallDistributionTypeIndex; }
+            get => this._selectedRainfallDistributionTypeIndex; 
             set 
             { 
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
@@ -85,8 +85,8 @@ namespace EFH_2
         /// </summary>
         public ObservableCollection<ComboBoxItem> RainfallDistributionTypes
         {
-            get { return this._rainfallDistributionTypes; }
-            set { this.SetProperty(ref this._rainfallDistributionTypes, value); }
+            get => this._rainfallDistributionTypes; 
+            set => this.SetProperty(ref this._rainfallDistributionTypes, value); 
         }
 
         private string _selectedDUHType = "";
@@ -95,7 +95,7 @@ namespace EFH_2
         /// </summary>
         public string SelectedDUHType
         {
-            get { return this._selectedDUHType; }
+            get => this._selectedDUHType; 
             set
             {
                 for(int i = 0; i < _duhTypes.Count; i++)
@@ -116,7 +116,7 @@ namespace EFH_2
         /// </summary>
         public int SelectedDUHTypeIndex
         {
-            get { return this._selectedDUHTypeIndex; }
+            get => this._selectedDUHTypeIndex; 
             set 
             { 
                 this.SetProperty(ref this._selectedDUHTypeIndex, value);
@@ -146,8 +146,8 @@ namespace EFH_2
         /// </summary>
         public ObservableCollection<ComboBoxItem> DUHTypes
         {
-            get { return this._duhTypes; }
-            set { this.SetProperty(ref this._duhTypes, value); }
+            get => this._duhTypes; 
+            set => this.SetProperty(ref this._duhTypes, value); 
         }
 
         public ObservableCollection<StormModel> Storms { get; set; }
@@ -211,8 +211,8 @@ namespace EFH_2
         /// </summary>
         public string RainfallDistributionTypeStatus
         {
-            get { return this._rainfallDistributionTypeStatus; }
-            set { this.SetProperty(ref this._rainfallDistributionTypeStatus, value); }
+            get => this._rainfallDistributionTypeStatus; 
+            set => this.SetProperty(ref this._rainfallDistributionTypeStatus, value); 
         }
 
         private string _duhTypeStatus = "";
@@ -221,8 +221,8 @@ namespace EFH_2
         /// </summary>
         public string DUHTypeStatus
         {
-            get { return this._duhTypeStatus; }
-            set { this.SetProperty(ref this._duhTypeStatus, value); }
+            get => this._duhTypeStatus; 
+            set => this.SetProperty(ref this._duhTypeStatus, value); 
         }
 
         public RainfallDataViewModel()

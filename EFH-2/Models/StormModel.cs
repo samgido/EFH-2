@@ -21,8 +21,8 @@ namespace EFH_2
         /// </summary>
         public double Frequency
         {
-            get { return this._frequency; }
-            set { this.SetProperty(ref this._frequency, value); }
+            get => this._frequency; 
+            set => this.SetProperty(ref this._frequency, value); 
         }
 
         private double _dayRain = double.NaN;
@@ -31,7 +31,7 @@ namespace EFH_2
         /// </summary>
         public double DayRain
         {
-            get { return this._dayRain; }
+            get => this._dayRain; 
             set
             {
                 if (value <= 26)
@@ -47,8 +47,8 @@ namespace EFH_2
         /// </summary>
         public double PeakFlow
         {
-            get { return this._peakFlow; }
-            set { this.SetProperty(ref this._peakFlow, value); }
+            get => this._peakFlow; 
+            set => this.SetProperty(ref this._peakFlow, value); 
         }
 
         private double _runoff = double.NaN;
@@ -57,8 +57,8 @@ namespace EFH_2
         /// </summary>
         public double Runoff
         {
-            get { return this._runoff; }
-            set { this.SetProperty(ref this._runoff, value); }
+            get => this._runoff; 
+            set => this.SetProperty(ref this._runoff, value); 
         }
 
         private bool _displayHydrograph = false;
@@ -67,8 +67,8 @@ namespace EFH_2
         /// </summary>
         public bool DisplayHydrograph
         {
-            get { return this._displayHydrograph; }
-            set { this.SetProperty(ref this._displayHydrograph, value); }
+            get => this._displayHydrograph; 
+            set => this.SetProperty(ref this._displayHydrograph, value); 
         }
 
         /// <summary>

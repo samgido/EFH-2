@@ -25,6 +25,13 @@ namespace EFH_2
             {
                 _groupAInputs.Add(double.NaN);
             }
+
+            for (int i = 0; i < 93; i++)
+            {
+                _groupBInputs.Add(double.NaN);
+                _groupCInputs.Add(double.NaN);
+                _groupDInputs.Add(double.NaN);
+            }
         }
 
         public struct HSGEntry
@@ -93,18 +100,29 @@ namespace EFH_2
         private ObservableCollection<double> _groupAInputs = new();
         public ObservableCollection<double> GroupAInputs
         {
-            get
-            {
-                return _groupAInputs;
-            }
-            set
-            {
-                this.SetProperty(ref this._groupAInputs, value);
-            }
+            get => this._groupAInputs; 
+            set => this.SetProperty(ref this._groupAInputs, value); 
         }
 
         private ObservableCollection<double> _groupBInputs = new();
+        public ObservableCollection<double> GroupBInputs
+        {
+            get => this._groupBInputs; 
+            set => this.SetProperty(ref this._groupBInputs, value); 
+        }
 
         private ObservableCollection<double> _groupCInputs = new();
+        public ObservableCollection<double> GroupCInputs
+        {
+            get => this._groupCInputs; 
+            set => this.SetProperty(ref this._groupCInputs, value); 
+        }
+
+        private ObservableCollection<double> _groupDInputs = new();
+        public ObservableCollection<double> GroupDInputs
+        {
+            get => this._groupDInputs; 
+            set => this.SetProperty(ref this._groupDInputs, value); 
+        }
     }
 }
