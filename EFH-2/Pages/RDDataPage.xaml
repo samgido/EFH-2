@@ -80,448 +80,561 @@
                 />
         </RelativePanel>
 
-        <RelativePanel
-            Padding="0,35,0,0">
-
-            <TextBlock
-                x:Name="uxFrequencyLabel"
-                Text="Frequency (yrs)"
-                Padding="125,0,0,0"
-                />
-
-            <TextBlock
-                x:Name="uxDayRainLabel"
-                RelativePanel.RightOf="uxFrequencyLabel"
-                Text="24-HR Rain (in)"
-                Margin="50,0,0,0"
-                />
-
-            <TextBlock
-                x:Name="uxPeakFlowLabel"
-                RelativePanel.RightOf="uxDayRainLabel"
-                Text="Peak Flow (cfs)"
-                Margin="100,0,0,0"
-                />
-
-            <TextBlock
-                x:Name="uxRunoffLabel"
-                RelativePanel.RightOf="uxPeakFlowLabel"
-                Text="Runoff (in)"
-                Margin="50,0,0,0"
-                />
-
-            <TextBlock
-                x:Name="uxSelectHydrographLabel"
-                RelativePanel.RightOf="uxRunoffLabel"
-                Text="Select Hydrograph"
-                Margin="100,0,0,0"
-                />
-
-            <NumberBox
-                x:Name="uxFrequencyField1"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #1"
-                Value="{x:Bind Path=RainfallVM.Storms[0].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.Below="uxFrequencyLabel"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
-                Margin="125,10,0,0"
-                Width="90"
-                />
-
-            <TextBlock
-                Text="Storm #1"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField1"
-                Padding="50,10,0,0"
-                />
-
-            <NumberBox
-                x:Name="uxFrequencyField2"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #2"
-                Value="{x:Bind Path=RainfallVM.Storms[1].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyField1"
-                RelativePanel.Below="uxFrequencyField1"
-                Margin="125,10,0,0"
-                Width="90"
-                />
-          
-            <TextBlock
-                Text="Storm #2"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField2"
-                Padding="50,10,0,0"
-                />
+        <ScrollViewer>
             
-            <NumberBox
-                x:Name="uxFrequencyField3"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #3"
-                Value="{x:Bind Path=RainfallVM.Storms[2].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
-                RelativePanel.Below="uxFrequencyField2"
-                Margin="125,10,0,0"
-                Width="90"
-                />
+            <RelativePanel
+                Padding="0,35,0,0">
 
-            <TextBlock
-                Text="Storm #3"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField3"
-                Padding="50,10,0,0"
-                />
+                <TextBlock
+                    x:Name="uxFrequencyLabel"
+                    Text="Frequency (yrs)"
+                    Padding="125,0,0,0"
+                    />
 
-            <NumberBox
-                x:Name="uxFrequencyField4"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #4"
-                Value="{x:Bind Path=RainfallVM.Storms[3].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyField3"
-                RelativePanel.Below="uxFrequencyField3"
-                Margin="125,10,0,0"
-                Width="90"
-                />
+                <TextBlock
+                    x:Name="uxDayRainLabel"
+                    RelativePanel.RightOf="uxFrequencyLabel"
+                    Text="24-HR Rain (in)"
+                    Margin="50,0,0,0"
+                    />
 
-            <TextBlock
-                Text="Storm #4"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField4"
-                Padding="50,10,0,0"
-                />
+                <TextBlock
+                    x:Name="uxPeakFlowLabel"
+                    RelativePanel.RightOf="uxDayRainLabel"
+                    Text="Peak Flow (cfs)"
+                    Margin="100,0,0,0"
+                    />
 
-            <NumberBox
-                x:Name="uxFrequencyField5"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #5"
-                Value="{x:Bind Path=RainfallVM.Storms[4].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyField4"
-                RelativePanel.Below="uxFrequencyField4"
-                Margin="125,10,0,0"
-                Width="90"
-                />
+                <TextBlock
+                    x:Name="uxRunoffLabel"
+                    RelativePanel.RightOf="uxPeakFlowLabel"
+                    Text="Runoff (in)"
+                    Margin="50,0,0,0"
+                    />
 
-            <TextBlock
-                Text="Storm #5"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField5"
-                Padding="50,10,0,0"
-                />
+                <TextBlock
+                    x:Name="uxSelectHydrographLabel"
+                    RelativePanel.RightOf="uxRunoffLabel"
+                    Text="Select Hydrograph"
+                    Margin="100,0,0,0"
+                    />
 
-            <NumberBox
-                x:Name="uxFrequencyField6"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #6"
-                Value="{x:Bind Path=RainfallVM.Storms[5].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyField5"
-                RelativePanel.Below="uxFrequencyField5"
-                Margin="125,10,0,0"
-                Width="90"
-                />
+                <NumberBox
+                    x:Name="uxFrequencyField1"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #1"
+                    Value="{x:Bind Path=RainfallVM.Storms[0].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.Below="uxFrequencyLabel"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyLabel"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
 
-            <TextBlock
-                Text="Storm #6"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField6"
-                Padding="50,10,0,0"
-                />
+                <TextBlock
+                    Text="Storm #1"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField1"
+                    Padding="50,10,0,0"
+                    />
 
-            <NumberBox
-                x:Name="uxFrequencyField7"
-                ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #7"
-                Value="{x:Bind Path=RainfallVM.Storms[6].Frequency, Mode=TwoWay}"
-                Minimum="0"
-                RelativePanel.AlignHorizontalCenterWith="uxFrequencyField6"
-                RelativePanel.Below="uxFrequencyField6"
-                Margin="125,10,0,0"
-                Width="90"
-                />
+                <NumberBox
+                    x:Name="uxFrequencyField2"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #2"
+                    Value="{x:Bind Path=RainfallVM.Storms[1].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField1"
+                    RelativePanel.Below="uxFrequencyField1"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
+              
+                <TextBlock
+                    Text="Storm #2"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField2"
+                    Padding="50,10,0,0"
+                    />
+                
+                <NumberBox
+                    x:Name="uxFrequencyField3"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #3"
+                    Value="{x:Bind Path=RainfallVM.Storms[2].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField2"
+                    RelativePanel.Below="uxFrequencyField2"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
 
-            <TextBlock
-                Text="Storm #7"
-                RelativePanel.AlignVerticalCenterWith="uxFrequencyField7"
-                Padding="50,10,0,0"
-                />
+                <TextBlock
+                    Text="Storm #3"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField3"
+                    Padding="50,10,0,0"
+                    />
 
-            <NumberBox
-                x:Name="uxDayRainField1"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #1 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[0].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainLabel"
-                RelativePanel.Below="uxDayRainLabel"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <NumberBox
-                x:Name="uxDayRainField2"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #2 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[1].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainField1"
-                RelativePanel.Below="uxDayRainField1"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <NumberBox
-                x:Name="uxDayRainField3"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #3 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[2].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainField2"
-                RelativePanel.Below="uxDayRainField2"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <NumberBox
-                x:Name="uxDayRainField4"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #4 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[3].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainField3"
-                RelativePanel.Below="uxDayRainField3"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <NumberBox
-                x:Name="uxDayRainField5"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #5 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[4].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainField4"
-                RelativePanel.Below="uxDayRainField4"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <NumberBox
-                x:Name="uxDayRainField6"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #6 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[5].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainField5"
-                RelativePanel.Below="uxDayRainField5"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <NumberBox
-                x:Name="uxDayRainField7"
-                ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #7 event frequency"
-                Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
-                NumberFormatter="{StaticResource DecimalFormatter}"
-                Minimum="0"
-                Maximum="{x:Bind RainfallVM.DayRainMax}"
-                RelativePanel.AlignHorizontalCenterWith="uxDayRainField6"
-                RelativePanel.Below="uxDayRainField6"
-                Margin="50,10,0,0"
-                Width="100"
-                />
+                <NumberBox
+                    x:Name="uxFrequencyField4"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #4"
+                    Value="{x:Bind Path=RainfallVM.Storms[3].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField3"
+                    RelativePanel.Below="uxFrequencyField3"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
 
-            <TextBox
-                x:Name="uxPeakFlowField1"
-                Text="{x:Bind Path=RainfallVM.Storms[0].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowLabel"
-                RelativePanel.Below="uxPeakFlowLabel"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxPeakFlowField2"
-                Text="{x:Bind Path=RainfallVM.Storms[1].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField1"
-                RelativePanel.Below="uxPeakFlowField1"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxPeakFlowField3"
-                Text="{x:Bind Path=RainfallVM.Storms[2].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField2"
-                RelativePanel.Below="uxPeakFlowField2"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxPeakFlowField4"
-                Text="{x:Bind Path=RainfallVM.Storms[3].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField3"
-                RelativePanel.Below="uxPeakFlowField3"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxPeakFlowField5"
-                Text="{x:Bind Path=RainfallVM.Storms[4].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField4"
-                RelativePanel.Below="uxPeakFlowField4"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxPeakFlowField6"
-                Text="{x:Bind Path=RainfallVM.Storms[5].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField5"
-                RelativePanel.Below="uxPeakFlowField5"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxPeakFlowField7"
-                Text="{x:Bind Path=RainfallVM.Storms[6].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField6"
-                RelativePanel.Below="uxPeakFlowField6"
-                IsReadOnly="True"
-                Margin="100,10,0,0"
-                Width="100"
-                />
+                <TextBlock
+                    Text="Storm #4"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField4"
+                    Padding="50,10,0,0"
+                    />
 
-            <TextBox
-                x:Name="uxRunoffField1"
-                Text="{x:Bind Path=RainfallVM.Storms[0].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffLabel"
-                RelativePanel.Below="uxRunoffLabel"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxRunoffField2"
-                Text="{x:Bind Path=RainfallVM.Storms[1].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffField1"
-                RelativePanel.Below="uxRunoffField1"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxRunoffField3"
-                Text="{x:Bind Path=RainfallVM.Storms[2].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffField2"
-                RelativePanel.Below="uxRunoffField2"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxRunoffField4"
-                Text="{x:Bind Path=RainfallVM.Storms[3].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffField3"
-                RelativePanel.Below="uxRunoffField3"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxRunoffField5"
-                Text="{x:Bind Path=RainfallVM.Storms[4].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffField4"
-                RelativePanel.Below="uxRunoffField4"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxRunoffField6"
-                Text="{x:Bind Path=RainfallVM.Storms[5].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffField5"
-                RelativePanel.Below="uxRunoffField5"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
-            <TextBox
-                x:Name="uxRunoffField7"
-                Text="{x:Bind Path=RainfallVM.Storms[6].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
-                RelativePanel.AlignHorizontalCenterWith="uxRunoffField6"
-                RelativePanel.Below="uxRunoffField6"
-                IsReadOnly="True"
-                Margin="50,10,0,0"
-                Width="100"
-                />
+                <NumberBox
+                    x:Name="uxFrequencyField5"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #5"
+                    Value="{x:Bind Path=RainfallVM.Storms[4].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField4"
+                    RelativePanel.Below="uxFrequencyField4"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
 
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton1"
-                IsOn="{x:Bind Path=RainfallVM.Storms[0].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographLabel"
-                RelativePanel.Below="uxSelectHydrographLabel"
-                Margin="175,5,0,0"
-                />
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton2"
-                IsOn="{x:Bind Path=RainfallVM.Storms[1].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton1"
-                RelativePanel.Below="uxSelectHydrographButton1"
-                RelativePanel.AlignVerticalCenterWith="uxRunoffField2"
-                Margin="175,5,0,0"
-                />
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton3"
-                IsOn="{x:Bind Path=RainfallVM.Storms[2].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton2"
-                RelativePanel.Below="uxSelectHydrographButton2"
-                RelativePanel.AlignVerticalCenterWith="uxRunoffField3"
-                Margin="175,5,0,0"
-                />
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton4"
-                IsOn="{x:Bind Path=RainfallVM.Storms[3].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton3"
-                RelativePanel.Below="uxSelectHydrographButton3"
-                RelativePanel.AlignVerticalCenterWith="uxRunoffField4"
-                Margin="175,5,0,0"
-                />
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton5"
-                IsOn="{x:Bind Path=RainfallVM.Storms[4].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton4"
-                RelativePanel.Below="uxSelectHydrographButton4"
-                RelativePanel.AlignVerticalCenterWith="uxRunoffField5"
-                Margin="175,5,0,0"
-                />
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton6"
-                IsOn="{x:Bind Path=RainfallVM.Storms[5].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton5"
-                RelativePanel.Below="uxSelectHydrographButton5"
-                RelativePanel.AlignVerticalCenterWith="uxRunoffField6"
-                Margin="175,5,0,0"
-                />
-            <ToggleSwitch
-                x:Name="uxSelectHydrographButton7"
-                IsOn="{x:Bind Path=RainfallVM.Storms[6].DisplayHydrograph, Mode=TwoWay}"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton6"
-                RelativePanel.Below="uxSelectHydrographButton6"
-                RelativePanel.AlignVerticalCenterWith="uxRunoffField7"
-                Margin="175,5,0,0"
-                />
+                <TextBlock
+                    Text="Storm #5"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField5"
+                    Padding="50,10,0,0"
+                    />
 
-            <Button
-                x:Name="uxPlotHydrographs"
-                RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographLabel"
-                RelativePanel.Below="uxSelectHydrographButton7"
-                Height="50"
-                Width="120"
-                Margin="100,10,0,0"
-                xml:space="preserve"
-                Padding="0,-14,0,0"
-                >
-                <Button.Content>
+                <NumberBox
+                    x:Name="uxFrequencyField6"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #6"
+                    Value="{x:Bind Path=RainfallVM.Storms[5].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField5"
+                    RelativePanel.Below="uxFrequencyField5"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
+
+                <TextBlock
+                    Text="Storm #6"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField6"
+                    Padding="50,10,0,0"
+                    />
+
+                <NumberBox
+                    x:Name="uxFrequencyField7"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #7"
+                    Value="{x:Bind Path=RainfallVM.Storms[6].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField6"
+                    RelativePanel.Below="uxFrequencyField6"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
+
+                <TextBlock
+                    Text="Storm #7"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField7"
+                    Padding="50,10,0,0"
+                    />
+
+                <NumberBox
+                    x:Name="uxFrequencyField8"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #8"
+                    Value="{x:Bind Path=RainfallVM.Storms[6].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField7"
+                    RelativePanel.Below="uxFrequencyField7"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
+
+                <TextBlock
+                    Text="Storm #8"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField8"
+                    Padding="50,10,0,0"
+                    />
+
+                <NumberBox
+                    x:Name="uxFrequencyField9"
+                    ToolTipService.ToolTip="Rainfall frequency in years for the 24-hour rainfall amount for Storm #9"
+                    Value="{x:Bind Path=RainfallVM.Storms[6].Frequency, Mode=TwoWay}"
+                    Minimum="0"
+                    RelativePanel.AlignHorizontalCenterWith="uxFrequencyField8"
+                    RelativePanel.Below="uxFrequencyField8"
+                    Margin="125,10,0,0"
+                    Width="90"
+                    />
+
+                <TextBlock
+                    Text="Storm #9"
+                    RelativePanel.AlignVerticalCenterWith="uxFrequencyField9"
+                    Padding="50,10,0,0"
+                    />
+
+                <NumberBox
+                    x:Name="uxDayRainField1"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #1 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[0].DayRain, Mode=TwoWay}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainLabel"
+                    RelativePanel.Below="uxDayRainLabel"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField2"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #2 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[1].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField1"
+                    RelativePanel.Below="uxDayRainField1"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField3"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #3 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[2].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField2"
+                    RelativePanel.Below="uxDayRainField2"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField4"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #4 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[3].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField3"
+                    RelativePanel.Below="uxDayRainField3"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField5"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #5 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[4].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField4"
+                    RelativePanel.Below="uxDayRainField4"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField6"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #6 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[5].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField5"
+                    RelativePanel.Below="uxDayRainField5"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField7"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #7 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField6"
+                    RelativePanel.Below="uxDayRainField6"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField8"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #7 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField7"
+                    RelativePanel.Below="uxDayRainField7"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <NumberBox
+                    x:Name="uxDayRainField9"
+                    ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #7 event frequency"
+                    Value="{x:Bind Path=RainfallVM.Storms[6].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
+                    Minimum="0"
+                    Maximum="{x:Bind RainfallVM.DayRainMax}"
+                    RelativePanel.AlignHorizontalCenterWith="uxDayRainField8"
+                    RelativePanel.Below="uxDayRainField8"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+
+                <TextBox
+                    x:Name="uxPeakFlowField1"
+                    Text="{x:Bind Path=RainfallVM.Storms[0].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowLabel"
+                    RelativePanel.Below="uxPeakFlowLabel"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField2"
+                    Text="{x:Bind Path=RainfallVM.Storms[1].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField1"
+                    RelativePanel.Below="uxPeakFlowField1"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField3"
+                    Text="{x:Bind Path=RainfallVM.Storms[2].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField2"
+                    RelativePanel.Below="uxPeakFlowField2"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField4"
+                    Text="{x:Bind Path=RainfallVM.Storms[3].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField3"
+                    RelativePanel.Below="uxPeakFlowField3"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField5"
+                    Text="{x:Bind Path=RainfallVM.Storms[4].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField4"
+                    RelativePanel.Below="uxPeakFlowField4"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField6"
+                    Text="{x:Bind Path=RainfallVM.Storms[5].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField5"
+                    RelativePanel.Below="uxPeakFlowField5"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField7"
+                    Text="{x:Bind Path=RainfallVM.Storms[6].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField6"
+                    RelativePanel.Below="uxPeakFlowField6"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField8"
+                    Text="{x:Bind Path=RainfallVM.Storms[6].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField7"
+                    RelativePanel.Below="uxPeakFlowField7"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxPeakFlowField9"
+                    Text="{x:Bind Path=RainfallVM.Storms[6].PeakFlow, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxPeakFlowField8"
+                    RelativePanel.Below="uxPeakFlowField8"
+                    IsReadOnly="True"
+                    Margin="100,10,0,0"
+                    Width="100"
+                    />
+
+                <TextBox
+                    x:Name="uxRunoffField1"
+                    Text="{x:Bind Path=RainfallVM.Storms[0].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffLabel"
+                    RelativePanel.Below="uxRunoffLabel"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField2"
+                    Text="{x:Bind Path=RainfallVM.Storms[1].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField1"
+                    RelativePanel.Below="uxRunoffField1"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField3"
+                    Text="{x:Bind Path=RainfallVM.Storms[2].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField2"
+                    RelativePanel.Below="uxRunoffField2"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField4"
+                    Text="{x:Bind Path=RainfallVM.Storms[3].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField3"
+                    RelativePanel.Below="uxRunoffField3"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField5"
+                    Text="{x:Bind Path=RainfallVM.Storms[4].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField4"
+                    RelativePanel.Below="uxRunoffField4"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField6"
+                    Text="{x:Bind Path=RainfallVM.Storms[5].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField5"
+                    RelativePanel.Below="uxRunoffField5"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField7"
+                    Text="{x:Bind Path=RainfallVM.Storms[6].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField6"
+                    RelativePanel.Below="uxRunoffField6"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField8"
+                    Text="{x:Bind Path=RainfallVM.Storms[6].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField7"
+                    RelativePanel.Below="uxRunoffField7"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+                <TextBox
+                    x:Name="uxRunoffField9"
+                    Text="{x:Bind Path=RainfallVM.Storms[6].Runoff, Mode=OneWay, Converter={StaticResource StringToDoubleConverter}}"
+                    RelativePanel.AlignHorizontalCenterWith="uxRunoffField8"
+                    RelativePanel.Below="uxRunoffField8"
+                    IsReadOnly="True"
+                    Margin="50,10,0,0"
+                    Width="100"
+                    />
+
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton1"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[0].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographLabel"
+                    RelativePanel.Below="uxSelectHydrographLabel"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton2"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[1].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton1"
+                    RelativePanel.Below="uxSelectHydrographButton1"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField2"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton3"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[2].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton2"
+                    RelativePanel.Below="uxSelectHydrographButton2"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField3"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton4"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[3].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton3"
+                    RelativePanel.Below="uxSelectHydrographButton3"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField4"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton5"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[4].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton4"
+                    RelativePanel.Below="uxSelectHydrographButton4"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField5"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton6"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[5].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton5"
+                    RelativePanel.Below="uxSelectHydrographButton5"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField6"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton7"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[6].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton6"
+                    RelativePanel.Below="uxSelectHydrographButton6"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField7"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton8"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[7].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographButton7"
+                    RelativePanel.Below="uxSelectHydrographButton7"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField7"
+                    Margin="175,5,0,0"
+                    />
+                <ToggleSwitch
+                    x:Name="uxSelectHydrographButton9"
+                    IsOn="{x:Bind Path=RainfallVM.Storms[8].DisplayHydrograph, Mode=TwoWay}"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographLabel"
+                    RelativePanel.Below="uxSelectHydrographButton8"
+                    RelativePanel.AlignVerticalCenterWith="uxRunoffField8"
+                    Margin="175,5,0,0"
+                    />
+
+                <Button
+                    x:Name="uxPlotHydrographs"
+                    RelativePanel.AlignHorizontalCenterWith="uxSelectHydrographLabel"
+                    RelativePanel.Below="uxSelectHydrographButton9"
+                    Height="50"
+                    Width="120"
+                    Margin="100,10,0,0"
+                    xml:space="preserve"
+                    Padding="0,-14,0,0"
+                    >
+                    <Button.Content>
 Plot Selected
 Hydrograph(s)
-                </Button.Content>
-            </Button>
+                    </Button.Content>
+                </Button>
 
-        </RelativePanel>
+            </RelativePanel>
+        
+        </ScrollViewer>
 
     </StackPanel>
 </Page>

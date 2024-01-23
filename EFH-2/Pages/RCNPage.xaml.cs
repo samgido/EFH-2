@@ -54,7 +54,7 @@ namespace EFH_2
             for(int i = 0; i < 120; i++)
             {
                 RowDefinition rowDef = new RowDefinition();
-                rowDef.Height = new GridLength(25);
+                rowDef.Height = new GridLength(30);
     
                 uxInputGrid.RowDefinitions.Add(rowDef);
             }
@@ -112,13 +112,26 @@ namespace EFH_2
                         Grid.SetColumn(inputBox, 3 + i * 2);
                         Grid.SetRow(inputBox, j);
 
-                        //Binding b = new();
-                        //b.Mode = BindingMode.TwoWay;
-                        //if ( i == 0)
-                        //{
-                        //    b.Source = RCNVM.GroupAInputs[next];
-                        //}
-                        //inputBox.SetBinding(NumberBox.ValueProperty, b);
+                        Binding b = new();
+                        b.Mode = BindingMode.TwoWay;
+                        switch (i)
+                        {
+                            case 0:
+                                { b.Source = RCNVM.GroupAInputs[next]; }
+                                break;
+                            case 1:
+                                { b.Source = RCNVM.GroupBInputs[next]; }
+                                break;
+                            case 2:
+                                { b.Source = RCNVM.GroupCInputs[next]; }
+                                break;
+                            case 3:
+                                { b.Source = RCNVM.GroupDInputs[next]; }
+                                break;
+                            default:
+                                break;
+                        }
+                        inputBox.SetBinding(NumberBox.ValueProperty, b);
 
                         next++;
                     }
