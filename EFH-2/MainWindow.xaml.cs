@@ -45,7 +45,7 @@ namespace EFH_2
         /// <summary>
         /// How many storms are available in the Rainfall/Discharge Data sheet
         /// </summary>
-        public const int NumberOfStorms = 7;
+        public const int NumberOfStorms = 9;
 
         public const string ChooseMessage = "Choose...";
 
@@ -64,14 +64,14 @@ namespace EFH_2
         /// <summary>
         /// View model for the basic data page
         /// </summary>
-        public BasicDataViewModel BasicVM { get; set; }
+        public BasicDataModel BasicVM { get; set; }
 
         /// <summary>
         /// View model for the rainfall/discharge page
         /// </summary>
-        public RainfallDataViewModel RainfallVM { get; set; }
+        public RainfallDataModel RainfallVM { get; set; }
 
-        public RCNDataViewModel RCNVM { get; set; }
+        public RCNDataModel RCNVM { get; set; }
 
         public MainWindow()
         {
@@ -351,6 +351,10 @@ namespace EFH_2
 
         private void NewClicked(object sender, RoutedEventArgs e)
         {
+            contentFrame.Navigate(typeof(RDDataPage));
+            contentFrame.Navigate(typeof(BasicDataPage));
+            uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
+
             BasicVM.Clear();
             RainfallVM.Clear();
         }
@@ -438,7 +442,7 @@ namespace EFH_2
             FileOperations.PrintData(BasicVM, RainfallVM, file.Path);
         }
 
-        private async void ShowSlopeCalculatorClick(object sender, RoutedEventArgs e)
+        private void ShowSlopeCalculatorClick(object sender, RoutedEventArgs e)
         {
             Window newWindow = new Window();
 

@@ -16,7 +16,7 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the rainfall/discharge page
     /// </summary>
-    public class RainfallDataViewModel : BindableBase
+    public class RainfallDataModel : BindableBase
     {
 
         public int DayRainMax => 26;
@@ -225,7 +225,7 @@ namespace EFH_2
             set => this.SetProperty(ref this._duhTypeStatus, value); 
         }
 
-        public RainfallDataViewModel()
+        public RainfallDataModel()
         {
             Storms = new ObservableCollection<StormModel>();
 

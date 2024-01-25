@@ -34,7 +34,11 @@ namespace EFH_2
             get => this._dayRain; 
             set
             {
-                if (value <= 26)
+                if (value == 0)
+                {
+                    this.SetProperty(ref this._dayRain, double.NaN);
+                }
+                else if (value <= 26)
                 {
                     this.SetProperty(ref this._dayRain, value);
                 }
@@ -77,7 +81,7 @@ namespace EFH_2
         public void Default()
         {
             Frequency = double.NaN;
-            DayRain = double.NaN;
+            DayRain = 0;
             PeakFlow = double.NaN;
             Runoff = double.NaN;
 

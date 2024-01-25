@@ -150,10 +150,25 @@
                     Text="Weighted Curve Number = "/>
 
                 <TextBlock
+                    x:Name="uxWeightedCurveNumber"
+                    Text="{x:Bind Path=RCNVM.WeightedCurveNumber}"
+                    RelativePanel.RightOf="uxWeightedCurveNumberLabel"
+                    Padding="5,0,0,0"
+                    />
+
+                <TextBlock
                     x:Name="uxAccumulatedAreaLabel"
                     Text="Accumulated Area (%) = "
                     RelativePanel.Below="uxWeightedCurveNumberLabel"
                     Padding="0,22,0,0"/>
+
+                <TextBlock
+                    x:Name="uxAccumulatedArea"
+                    Text="{x:Bind Path=RCNVM.AccumulatedArea}"
+                    RelativePanel.RightOf="uxAccumulatedAreaLabel"
+                    RelativePanel.Below="uxWeightedCurveNumberLabel"
+                    Padding="5,22,0,0"
+                    />
 
             </RelativePanel>
 

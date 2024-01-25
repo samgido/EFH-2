@@ -276,6 +276,7 @@
                     x:Name="uxDayRainField1"
                     ToolTipService.ToolTip="Depth of the 24-hour rainfall in inches for the Storm #1 event frequency"
                     Value="{x:Bind Path=RainfallVM.Storms[0].DayRain, Mode=TwoWay}"
+                    NumberFormatter="{StaticResource DecimalFormatter}"
                     Minimum="0"
                     Maximum="{x:Bind RainfallVM.DayRainMax}"
                     RelativePanel.AlignHorizontalCenterWith="uxDayRainLabel"

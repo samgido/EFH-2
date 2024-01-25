@@ -11,9 +11,9 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the RCN page
     /// </summary>
-    public class RCNDataViewModel : BindableBase
+    public class RCNDataModel : BindableBase
     {
-        public RCNDataViewModel()
+        public RCNDataModel()
         {
             RCNTableEntries = new string[7][];
             for (int i = 0; i < RCNTableEntries.Length; i++)
@@ -58,11 +58,12 @@ namespace EFH_2
         public void LoadRCNTableEntries(StreamReader reader)
         {
             var _ = reader.ReadLine();
-            int lineNumber = 0;
-            while(lineNumber < 118)
+            for(int lineNumber = 0; lineNumber < 118; lineNumber++)
             {
                 string line = reader.ReadLine();
                 string[] splitLine = line.Split('\t');
+
+                if (splitLine[0] == "") continue;
 
                 if (splitLine.Length >= 2)
                 {
@@ -92,8 +93,6 @@ namespace EFH_2
                 {
                     RCNTableEntries[6][lineNumber] = splitLine[11];
                 }
-
-                lineNumber++;
             }
         }
 
@@ -123,6 +122,20 @@ namespace EFH_2
         {
             get => this._groupDInputs; 
             set => this.SetProperty(ref this._groupDInputs, value); 
+        }
+
+        private double _weightedCurveNumber = 0;
+        public double WeightedCurveNumber
+        {
+            get => _weightedCurveNumber;
+            set => this.SetProperty(ref this._weightedCurveNumber, value);
+        }
+
+        private double _accumulatedArea = 0;
+        public double AccumulatedArea
+        {
+            get => _accumulatedArea;
+            set => this.SetProperty(ref this._accumulatedArea, value);
         }
     }
 }

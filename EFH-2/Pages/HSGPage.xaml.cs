@@ -14,7 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using EFH_2.Misc;
 using System.Collections.ObjectModel;
-using static EFH_2.RCNDataViewModel;
+using static EFH_2.RCNDataModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,21 +32,21 @@ namespace EFH_2
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
-        public BasicDataViewModel BasicVM => _mainWindow.BasicVM;
+        public BasicDataModel BasicVM => _mainWindow.BasicVM;
 
         /// <summary>
         /// The RainfallDataViewModel of the parent, main window
         /// </summary>
-        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallVM;
+        public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
 
-        public RCNDataViewModel RCNVM => _mainWindow.RCNVM;
+        public RCNDataModel RCNVM => _mainWindow.RCNVM;
 
         public HSGPage()
         {
             this.InitializeComponent();
 
 
-            using (StreamReader reader = new("C:\\Users\\samue\\Documents\\EFH-2 project\\source code\\src\\Source code\\SOILS.hg"))
+            using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
             {
                 while (!reader.EndOfStream)
                 {

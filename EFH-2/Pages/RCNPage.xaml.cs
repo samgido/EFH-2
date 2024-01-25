@@ -35,17 +35,17 @@ namespace EFH_2
         /// <summary>
         /// Gets the BasicDataViewModel of the main window
         /// </summary>
-        public BasicDataViewModel BasicVM => _mainWindow.BasicVM;
+        public BasicDataModel BasicVM => _mainWindow.BasicVM;
 
         /// <summary>
         /// Gets the RainfallDataViewModel of the main window
         /// </summary>
-        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallVM;
+        public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
 
         /// <summary>
         /// Gets the RCNDataViewModel of main window
         /// </summary>
-        public RCNDataViewModel RCNVM => _mainWindow.RCNVM;
+        public RCNDataModel RCNVM => _mainWindow.RCNVM;
 
         public RCNPage()
         {
@@ -143,7 +143,7 @@ namespace EFH_2
         {
             try
             {
-                using (StreamReader reader = new("C:\\Users\\samue\\Documents\\EFH-2 project\\source code\\src\\ProgramData\\EFH2\\COVER.txt"))
+                using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\Cover.txt"))
                 {
                     RCNVM.LoadRCNTableEntries(reader);
                 }

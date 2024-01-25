@@ -32,12 +32,12 @@ namespace EFH_2
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
-        public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
+        public BasicDataModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicVM;
 
         /// <summary>
         /// The RainfallDataViewModel of the parent, main window
         /// </summary>
-        public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
+        public RainfallDataModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
 
         public RDDataPage()
         {
@@ -50,12 +50,12 @@ namespace EFH_2
         {
             try
             {
-                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\duh.txt"))
+                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt"))
                 {
                     RainfallVM.LoadDUHTypes(reader);
                 }
 
-                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\EFH2\\rftype.txt"))
+                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt"))
                 {
                     RainfallVM.LoadRainfallDistributionTypes(reader);
                 }
@@ -66,7 +66,7 @@ namespace EFH_2
 
                 dialog.XamlRoot = uxRootPanel.XamlRoot;
                 dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "An error occured while reading the program data.";
+                dialog.Title = "An error occurred while reading the program data.";
                 dialog.CloseButtonText = "Close";
                 dialog.PrimaryButtonText = "Show full error";
 

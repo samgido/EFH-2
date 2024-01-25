@@ -34,12 +34,12 @@ namespace EFH_2
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
-        public BasicDataViewModel BasicVM => _mainWindow.BasicVM;
+        public BasicDataModel BasicVM => _mainWindow.BasicVM;
 
         /// <summary>
         /// The RainfallDataViewModel of the parent, main window
         /// </summary>
-        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallVM;
+        public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
 
         public BasicDataPage()
         {

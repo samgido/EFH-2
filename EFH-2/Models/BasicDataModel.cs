@@ -18,7 +18,7 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the basic data page
     /// </summary>
-    public class BasicDataViewModel : BindableBase
+    public class BasicDataModel : BindableBase
     {
         private string _client = "";
         /// <summary>
@@ -456,7 +456,7 @@ namespace EFH_2
             set => this.SetProperty(ref this._timeOfConcentrationStatus, value); 
         }
 
-        public BasicDataViewModel()
+        public BasicDataModel()
         {
             Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
         }
