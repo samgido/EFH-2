@@ -51,13 +51,13 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
-            for(int i = 0; i < 120; i++)
-            {
-                RowDefinition rowDef = new RowDefinition();
-                rowDef.Height = new GridLength(30);
+            //for(int i = 0; i < 120; i++)
+            //{
+            //    RowDefinition rowDef = new RowDefinition();
+            //    rowDef.Height = new GridLength(30);
     
-                uxInputGrid.RowDefinitions.Add(rowDef);
-            }
+            //    uxInputGrid.RowDefinitions.Add(rowDef);
+            //}
 
             ReadRCNTableData();
 
@@ -81,69 +81,13 @@ namespace EFH_2
                 labeledColumns[i] = items;
             }
 
-            for(int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 120; j++)
-                {
-                    TextBlock block = labeledColumns[i][j];
-                    block.VerticalAlignment = VerticalAlignment.Center;
-                    uxInputGrid.Children.Add(block);
-                    Grid.SetColumn(block, i);
-                    Grid.SetRow(block, j);
-                }
-            }
-
-            for (int i = 0; i < 4; i++)
-            {
-                int next = 0;
-                for (int j = 0; j < 120; j++)
-                {
-                    TextBlock textBlock = labeledColumns[3 + i][j];
-                    textBlock.VerticalAlignment = VerticalAlignment.Center;
-                    textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                    uxInputGrid.Children.Add(textBlock);
-                    Grid.SetColumn(textBlock, 4 + i * 2);
-                    Grid.SetRow(textBlock, j);
-
-                    if(labeledColumns[3+i][j].Text.Trim() != "" && labeledColumns[3 + i][j].Text.Trim() != "**")
-                    {
-                        NumberBox inputBox = new();
-                        uxInputGrid.Children.Add(inputBox);
-                        Grid.SetColumn(inputBox, 3 + i * 2);
-                        Grid.SetRow(inputBox, j);
-
-                        Binding b = new();
-                        b.Mode = BindingMode.TwoWay;
-                        switch (i)
-                        {
-                            case 0:
-                                { b.Source = RCNVM.GroupAInputs[next]; }
-                                break;
-                            case 1:
-                                { b.Source = RCNVM.GroupBInputs[next]; }
-                                break;
-                            case 2:
-                                { b.Source = RCNVM.GroupCInputs[next]; }
-                                break;
-                            case 3:
-                                { b.Source = RCNVM.GroupDInputs[next]; }
-                                break;
-                            default:
-                                break;
-                        }
-                        inputBox.SetBinding(NumberBox.ValueProperty, b);
-
-                        next++;
-                    }
-                }
-            }
         }
 
         private async void ReadRCNTableData()
         {
             try
             {
-                using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\Cover.txt"))
+                using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Cover.txt"))
                 {
                     RCNVM.LoadRCNTableEntries(reader);
                 }
@@ -178,7 +122,6 @@ namespace EFH_2
         private void ClearButtonClick(object sender, RoutedEventArgs e)
         {
             BasicVM.DrainageArea = 5.0;
-            RCNVM.GroupAInputs[0] = 5.0;
         }
     }
 }
