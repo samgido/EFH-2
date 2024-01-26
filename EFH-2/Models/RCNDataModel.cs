@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EFH_2.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -11,7 +13,7 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the RCN page
     /// </summary>
-    public class RCNDataModel : BindableBase
+    public partial class RCNDataModel : ObservableObject
     {
         public RCNDataModel()
         {
@@ -19,18 +21,6 @@ namespace EFH_2
             for (int i = 0; i < RCNTableEntries.Length; i++)
             {
                 RCNTableEntries[i] = new string[120];
-            }
-
-            for (int i = 0; i < 81; i++)
-            {
-                _groupAInputs.Add(double.NaN);
-            }
-
-            for (int i = 0; i < 93; i++)
-            {
-                _groupBInputs.Add(double.NaN);
-                _groupCInputs.Add(double.NaN);
-                _groupDInputs.Add(double.NaN);
             }
         }
 
@@ -58,84 +48,64 @@ namespace EFH_2
         public void LoadRCNTableEntries(StreamReader reader)
         {
             var _ = reader.ReadLine();
-            for(int lineNumber = 0; lineNumber < 118; lineNumber++)
+
+            RCNCategory currentCategory = new();
+            List<RCNCategory> categories = new();
+
+            while(!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
                 string[] splitLine = line.Split('\t');
 
-                if (splitLine[0] == "") continue;
+                if (splitLine[0] == "") // start a new category if there aren't any input fields on a row
+                {
+                    categories.Add(currentCategory);
 
-                if (splitLine.Length >= 2)
-                {
-                    RCNTableEntries[0][lineNumber] = splitLine[1];
+                    currentCategory = new();
+                    currentCategory.Label = splitLine[1];
                 }
-                if (splitLine.Length >= 3)
+                else // add to the current category as long as there are input fields
                 {
-                    RCNTableEntries[1][lineNumber] = splitLine[2];
-                }
-                if (splitLine.Length >= 4)
-                {
-                    RCNTableEntries[2][lineNumber] = splitLine[3];
-                }
-                if (splitLine.Length >= 6)
-                {
-                    RCNTableEntries[3][lineNumber] = splitLine[5];
-                }
-                if (splitLine.Length >= 8)
-                {
-                    RCNTableEntries[4][lineNumber] = splitLine[7];
-                }
-                if (splitLine.Length >= 10)
-                {
-                    RCNTableEntries[5][lineNumber] = splitLine[9];
-                }
-                if (splitLine.Length >= 12)
-                {
-                    RCNTableEntries[6][lineNumber] = splitLine[11];
+                    RCNColumn row = new();
+                    row.Text[0] = splitLine[1];
+                    row.Text[1] = splitLine[2];
+                    row.Text[2] = splitLine[3];
+
+                    if (splitLine[5] == "**") row.WeightAreaPairs[0] = new(-1);
+                    else row.WeightAreaPairs[0] = new(int.Parse(splitLine[5].Trim()));
+
+                    row.WeightAreaPairs[1] = new(int.Parse(splitLine[7].Trim()));
+                    row.WeightAreaPairs[2] = new(int.Parse(splitLine[9].Trim()));
+                    row.WeightAreaPairs[3] = new(int.Parse(splitLine[11].Trim()));
+
+                    currentCategory.Columns.Add(row);
                 }
             }
+
+            categories.Add(currentCategory);
+
+            RcnCategories = categories;
         }
 
-        private ObservableCollection<double> _groupAInputs = new();
-        public ObservableCollection<double> GroupAInputs
-        {
-            get => this._groupAInputs; 
-            set => this.SetProperty(ref this._groupAInputs, value); 
-        }
-
-        private ObservableCollection<double> _groupBInputs = new();
-        public ObservableCollection<double> GroupBInputs
-        {
-            get => this._groupBInputs; 
-            set => this.SetProperty(ref this._groupBInputs, value); 
-        }
-
-        private ObservableCollection<double> _groupCInputs = new();
-        public ObservableCollection<double> GroupCInputs
-        {
-            get => this._groupCInputs; 
-            set => this.SetProperty(ref this._groupCInputs, value); 
-        }
-
-        private ObservableCollection<double> _groupDInputs = new();
-        public ObservableCollection<double> GroupDInputs
-        {
-            get => this._groupDInputs; 
-            set => this.SetProperty(ref this._groupDInputs, value); 
-        }
+        [ObservableProperty]
+        private List<RCNCategory> _rcnCategories = new();
 
         private double _weightedCurveNumber = 0;
-        public double WeightedCurveNumber
-        {
-            get => _weightedCurveNumber;
-            set => this.SetProperty(ref this._weightedCurveNumber, value);
-        }
+        public double WeightedCurveNumber => _groupAWeightedArea + _groupBWeightedArea + _groupCWeightedArea + _groupDWeightedArea;
 
         private double _accumulatedArea = 0;
-        public double AccumulatedArea
-        {
-            get => _accumulatedArea;
-            set => this.SetProperty(ref this._accumulatedArea, value);
-        }
+        public double AccumulatedArea => _groupAAccumulatedArea + _groupBAccumulatedArea + _groupCAccumulatedArea + _groupDAccumulatedArea;
+
+        private double _groupAAccumulatedArea = 0;
+        private double _groupAWeightedArea = 0;
+
+        private double _groupBAccumulatedArea = 0;
+        private double _groupBWeightedArea = 0;
+
+        private double _groupCAccumulatedArea = 0;
+        private double _groupCWeightedArea = 0;
+
+        private double _groupDAccumulatedArea = 0;
+        private double _groupDWeightedArea = 0;
     }
 }
