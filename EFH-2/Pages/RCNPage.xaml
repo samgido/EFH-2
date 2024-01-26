@@ -43,10 +43,12 @@
             RelativePanel.Above="uxConversionSettings"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
-            HorizontalAlignment="Stretch">
+            HorizontalAlignment="Stretch"
+            HorizontalScrollMode="Enabled">
 
             <ItemsRepeater
-                ItemsSource="{x:Bind RCNVM.RcnCategories, Mode=OneWay}">
+                ItemsSource="{x:Bind RCNVM.RcnCategories, Mode=OneWay}"
+                x:Name="uxMainRepeater">
 
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="local:RCNCategory">
@@ -55,52 +57,96 @@
 
                             <TextBlock
                                 Text="{x:Bind Label}"
+                                Margin="0,10,0,0"
                                 />
                             <ItemsRepeater
-                                ItemsSource="{x:Bind Columns}">
+                                ItemsSource="{x:Bind Columns}"
+                                x:Name="uxNestedRepeater">
                                 <ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="local:RCNColumn">
 
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition
+                                                    Width="300"/>
+                                                <ColumnDefinition
+                                                    Width="150"/>
+                                                <ColumnDefinition
+                                                    Width="50"/>
+                                                <ColumnDefinition
+                                                    Width="90"/>
+                                                <ColumnDefinition
+                                                    Width="55"/>
+                                                <ColumnDefinition
+                                                    Width="90"/>
+                                                <ColumnDefinition
+                                                    Width="55"/>
+                                                <ColumnDefinition
+                                                    Width="90"/>
+                                                <ColumnDefinition
+                                                    Width="55"/>
+                                                <ColumnDefinition
+                                                    Width="90"/>
+                                                <ColumnDefinition
+                                                    Width="55"/>
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock
                                                 Grid.Column="0"
-                                                Text="{x:Bind Text[0]}" />
+                                                Text="{x:Bind Text[0]}"
+                                                VerticalAlignment="Center"/>
                                             <TextBlock
                                                 Grid.Column="1"
-                                                Text="{x:Bind Text[1]}" />
+                                                Text="{x:Bind Text[1]}"
+                                                VerticalAlignment="Center"/>
                                             <TextBlock
                                                 Grid.Column="2"
-                                                Text="{x:Bind Text[2]}" />
+                                                Text="{x:Bind Text[2]}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="3"
+                                                Width="80"
+                                                Value="{x:Bind WeightAreaPairs[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
                                                 Grid.Column="4"
-                                                Text="{x:Bind WeightAreaPairs[0].Weight}"/>
+                                                Text="{x:Bind WeightAreaPairs[0].Weight}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="5"
+                                                Width="80"
+                                                Value="{x:Bind WeightAreaPairs[1].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
                                                 Grid.Column="6"
-                                                Text="{x:Bind WeightAreaPairs[1].Weight}"/>
+                                                Text="{x:Bind WeightAreaPairs[1].Weight}"
+                                                VerticalAlignment="Center"/>
                                                 
+                                            <NumberBox
+                                                Grid.Column="7"
+                                                Width="80"
+                                                Value="{x:Bind WeightAreaPairs[2].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                ValueChanged="RCNValuesChanged"/>
+
                                             <TextBlock
                                                 Grid.Column="8"
-                                                Text="{x:Bind WeightAreaPairs[2].Weight}"/>
+                                                Text="{x:Bind WeightAreaPairs[2].Weight}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="9"
+                                                Width="80"
+                                                Value="{x:Bind WeightAreaPairs[3].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
                                                 Grid.Column="10"
-                                                Text="{x:Bind WeightAreaPairs[3].Weight}"/>
+                                                Text="{x:Bind WeightAreaPairs[3].Weight}"
+                                                VerticalAlignment="Center"/>
                                         </Grid> 
                                         
                                     </DataTemplate>
@@ -108,7 +154,6 @@
 
                                 <ItemsRepeater.Layout>
                                     <UniformGridLayout
-                                        MaximumRowsOrColumns="11"
                                         Orientation="Vertical"/>
                                 </ItemsRepeater.Layout>
                             </ItemsRepeater>
@@ -154,7 +199,7 @@
 
                 <TextBlock
                     x:Name="uxWeightedCurveNumber"
-                    Text="{x:Bind Path=RCNVM.WeightedCurveNumber}"
+                    Text="{x:Bind Path=RCNVM.WeightedCurveNumber, Mode=OneWay}"
                     RelativePanel.RightOf="uxWeightedCurveNumberLabel"
                     Padding="5,0,0,0"
                     />
@@ -167,7 +212,7 @@
 
                 <TextBlock
                     x:Name="uxAccumulatedArea"
-                    Text="{x:Bind Path=RCNVM.AccumulatedArea}"
+                    Text="{x:Bind Path=RCNVM.AccumulatedArea, Mode=OneWay}"
                     RelativePanel.RightOf="uxAccumulatedAreaLabel"
                     RelativePanel.Below="uxWeightedCurveNumberLabel"
                     Padding="5,22,0,0"

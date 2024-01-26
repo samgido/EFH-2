@@ -98,7 +98,7 @@ namespace EFH_2
 
                 dialog.XamlRoot = _mainWindow.Content.XamlRoot;
                 dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "An error occured while reading the program data.";
+                dialog.Title = "An error occurred while reading the program data.";
                 dialog.CloseButtonText = "Close";
                 dialog.PrimaryButtonText = "Show full error";
 
@@ -121,7 +121,12 @@ namespace EFH_2
 
         private void ClearButtonClick(object sender, RoutedEventArgs e)
         {
-            BasicVM.DrainageArea = 5.0;
+            RCNVM.Default();
+        }
+
+        private void RCNValuesChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            RCNVM.Update();
         }
     }
 }
