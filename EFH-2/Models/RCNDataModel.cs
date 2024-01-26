@@ -62,7 +62,7 @@ namespace EFH_2
                     categories.Add(currentCategory);
 
                     currentCategory = new();
-                    currentCategory.Label = splitLine[1];
+                    currentCategory.Label = splitLine[1].Replace('"', (char)0);
                 }
                 else // add to the current category as long as there are input fields
                 {
@@ -87,14 +87,22 @@ namespace EFH_2
             RcnCategories = categories;
         }
 
-        [ObservableProperty]
         private List<RCNCategory> _rcnCategories = new();
+        public List<RCNCategory> RcnCategories
+        {
+            get => _rcnCategories;
+            set
+            {
 
+                SetProperty(ref _rcnCategories, value);
+            }
+        }
+
+        [ObservableProperty]
         private double _weightedCurveNumber = 0;
-        public double WeightedCurveNumber => _groupAWeightedArea + _groupBWeightedArea + _groupCWeightedArea + _groupDWeightedArea;
 
+        [ObservableProperty]
         private double _accumulatedArea = 0;
-        public double AccumulatedArea => _groupAAccumulatedArea + _groupBAccumulatedArea + _groupCAccumulatedArea + _groupDAccumulatedArea;
 
         private double _groupAAccumulatedArea = 0;
         private double _groupAWeightedArea = 0;
@@ -107,5 +115,24 @@ namespace EFH_2
 
         private double _groupDAccumulatedArea = 0;
         private double _groupDWeightedArea = 0;
+
+        public void Default()
+        {
+            foreach(RCNCategory cat in RcnCategories)
+            {
+                cat.Default();
+            }
+        }
+
+        public void Update()
+        {
+            this.AccumulatedArea = 0;
+            this.WeightedCurveNumber = 0;
+            foreach(RCNCategory cat in RcnCategories)
+            {
+                this.AccumulatedArea += cat.AccumulatedArea;
+                this.WeightedCurveNumber += cat.AccumulatedWeightedArea;
+            }
+        }
     }
 }

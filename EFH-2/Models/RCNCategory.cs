@@ -16,5 +16,43 @@ namespace EFH_2.Models
         [ObservableProperty]
         private List<RCNColumn> _columns = new();
 
+        public void Default()
+        {
+            foreach(RCNColumn col in Columns)
+            {
+                col.Default();
+            }
+        }
+
+        public double AccumulatedArea
+        {
+            get
+            {
+                double total = 0;
+
+                foreach(RCNColumn col in Columns)
+                {
+                    total += col.AccumulatedArea;
+                }
+
+                return total;
+            }
+        }
+
+        public double AccumulatedWeightedArea
+        {
+            get
+            {
+                double total = 0;
+
+                foreach (RCNColumn col in Columns)
+                {
+                    total += col.AccumulatedWeightedArea;
+                }
+
+                return total;
+            }
+        }
+
     }
 }
