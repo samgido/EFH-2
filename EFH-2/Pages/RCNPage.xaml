@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EFH_2.Models"
+    xmlns:converters="using:EFH_2.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -11,9 +12,13 @@
     NavigationCacheMode="Required">
 
     <Page.Resources>
-        <local:RCNColumn x:Key="RCNColumn"/>
+        <local:RCNRow x:Key="RCNColumn"/>
         <local:RCNCategory x:Key="RCNCategory"/>
     </Page.Resources>
+
+    <UserControl.Resources>
+        <converters:RCNConverter x:Key="RCNConverter"/>
+    </UserControl.Resources>
 
     <RelativePanel
         Background="Black"
@@ -63,7 +68,7 @@
                                 ItemsSource="{x:Bind Columns}"
                                 x:Name="uxNestedRepeater">
                                 <ItemsRepeater.ItemTemplate>
-                                    <DataTemplate x:DataType="local:RCNColumn">
+                                    <DataTemplate x:DataType="local:RCNRow">
 
                                         <Grid>
                                             <Grid.ColumnDefinitions>

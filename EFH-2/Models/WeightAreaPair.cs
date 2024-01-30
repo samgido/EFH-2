@@ -9,20 +9,12 @@ namespace EFH_2.Models
 {
     public partial class WeightAreaPair : ObservableObject
     {
-        public int Weight;
+        public int Weight { get; }
 
         [ObservableProperty]
         private double _area;
 
-        //public double WeightedArea => Area == double.NaN ? Area * Weight : 0;
-        public double WeightedArea
-        {
-            get
-            {
-                if (Area == double.NaN) return 0;
-                else return Area;
-            }
-        }
+        public double WeightedArea => Area * Weight;
 
         public WeightAreaPair(int weight)
         {

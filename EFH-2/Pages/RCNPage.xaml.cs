@@ -80,7 +80,6 @@ namespace EFH_2
 
                 labeledColumns[i] = items;
             }
-
         }
 
         private async void ReadRCNTableData()
@@ -94,25 +93,27 @@ namespace EFH_2
             }
             catch (Exception err)
             {
-                ContentDialog dialog = new ContentDialog();
-
-                dialog.XamlRoot = _mainWindow.Content.XamlRoot;
-                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "An error occurred while reading the program data.";
-                dialog.CloseButtonText = "Close";
-                dialog.PrimaryButtonText = "Show full error";
+                ContentDialog dialog = new()
+                {
+                    XamlRoot = _mainWindow.Content.XamlRoot,
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Title = "An error occurred while reading the program data.",
+                    CloseButtonText = "Close",
+                    PrimaryButtonText = "Show full error"
+                };
 
                 var result = await dialog.ShowAsync();
 
                 if (result == ContentDialogResult.Primary)
                 {
-                    ContentDialog fullError = new ContentDialog();
+                    ContentDialog fullError = new()
+                    {
+                        XamlRoot = uxRootPanel.XamlRoot,
+                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                        CloseButtonText = "Close",
 
-                    fullError.XamlRoot = uxRootPanel.XamlRoot;
-                    fullError.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                    fullError.CloseButtonText = "Close";
-
-                    fullError.Content = err.ToString();
+                        Content = err.ToString()
+                    };
 
                     var _ = await fullError.ShowAsync();
                 }

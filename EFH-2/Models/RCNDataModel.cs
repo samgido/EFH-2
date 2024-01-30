@@ -3,6 +3,7 @@ using EFH_2.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,7 +67,7 @@ namespace EFH_2
                 }
                 else // add to the current category as long as there are input fields
                 {
-                    RCNColumn row = new();
+                    RCNRow row = new();
                     row.Text[0] = splitLine[1];
                     row.Text[1] = splitLine[2];
                     row.Text[2] = splitLine[3];
@@ -87,34 +88,14 @@ namespace EFH_2
             RcnCategories = categories;
         }
 
+        [ObservableProperty]
         private List<RCNCategory> _rcnCategories = new();
-        public List<RCNCategory> RcnCategories
-        {
-            get => _rcnCategories;
-            set
-            {
-
-                SetProperty(ref _rcnCategories, value);
-            }
-        }
 
         [ObservableProperty]
         private double _weightedCurveNumber = 0;
 
         [ObservableProperty]
         private double _accumulatedArea = 0;
-
-        private double _groupAAccumulatedArea = 0;
-        private double _groupAWeightedArea = 0;
-
-        private double _groupBAccumulatedArea = 0;
-        private double _groupBWeightedArea = 0;
-
-        private double _groupCAccumulatedArea = 0;
-        private double _groupCWeightedArea = 0;
-
-        private double _groupDAccumulatedArea = 0;
-        private double _groupDWeightedArea = 0;
 
         public void Default()
         {
@@ -126,13 +107,23 @@ namespace EFH_2
 
         public void Update()
         {
-            this.AccumulatedArea = 0;
-            this.WeightedCurveNumber = 0;
+            double totalArea = 0;
+            double totalWeightedArea = 0;
             foreach(RCNCategory cat in RcnCategories)
             {
-                this.AccumulatedArea += cat.AccumulatedArea;
-                this.WeightedCurveNumber += cat.AccumulatedWeightedArea;
+                if (!cat.AccumulatedArea.Equals(double.NaN))
+                {
+                    totalArea += cat.AccumulatedArea;
+                }
+
+                if (!cat.AccumulatedWeightedArea.Equals(double.NaN))
+                {
+                    totalWeightedArea += cat.AccumulatedWeightedArea;
+                }
             }
+
+            AccumulatedArea = totalArea;
+            WeightedCurveNumber = totalWeightedArea;
         }
     }
 }

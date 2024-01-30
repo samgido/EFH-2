@@ -14,11 +14,11 @@ namespace EFH_2.Models
         private string _label;
 
         [ObservableProperty]
-        private List<RCNColumn> _columns = new();
+        private List<RCNRow> _columns = new();
 
         public void Default()
         {
-            foreach(RCNColumn col in Columns)
+            foreach(RCNRow col in Columns)
             {
                 col.Default();
             }
@@ -30,9 +30,9 @@ namespace EFH_2.Models
             {
                 double total = 0;
 
-                foreach(RCNColumn col in Columns)
+                foreach(RCNRow col in Columns)
                 {
-                    total += col.AccumulatedArea;
+                    if (!col.AccumulatedArea.Equals(double.NaN)) total += col.AccumulatedArea;
                 }
 
                 return total;
@@ -45,9 +45,9 @@ namespace EFH_2.Models
             {
                 double total = 0;
 
-                foreach (RCNColumn col in Columns)
+                foreach (RCNRow col in Columns)
                 {
-                    total += col.AccumulatedWeightedArea;
+                    if (!col.AccumulatedWeightedArea.Equals(double.NaN)) total += col.AccumulatedWeightedArea;
                 }
 
                 return total;
