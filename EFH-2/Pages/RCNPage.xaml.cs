@@ -60,26 +60,6 @@ namespace EFH_2
             //}
 
             ReadRCNTableData();
-
-            PopulateRCNData();
-        }
-
-        private void PopulateRCNData()
-        {
-            List<TextBlock>[] labeledColumns = new List<TextBlock>[7];
-            for(int i = 0; i < 7; i++)
-            {
-                List<TextBlock> items = new();
-
-                for(int j = 0; j < 120; j++)
-                {
-                    TextBlock label = new();
-                    label.Text = RCNVM.RCNTableEntries[i][j];
-                    items.Add(label); 
-                }
-
-                labeledColumns[i] = items;
-            }
         }
 
         private async void ReadRCNTableData()

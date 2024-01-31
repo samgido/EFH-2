@@ -12,7 +12,7 @@ namespace EFH_2.Converters
         // from the model
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if((double)value == -1)
+            if((Int32)value == -1)
             {
                 return "**"; 
             }
