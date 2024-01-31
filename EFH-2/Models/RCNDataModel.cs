@@ -79,7 +79,7 @@ namespace EFH_2
                     row.WeightAreaPairs[2] = new(int.Parse(splitLine[9].Trim()));
                     row.WeightAreaPairs[3] = new(int.Parse(splitLine[11].Trim()));
 
-                    currentCategory.Columns.Add(row);
+                    currentCategory.Rows.Add(row);
                 }
             }
 
@@ -92,16 +92,16 @@ namespace EFH_2
         private List<RCNCategory> _rcnCategories = new();
 
         [ObservableProperty]
-        private double _weightedCurveNumber = 0;
+        static private double _weightedCurveNumber = 0;
 
         [ObservableProperty]
         private double _accumulatedArea = 0;
 
         public void Default()
         {
-            foreach(RCNCategory cat in RcnCategories)
+            foreach(RCNCategory category in RcnCategories)
             {
-                cat.Default();
+                category.Default();
             }
         }
 
@@ -109,16 +109,13 @@ namespace EFH_2
         {
             double totalArea = 0;
             double totalWeightedArea = 0;
-            foreach(RCNCategory cat in RcnCategories)
-            {
-                if (!cat.AccumulatedArea.Equals(double.NaN))
-                {
-                    totalArea += cat.AccumulatedArea;
-                }
 
-                if (!cat.AccumulatedWeightedArea.Equals(double.NaN))
+            foreach(RCNCategory category in RcnCategories)
+            {
+                if (!category.AccumulatedArea.Equals(double.NaN))
                 {
-                    totalWeightedArea += cat.AccumulatedWeightedArea;
+                    totalArea += category.AccumulatedArea;
+                    totalWeightedArea += category.AccumulatedWeightedArea;
                 }
             }
 

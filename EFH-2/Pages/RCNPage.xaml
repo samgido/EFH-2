@@ -61,7 +61,7 @@
                                 Margin="10,10,0,0"
                                 />
                             <ItemsRepeater
-                                ItemsSource="{x:Bind Columns}"
+                                ItemsSource="{x:Bind Rows}"
                                 Margin="10,0,0,0"
                                 x:Name="uxNestedRepeater">
                                 <ItemsRepeater.ItemTemplate>
@@ -122,7 +122,7 @@
                                             <NumberBox
                                                 Grid.Column="5"
                                                 Width="80"
-                                                Value="{x:Bind WeightAreaPairs[1].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Value="{x:Bind WeightAreaPairs[1].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
@@ -133,7 +133,7 @@
                                             <NumberBox
                                                 Grid.Column="7"
                                                 Width="80"
-                                                Value="{x:Bind WeightAreaPairs[2].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Value="{x:Bind WeightAreaPairs[2].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
@@ -144,7 +144,7 @@
                                             <NumberBox
                                                 Grid.Column="9"
                                                 Width="80"
-                                                Value="{x:Bind WeightAreaPairs[3].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Value="{x:Bind WeightAreaPairs[3].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
@@ -203,7 +203,7 @@
 
                 <TextBlock
                     x:Name="uxWeightedCurveNumber"
-                    Text="{x:Bind Path=RCNVM.WeightedCurveNumber, Mode=OneWay}"
+                    Text="{x:Bind Path=RCNVM.WeightedCurveNumber, Mode=TwoWay}"
                     RelativePanel.RightOf="uxWeightedCurveNumberLabel"
                     Padding="5,0,0,0"
                     />
@@ -216,7 +216,7 @@
 
                 <TextBlock
                     x:Name="uxAccumulatedArea"
-                    Text="{x:Bind Path=RCNVM.AccumulatedArea, Mode=OneWay}"
+                    Text="{x:Bind Path=RCNVM.AccumulatedArea, Mode=TwoWay}"
                     RelativePanel.RightOf="uxAccumulatedAreaLabel"
                     RelativePanel.Below="uxWeightedCurveNumberLabel"
                     Padding="5,22,0,0"
