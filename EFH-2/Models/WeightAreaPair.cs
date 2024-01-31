@@ -16,6 +16,8 @@ namespace EFH_2.Models
 
         public double WeightedArea => Area * Weight;
 
+        public bool Enabled => Weight != -1;
+
         public WeightAreaPair(int weight)
         {
             Weight = weight;

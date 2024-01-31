@@ -14,16 +14,12 @@
     <Page.Resources>
         <local:RCNRow x:Key="RCNColumn"/>
         <local:RCNCategory x:Key="RCNCategory"/>
-    </Page.Resources>
-
-    <UserControl.Resources>
         <converters:RCNConverter x:Key="RCNConverter"/>
-    </UserControl.Resources>
+    </Page.Resources>
 
     <RelativePanel
         Background="Black"
-        x:Name="uxRootPanel"
-        >
+        x:Name="uxRootPanel">
 
         <RadioButtons
             x:Name="uxCoverDescriptionButtons"
@@ -73,27 +69,27 @@
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition
-                                                    Width="300"/>
+                                                    MinWidth="300"/>
                                                 <ColumnDefinition
-                                                    Width="150"/>
+                                                    MinWidth="150"/>
                                                 <ColumnDefinition
-                                                    Width="50"/>
+                                                    MinWidth="50"/>
                                                 <ColumnDefinition
-                                                    Width="90"/>
+                                                    MinWidth="90"/>
                                                 <ColumnDefinition
-                                                    Width="55"/>
+                                                    MinWidth="55"/>
                                                 <ColumnDefinition
-                                                    Width="90"/>
+                                                    MinWidth="90"/>
                                                 <ColumnDefinition
-                                                    Width="55"/>
+                                                    MinWidth="55"/>
                                                 <ColumnDefinition
-                                                    Width="90"/>
+                                                    MinWidth="90"/>
                                                 <ColumnDefinition
-                                                    Width="55"/>
+                                                    MinWidth="55"/>
                                                 <ColumnDefinition
-                                                    Width="90"/>
+                                                    MinWidth="90"/>
                                                 <ColumnDefinition
-                                                    Width="55"/>
+                                                    MinWidth="55"/>
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock
@@ -113,11 +109,12 @@
                                                 Grid.Column="3"
                                                 Width="80"
                                                 Value="{x:Bind WeightAreaPairs[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                IsEnabled="{x:Bind WeightAreaPairs[0].Enabled}"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
                                                 Grid.Column="4"
-                                                Text="{x:Bind WeightAreaPairs[0].Weight}"
+                                                Text="{x:Bind WeightAreaPairs[0].Weight, Converter={StaticResource RCNConverter}}"
                                                 VerticalAlignment="Center"/>
 
                                             <NumberBox
