@@ -2,6 +2,7 @@
  * Author: Samuel Gido
  */
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +14,33 @@ namespace EFH_2
     /// <summary>
     /// Model for one storm
     /// </summary>
-    public class StormModel : BindableBase
+    public partial class StormModel : ObservableObject
     {
-        private double _frequency = double.NaN;
-        /// <summary>
-        /// The storm's frequency field
-        /// </summary>
-        public double Frequency
-        {
-            get => this._frequency; 
-            set => this.SetProperty(ref this._frequency, value); 
-        }
+
+        #region Private Fields
 
         private double _dayRain = double.NaN;
+
+        #endregion
+
+        #region Observable Properties
+
+        [ObservableProperty]
+        private double _frequency = double.NaN;
+
+        [ObservableProperty]
+        private double _peakFlow = double.NaN;
+
+        [ObservableProperty]
+        private double _runoff = double.NaN;
+
+        [ObservableProperty]
+        private bool _displayHydrograph = false;
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// The storm's "24-HR Rain" field
         /// </summary>
@@ -45,35 +60,9 @@ namespace EFH_2
             } 
         }
 
-        private double _peakFlow = double.NaN;
-        /// <summary>
-        /// The storm's peak flow field
-        /// </summary>
-        public double PeakFlow
-        {
-            get => this._peakFlow; 
-            set => this.SetProperty(ref this._peakFlow, value); 
-        }
+        #endregion
 
-        private double _runoff = double.NaN;
-        /// <summary>
-        /// The storm's runoff field
-        /// </summary>
-        public double Runoff
-        {
-            get => this._runoff; 
-            set => this.SetProperty(ref this._runoff, value); 
-        }
-
-        private bool _displayHydrograph = false;
-        /// <summary>
-        /// Whether or not this storm will be displayed on the hydrograph
-        /// </summary>
-        public bool DisplayHydrograph
-        {
-            get => this._displayHydrograph; 
-            set => this.SetProperty(ref this._displayHydrograph, value); 
-        }
+        #region Methods
 
         /// <summary>
         /// Sets all values to their defualt state
@@ -87,5 +76,7 @@ namespace EFH_2
 
             DisplayHydrograph = false;
         }
+
+        #endregion
     }
 }

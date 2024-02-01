@@ -23,6 +23,7 @@ namespace EFH_2
     /// </summary>
     public sealed partial class SlopeCalcPage : Page
     {
+        #region Properties
 
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
@@ -36,10 +37,9 @@ namespace EFH_2
         /// </summary>
         public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
 
-        public SlopeCalcPage()
-        {
-            this.InitializeComponent();
-        }
+        #endregion
+
+        #region Methods
 
         private void NumberBoxesChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
@@ -55,6 +55,13 @@ namespace EFH_2
                     BasicVM.WatershedSlope = Math.Round(slope, 2);
                 }
             }
+        }
+
+        #endregion
+
+        public SlopeCalcPage()
+        {
+            this.InitializeComponent();
         }
     }
 }

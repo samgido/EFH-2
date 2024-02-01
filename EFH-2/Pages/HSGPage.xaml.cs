@@ -26,6 +26,7 @@ namespace EFH_2
     /// </summary>
     public sealed partial class HSGPage : Page
     {
+        #region Properties
 
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
@@ -40,6 +41,21 @@ namespace EFH_2
         public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
 
         public RCNDataModel RCNVM => _mainWindow.RCNVM;
+
+        #endregion
+
+        #region Methods
+
+        private void SearchBoxTextChanged(object sender, TextChangedEventArgs e) {
+            string filter = (sender as TextBox).Text.ToUpper();
+
+
+            uxDataGrid.ItemsSource = new ObservableCollection<HSGEntry>(
+                from item in RCNVM.HSGEntries where item.Column1.Contains(filter) select item);
+        }
+
+        #endregion
+
 
         public HSGPage()
         {
@@ -57,15 +73,6 @@ namespace EFH_2
                     RCNVM.AddHSGEntry(lineParts[0], lineParts[1], lineParts[2]);
                 }
             }
-        }
-
-        private void SearchBoxTextChanged(object sender, TextChangedEventArgs e)
-        {
-            string filter = (sender as TextBox).Text.ToUpper();
-
-
-            uxDataGrid.ItemsSource = new ObservableCollection<HSGEntry>(
-                from item in RCNVM.HSGEntries where item.Column1.Contains(filter) select item);
         }
     }
 }

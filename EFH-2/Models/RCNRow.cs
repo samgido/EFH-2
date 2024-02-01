@@ -9,11 +9,8 @@ namespace EFH_2.Models
 {
     public partial class RCNRow : ObservableObject
     {
-        public RCNRow()
-        {
-            _text = new string[3];
-            _weightAreaPairs = new WeightAreaPair[4];
-        }
+
+        #region Observable Properties
 
         [ObservableProperty]
         private WeightAreaPair[] _weightAreaPairs;
@@ -21,13 +18,9 @@ namespace EFH_2.Models
         [ObservableProperty]
         private string[] _text;
 
-        public void Default()
-        {
-            foreach(WeightAreaPair pair in WeightAreaPairs)
-            {
-                pair.Default();
-            }
-        }
+        #endregion
+
+        #region Properties
 
         public double AccumulatedArea
         {
@@ -55,6 +48,26 @@ namespace EFH_2.Models
 
                 return total;
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void Default()
+        {
+            foreach(WeightAreaPair pair in WeightAreaPairs)
+            {
+                pair.Default();
+            }
+        }
+
+        #endregion
+
+        public RCNRow()
+        {
+            _text = new string[3];
+            _weightAreaPairs = new WeightAreaPair[4];
         }
     }
 }

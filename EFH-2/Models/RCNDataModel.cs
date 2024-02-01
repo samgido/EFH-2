@@ -16,23 +16,37 @@ namespace EFH_2
     /// </summary>
     public partial class RCNDataModel : ObservableObject
     {
-        public RCNDataModel()
-        {
-            RCNTableEntries = new string[7][];
-            for (int i = 0; i < RCNTableEntries.Length; i++)
-            {
-                RCNTableEntries[i] = new string[120];
-            }
-        }
 
-        public struct HSGEntry
-        {
-            public string Column1 { get; set; }
-            public string Column2 { get; set; }
-            public string Column3 { get; set; }
-        }
+        #region Private Fields
+
+        #endregion
+
+        #region Public Fields
+
+        #endregion
+
+        #region Observable Properties
+
+        [ObservableProperty]
+        private List<RCNCategory> _rcnCategories = new();
+
+        [ObservableProperty]
+        static private double _weightedCurveNumber = 0;
+
+        [ObservableProperty]
+        private double _accumulatedArea = 0;
+
+        #endregion
+
+        #region Properties
 
         public ObservableCollection<HSGEntry> HSGEntries { get; } = new();
+
+        public string[][] RCNTableEntries { get; }
+
+        #endregion
+
+        #region Methods
 
         public void AddHSGEntry(string name, string column2, string group)
         {
@@ -43,8 +57,6 @@ namespace EFH_2
                 Column3 = group
             });
         }
-
-        public string[][] RCNTableEntries { get; }
 
         public void LoadRCNTableEntries(StreamReader reader)
         {
@@ -88,15 +100,6 @@ namespace EFH_2
             RcnCategories = categories;
         }
 
-        [ObservableProperty]
-        private List<RCNCategory> _rcnCategories = new();
-
-        [ObservableProperty]
-        static private double _weightedCurveNumber = 0;
-
-        [ObservableProperty]
-        private double _accumulatedArea = 0;
-
         public void Default()
         {
             foreach(RCNCategory category in RcnCategories)
@@ -122,5 +125,28 @@ namespace EFH_2
             AccumulatedArea = totalArea;
             WeightedCurveNumber = totalWeightedArea;
         }
+
+        #endregion
+
+        #region Structs
+
+        public struct HSGEntry
+        {
+            public string Column1 { get; set; }
+            public string Column2 { get; set; }
+            public string Column3 { get; set; }
+        }
+
+        #endregion
+
+        public RCNDataModel()
+        {
+            RCNTableEntries = new string[7][];
+            for (int i = 0; i < RCNTableEntries.Length; i++)
+            {
+                RCNTableEntries[i] = new string[120];
+            }
+        }
+
     }
 }

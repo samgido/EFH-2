@@ -63,7 +63,7 @@
                 x:Name="uxDUHTypeStatus"
                 RelativePanel.AlignVerticalCenterWith="uxDUHType"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                Text="{x:Bind Path=RainfallVM.DUHTypeStatus, Mode=OneWay}"
+                Text="{x:Bind Path=RainfallVM.DuhTypeStatus, Mode=OneWay}"
                 Padding="200,0,0,0"
                 Foreground="HotPink"
                 />
@@ -71,7 +71,7 @@
             <ComboBox
                 x:Name="uxDUHType"
                 ToolTipService.ToolTip="Rainfall distribution - choose from the list"
-                ItemsSource="{x:Bind Path=RainfallVM.DUHTypes, Mode=OneTime}"
+                ItemsSource="{x:Bind Path=RainfallVM.DuhTypes, Mode=OneTime}"
                 SelectedIndex="{x:Bind Path=RainfallVM.SelectedDUHTypeIndex, Mode=TwoWay}"
                 SelectionChanged="DUHTypeChanged"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"

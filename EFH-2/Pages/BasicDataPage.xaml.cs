@@ -29,6 +29,8 @@ namespace EFH_2
     /// </summary>
     public sealed partial class BasicDataPage : Page
     {
+        #region Properties
+
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
         /// <summary>
@@ -41,15 +43,9 @@ namespace EFH_2
         /// </summary>
         public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
 
-        public BasicDataPage()
-        {
-            this.InitializeComponent();
+        #endregion
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
-            {
-                BasicVM.LoadStatesAndCounties(reader);
-            }
-        }
+        #region Methods
 
         public void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
@@ -99,6 +95,18 @@ namespace EFH_2
         {
             BasicVM.TimeOfConcentration = sender.Value;
             BasicVM.CheckTimeOfConcentration();
+        }
+
+        #endregion
+
+        public BasicDataPage()
+        {
+            this.InitializeComponent();
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
+            {
+                BasicVM.LoadStatesAndCounties(reader);
+            }
         }
     }
 }

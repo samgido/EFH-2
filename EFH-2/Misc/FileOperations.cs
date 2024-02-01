@@ -14,7 +14,22 @@ namespace EFH_2.Misc
 
     public class FileOperations
     {
+        #region Private Fields
+
         private const string InvalidEntryReplacerMessage = "Invalid Entry";
+
+        #endregion
+
+        #region Public Fields
+        #endregion
+
+        #region Observable Properties
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Methods
 
         public static void PrintData(BasicDataModel BasicVM, RainfallDataModel RainfallVM, string fn)
         {
@@ -385,7 +400,7 @@ namespace EFH_2.Misc
                                 table.Cell().Row(14).Column(5).ColumnSpan(2).Text(text =>
                                 {
                                     text.AlignLeft();
-                                    text.Span("(" + RainfallVM.DUHTypeStatus + ")");
+                                    text.Span("(" + RainfallVM.DuhTypeStatus + ")");
                                 });
 
                             });
@@ -847,6 +862,8 @@ namespace EFH_2.Misc
         }
 
     }
+
+        #endregion
 
     /// <summary>
     /// Helper class that writes to the save file

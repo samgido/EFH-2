@@ -41,6 +41,10 @@ namespace EFH_2
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        #region Private Fields
+        #endregion
+
+        #region Public Fields
 
         /// <summary>
         /// How many storms are available in the Rainfall/Discharge Data sheet
@@ -59,6 +63,13 @@ namespace EFH_2
         public static string WatershedSlopeInvalidEntryMessage = "Watershed slope must be the range 0.5 and 64 percent!";
         public static string TimeOfConcentrationInvalidEntryMessage = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
 
+        #endregion
+
+        #region Observable Properties
+        #endregion
+
+        #region Properties
+
         public TextBox? _previousFocusedTextBox { get; set; }
 
         /// <summary>
@@ -73,27 +84,9 @@ namespace EFH_2
 
         public RCNDataModel RCNVM { get; set; }
 
-        public MainWindow()
-        {
-            this.InitializeComponent();
-            this.Activated += MainWindowActivated;
-            FocusManager.GotFocus += FocusManager_GotFocus;
+        #endregion
 
-            this.Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
-            this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
-
-            contentFrame.Navigate(typeof(IntroPage));
-            uxNavigationView.SelectedItem = uxIntroPageNav;
-
-            uxAverageSlopeCalulatorButton.IsEnabled = false;
-            uxHSGButton.IsEnabled = false;
-            uxToolbarToggle.IsChecked = true;
-
-            BasicVM = new();
-            RainfallVM = new();
-            RCNVM = new();
-
-        }
+        #region Methods
 
         private void FocusManager_GotFocus(object sender, FocusManagerGotFocusEventArgs e)
         {
@@ -275,7 +268,7 @@ namespace EFH_2
                         if (types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
                         else { RainfallVM.SelectedDUHType = "<standard>"; }
                         RainfallVM.RainfallDistributionTypeStatus = _importedStatusMessage;
-                        RainfallVM.DUHTypeStatus = _importedStatusMessage;
+                        RainfallVM.DuhTypeStatus = _importedStatusMessage;
 
                         // lines 17 - 30
                         int[] frequencies = new int[MainWindow.NumberOfStorms];
@@ -471,6 +464,30 @@ namespace EFH_2
             };
 
             await dialog.ShowAsync();
+        }
+
+        #endregion
+
+        public MainWindow()
+        {
+            this.InitializeComponent();
+            this.Activated += MainWindowActivated;
+            FocusManager.GotFocus += FocusManager_GotFocus;
+
+            this.Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
+            this.AppWindow.SetIcon("C:\\Users\\samue\\Source\\Repos\\samgido\\EFH - 2\\EFH - 2\\ProgramData\\EFH2.ico");
+
+            contentFrame.Navigate(typeof(IntroPage));
+            uxNavigationView.SelectedItem = uxIntroPageNav;
+
+            uxAverageSlopeCalulatorButton.IsEnabled = false;
+            uxHSGButton.IsEnabled = false;
+            uxToolbarToggle.IsChecked = true;
+
+            BasicVM = new();
+            RainfallVM = new();
+            RCNVM = new();
+
         }
     }
 }

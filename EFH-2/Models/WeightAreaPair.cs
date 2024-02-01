@@ -9,23 +9,35 @@ namespace EFH_2.Models
 {
     public partial class WeightAreaPair : ObservableObject
     {
-        public int Weight { get; }
+        #region Observable Properties
 
         [ObservableProperty]
         private double _area;
+
+        #endregion
+
+        #region Properties
+
+        public int Weight { get; }
 
         public double WeightedArea => Area * Weight;
 
         public bool Enabled => Weight != -1;
 
-        public WeightAreaPair(int weight)
-        {
-            Weight = weight;
-            Area = double.NaN;
-        }
+        #endregion
+
+        #region Methods
 
         public void Default()
         {
+            Area = double.NaN;
+        }
+
+        #endregion
+
+        public WeightAreaPair(int weight)
+        {
+            Weight = weight;
             Area = double.NaN;
         }
     }

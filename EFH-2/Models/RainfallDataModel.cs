@@ -2,6 +2,7 @@
  * Author: Samuel Gido
  */
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,47 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the rainfall/discharge page
     /// </summary>
-    public class RainfallDataModel : BindableBase
+    public partial class RainfallDataModel : ObservableObject
     {
+
+        #region Private Fields
+
+        private string _selectedRainfallDistributionType = "";
+
+        private int _selectedRainfallDistributionTypeIndex = 0;
+
+        private string _selectedDUHType = "";
+
+        private int _selectedDUHTypeIndex = 0;
+
+        #endregion
+
+        #region Public Fields
+
+        public ObservableCollection<StormModel> Storms { get; set; }
+
+        #endregion
+
+        #region Observable Properties
+
+        [ObservableProperty]
+        private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ComboBoxItem> _duhTypes = new();
+
+        [ObservableProperty]
+        private string _rainfallDistributionTypeStatus = "";
+
+        [ObservableProperty]
+        private string _duhTypeStatus = "";
+
+        #endregion
+
+        #region Properties
 
         public int DayRainMax => 26;
 
-        private string _selectedRainfallDistributionType = "";
         /// <summary>
         /// Gets or sets the selected rainfall distribution type
         /// </summary>
@@ -42,7 +78,6 @@ namespace EFH_2
             }
         }
 
-        private int _selectedRainfallDistributionTypeIndex = 0;
         /// <summary>
         /// Gets or sets the selected index of the rainfall distribution type combo box 
         /// </summary>
@@ -55,41 +90,7 @@ namespace EFH_2
                 this._selectedRainfallDistributionType = _rainfallDistributionTypes[value].Content as string;
             }
         }
-        
-        public void LoadRainfallDistributionTypes(StreamReader reader)
-        {
-            ComboBoxItem c = new();
-            c.Content = "";
-            RainfallDistributionTypes.Clear();
-            RainfallDistributionTypes.Add(c);
 
-            string line = reader.ReadLine();
-            
-            while (line != "")
-            {
-                string[] lineParts = line.Split(',');
-                string type = lineParts[0];
-
-                c = new();
-                c.Content = type.Trim('"');
-
-                RainfallDistributionTypes.Add(c);
-                line = reader.ReadLine();
-            }
-            SelectedRainfallDistributionTypeIndex = 0;
-        }
-
-        private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
-        /// <summary>
-        /// Gets or sets the collection that holds the rainfall distribution types as ComboBoxItems
-        /// </summary>
-        public ObservableCollection<ComboBoxItem> RainfallDistributionTypes
-        {
-            get => this._rainfallDistributionTypes; 
-            set => this.SetProperty(ref this._rainfallDistributionTypes, value); 
-        }
-
-        private string _selectedDUHType = "";
         /// <summary>
         /// Gets or sets the selected dimensionless unit hydrograph type
         /// </summary>
@@ -110,7 +111,6 @@ namespace EFH_2
             }
         }
 
-        private int _selectedDUHTypeIndex = 0;
         /// <summary>
         /// Gets or sets the selected index of the duh type combo box
         /// </summary>
@@ -123,34 +123,6 @@ namespace EFH_2
                 this._selectedDUHType = _duhTypes[value].Content as string;
             }
         }
-
-        public void LoadDUHTypes(StreamReader reader)
-        {
-            DUHTypes.Clear();
-            string line = reader.ReadLine();
-
-            while (line != "")
-            {
-                ComboBoxItem c = new();
-                c.Content = line;
-
-                DUHTypes.Add(c);
-                line = reader.ReadLine();
-            }
-            SelectedDUHTypeIndex = 0;
-        }
-
-        private ObservableCollection<ComboBoxItem> _duhTypes = new();
-        /// <summary>
-        /// Gets or sets the collection that holds the duh types as ComboBoxItems
-        /// </summary>
-        public ObservableCollection<ComboBoxItem> DUHTypes
-        {
-            get => this._duhTypes; 
-            set => this.SetProperty(ref this._duhTypes, value); 
-        }
-
-        public ObservableCollection<StormModel> Storms { get; set; }
 
         /// <summary>
         /// Summarizes the data in this page to a list of objects
@@ -205,34 +177,47 @@ namespace EFH_2
             }
         }
 
-        private string _rainfallDistributionTypeStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the rainfall distribution type field
-        /// </summary>
-        public string RainfallDistributionTypeStatus
-        {
-            get => this._rainfallDistributionTypeStatus; 
-            set => this.SetProperty(ref this._rainfallDistributionTypeStatus, value); 
-        }
+        #endregion
 
-        private string _duhTypeStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the rainfall distribution type field
-        /// </summary>
-        public string DUHTypeStatus
-        {
-            get => this._duhTypeStatus; 
-            set => this.SetProperty(ref this._duhTypeStatus, value); 
-        }
+        #region Methods
 
-        public RainfallDataModel()
+        public void LoadRainfallDistributionTypes(StreamReader reader)
         {
-            Storms = new ObservableCollection<StormModel>();
+            ComboBoxItem c = new();
+            c.Content = "";
+            RainfallDistributionTypes.Clear();
+            RainfallDistributionTypes.Add(c);
 
-            for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+            string line = reader.ReadLine();
+            
+            while (line != "")
             {
-                this.Storms.Add(new());
+                string[] lineParts = line.Split(',');
+                string type = lineParts[0];
+
+                c = new();
+                c.Content = type.Trim('"');
+
+                RainfallDistributionTypes.Add(c);
+                line = reader.ReadLine();
             }
+            SelectedRainfallDistributionTypeIndex = 0;
+        }
+
+        public void LoadDUHTypes(StreamReader reader)
+        {
+            DuhTypes.Clear();
+            string line = reader.ReadLine();
+
+            while (line != "")
+            {
+                ComboBoxItem c = new();
+                c.Content = line;
+
+                DuhTypes.Add(c);
+                line = reader.ReadLine();
+            }
+            SelectedDUHTypeIndex = 0;
         }
 
         /// <summary>
@@ -255,8 +240,21 @@ namespace EFH_2
         public void Clear()
         {
             Default();
-            DUHTypeStatus = MainWindow.ClearedMessage;
+            DuhTypeStatus = MainWindow.ClearedMessage;
             RainfallDistributionTypeStatus = MainWindow.ClearedMessage;
+        }
+
+        #endregion
+
+
+        public RainfallDataModel()
+        {
+            Storms = new ObservableCollection<StormModel>();
+
+            for (int i = 0; i < MainWindow.NumberOfStorms; i++)
+            {
+                this.Storms.Add(new());
+            }
         }
     }
 }

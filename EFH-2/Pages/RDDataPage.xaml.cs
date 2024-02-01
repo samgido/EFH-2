@@ -29,6 +29,8 @@ namespace EFH_2
     /// </summary>
     public sealed partial class RDDataPage : Page
     {
+        #region Properties
+
         /// <summary>
         /// The BasicDataViewModel of the parent, main window
         /// </summary>
@@ -39,12 +41,9 @@ namespace EFH_2
         /// </summary>
         public RainfallDataModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallVM;
 
-        public RDDataPage()
-        {
-            this.InitializeComponent();
+        #endregion
 
-            ReadData();
-        }
+        #region Methods
 
         private async void ReadData()
         {
@@ -113,8 +112,17 @@ namespace EFH_2
 
             if (selectedIndex != 0)
             {
-                RainfallVM.DUHTypeStatus = "User selected.";
+                RainfallVM.DuhTypeStatus = "User selected.";
             }
+        }
+
+        #endregion
+
+        public RDDataPage()
+        {
+            this.InitializeComponent();
+
+            ReadData();
         }
     }
 }

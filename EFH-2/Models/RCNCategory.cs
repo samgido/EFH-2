@@ -9,6 +9,7 @@ namespace EFH_2.Models
 {
     public partial class RCNCategory : ObservableObject
     {
+        #region Observable Properties
 
         [ObservableProperty]
         private string _label;
@@ -16,13 +17,9 @@ namespace EFH_2.Models
         [ObservableProperty]
         private List<RCNRow> _rows = new();
 
-        public void Default()
-        {
-            foreach(RCNRow col in Rows)
-            {
-                col.Default();
-            }
-        }
+        #endregion
+
+        #region Properties
 
         public double AccumulatedArea
         {
@@ -53,6 +50,21 @@ namespace EFH_2.Models
                 return total;
             }
         }
+
+        #endregion
+
+        #region Methods
+
+        public void Default()
+        {
+            foreach(RCNRow col in Rows)
+            {
+                col.Default();
+            }
+        }
+
+        #endregion
+
 
     }
 }

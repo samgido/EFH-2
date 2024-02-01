@@ -2,6 +2,7 @@
  * Author: Samuel Gido
  */
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,226 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the basic data page
     /// </summary>
-    public class BasicDataModel : BindableBase
+    public partial class BasicDataModel : ObservableObject
     {
-        private string _client = "";
-        /// <summary>
-        /// The client's title
-        /// </summary>
-        public string Client
-        {
-            get => this._client; 
-            set => this.SetProperty(ref this._client, value); 
-        }
+        #region Private Fields
 
         /// <summary>
         /// Holds all of the available counties mapped to their respective states
         /// </summary>
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
+
+        private string _selectedState = "";
+
+        private int _selectedStateIndex = 0;
+
+        private string _selectedCounty = "";
+
+        private int _selectedCountyIndex = 0;
+
+        #endregion
+
+        #region Public Fields
+
+        /// <summary>
+        /// Minimum value for the drainage area
+        /// </summary>
+        public static int DrainageAreaMin => 1;
+        /// <summary>
+        /// Maximum value for a the drainage are
+        /// </summary>
+        public static int DrainageAreaMax => 2000;
+
+        /// <summary>
+        /// Minimum value for the runoff curve number
+        /// </summary>
+        public static int RunoffCurveNumberMin => 40;
+        /// <summary>
+        /// Maximum value for the runoff curve number
+        /// </summary>
+        public static int RunoffCurveNumberMax => 98;
+
+        /// <summary>
+        /// Minimum value for the watershed length field
+        /// </summary>
+        public static int WatershedLengthMin => 200;
+        /// <summary>
+        /// Minimum value for the watershed length field
+        /// </summary>
+        public static int WatershedLengthMax => 26000;
+
+        /// <summary>
+        /// Minimum value for the time of concentration field
+        /// </summary>
+        public static double TimeOfConcentrationMin => 0.1;
+        /// <summary>
+        /// Maximum value for the time of concentration field
+        /// </summary>
+        public static double TimeOfConcentrationMax => 10;
+
+        /// <summary>
+        /// Mimimum value for the watershed slope field
+        /// </summary>
+        public static double WatershedSlopeMin => 0.5;
+        /// <summary>
+        /// Maximum value for the watershed slope field
+        /// </summary>
+        public static double WatershedSlopeMax => 64;
+
+        #endregion
+
+        #region Observable Properties 
+
+        [ObservableProperty]
+        private string _client = "";
+
+        [ObservableProperty]
+        private ObservableCollection<ComboBoxItem> _states = new();
+
+        [ObservableProperty]
+        private ObservableCollection<ComboBoxItem> _counties = new();
+
+        [ObservableProperty]
+        private string _practice = "";
+
+        [ObservableProperty]
+        private string _by = "";
+
+        [ObservableProperty]
+        private DateTimeOffset _date = new();
+
+        [ObservableProperty]
+        private double _drainageArea = double.NaN;
+
+        [ObservableProperty]
+        private double _runoffCurveNumber = double.NaN;
+
+        [ObservableProperty]
+        private double _watershedLength = double.NaN;
+
+        [ObservableProperty]
+        private double _watershedSlope = double.NaN;
+
+        [ObservableProperty]
+        private double _timeOfConcentration = double.NaN;
+
+        [ObservableProperty]
+        private string _drainageAreaStatus = "";
+
+        [ObservableProperty]
+        private string _runoffCurveNumberStatus = "";
+
+        [ObservableProperty]
+        private string _watershedLengthStatus = "";
+
+        [ObservableProperty]
+        private string _watershedSlopeStatus = "";
+
+        [ObservableProperty]
+        private string _timeOfConcentrationStatus = "";
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the selected state in the combobox
+        /// </summary>
+        public string SelectedState
+        {
+            get => this._selectedState; 
+            set
+            {
+                for (int i = 0; i < States.Count; i++)
+                {
+                    if (States[i].Content as string == value)
+                    {
+                        SelectedStateIndex = i;
+                        return;
+                    }
+                    SelectedStateIndex = 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected index in the state ComboBox
+        /// </summary>
+        public int SelectedStateIndex
+        {
+            get => this._selectedStateIndex; 
+            set
+            {
+                this.SetProperty(ref this._selectedStateIndex, value);
+                
+                this._selectedState = _states[_selectedStateIndex].Content.ToString();
+
+                SetCounties(_stateCountyDictionary[SelectedState]);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected county in the combobox
+        /// </summary>
+        public string SelectedCounty
+        {
+            get => this._selectedCounty; 
+            set
+            {
+                for (int i = 0; i < Counties.Count; i++)
+                {
+                    if (Counties[i].Content as string == value)
+                    {
+                        SelectedCountyIndex = i;
+                        return;
+                    }
+                    SelectedCountyIndex = 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected index of the county ComboBox
+        /// </summary>
+        public int SelectedCountyIndex
+        {
+            get => this._selectedCountyIndex; 
+            set
+            {
+                this.SetProperty(ref this._selectedCountyIndex, value);
+                if(value == -1) { return; }
+                this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Summarizes the data into a list of objects
+        /// </summary>
+        public List<object> Summary
+        {
+            get
+            {
+                List<object> l = new();
+
+                l.Add(By);
+                l.Add(Date.Date.ToString("MM/dd/yyyy"));
+                l.Add(Client);
+                l.Add(SelectedCounty);
+                l.Add(SelectedState);
+                l.Add(Practice);
+                l.Add(DrainageArea);
+                l.Add(RunoffCurveNumber);
+                l.Add(WatershedLength);
+                l.Add(WatershedSlope);
+                l.Add(TimeOfConcentration);
+
+                return l;
+            }
+        }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Uses a stream reader to load all of the county and state data into the program
@@ -70,90 +275,6 @@ namespace EFH_2
             }
         }
 
-        private string _selectedState = "";
-        /// <summary>
-        /// Gets or sets the selected state in the combobox
-        /// </summary>
-        public string SelectedState
-        {
-            get => this._selectedState; 
-            set
-            {
-                for (int i = 0; i < States.Count; i++)
-                {
-                    if (States[i].Content as string == value)
-                    {
-                        SelectedStateIndex = i;
-                        return;
-                    }
-                    SelectedStateIndex = 0;
-                }
-            }
-        }
-
-        private int _selectedStateIndex = 0;
-        /// <summary>
-        /// Gets or sets the selected index in the state ComboBox
-        /// </summary>
-        public int SelectedStateIndex
-        {
-            get => this._selectedStateIndex; 
-            set
-            {
-                this.SetProperty(ref this._selectedStateIndex, value);
-                
-                this._selectedState = _states[_selectedStateIndex].Content.ToString();
-
-                SetCounties(_stateCountyDictionary[SelectedState]);
-            }
-        }
-
-        private ObservableCollection<ComboBoxItem> _states = new();
-        /// <summary>
-        /// Gets or sets the abbreviated states as ComboBoxItems
-        /// </summary>
-        public ObservableCollection<ComboBoxItem> States
-        {
-            get => this._states; 
-            set => this.SetProperty(ref this._states, value); 
-        }
-
-        private string _selectedCounty = "";
-        /// <summary>
-        /// Gets or sets the selected county in the combobox
-        /// </summary>
-        public string SelectedCounty
-        {
-            get => this._selectedCounty; 
-            set
-            {
-                for (int i = 0; i < Counties.Count; i++)
-                {
-                    if (Counties[i].Content as string == value)
-                    {
-                        SelectedCountyIndex = i;
-                        return;
-                    }
-                    SelectedCountyIndex = 0;
-                }
-            }
-        }
-
-        private int _selectedCountyIndex = 0;
-        /// <summary>
-        /// Gets or sets the selected index of the county ComboBox
-        /// </summary>
-        public int SelectedCountyIndex
-        {
-            get => this._selectedCountyIndex; 
-            set
-            {
-                this.SetProperty(ref this._selectedCountyIndex, value);
-                if(value == -1) { return; }
-                this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
-            }
-        }
-
         /// <summary>
         /// Changes the contents of the counties combobox
         /// </summary>
@@ -176,56 +297,6 @@ namespace EFH_2
             SelectedCountyIndex = 0;
         }
 
-        private ObservableCollection<ComboBoxItem> _counties = new();
-        /// <summary>
-        /// Gets or sets the counties available in the combobox
-        /// </summary>
-        public ObservableCollection<ComboBoxItem> Counties
-        {
-            get => this._counties; 
-            set => this.SetProperty(ref this._counties, value); 
-        }
-
-        private string _practice = "";
-        /// <summary>
-        /// Gets or sets the practice field
-        /// </summary>
-        public string Practice
-        {
-            get => this._practice; 
-            set => this.SetProperty(ref this._practice, value); 
-        }
-
-        private string _by = "";
-        /// <summary>
-        /// Gets or sets the title of who entered the data
-        /// </summary>
-        public string By
-        {
-            get => this._by; 
-            set => this.SetProperty(ref this._by, value); 
-        }
-
-        private DateTimeOffset _date = new();
-        /// <summary>
-        /// Gets or sets the date field
-        /// </summary>
-        public DateTimeOffset Date
-        {
-            get => this._date; 
-            set => this.SetProperty(ref this._date, value); 
-        }
-
-        private double _drainageArea = double.NaN;
-        /// <summary>
-        /// Gets or sets drainage area field 
-        /// </summary>
-        public double DrainageArea
-        {
-            get => this._drainageArea; 
-            set => this.SetProperty(ref this._drainageArea, value); 
-        }
-
         /// <summary>
         /// Checks and corrects the drainage area field
         /// </summary>
@@ -240,56 +311,19 @@ namespace EFH_2
             DrainageAreaStatus = MainWindow.DrainageAreaInvalidEntryMessage;
         }
 
-        /// <summary>
-        /// Minimum value for the drainage area
-        /// </summary>
-        public static int DrainageAreaMin => 1;
-        /// <summary>
-        /// Maximum value for a the drainage are
-        /// </summary>
-        public static int DrainageAreaMax => 2000;
-
-        private double _curveNumber = double.NaN;
-        /// <summary>
-        /// Gets or sets the curve number field
-        /// </summary>
-        public double RunoffCurveNumber
-        {
-            get => this._curveNumber; 
-            set => this.SetProperty(ref this._curveNumber, value); 
-        }
 
         /// <summary>
         /// Checks and corrects the value of the runoff curve number field
         /// </summary>
         public void CheckRunoffCurveNumber()
         {
-            if (_curveNumber >= RunoffCurveNumberMin && _curveNumber <= RunoffCurveNumberMax)
+            if (_runoffCurveNumber >= RunoffCurveNumberMin && _runoffCurveNumber <= RunoffCurveNumberMax)
             {
                 RunoffCurveNumberStatus = "User entered.";
                 return;
             }
 
             RunoffCurveNumberStatus = MainWindow.RunoffCurveNumberInvalidEntryMessage;
-        }
-
-        /// <summary>
-        /// Minimum value for the runoff curve number
-        /// </summary>
-        public static int RunoffCurveNumberMin => 40;
-        /// <summary>
-        /// Maximum value for the runoff curve number
-        /// </summary>
-        public static int RunoffCurveNumberMax => 98;
-
-        private double _watershedLength = double.NaN;
-        /// <summary>
-        /// Gets or sets the watershed length field
-        /// </summary>
-        public double WatershedLength
-        {
-            get => this._watershedLength; 
-            set => this.SetProperty(ref this._watershedLength, value); 
         }
 
         /// <summary>
@@ -307,25 +341,6 @@ namespace EFH_2
         }
 
         /// <summary>
-        /// Minimum value for the watershed length field
-        /// </summary>
-        public static int WatershedLengthMin => 200;
-        /// <summary>
-        /// Minimum value for the watershed length field
-        /// </summary>
-        public static int WatershedLengthMax => 26000;
-
-        private double _watershedSlope = double.NaN;
-        /// <summary>
-        /// Gets or sets the watershed slope field
-        /// </summary>
-        public double WatershedSlope
-        {
-            get => this._watershedSlope; 
-            set => this.SetProperty(ref this._watershedSlope, value); 
-        }
-
-        /// <summary>
         /// Checks and corrects the watershed slope field
         /// </summary>
         public void CheckWatershedSlope()
@@ -340,25 +355,6 @@ namespace EFH_2
         }
 
         /// <summary>
-        /// Mimimum value for the watershed slope field
-        /// </summary>
-        public static double WatershedSlopeMin => 0.5;
-        /// <summary>
-        /// Maximum value for the watershed slope field
-        /// </summary>
-        public static double WatershedSlopeMax => 64;
-
-        private double _timeOfConcentration = double.NaN;
-        /// <summary>
-        /// Gets or sets the time of concentration field
-        /// </summary>
-        public double TimeOfConcentration
-        {
-            get => this._timeOfConcentration; 
-            set => this.SetProperty(ref this._timeOfConcentration, value); 
-        }
-
-        /// <summary>
         /// Checks and corrects the time of concentration field
         /// </summary>
         public void CheckTimeOfConcentration()
@@ -370,95 +366,6 @@ namespace EFH_2
             }
 
             TimeOfConcentrationStatus = MainWindow.TimeOfConcentrationInvalidEntryMessage;
-        }
-
-        /// <summary>
-        /// Minimum value for the time of concentration field
-        /// </summary>
-        public static double TimeOfConcentrationMin => 0.1;
-        /// <summary>
-        /// Maximum value for the time of concentration field
-        /// </summary>
-        public static double TimeOfConcentrationMax => 10;
-
-        /// <summary>
-        /// Summarizes the data into a list of objects
-        /// </summary>
-        public List<object> Summary
-        {
-            get
-            {
-                List<object> l = new();
-
-                l.Add(By);
-                l.Add(Date.Date.ToString("MM/dd/yyyy"));
-                l.Add(Client);
-                l.Add(SelectedCounty);
-                l.Add(SelectedState);
-                l.Add(Practice);
-                l.Add(DrainageArea);
-                l.Add(RunoffCurveNumber);
-                l.Add(WatershedLength);
-                l.Add(WatershedSlope);
-                l.Add(TimeOfConcentration);
-
-                return l;
-            }
-        }
-
-        private string _drainageStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the drainage area field
-        /// </summary>
-        public string DrainageAreaStatus
-        {
-            get => this._drainageStatus; 
-            set => this.SetProperty(ref this._drainageStatus, value); 
-        }
-
-        private string _curveNumberStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the runoff curve number field
-        /// </summary>
-        public string RunoffCurveNumberStatus
-        {
-            get => this._curveNumberStatus; 
-            set => this.SetProperty(ref this._curveNumberStatus, value); 
-        }
-
-        private string _watershedLengthStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the watershed length field
-        /// </summary>
-        public string WatershedLengthStatus
-        {
-            get => this._watershedLengthStatus; 
-            set => this.SetProperty(ref this._watershedLengthStatus, value); 
-        }
-
-        private string _watershedSlopeStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the watershed slope field
-        /// </summary>
-        public string WatershedSlopeStatus
-        {
-            get => this._watershedSlopeStatus; 
-            set => this.SetProperty(ref this._watershedSlopeStatus, value); 
-        }
-
-        private string _timeOfConcentrationStatus = "";
-        /// <summary>
-        /// Gets or sets the current status of the time of concentration field
-        /// </summary>
-        public string TimeOfConcentrationStatus
-        {
-            get => this._timeOfConcentrationStatus; 
-            set => this.SetProperty(ref this._timeOfConcentrationStatus, value); 
-        }
-
-        public BasicDataModel()
-        {
-            Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
         }
 
         /// <summary>
@@ -493,6 +400,13 @@ namespace EFH_2
             WatershedLengthStatus = MainWindow.ClearedMessage;
             RunoffCurveNumberStatus = MainWindow.ClearedMessage;
             DrainageAreaStatus = MainWindow.ClearedMessage;
+        }
+
+        #endregion
+
+        public BasicDataModel()
+        {
+            Date = DateTimeOffset.Parse(DateTime.Now.ToString("MM/dd/yyyy"));
         }
     }
 }

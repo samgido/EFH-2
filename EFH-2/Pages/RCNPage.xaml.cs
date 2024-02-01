@@ -31,6 +31,8 @@ namespace EFH_2
     /// </summary>
     public sealed partial class RCNPage : Page
     {
+        #region Properties
+
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
         /// <summary>
@@ -48,20 +50,9 @@ namespace EFH_2
         /// </summary>
         public RCNDataModel RCNVM => _mainWindow.RCNVM;
 
-        public RCNPage()
-        {
-            this.InitializeComponent();
+        #endregion
 
-            //for(int i = 0; i < 120; i++)
-            //{
-            //    RowDefinition rowDef = new RowDefinition();
-            //    rowDef.Height = new GridLength(30);
-    
-            //    uxInputGrid.RowDefinitions.Add(rowDef);
-            //}
-
-            ReadRCNTableData();
-        }
+        #region Methods
 
         private async void ReadRCNTableData()
         {
@@ -109,6 +100,23 @@ namespace EFH_2
         private void RCNValuesChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             RCNVM.Update();
+        }
+
+        #endregion
+
+        public RCNPage()
+        {
+            this.InitializeComponent();
+
+            //for(int i = 0; i < 120; i++)
+            //{
+            //    RowDefinition rowDef = new RowDefinition();
+            //    rowDef.Height = new GridLength(30);
+    
+            //    uxInputGrid.RowDefinitions.Add(rowDef);
+            //}
+
+            ReadRCNTableData();
         }
     }
 }
