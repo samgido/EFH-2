@@ -108,14 +108,6 @@ namespace EFH_2
         {
             this.InitializeComponent();
 
-            //for(int i = 0; i < 120; i++)
-            //{
-            //    RowDefinition rowDef = new RowDefinition();
-            //    rowDef.Height = new GridLength(30);
-    
-            //    uxInputGrid.RowDefinitions.Add(rowDef);
-            //}
-
             ReadRCNTableData();
         }
     }

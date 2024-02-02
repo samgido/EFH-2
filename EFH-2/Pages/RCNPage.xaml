@@ -112,6 +112,7 @@
                                                 Width="80"
                                                 Value="{x:Bind WeightAreaPairs[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 IsEnabled="{x:Bind WeightAreaPairs[0].Enabled}"
+                                                VerticalAlignment="Center"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
@@ -123,6 +124,7 @@
                                                 Grid.Column="5"
                                                 Width="80"
                                                 Value="{x:Bind WeightAreaPairs[1].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
+                                                VerticalAlignment="Center"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
@@ -134,6 +136,7 @@
                                                 Grid.Column="7"
                                                 Width="80"
                                                 Value="{x:Bind WeightAreaPairs[2].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
+                                                VerticalAlignment="Center"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
@@ -145,6 +148,7 @@
                                                 Grid.Column="9"
                                                 Width="80"
                                                 Value="{x:Bind WeightAreaPairs[3].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
+                                                VerticalAlignment="Center"
                                                 ValueChanged="RCNValuesChanged"/>
 
                                             <TextBlock
