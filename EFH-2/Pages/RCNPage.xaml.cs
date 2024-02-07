@@ -38,17 +38,17 @@ namespace EFH_2
         /// <summary>
         /// Gets the BasicDataViewModel of the main window
         /// </summary>
-        public BasicDataModel BasicVM => _mainWindow.BasicVM;
+        public BasicDataModel BasicDataModel => _mainWindow.BasicDataModel;
 
         /// <summary>
         /// Gets the RainfallDataViewModel of the main window
         /// </summary>
-        public RainfallDataModel RainfallVM => _mainWindow.RainfallVM;
+        public RainfallDataModel RainfallDataModel => _mainWindow.RainfallDataModel;
 
         /// <summary>
         /// Gets the RCNDataViewModel of main window
         /// </summary>
-        public RCNDataModel RCNVM => _mainWindow.RCNVM;
+        public RCNDataModel RCNModel => _mainWindow.RCNModel;
 
         #endregion
 
@@ -60,7 +60,7 @@ namespace EFH_2
             {
                 using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Cover.txt"))
                 {
-                    RCNVM.LoadRCNTableEntries(reader);
+                    RCNModel.LoadRCNTableEntries(reader);
                 }
             }
             catch (Exception err)
@@ -94,12 +94,12 @@ namespace EFH_2
 
         private void ClearButtonClick(object sender, RoutedEventArgs e)
         {
-            RCNVM.Default();
+            RCNModel.Default();
         }
 
-        private void RCNValuesChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void AcceptButtonClick(object sender, RoutedEventArgs e)
         {
-            RCNVM.Update();
+            _mainWindow.AcceptRCNValues((int)Math.Round(RCNModel.AccumulatedArea), (int)Math.Round(RCNModel.WeightedCurveNumber));
         }
 
         #endregion

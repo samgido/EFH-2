@@ -68,6 +68,11 @@ namespace EFH_2.Models
         {
             _text = new string[3];
             _weightAreaPairs = new WeightAreaPair[4];
+
+            for (int i = 0; i < _weightAreaPairs.Length; i++)
+            {
+                _weightAreaPairs[i] = new();
+            }
         }
     }
 }

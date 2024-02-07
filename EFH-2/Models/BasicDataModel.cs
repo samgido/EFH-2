@@ -402,6 +402,15 @@ namespace EFH_2
             DrainageAreaStatus = MainWindow.ClearedMessage;
         }
 
+        public void AcceptRCNValues(int totalArea, int curveNumber)
+        {
+            DrainageArea = totalArea;
+            RunoffCurveNumber = curveNumber;
+
+            DrainageAreaStatus = "from RCN Calculator";
+            RunoffCurveNumberStatus = "from RCN Calculator";
+        }
+
         #endregion
 
         public BasicDataModel()

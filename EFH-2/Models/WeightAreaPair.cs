@@ -18,7 +18,7 @@ namespace EFH_2.Models
 
         #region Properties
 
-        public int Weight { get; }
+        public int Weight { get; set; }
 
         public double WeightedArea => Area * Weight;
 
@@ -33,11 +33,21 @@ namespace EFH_2.Models
             Area = double.NaN;
         }
 
+        partial void OnAreaChanged(double oldValue, double newValue)
+        {
+            this.AreaChanged?.Invoke(this, (oldValue, newValue));
+        }
+
         #endregion
 
-        public WeightAreaPair(int weight)
+        #region Events
+
+        public event EventHandler<(double oldValue, double newValue)>? AreaChanged;
+
+        #endregion
+
+        public WeightAreaPair()
         {
-            Weight = weight;
             Area = double.NaN;
         }
     }

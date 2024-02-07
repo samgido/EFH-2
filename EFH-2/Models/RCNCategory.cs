@@ -9,6 +9,12 @@ namespace EFH_2.Models
 {
     public partial class RCNCategory : ObservableObject
     {
+        #region Private Fields
+
+        private double _accumulatedArea = 0;
+
+        #endregion
+
         #region Observable Properties
 
         [ObservableProperty]
@@ -23,17 +29,7 @@ namespace EFH_2.Models
 
         public double AccumulatedArea
         {
-            get
-            {
-                double total = 0;
-
-                foreach(RCNRow col in Rows)
-                {
-                    if (!col.AccumulatedArea.Equals(double.NaN)) total += col.AccumulatedArea;
-                }
-
-                return total;
-            }
+            get => _accumulatedArea;
         }
 
         public double AccumulatedWeightedArea
@@ -65,6 +61,12 @@ namespace EFH_2.Models
 
         #endregion
 
+        #region Events
 
+        #endregion
+
+        public RCNCategory()
+        {
+        }
     }
 }

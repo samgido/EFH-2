@@ -48,7 +48,7 @@
             HorizontalScrollMode="Enabled">
 
             <ItemsRepeater
-                ItemsSource="{x:Bind RCNVM.RcnCategories, Mode=OneWay}"
+                ItemsSource="{x:Bind RCNModel.RcnCategories, Mode=OneWay}"
                 VerticalCacheLength="1000"
                 x:Name="uxMainRepeater">
 
@@ -112,48 +112,44 @@
                                                 Width="80"
                                                 Value="{x:Bind WeightAreaPairs[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 IsEnabled="{x:Bind WeightAreaPairs[0].Enabled}"
-                                                VerticalAlignment="Center"
-                                                ValueChanged="RCNValuesChanged"/>
+                                                VerticalAlignment="Center"/>
 
                                             <TextBlock
                                                 Grid.Column="4"
-                                                Text="{x:Bind WeightAreaPairs[0].Weight, Converter={StaticResource RCNConverter}}"
+                                                Text="{x:Bind WeightAreaPairs[0].Weight, Converter={StaticResource RCNConverter}, Mode=OneTime}"
                                                 VerticalAlignment="Center"/>
 
                                             <NumberBox
                                                 Grid.Column="5"
                                                 Width="80"
-                                                Value="{x:Bind WeightAreaPairs[1].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
-                                                VerticalAlignment="Center"
-                                                ValueChanged="RCNValuesChanged"/>
+                                                Value="{x:Bind WeightAreaPairs[1].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                VerticalAlignment="Center"/>
 
                                             <TextBlock
                                                 Grid.Column="6"
-                                                Text="{x:Bind WeightAreaPairs[1].Weight}"
+                                                Text="{x:Bind WeightAreaPairs[1].Weight, Mode=OneTime}"
                                                 VerticalAlignment="Center"/>
                                                 
                                             <NumberBox
                                                 Grid.Column="7"
                                                 Width="80"
-                                                Value="{x:Bind WeightAreaPairs[2].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
-                                                VerticalAlignment="Center"
-                                                ValueChanged="RCNValuesChanged"/>
+                                                Value="{x:Bind WeightAreaPairs[2].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                VerticalAlignment="Center"/>
 
                                             <TextBlock
                                                 Grid.Column="8"
-                                                Text="{x:Bind WeightAreaPairs[2].Weight}"
+                                                Text="{x:Bind WeightAreaPairs[2].Weight, Mode=OneTime}"
                                                 VerticalAlignment="Center"/>
 
                                             <NumberBox
                                                 Grid.Column="9"
                                                 Width="80"
-                                                Value="{x:Bind WeightAreaPairs[3].Area, UpdateSourceTrigger=Default, Mode=TwoWay}"
-                                                VerticalAlignment="Center"
-                                                ValueChanged="RCNValuesChanged"/>
+                                                Value="{x:Bind WeightAreaPairs[3].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                VerticalAlignment="Center"/>
 
                                             <TextBlock
                                                 Grid.Column="10"
-                                                Text="{x:Bind WeightAreaPairs[3].Weight}"
+                                                Text="{x:Bind WeightAreaPairs[3].Weight, Mode=OneTime}"
                                                 VerticalAlignment="Center"/>
                                         </Grid> 
                                         
@@ -207,7 +203,7 @@
 
                 <TextBlock
                     x:Name="uxWeightedCurveNumber"
-                    Text="{x:Bind Path=RCNVM.WeightedCurveNumber, Mode=TwoWay}"
+                    Text="{x:Bind Path=RCNModel.WeightedCurveNumber, Mode=OneWay}"
                     RelativePanel.RightOf="uxWeightedCurveNumberLabel"
                     Padding="5,0,0,0"
                     />
@@ -220,7 +216,7 @@
 
                 <TextBlock
                     x:Name="uxAccumulatedArea"
-                    Text="{x:Bind Path=RCNVM.AccumulatedArea, Mode=TwoWay}"
+                    Text="{x:Bind Path=RCNModel.AccumulatedArea, Mode=OneWay}"
                     RelativePanel.RightOf="uxAccumulatedAreaLabel"
                     RelativePanel.Below="uxWeightedCurveNumberLabel"
                     Padding="5,22,0,0"
@@ -233,7 +229,8 @@
                 Content="Accept"
                 RelativePanel.RightOf="labels"
                 RelativePanel.AlignVerticalCenterWith="labels"
-                Margin="100,0,0,0"/>
+                Margin="100,0,0,0"
+                Click="AcceptButtonClick"/>
 
             <Button
                 x:Name="uxClearButton"

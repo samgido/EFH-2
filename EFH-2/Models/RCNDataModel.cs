@@ -16,14 +16,13 @@ namespace EFH_2
     /// </summary>
     public partial class RCNDataModel : ObservableObject
     {
+        #region Private Fields 
 
-        #region Private Fields
+        private double _accumulatedArea;
 
-        #endregion
+        private double _weightedAccumulatedArea;
 
-        #region Public Fields
-
-        #endregion
+        #endregion 
 
         #region Observable Properties
 
@@ -31,18 +30,70 @@ namespace EFH_2
         private List<RCNCategory> _rcnCategories = new();
 
         [ObservableProperty]
-        static private double _weightedCurveNumber = 0;
+        private double _groupAAccumulatedArea;
+        [ObservableProperty]
+        private double _groupAWeightedAccumulatedArea;
 
         [ObservableProperty]
-        private double _accumulatedArea = 0;
+        private double _groupBAccumulatedArea;
+        [ObservableProperty]
+        private double _groupBWeightedAccumulatedArea;
+
+        [ObservableProperty]
+        private double _groupCAccumulatedArea;
+        [ObservableProperty]
+        private double _groupCWeightedAccumulatedArea;
+
+        [ObservableProperty]
+        private double _groupDAccumulatedArea;
+        [ObservableProperty]
+        private double _groupDWeightedAccumulatedArea;
+
+        private double _weightedCurveNumber;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         public ObservableCollection<HSGEntry> HSGEntries { get; } = new();
 
-        public string[][] RCNTableEntries { get; }
+        public double AccumulatedArea
+        {
+            get => _accumulatedArea;
+            set
+            {
+                this.SetProperty(ref this._accumulatedArea, value);
+            }
+        }
+
+        public double WeightedAccumulatedArea
+        {
+            get => _weightedAccumulatedArea;
+            set
+            {
+                if (_accumulatedArea <= 0 || _accumulatedArea.Equals(double.NaN)) WeightedCurveNumber = 0; 
+                else WeightedCurveNumber = value / _accumulatedArea;
+                this.SetProperty(ref this._weightedAccumulatedArea, value);
+            }
+        }
+
+        public double WeightedCurveNumber
+        {
+            get => Math.Round(_weightedCurveNumber);
+            set => this.SetProperty(ref this._weightedCurveNumber, value);
+        }
+            
+
+        #endregion
+
+        #region Structs
+
+        public struct HSGEntry
+        {
+            public string Column1 { get; set; }
+            public string Column2 { get; set; }
+            public string Column3 { get; set; }
+        }
 
         #endregion
 
@@ -84,12 +135,12 @@ namespace EFH_2
                     row.Text[1] = splitLine[2];
                     row.Text[2] = splitLine[3];
 
-                    if (splitLine[5] == "**") row.WeightAreaPairs[0] = new(-1);
-                    else row.WeightAreaPairs[0] = new(int.Parse(splitLine[5].Trim()));
+                    if (splitLine[5] == "**") row.WeightAreaPairs[0].Weight = -1;
+                    else row.WeightAreaPairs[0].Weight = int.Parse(splitLine[5].Trim());
 
-                    row.WeightAreaPairs[1] = new(int.Parse(splitLine[7].Trim()));
-                    row.WeightAreaPairs[2] = new(int.Parse(splitLine[9].Trim()));
-                    row.WeightAreaPairs[3] = new(int.Parse(splitLine[11].Trim()));
+                    row.WeightAreaPairs[1].Weight = int.Parse(splitLine[7].Trim());
+                    row.WeightAreaPairs[2].Weight = int.Parse(splitLine[9].Trim());
+                    row.WeightAreaPairs[3].Weight = int.Parse(splitLine[11].Trim());
 
                     currentCategory.Rows.Add(row);
                 }
@@ -98,6 +149,17 @@ namespace EFH_2
             categories.Add(currentCategory);
 
             RcnCategories = categories;
+
+            foreach (RCNCategory category in RcnCategories)
+            {
+                foreach (RCNRow row in category.Rows)
+                {
+                    row.WeightAreaPairs[0].AreaChanged += GroupAFieldChanged;
+                    row.WeightAreaPairs[1].AreaChanged += GroupBFieldChanged;
+                    row.WeightAreaPairs[2].AreaChanged += GroupCFieldChanged;
+                    row.WeightAreaPairs[3].AreaChanged += GroupDFieldChanged;
+                }
+            }
         }
 
         public void Default()
@@ -110,43 +172,112 @@ namespace EFH_2
 
         public void Update()
         {
-            double totalArea = 0;
-            double totalWeightedArea = 0;
+            AccumulatedArea = 0;
+            WeightedAccumulatedArea = 0;
 
             foreach(RCNCategory category in RcnCategories)
             {
                 if (!category.AccumulatedArea.Equals(double.NaN))
                 {
-                    totalArea += category.AccumulatedArea;
-                    totalWeightedArea += category.AccumulatedWeightedArea;
+                    AccumulatedArea += category.AccumulatedArea;
+                    WeightedAccumulatedArea += category.AccumulatedWeightedArea;
                 }
             }
-
-            AccumulatedArea = totalArea;
-            WeightedCurveNumber = totalWeightedArea;
         }
 
-        #endregion
-
-        #region Structs
-
-        public struct HSGEntry
+        private void GroupAFieldChanged(object? sender, (double oldValue, double newValue) e)
         {
-            public string Column1 { get; set; }
-            public string Column2 { get; set; }
-            public string Column3 { get; set; }
-        }
-
-        #endregion
-
-        public RCNDataModel()
-        {
-            RCNTableEntries = new string[7][];
-            for (int i = 0; i < RCNTableEntries.Length; i++)
+            int weight = 0;
+            if (sender is WeightAreaPair pair)
             {
-                RCNTableEntries[i] = new string[120];
+                weight = pair.Weight;
+            }
+
+            if (!e.oldValue.Equals(double.NaN))
+            {
+                GroupAAccumulatedArea -= e.oldValue;
+                AccumulatedArea -= e.oldValue;
+                GroupAWeightedAccumulatedArea -= e.oldValue * weight;
+                WeightedAccumulatedArea -= e.oldValue * weight;
+            }
+            if (!e.newValue.Equals(double.NaN))
+            {
+                GroupAAccumulatedArea += e.newValue;
+                AccumulatedArea += e.newValue;
+                GroupAWeightedAccumulatedArea += e.newValue * weight;
+                WeightedAccumulatedArea += e.newValue * weight;
             }
         }
 
+        private void GroupBFieldChanged(object? sender, (double oldValue, double newValue) e)
+        {
+            int weight = 0;
+            if (sender is WeightAreaPair pair)
+            {
+                weight = pair.Weight;
+            }
+
+            if (!e.oldValue.Equals(double.NaN))
+            {
+                GroupBAccumulatedArea -= e.oldValue;
+                AccumulatedArea -= e.oldValue;
+                GroupBWeightedAccumulatedArea -= e.oldValue * weight;
+                WeightedAccumulatedArea -= e.oldValue * weight;
+            }
+            if (!e.newValue.Equals(double.NaN))
+            {
+                GroupBAccumulatedArea += e.newValue;
+                AccumulatedArea += e.newValue;
+                GroupBWeightedAccumulatedArea += e.newValue * weight;
+                WeightedAccumulatedArea += e.newValue * weight;
+            }
+        }
+
+        private void GroupCFieldChanged(object? sender, (double oldValue, double newValue) e)
+        {
+            int weight = 0;
+            if (sender is WeightAreaPair pair)
+            {
+                weight = pair.Weight;
+            }
+
+            if (!e.oldValue.Equals(double.NaN))
+            {
+                GroupCAccumulatedArea -= e.oldValue;
+                AccumulatedArea -= e.oldValue;
+                GroupCWeightedAccumulatedArea -= e.oldValue * weight;
+                WeightedAccumulatedArea -= e.oldValue * weight;
+            }
+            if (!e.newValue.Equals(double.NaN))
+            {
+                GroupCAccumulatedArea += e.newValue;
+                AccumulatedArea += e.newValue;
+                GroupCWeightedAccumulatedArea += e.newValue * weight;
+                WeightedAccumulatedArea += e.newValue * weight;
+            }
+        }
+
+        private void GroupDFieldChanged(object? sender, (double oldValue, double newValue) e)
+        {
+            int weight = 0;
+            if (sender is WeightAreaPair pair) weight = pair.Weight;
+
+            if (!e.oldValue.Equals(double.NaN))
+            {
+                GroupDAccumulatedArea -= e.oldValue;
+                AccumulatedArea -= e.oldValue;
+                GroupDWeightedAccumulatedArea -= e.oldValue * weight;
+                WeightedAccumulatedArea -= e.oldValue * weight;
+            }
+            if (!e.newValue.Equals(double.NaN))
+            {
+                GroupDAccumulatedArea += e.newValue;
+                AccumulatedArea += e.newValue;
+                GroupDWeightedAccumulatedArea += e.newValue * weight;
+                WeightedAccumulatedArea += e.newValue * weight;
+            }
+        }
+
+        #endregion
     }
 }

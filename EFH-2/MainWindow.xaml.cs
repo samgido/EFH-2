@@ -75,14 +75,14 @@ namespace EFH_2
         /// <summary>
         /// View model for the basic data page
         /// </summary>
-        public BasicDataModel BasicVM { get; set; }
+        public BasicDataModel BasicDataModel { get; set; }
 
         /// <summary>
         /// View model for the rainfall/discharge page
         /// </summary>
-        public RainfallDataModel RainfallVM { get; set; }
+        public RainfallDataModel RainfallDataModel { get; set; }
 
-        public RCNDataModel RCNVM { get; set; }
+        public RCNDataModel RCNModel { get; set; }
 
         #endregion
 
@@ -154,7 +154,7 @@ namespace EFH_2
 
                     // basic data
                     // lines 2 - 12
-                    foreach (object o in BasicVM.Summary)
+                    foreach (object o in BasicDataModel.Summary)
                     {
                         w.WriteQuoted(o, true);
                     }
@@ -165,7 +165,7 @@ namespace EFH_2
                     w.WriteQuoted("", true);
 
                     // lines 16 - 30
-                    foreach (object o in RainfallVM.Summary1)
+                    foreach (object o in RainfallDataModel.Summary1)
                     {
                         w.WriteQuoted(o, true);
                     }
@@ -185,7 +185,7 @@ namespace EFH_2
                     for (int i = 0; i < MainWindow.NumberOfStorms; i++)
                     {
                         char enabled = ' ';
-                        if (RainfallVM.Storms[i].DisplayHydrograph) { enabled = '*'; }
+                        if (RainfallDataModel.Storms[i].DisplayHydrograph) { enabled = '*'; }
 
                         selectedHydrographs.Append(enabled);
                     }
@@ -198,7 +198,7 @@ namespace EFH_2
                     w.Write(line38, true);
 
                     // lines 40 - 46 
-                    foreach (object o in RainfallVM.Summary2)
+                    foreach (object o in RainfallDataModel.Summary2)
                     {
                         w.WriteQuoted(o, true);
                     }
@@ -237,23 +237,23 @@ namespace EFH_2
                         Reader r = new(reader);
                         string version = r.ReadQuoted();
 
-                        BasicVM.By = r.ReadQuoted();
-                        BasicVM.Date = DateTimeOffset.Parse(r.ReadQuoted());
-                        BasicVM.Client = r.ReadQuoted();
+                        BasicDataModel.By = r.ReadQuoted();
+                        BasicDataModel.Date = DateTimeOffset.Parse(r.ReadQuoted());
+                        BasicDataModel.Client = r.ReadQuoted();
                         string county = r.ReadQuoted();
-                        BasicVM.SelectedState = r.ReadQuoted();
-                        BasicVM.SelectedCounty = county;
-                        BasicVM.Practice = r.ReadQuoted();
-                        BasicVM.DrainageArea = r.ParseInt(r.ReadQuoted());
-                        BasicVM.DrainageAreaStatus = _importedStatusMessage;
-                        BasicVM.RunoffCurveNumber = r.ParseFloat(r.ReadQuoted());
-                        BasicVM.RunoffCurveNumberStatus = _importedStatusMessage;
-                        BasicVM.WatershedLength = r.ParseInt(r.ReadQuoted());
-                        BasicVM.WatershedLengthStatus = _importedStatusMessage;
-                        BasicVM.WatershedSlope = r.ParseFloat(r.ReadQuoted());
-                        BasicVM.WatershedSlopeStatus = _importedStatusMessage;
-                        BasicVM.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
-                        BasicVM.TimeOfConcentrationStatus = _importedStatusMessage;
+                        BasicDataModel.SelectedState = r.ReadQuoted();
+                        BasicDataModel.SelectedCounty = county;
+                        BasicDataModel.Practice = r.ReadQuoted();
+                        BasicDataModel.DrainageArea = r.ParseInt(r.ReadQuoted());
+                        BasicDataModel.DrainageAreaStatus = _importedStatusMessage;
+                        BasicDataModel.RunoffCurveNumber = r.ParseFloat(r.ReadQuoted());
+                        BasicDataModel.RunoffCurveNumberStatus = _importedStatusMessage;
+                        BasicDataModel.WatershedLength = r.ParseInt(r.ReadQuoted());
+                        BasicDataModel.WatershedLengthStatus = _importedStatusMessage;
+                        BasicDataModel.WatershedSlope = r.ParseFloat(r.ReadQuoted());
+                        BasicDataModel.WatershedSlopeStatus = _importedStatusMessage;
+                        BasicDataModel.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
+                        BasicDataModel.TimeOfConcentrationStatus = _importedStatusMessage;
 
                         // not sure what these are 
                         string line13 = r.Read();
@@ -264,11 +264,11 @@ namespace EFH_2
                         string type = r.ReadQuoted();
 
                         string[] types = type.Split(", ");
-                        RainfallVM.SelectedRainfallDistributionType = types[0];
-                        if (types.Length == 2) { RainfallVM.SelectedDUHType = types[1]; }
-                        else { RainfallVM.SelectedDUHType = "<standard>"; }
-                        RainfallVM.RainfallDistributionTypeStatus = _importedStatusMessage;
-                        RainfallVM.DuhTypeStatus = _importedStatusMessage;
+                        RainfallDataModel.SelectedRainfallDistributionType = types[0];
+                        if (types.Length == 2) { RainfallDataModel.SelectedDUHType = types[1]; }
+                        else { RainfallDataModel.SelectedDUHType = "<standard>"; }
+                        RainfallDataModel.RainfallDistributionTypeStatus = _importedStatusMessage;
+                        RainfallDataModel.DuhTypeStatus = _importedStatusMessage;
 
                         // lines 17 - 30
                         int[] frequencies = new int[MainWindow.NumberOfStorms];
@@ -276,8 +276,8 @@ namespace EFH_2
 
                         for (int i = 0; i < MainWindow.NumberOfStorms; i++)
                         {
-                            RainfallVM.Storms[i].Frequency = r.ParseInt(r.ReadQuoted());
-                            RainfallVM.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
+                            RainfallDataModel.Storms[i].Frequency = r.ParseInt(r.ReadQuoted());
+                            RainfallDataModel.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
                         }
 
                         string line31 = r.Read();
@@ -297,7 +297,7 @@ namespace EFH_2
 
                         for (int i = 5; i < MainWindow.NumberOfStorms + 5; i++)
                         {
-                            RainfallVM.Storms[i - 5].DisplayHydrograph = hydrographs[i] == '*';
+                            RainfallDataModel.Storms[i - 5].DisplayHydrograph = hydrographs[i] == '*';
                         }
 
                         // lines 40 - end
@@ -306,8 +306,8 @@ namespace EFH_2
                             string line = r.ReadQuoted();
                             string[] splitLine = line.Split(',');
 
-                            RainfallVM.Storms[i].PeakFlow = r.ParseDouble(splitLine[2].Trim('"'));
-                            RainfallVM.Storms[i].Runoff = r.ParseDouble(splitLine[3].Trim('"'));
+                            RainfallDataModel.Storms[i].PeakFlow = r.ParseDouble(splitLine[2].Trim('"'));
+                            RainfallDataModel.Storms[i].Runoff = r.ParseDouble(splitLine[3].Trim('"'));
                         }
                     }
                 }
@@ -336,8 +336,8 @@ namespace EFH_2
 
                     var _ = await fullError.ShowAsync();
 
-                    BasicVM.Default();
-                    RainfallVM.Default();
+                    BasicDataModel.Default();
+                    RainfallDataModel.Default();
                 }
             }
         }
@@ -348,8 +348,8 @@ namespace EFH_2
             contentFrame.Navigate(typeof(BasicDataPage));
             uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
 
-            BasicVM.Clear();
-            RainfallVM.Clear();
+            BasicDataModel.Clear();
+            RainfallDataModel.Clear();
         }
 
         private void ToggleToolbarClicked(object sender, RoutedEventArgs e)
@@ -432,7 +432,7 @@ namespace EFH_2
 
             Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
 
-            FileOperations.PrintData(BasicVM, RainfallVM, file.Path);
+            FileOperations.PrintData(BasicDataModel, RainfallDataModel, file.Path);
         }
 
         private void ShowSlopeCalculatorClick(object sender, RoutedEventArgs e)
@@ -466,6 +466,14 @@ namespace EFH_2
             await dialog.ShowAsync();
         }
 
+        public void AcceptRCNValues(int totalArea, int curveNumber)
+        {
+            BasicDataModel.AcceptRCNValues(totalArea, curveNumber);
+
+            contentFrame.Navigate(typeof(BasicDataPage));
+            uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
+        }
+
         #endregion
 
         public MainWindow()
@@ -484,9 +492,9 @@ namespace EFH_2
             uxHSGButton.IsEnabled = false;
             uxToolbarToggle.IsChecked = true;
 
-            BasicVM = new();
-            RainfallVM = new();
-            RCNVM = new();
+            BasicDataModel = new();
+            RainfallDataModel = new();
+            RCNModel = new();
 
         }
     }
