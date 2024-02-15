@@ -1,0 +1,119 @@
+	COVER DESCRIPTION	COVER DESCRIPTION		A	A	B	B	C	C	D	D									
+1	FULLY DEVELOPED URBAN AREAS (Veg Estab.)	FULLY DEVELOPED URBAN AREAS (Veg Estab.)																		
+2	Open space (Lawns,parks etc.)		 	            	  	  	  	  	  	  	  									
+3	   Poor condition; grass cover < 50%				68		79		86		89			0		0		0		0
+4	   Fair condition; grass cover 50% to 75%				49		69		79		84			0		0		0		0
+5	   Good condition; grass cover > 75% 				39		61		74		80			0		0		0		0
+														0		0		0		0
+6	Impervious Areas		 	                     	  		  		  		  									
+7	  Paved parking lots, roofs, driveways		 		98		98		98		98			0		0		0		0
+														0		0		0		0
+8	  Streets and roads		 	                  	  		  		  		  									
+9	     Paved; curbs and storm sewers				98		98		98		98			0		0		0		0
+10	     Paved; open ditches (w/right-of-way)				83		89		92		93			0		0		0		0
+11	     Gravel (w/ right-of-way)				76		85		89		91			0		0		0		0
+12	     Dirt   (w/ right-of-way)				72		82		87		89			0		0		0		0
+														0		0		0		0
+13	Urban Districts 		Avg % imperv	 	  		  		  		  									
+14	   Commercial & business       		85		89		92		94		95			0		0		0		0
+15	   Industrial                  		72		81		88		91		93			0		0		0		0
+16	 			 	  		  		  		  									
+17	Residential districts (by average lot size)		Avg % imperv	      	  		  		  		  									
+18	   1/8 acre (town houses)		65		77		85		90		92			0		0		0		0
+19	   1/4 acre		38		61		75		83		87			0		0		0		0
+20	   1/3 acre		30		57		72		81		86			0		0		0		0
+21	   1/2 acre		25		54		70		80		85			0		0		0		0
+22	     1 acre		20		51		68		79		84			0		0		0		0
+23	     2 acre		12		46		65		77		82			0		0		0		0
+														0		0		0		0
+24	Western Desert Urban Areas		 	          	  		  		  		  									
+25	   Natural desert (pervious areas only)				63		77		85		88			0		0		0		0
+26	   Artifical desert landscaping				96		96		96		96			0		0		0		0
+														0		0		0		0
+27	User defined urban	(NOT ACTIVE - USE	WinTR55)   	        	39		61		74		80									
+	  % Impervious Area:
+	  % Unconnected Impervious Area:
+	  Previous Curve Number
+28	 		               	                         	  		  		  		  									
+29	DEVELOPING URBAN AREA (No Vegetation)	DEVELOPING URBAN AREA (No Vegetation)																		
+30	Newly graded area (pervious only)		      		77		86		91		94			0		0		0		0
+														0		0		0		0
+31	CULTIVATED AGRICULTURAL LANDS	CULTIVATED AGRICULTURAL LANDS																		
+32	Fallow	Bare soil	 ----		77		86		91		94			0		0		0		0
+33	      	Crop residue (CR)	poor		76		85		90		93			0		0		0		0
+34	      	Crop residue (CR)	good		74		83		88		90			0		0		0		0
+														0		0		0		0
+35	Row crops	Straight row (SR)	poor		72		81		88		91			0		0		0		0
+36	         	Straight row (SR)	good		67		78		85		89			0		0		0		0
+37	         	SR + Crop residue	poor		71		80		87		90			0		0		0		0
+38	         	SR + Crop residue	good		64		75		82		85			0		0		0		0
+39	         	Contoured (C)	poor		70		79		84		88			0		0		0		0
+40	         	Contoured (C)	good		65		75		82		86			0		0		0		0
+41	         	C + Crop residue	poor		69		78		83		87			0		0		0		0
+42	         	C + Crop residue	good		64		74		81		85			0		0		0		0
+43	         	Cont & terraced(C&T)	poor		66		74		80		82			0		0		0		0
+44	         	Cont & terraced(C&T)	good		62		71		78		81			0		0		0		0
+45	         	C&T + Crop residue	poor		65		73		79		81			0		0		0		0
+46	         	C&T + Crop residue	good		61		70		77		80			0		0		0		0
+														0		0		0		0
+47	Small grain	Straight row (SR)	poor		65		76		84		88			0		0		0		0
+48	           	Straight row (SR)	good		63		75		83		87			0		0		0		0
+49	           	SR + Crop residue	poor		64		75		83		86			0		0		0		0
+50	           	SR + Crop residue	good		60		72		80		84			0		0		0		0
+51	           	Contoured (C)	poor		63		74		82		85			0		0		0		0
+52	           	Contoured (C)	good		61		73		81		84			0		0		0		0
+53	           	C + Crop residue	poor		62		73		81		84			0		0		0		0
+54	           	C + Crop residue	good		60		72		80		83			0		0		0		0
+55	           	Cont & terraced(C&T)	poor		61		72		79		82			0		0		0		0
+56	           	Cont & terraced(C&T)	good		59		70		78		81			0		0		0		0
+57	           	C&T + Crop residue	poor		60		71		78		81			0		0		0		0
+58	           	C&T + Crop residue	good		58		69		77		80			0		0		0		0
+														0		0		0		0
+59	Close-seeded	Straight row      	poor		66		77		85		89			0		0		0		0
+60	legumes or  	Straight row      	good		58		72		81		85			0		0		0		0
+61	rotation    	Contoured         	poor		64		75		83		85			0		0		0		0
+62	meadow      	Contoured         	good		55		69		78		83			0		0		0		0
+63	            	Cont & terraced   	poor		63		73		80		83			0		0		0		0
+64	            	Cont & terraced   	good		51		67		76		80			0		0		0		0
+														0		0		0		0
+65	OTHER AGRICULTURAL LANDS	OTHER AGRICULTURAL LANDS																		
+66	Pasture, grassland or range		poor		68		79		86		89			0		0		0		0
+67	                           		fair		49		69		79		84			0		0		0		0
+68	                           		good		39		61		74		80			0		0		0		0
+														0		0		0		0
+69	Meadow -cont. grass (non grazed)		----		30		58		71		78			0		0		0		0
+														0		0		0		0
+70	Brush - brush, weed, grass mix		poor		48		67		77		83			0		0		0		0
+71	                              		fair		35		56		70		77			0		0		0		0
+72	                              		good		30		48		65		73			0		0		0		0
+														0		0		0		0
+73	Woods - grass combination		poor		57		73		82		86			0		0		0		0
+74	                         		fair		43		65		76		82			0		0		0		0
+75	                         		good		32		58		72		79			0		0		0		0
+														0		0		0		0
+76	Woods		poor		45		66		77		83			0		0		0		0
+77	     		fair		36		60		73		79			0		0		0		0
+78	     		good		30		55		70		77			0		0		0		0
+														0		0		0		0
+79	Farmsteads		----		59		74		82		86			0		0		0		0
+														0		0		0		0
+80	ARID AND SEMIARID RANGELANDS	ARID AND SEMIARID RANGELANDS																		
+81	Herbaceous		poor		**		80		87		93									
+82	          		fair		**		71		81		89									
+83	          		good		**		62		74		85									
+														0		0		0		0
+84	Oak - aspen		poor		**		66		74		79									
+85	           		fair		**		48		57		63									
+86	           		good		**		30		41		48									
+														0		0		0		0
+87	Pinyon - juniper		poor		**		75		85		89									
+88	                		fair		**		58		73		80									
+89	                		good		**		41		61		71									
+														0		0		0		0
+90	Sagebrush (w/ grass understory)		poor		**		67		80		85									
+91	                               		fair		**		51		63		70									
+92	                               		good		**		35		47		55									
+														0		0		0		0
+93	Desert shrub		poor		63		77		85		88			0		0		0		0
+94	            		fair		55		72		81		86			0		0		0		0
+95	            		good		49		68		79		84			0		0		0		0
