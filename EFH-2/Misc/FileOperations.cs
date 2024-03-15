@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace EFH_2.Misc
 {
-
     public class FileOperations
     {
         #region Private Fields
@@ -905,7 +904,6 @@ namespace EFH_2.Misc
             if(next) { _writer.WriteLine(""); }
         }
     }
-
 
     public class Reader
     {
