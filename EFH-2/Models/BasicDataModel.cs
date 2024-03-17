@@ -13,9 +13,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace EFH_2
 {
+    [JsonObject("MemberSerialization.OptIn")]
     /// <summary>
     /// A class that holds all the data in the basic data page
     /// </summary>
@@ -28,10 +30,12 @@ namespace EFH_2
         /// </summary>
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
+        [JsonProperty]
         private string _selectedState = "";
 
         private int _selectedStateIndex = 0;
 
+        [JsonProperty]
         private string _selectedCounty = "";
 
         private int _selectedCountyIndex = 0;
@@ -89,6 +93,7 @@ namespace EFH_2
 
         #region Observable Properties 
 
+        [JsonProperty]
         [ObservableProperty]
         private string _client = "";
 
@@ -98,27 +103,35 @@ namespace EFH_2
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _counties = new();
 
+        [JsonProperty]
         [ObservableProperty]
         private string _practice = "";
 
+        [JsonProperty]
         [ObservableProperty]
         private string _by = "";
 
+        [JsonProperty]
         [ObservableProperty]
         private DateTimeOffset _date = new();
 
+        [JsonProperty]
         [ObservableProperty]
         private double _drainageArea = double.NaN;
 
+        [JsonProperty]
         [ObservableProperty]
         private double _runoffCurveNumber = double.NaN;
 
+        [JsonProperty]
         [ObservableProperty]
         private double _watershedLength = double.NaN;
 
+        [JsonProperty]
         [ObservableProperty]
         private double _watershedSlope = double.NaN;
 
+        [JsonProperty]
         [ObservableProperty]
         private double _timeOfConcentration = double.NaN;
 
@@ -207,7 +220,7 @@ namespace EFH_2
             {
                 this.SetProperty(ref this._selectedCountyIndex, value);
                 if(value == -1) { return; }
-                this._selectedCounty = _counties[_selectedCountyIndex].Content.ToString();
+                this._selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
             }
         }
 

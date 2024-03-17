@@ -64,9 +64,5 @@ namespace EFH_2.Models
         #region Events
 
         #endregion
-
-        public RCNCategory()
-        {
-        }
     }
 }

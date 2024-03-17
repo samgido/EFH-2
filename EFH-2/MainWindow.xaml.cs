@@ -137,7 +137,7 @@ namespace EFH_2
         {
             var savePicker = new FileSavePicker();
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
+            savePicker.FileTypeChoices.Add("JSON", new List<string> { ".json" });
             savePicker.SuggestedFileName = "WIP";
 
             var window = (Application.Current as App)?.Window as MainWindow;
@@ -149,8 +149,8 @@ namespace EFH_2
             {
                 CachedFileManager.DeferUpdates(file);
 
-                FileOperations fileOperations = new FileOperations(BasicDataModel, RainfallDataModel, RCNModel);
-                fileOperations.WriteFile(file.Path);
+                FileOperations fileOperations = new FileOperations(this.BasicDataModel, this.RainfallDataModel, this.RCNModel);
+                fileOperations.WriteFile(file);
                 await CachedFileManager.CompleteUpdatesAsync(file);
             }
         }

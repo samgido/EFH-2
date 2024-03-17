@@ -11,9 +11,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace EFH_2
 {
+    [JsonObject("MemberSerialization.OptIn")]
     /// <summary>
     /// A class that holds all the data in the rainfall/discharge page
     /// </summary>
@@ -22,10 +24,12 @@ namespace EFH_2
 
         #region Private Fields
 
+        [JsonProperty]
         private string _selectedRainfallDistributionType = "";
 
         private int _selectedRainfallDistributionTypeIndex = 0;
 
+        [JsonProperty]
         private string _selectedDUHType = "";
 
         private int _selectedDUHTypeIndex = 0;
@@ -34,6 +38,7 @@ namespace EFH_2
 
         #region Public Fields
 
+        [JsonProperty]
         public ObservableCollection<StormModel> Storms { get; set; }
 
         #endregion

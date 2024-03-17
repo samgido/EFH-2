@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Windows.Storage;
 
 namespace EFH_2.Misc
 {
@@ -27,20 +29,19 @@ namespace EFH_2.Misc
 
         public FileOperations(BasicDataModel basicDataModel, RainfallDataModel rainfallDataModel, RCNDataModel rCNDataModel)
         {
-            DataWrapper _wrapper = new DataWrapper()
+            this._wrapper = new DataWrapper()
             {
-                BasicDataModel = basicDataModel, 
+                BasicDataModel = basicDataModel,
                 RainfallDataModel = rainfallDataModel, 
                 RCNDataModel = rCNDataModel
             };
         }
 
-        public void WriteFile(string fileName)
+        public async void WriteFile(StorageFile file)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(DataWrapper));
-            TextWriter writer = new StreamWriter(fileName);
+            string json = JsonConvert.SerializeObject(this._wrapper.BasicDataModel);
 
-            serializer.Serialize(writer, _wrapper);
+            await Windows.Storage.FileIO.WriteTextAsync(file, json);
         }
     }
 }

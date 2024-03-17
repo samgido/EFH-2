@@ -111,7 +111,7 @@ namespace EFH_2
 
         public void LoadRCNTableEntries(StreamReader reader)
         {
-            var _ = reader.ReadLine();
+            reader.ReadLine();
 
             RCNCategory currentCategory = new();
             List<RCNCategory> categories = new();
