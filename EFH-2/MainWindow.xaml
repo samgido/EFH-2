@@ -11,7 +11,7 @@
     
     
     <RelativePanel
-        x:Name="uxRootPanel"
+        x:Name="RootPanel"
         Background="Black"
         >
 

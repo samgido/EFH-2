@@ -38,12 +38,12 @@ namespace EFH_2
         /// <summary>
         /// Gets the BasicDataViewModel of the main window
         /// </summary>
-        public BasicDataModel BasicDataModel => _mainWindow.BasicDataModel;
+        public BasicDataViewModel BasicDataModel => _mainWindow.BasicDataModel;
 
         /// <summary>
         /// Gets the RainfallDataViewModel of the main window
         /// </summary>
-        public RainfallDataModel RainfallDataModel => _mainWindow.RainfallDataModel;
+        public RainfallDataViewModel RainfallDataModel => _mainWindow.RainfallDataModel;
 
         /// <summary>
         /// Gets the RCNDataViewModel of main window

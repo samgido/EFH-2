@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EFH_2.Models
 {
-    public class RCNDataModel
+    public class RCNGroupModel
     {
-        public EFH_2.Models.RCNGroupModel[] RCNGroups;
+        public List<EFH_2.Models.RCNEntryModel> Entries = new List<RCNEntryModel>();
     }
 }

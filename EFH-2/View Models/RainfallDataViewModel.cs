@@ -17,7 +17,7 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the rainfall/discharge page
     /// </summary>
-    public partial class RainfallDataModel : ObservableObject
+    public partial class RainfallDataViewModel : ObservableObject
     {
 
         #region Private Fields
@@ -247,7 +247,7 @@ namespace EFH_2
         #endregion
 
 
-        public RainfallDataModel()
+        public RainfallDataViewModel()
         {
             Storms = new ObservableCollection<StormModel>();
 

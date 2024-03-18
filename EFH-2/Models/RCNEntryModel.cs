@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace EFH_2.Models
 {
-    public class RCNDataModel
+    public class RCNEntryModel
     {
-        public EFH_2.Models.RCNGroupModel[] RCNGroups;
+        public uint Weight { get; init; }
+
+        public double Area = double.NaN;
     }
 }

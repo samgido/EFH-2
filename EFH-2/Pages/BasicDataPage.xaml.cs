@@ -33,16 +33,6 @@ namespace EFH_2
 
         private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
 
-        /// <summary>
-        /// The BasicDataViewModel of the parent, main window
-        /// </summary>
-        public BasicDataModel BasicVM => _mainWindow.BasicDataModel;
-
-        /// <summary>
-        /// The RainfallDataViewModel of the parent, main window
-        /// </summary>
-        public RainfallDataModel RainfallVM => _mainWindow.RainfallDataModel;
-
         #endregion
 
         #region Methods

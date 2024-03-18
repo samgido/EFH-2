@@ -72,17 +72,7 @@ namespace EFH_2
 
         public TextBox? _previousFocusedTextBox { get; set; }
 
-        /// <summary>
-        /// View model for the basic data page
-        /// </summary>
-        public BasicDataModel BasicDataModel { get; set; }
-
-        /// <summary>
-        /// View model for the rainfall/discharge page
-        /// </summary>
-        public RainfallDataModel RainfallDataModel { get; set; }
-
-        public RCNDataModel RCNModel { get; set; }
+        public Models.MainDataModel MainModel { get; set; }
 
         #endregion
 
@@ -135,77 +125,6 @@ namespace EFH_2
         /// <param name="e">Object that holds information about the event</param>
         private async void SaveClicked(object sender, RoutedEventArgs e)
         {
-            FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
-            savePicker.FileTypeChoices.Add("efm", new List<string> { ".efm" });
-
-            var window = new Microsoft.UI.Xaml.Window();
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
-
-            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
-
-            if (file != null)
-            {
-                using (StreamWriter writer = new(file.Path))
-                {
-                    Writer w = new(writer);
-                    // version
-                    w.WriteQuoted("version", true);
-
-                    // basic data
-                    // lines 2 - 12
-                    foreach (object o in BasicDataModel.Summary)
-                    {
-                        w.WriteQuoted(o, true);
-                    }
-
-                    // lines 13 - 15
-                    w.WriteQuoted("", true);
-                    w.WriteQuoted("", true);
-                    w.WriteQuoted("", true);
-
-                    // lines 16 - 30
-                    foreach (object o in RainfallDataModel.Summary1)
-                    {
-                        w.WriteQuoted(o, true);
-                    }
-
-                    // line 31 
-                    w.WriteQuoted("", true);
-                    
-                    // lines 32 - 38
-                    for (int i = 0; i < 7; i++)
-                    {
-                        w.WriteQuoted("", true);
-                    }
-
-                    // line 39
-                    StringBuilder selectedHydrographs = new("\"     ");
-
-                    for (int i = 0; i < MainWindow.NumberOfStorms; i++)
-                    {
-                        char enabled = ' ';
-                        if (RainfallDataModel.Storms[i].DisplayHydrograph) { enabled = '*'; }
-
-                        selectedHydrographs.Append(enabled);
-                    }
-                    selectedHydrographs.Append(" \"");
-
-                    StringBuilder line38 = new();
-                    line38.Append("0,0,");
-                    line38.Append(selectedHydrographs);
-
-                    w.Write(line38, true);
-
-                    // lines 40 - 46 
-                    foreach (object o in RainfallDataModel.Summary2)
-                    {
-                        w.WriteQuoted(o, true);
-                    }
-
-                }
-            }
-
         }
 
         /// <summary>
@@ -214,133 +133,7 @@ namespace EFH_2
         /// <param name="sender">Object that sent the event</param>
         /// <param name="e">Object that holds information about the event</param>
         private async void OpenClicked(object sender, RoutedEventArgs e)
-        {
-            contentFrame.Navigate(typeof(RDDataPage));
-            contentFrame.Navigate(typeof(BasicDataPage));
-            uxNavigationView.SelectedItem = uxBasicDataPageNav;
-
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.FileTypeFilter.Add(".efm");
-
-            var window = new Microsoft.UI.Xaml.Window();
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
-
-            StorageFile file = await openPicker.PickSingleFileAsync();
-
-            try
-            {
-                if (file != null)
-                {
-                    using (StreamReader reader = new(file.Path))
-                    {
-                        Reader r = new(reader);
-                        string version = r.ReadQuoted();
-
-                        BasicDataModel.By = r.ReadQuoted();
-                        BasicDataModel.Date = DateTimeOffset.Parse(r.ReadQuoted());
-                        BasicDataModel.Client = r.ReadQuoted();
-                        string county = r.ReadQuoted();
-                        BasicDataModel.SelectedState = r.ReadQuoted();
-                        BasicDataModel.SelectedCounty = county;
-                        BasicDataModel.Practice = r.ReadQuoted();
-                        BasicDataModel.DrainageArea = r.ParseInt(r.ReadQuoted());
-                        BasicDataModel.DrainageAreaStatus = _importedStatusMessage;
-                        BasicDataModel.RunoffCurveNumber = r.ParseFloat(r.ReadQuoted());
-                        BasicDataModel.RunoffCurveNumberStatus = _importedStatusMessage;
-                        BasicDataModel.WatershedLength = r.ParseInt(r.ReadQuoted());
-                        BasicDataModel.WatershedLengthStatus = _importedStatusMessage;
-                        BasicDataModel.WatershedSlope = r.ParseFloat(r.ReadQuoted());
-                        BasicDataModel.WatershedSlopeStatus = _importedStatusMessage;
-                        BasicDataModel.TimeOfConcentration = r.ParseFloat(r.ReadQuoted());
-                        BasicDataModel.TimeOfConcentrationStatus = _importedStatusMessage;
-
-                        // not sure what these are 
-                        string line13 = r.Read();
-                        string line14 = r.Read();
-                        string line15 = r.Read();
-
-                        // line 16
-                        string type = r.ReadQuoted();
-
-                        string[] types = type.Split(", ");
-                        RainfallDataModel.SelectedRainfallDistributionType = types[0];
-                        if (types.Length == 2) { RainfallDataModel.SelectedDUHType = types[1]; }
-                        else { RainfallDataModel.SelectedDUHType = "<standard>"; }
-                        RainfallDataModel.RainfallDistributionTypeStatus = _importedStatusMessage;
-                        RainfallDataModel.DuhTypeStatus = _importedStatusMessage;
-
-                        // lines 17 - 30
-                        int[] frequencies = new int[MainWindow.NumberOfStorms];
-                        float[] dayRains = new float[MainWindow.NumberOfStorms];
-
-                        for (int i = 0; i < MainWindow.NumberOfStorms; i++)
-                        {
-                            RainfallDataModel.Storms[i].Frequency = r.ParseInt(r.ReadQuoted());
-                            RainfallDataModel.Storms[i].DayRain = r.ParseFloat(r.ReadQuoted());
-                        }
-
-                        string line31 = r.Read();
-                        string line32 = r.Read();
-                        string line33 = r.Read();
-                        string line34 = r.Read();
-                        string line35 = r.Read();
-                        string line36 = r.Read();
-                        string line37 = r.Read();
-                        string line38 = r.Read();
-
-                        // Line with selected hydrograph
-                        string line39 = r.Read();
-
-                        string[] line39Split = line39.Split(',');
-                        string hydrographs = line39Split[2].Trim('"');
-
-                        for (int i = 5; i < MainWindow.NumberOfStorms + 5; i++)
-                        {
-                            RainfallDataModel.Storms[i - 5].DisplayHydrograph = hydrographs[i] == '*';
-                        }
-
-                        // lines 40 - end
-                        for (int i = 0; i < MainWindow.NumberOfStorms; i++)
-                        {
-                            string line = r.ReadQuoted();
-                            string[] splitLine = line.Split(',');
-
-                            RainfallDataModel.Storms[i].PeakFlow = r.ParseDouble(splitLine[2].Trim('"'));
-                            RainfallDataModel.Storms[i].Runoff = r.ParseDouble(splitLine[3].Trim('"'));
-                        }
-                    }
-                }
-            }
-            catch (Exception err)
-            {
-                ContentDialog dialog = new ContentDialog();
-
-                dialog.XamlRoot = uxRootPanel.XamlRoot;
-                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "An error occured while opening the file.";
-                dialog.CloseButtonText = "Close";
-                dialog.PrimaryButtonText = "Show full error";
-
-                var result = await dialog.ShowAsync();
-
-                if (result == ContentDialogResult.Primary)
-                {
-                    ContentDialog fullError = new ContentDialog();
-
-                    fullError.XamlRoot = uxRootPanel.XamlRoot;
-                    fullError.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                    fullError.CloseButtonText = "Close";
-
-                    fullError.Content = err.ToString();
-
-                    var _ = await fullError.ShowAsync();
-
-                    BasicDataModel.Default();
-                    RainfallDataModel.Default();
-                }
-            }
-        }
+        
 
         private void NewClicked(object sender, RoutedEventArgs e)
         {
@@ -348,8 +141,8 @@ namespace EFH_2
             contentFrame.Navigate(typeof(BasicDataPage));
             uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
 
-            BasicDataModel.Clear();
-            RainfallDataModel.Clear();
+            BasicDataViewModel.Clear();
+            RainfallDataViewModel.Clear();
         }
 
         private void ToggleToolbarClicked(object sender, RoutedEventArgs e)
@@ -468,7 +261,7 @@ namespace EFH_2
 
         public void AcceptRCNValues(int totalArea, int curveNumber)
         {
-            BasicDataModel.AcceptRCNValues(totalArea, curveNumber);
+            BasicDataViewModel.AcceptRCNValues(totalArea, curveNumber);
 
             contentFrame.Navigate(typeof(BasicDataPage));
             uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
@@ -492,10 +285,10 @@ namespace EFH_2
             uxHSGButton.IsEnabled = false;
             uxToolbarToggle.IsChecked = true;
 
-            BasicDataModel = new();
-            RainfallDataModel = new();
-            RCNModel = new();
+            Models.MainDataModel mainModel = new Models.MainDataModel();
+            MainModel = mainModel;
 
+            RootPanel.DataContext = MainModel;
         }
     }
 }

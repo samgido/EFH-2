@@ -30,7 +30,7 @@ namespace EFH_2.Misc
 
         #region Methods
 
-        public static void PrintData(BasicDataModel BasicVM, RainfallDataModel RainfallVM, string fn)
+        public static void PrintData(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM, string fn)
         {
             QuestPDF.Settings.License = LicenseType.Community;
             
@@ -40,7 +40,7 @@ namespace EFH_2.Misc
                 .GeneratePdf(fn);
 
 
-            static Document GeneratePageOne(BasicDataModel BasicVM, RainfallDataModel RainfallVM)
+            static Document GeneratePageOne(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM)
             {
                 return Document.Create(document =>
                 {
@@ -533,7 +533,7 @@ namespace EFH_2.Misc
 
             }
 
-            static Document GeneratePageTwo(BasicDataModel BasicVM, RainfallDataModel RainfallVM)
+            static Document GeneratePageTwo(BasicDataViewModel BasicVM, RainfallDataViewModel RainfallVM)
             {
                 return Document.Create(document =>
                 {

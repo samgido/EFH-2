@@ -11,14 +11,13 @@
 
     <StackPanel
         Background="Black">
-
         <RelativePanel>
 
             <TextBox
                 x:Name="uxClientBox"
                 Header="Client:"
                 ToolTipService.ToolTip="Identifies property owner"
-                Text="{x:Bind Path=BasicVM.Client, Mode=TwoWay}"
+                Text="{Binding Path=Client}"
                 Margin="50,0,0,0"
                 Width="300"/>
 
