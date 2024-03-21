@@ -14,7 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using EFH_2.Misc;
 using System.Collections.ObjectModel;
-using static EFH_2.RCNDataModel;
+using static EFH_2.RCNDataViewModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,30 +28,20 @@ namespace EFH_2
     {
         #region Properties
 
-        private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
-
-        /// <summary>
-        /// The BasicDataViewModel of the parent, main window
-        /// </summary>
-        public BasicDataViewModel BasicVM => _mainWindow.BasicDataModel;
-
-        /// <summary>
-        /// The RainfallDataViewModel of the parent, main window
-        /// </summary>
-        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallDataModel;
-
-        public RCNDataModel RCNVM => _mainWindow.RCNModel;
 
         #endregion
 
         #region Methods
 
         private void SearchBoxTextChanged(object sender, TextChangedEventArgs e) {
-            string filter = (sender as TextBox).Text.ToUpper();
+            if (this.DataContext is MainViewModel VM)
+            {
+                string filter = (sender as TextBox).Text.ToUpper();
 
 
-            uxDataGrid.ItemsSource = new ObservableCollection<HSGEntry>(
-                from item in RCNVM.HSGEntries where item.Column1.Contains(filter) select item);
+                uxDataGrid.ItemsSource = new ObservableCollection<HSGEntry>(
+                    from item in VM.RCNDataViewModel.HSGEntries where item.Column1.Contains(filter) select item);
+            }
         }
 
         #endregion
@@ -62,15 +52,18 @@ namespace EFH_2
             this.InitializeComponent();
 
 
-            using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
+            if (this.DataContext is MainViewModel VM)
             {
-                while (!reader.EndOfStream)
+                using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
                 {
-                    string line = reader.ReadLine();
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
 
-                    string[] lineParts = line.Split("\t");
+                        string[] lineParts = line.Split("\t");
 
-                    RCNVM.AddHSGEntry(lineParts[0], lineParts[1], lineParts[2]);
+                        VM.RCNDataViewModel.AddHSGEntry(lineParts[0], lineParts[1], lineParts[2]);
+                    }
                 }
             }
         }

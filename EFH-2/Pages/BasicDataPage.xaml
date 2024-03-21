@@ -23,7 +23,7 @@
 
             <ComboBox
                 x:Name="uxStateBox"
-                ItemsSource="{x:Bind Path=BasicVM.States, Mode=TwoWay}"
+                ItemsSource="{x:Bind Path=}"
                 SelectedIndex="{x:Bind Path=BasicVM.SelectedStateIndex, Mode=TwoWay}"
                 Header="State:"
                 RelativePanel.RightOf="uxClientBox"
@@ -207,7 +207,7 @@
                     x:Name="uxWatershedSlopeStatus"
                     RelativePanel.RightOf="uxWatershedSlope"
                     RelativePanel.AlignVerticalCenterWith="uxWatershedSlope"
-                    Text="{x:Bind Path=BasicVM.WatershedSlopeStatus, Mode=TwoWay}"
+                    Text="{x:Bind Path=, Mode=TwoWay}"
                     Padding="75,0,0,0"
                     Foreground="HotPink"
                     />

@@ -33,23 +33,6 @@ namespace EFH_2
     {
         #region Properties
 
-        private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
-
-        /// <summary>
-        /// Gets the BasicDataViewModel of the main window
-        /// </summary>
-        public BasicDataViewModel BasicDataModel => _mainWindow.BasicDataModel;
-
-        /// <summary>
-        /// Gets the RainfallDataViewModel of the main window
-        /// </summary>
-        public RainfallDataViewModel RainfallDataModel => _mainWindow.RainfallDataModel;
-
-        /// <summary>
-        /// Gets the RCNDataViewModel of main window
-        /// </summary>
-        public RCNDataModel RCNModel => _mainWindow.RCNModel;
-
         #endregion
 
         #region Methods
@@ -58,16 +41,19 @@ namespace EFH_2
         {
             try
             {
-                using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Cover.txt"))
+                if (this.DataContext is MainViewModel VM)
                 {
-                    RCNModel.LoadRCNTableEntries(reader);
+                    using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Cover.txt"))
+                    {
+                        VM.RCNDataViewModel.LoadRCNTableEntries(reader);
+                    }
                 }
             }
             catch (Exception err)
             {
                 ContentDialog dialog = new()
                 {
-                    XamlRoot = _mainWindow.Content.XamlRoot,
+                    XamlRoot = ((Application.Current as App)?.Window as MainWindow).Content.XamlRoot,
                     Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
                     Title = "An error occurred while reading the program data.",
                     CloseButtonText = "Close",
@@ -94,12 +80,19 @@ namespace EFH_2
 
         private void ClearButtonClick(object sender, RoutedEventArgs e)
         {
-            RCNModel.Default();
+            if (this.DataContext is MainViewModel VM)
+            {
+                VM.RCNDataViewModel.Default();
+            }
         }
 
         private void AcceptButtonClick(object sender, RoutedEventArgs e)
         {
-            _mainWindow.AcceptRCNValues((int)Math.Round(RCNModel.AccumulatedArea), (int)Math.Round(RCNModel.WeightedCurveNumber));
+            if (this.DataContext is MainViewModel VM)
+            {
+                ((Application.Current as App)?.Window as MainWindow).AcceptRCNValues(
+                    (int)Math.Round(VM.RCNDataViewModel.AccumulatedArea), (int)Math.Round(VM.RCNDataViewModel.WeightedCurveNumber));
+            }
         }
 
         #endregion

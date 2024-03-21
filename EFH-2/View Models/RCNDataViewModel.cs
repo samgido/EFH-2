@@ -14,7 +14,7 @@ namespace EFH_2
     /// <summary>
     /// A class that holds all the data in the RCN page
     /// </summary>
-    public partial class RCNDataModel : ObservableObject
+    public partial class RCNDataViewModel : ObservableObject
     {
         #region Private Fields 
 

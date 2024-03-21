@@ -39,8 +39,11 @@ namespace EFH_2
 
         public void DrainageAreaChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            BasicVM.DrainageArea = sender.Value;
-            BasicVM.CheckDrainageArea();
+            if (this.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.DrainageArea = sender.Value;
+                VM.BasicDataViewModel.CheckDrainageArea();
+            }
         }
 
         /// <summary>
@@ -50,8 +53,11 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void RunoffCurveNumberChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            BasicVM.RunoffCurveNumber = sender.Value;
-            BasicVM.CheckRunoffCurveNumber();
+            if (this.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.RunoffCurveNumber = sender.Value;
+                VM.BasicDataViewModel.CheckRunoffCurveNumber();
+            }
         }
 
         /// <summary>
@@ -61,8 +67,11 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void WatershedLengthChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            BasicVM.WatershedLength = sender.Value;
-            BasicVM.CheckWatershedLength();
+            if (this.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.WatershedLength = sender.Value;
+                VM.BasicDataViewModel.CheckWatershedLength();
+            }
         }
 
         /// <summary>
@@ -72,8 +81,11 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void WatershedSlopeChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            BasicVM.WatershedSlope = sender.Value;
-            BasicVM.CheckWatershedSlope();
+            if (this.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.WatershedSlope = sender.Value;
+                VM.BasicDataViewModel.CheckWatershedSlope();
+            }
         }
 
         /// <summary>
@@ -83,8 +95,11 @@ namespace EFH_2
         /// <param name="args">Object that holds information about the event</param>
         private void TimeOfConcentrationChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            BasicVM.TimeOfConcentration = sender.Value;
-            BasicVM.CheckTimeOfConcentration();
+            if (this.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.TimeOfConcentration = sender.Value;
+                VM.BasicDataViewModel.CheckTimeOfConcentration();
+            }
         }
 
         #endregion
@@ -95,7 +110,10 @@ namespace EFH_2
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA\\Shared Engineering Data\\Rainfall_Data.csv"))
             {
-                BasicVM.LoadStatesAndCounties(reader);
+                if (this.DataContext is MainViewModel VM)
+                {
+                    VM.BasicDataViewModel.LoadStatesAndCounties(reader);
+                }
             }
         }
     }

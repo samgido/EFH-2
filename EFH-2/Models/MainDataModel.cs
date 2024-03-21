@@ -14,5 +14,12 @@ namespace EFH_2.Models
         public RainfallDischargeDataModel RainfallDischargeDataModel { get; set; }
 
         public RCNDataModel RCNDataModel { get; set; }
+
+        public void Clear()
+        {
+            BasicDataModel = new BasicDataModel();
+            RainfallDischargeDataModel = new RainfallDischargeDataModel();
+            RCNDataModel = new RCNDataModel();
+        }
     }
 }

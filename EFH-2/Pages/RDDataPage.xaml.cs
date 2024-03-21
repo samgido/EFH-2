@@ -30,17 +30,6 @@ namespace EFH_2
     public sealed partial class RDDataPage : Page
     {
         #region Properties
-
-        /// <summary>
-        /// The BasicDataViewModel of the parent, main window
-        /// </summary>
-        public BasicDataViewModel BasicVM => ((Application.Current as App)?.Window as MainWindow).BasicDataModel;
-
-        /// <summary>
-        /// The RainfallDataViewModel of the parent, main window
-        /// </summary>
-        public RainfallDataViewModel RainfallVM => ((Application.Current as App)?.Window as MainWindow).RainfallDataModel;
-
         #endregion
 
         #region Methods
@@ -49,14 +38,17 @@ namespace EFH_2
         {
             try
             {
-                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt"))
+                if (this.DataContext is MainViewModel VM)
                 {
-                    RainfallVM.LoadDUHTypes(reader);
-                }
+                    using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt"))
+                    {
+                        VM.RainfallDataViewModel.LoadDUHTypes(reader);
+                    }
 
-                using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt"))
-                {
-                    RainfallVM.LoadRainfallDistributionTypes(reader);
+                    using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt"))
+                    {
+                        VM.RainfallDataViewModel.LoadRainfallDistributionTypes(reader);
+                    }
                 }
             }
             catch (Exception err)
@@ -93,11 +85,14 @@ namespace EFH_2
         /// <param name="e"></param>
         private void RainfallDistributionTypeChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedIndex = RainfallVM.SelectedRainfallDistributionTypeIndex;
-
-            if(selectedIndex != 0)
+            if (this.DataContext is MainViewModel VM)
             {
-                RainfallVM.RainfallDistributionTypeStatus = "User selected.";
+                int selectedIndex = VM.RainfallDataViewModel.SelectedRainfallDistributionTypeIndex;
+
+                if(selectedIndex != 0)
+                {
+                    VM.RainfallDataViewModel.RainfallDistributionTypeStatus = "User selected.";
+                }
             }
         }
 
@@ -108,11 +103,14 @@ namespace EFH_2
         /// <param name="e"></param>
         private void DUHTypeChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedIndex = RainfallVM.SelectedDUHTypeIndex;
-
-            if (selectedIndex != 0)
+            if (this.DataContext is MainViewModel VM)
             {
-                RainfallVM.DuhTypeStatus = "User selected.";
+                int selectedIndex = VM.RainfallDataViewModel.SelectedDUHTypeIndex;
+
+                if (selectedIndex != 0)
+                {
+                    VM.RainfallDataViewModel.DuhTypeStatus = "User selected.";
+                }
             }
         }
 

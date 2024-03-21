@@ -148,19 +148,8 @@ namespace EFH_2
         /// </summary>
         public string SelectedState
         {
-            get => this._selectedState; 
-            set
-            {
-                for (int i = 0; i < States.Count; i++)
-                {
-                    if (States[i].Content as string == value)
-                    {
-                        SelectedStateIndex = i;
-                        return;
-                    }
-                    SelectedStateIndex = 0;
-                }
-            }
+            get => this.model.State; 
+            private set => this.model.State = value;
         }
 
         /// <summary>
@@ -173,7 +162,7 @@ namespace EFH_2
             {
                 this.SetProperty(ref this._selectedStateIndex, value);
                 
-                this._selectedState = _states[_selectedStateIndex].Content.ToString();
+                this.model.State = States[_selectedStateIndex].Content.ToString();
 
                 SetCounties(_stateCountyDictionary[SelectedState]);
             }

@@ -72,8 +72,6 @@ namespace EFH_2
 
         public TextBox? _previousFocusedTextBox { get; set; }
 
-        public Models.MainDataModel MainModel { get; set; }
-
         #endregion
 
         #region Methods
@@ -133,6 +131,9 @@ namespace EFH_2
         /// <param name="sender">Object that sent the event</param>
         /// <param name="e">Object that holds information about the event</param>
         private async void OpenClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
         
 
         private void NewClicked(object sender, RoutedEventArgs e)
@@ -141,8 +142,11 @@ namespace EFH_2
             contentFrame.Navigate(typeof(BasicDataPage));
             uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
 
-            BasicDataViewModel.Clear();
-            RainfallDataViewModel.Clear();
+            if (RootPanel.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.Clear();
+                VM.RainfallDataViewModel.Clear();
+            }
         }
 
         private void ToggleToolbarClicked(object sender, RoutedEventArgs e)
@@ -225,7 +229,7 @@ namespace EFH_2
 
             Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
 
-            FileOperations.PrintData(BasicDataModel, RainfallDataModel, file.Path);
+            //FileOperations.PrintData(BasicDataModel, RainfallDataModel, file.Path);
         }
 
         private void ShowSlopeCalculatorClick(object sender, RoutedEventArgs e)
@@ -261,10 +265,13 @@ namespace EFH_2
 
         public void AcceptRCNValues(int totalArea, int curveNumber)
         {
-            BasicDataViewModel.AcceptRCNValues(totalArea, curveNumber);
+            if (RootPanel.DataContext is MainViewModel VM)
+            {
+                VM.BasicDataViewModel.AcceptRCNValues(totalArea, curveNumber);
 
-            contentFrame.Navigate(typeof(BasicDataPage));
-            uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
+                contentFrame.Navigate(typeof(BasicDataPage));
+                uxNavigationView.SelectedItem = uxNavigationView.MenuItems[1];
+            }
         }
 
         #endregion
@@ -285,10 +292,7 @@ namespace EFH_2
             uxHSGButton.IsEnabled = false;
             uxToolbarToggle.IsChecked = true;
 
-            Models.MainDataModel mainModel = new Models.MainDataModel();
-            MainModel = mainModel;
-
-            RootPanel.DataContext = MainModel;
+            RootPanel.DataContext = new MainViewModel();
         }
     }
 }

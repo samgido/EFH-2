@@ -25,18 +25,6 @@ namespace EFH_2
     {
         #region Properties
 
-        private MainWindow _mainWindow = ((Application.Current as App)?.Window as MainWindow);
-
-        /// <summary>
-        /// The BasicDataViewModel of the parent, main window
-        /// </summary>
-        public BasicDataViewModel BasicVM => _mainWindow.BasicDataModel;
-
-        /// <summary>
-        /// The RainfallDataViewModel of the parent, main window
-        /// </summary>
-        public RainfallDataViewModel RainfallVM => _mainWindow.RainfallDataModel;
-
         #endregion
 
         #region Methods
@@ -52,7 +40,10 @@ namespace EFH_2
                 double slope = (contourLength * contourInterval) / (drainageArea * 435.6);
                 if (slope > 0 && slope != double.PositiveInfinity)
                 {
-                    BasicVM.WatershedSlope = Math.Round(slope, 2);
+                    if (this.DataContext is MainViewModel VM)
+                    {
+                        VM.BasicDataViewModel.WatershedSlope = Math.Round(slope, 2);
+                    }
                 }
             }
         }
