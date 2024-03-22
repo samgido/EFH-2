@@ -7,21 +7,17 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace EFH2
 {
     public static class FileOperations
     {
-        public static string SerializeData(BasicDataViewModel model)
+        public static void SerializeData(MainViewModel model, TextWriter writer)
         {
-            JsonSerializerOptions options = new JsonSerializerOptions()
-            {
-                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.AllowNamedFloatingPointLiterals,
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true,
-            };
-
-            return JsonSerializer.Serialize(model, options);
+            XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
+            serializer.Serialize(writer, model);
         }
     }
 }

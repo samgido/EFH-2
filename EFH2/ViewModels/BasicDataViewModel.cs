@@ -9,116 +9,117 @@ using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Metrics;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace EFH2
 {
     public partial class BasicDataViewModel : ObservableObject
     {
-        [JsonIgnore]
+        [XmlIgnore]
         public static int DrainageAreaMin => 1;
-        [JsonIgnore]
+        [XmlIgnore]
         public static int DrainageAreaMax => 2000;
 
-        [JsonIgnore]
+        [XmlIgnore]
         public static int RunoffCurveNumberMin => 40;
-        [JsonIgnore]
+        [XmlIgnore]
         public static int RunoffCurveNumberMax => 98;
 
-        [JsonIgnore]
+        [XmlIgnore]
         public static int WatershedLengthMin => 200;
-        [JsonIgnore]
+        [XmlIgnore]
         public static int WatershedLengthMax => 26000;
 
-        [JsonIgnore]
+        [XmlIgnore]
         public static double WatershedSlopeMin => 0.5;
-        [JsonIgnore]
+        [XmlIgnore]
         public static double WatershedSlopeMax => 64;
 
-        [JsonIgnore]
+        [XmlIgnore]
         public static double TimeOfConcentrationMin => 0.1;
-        [JsonIgnore]
+        [XmlIgnore]
         public static double TimeOfConcentrationMax => 10;
 
-        [JsonIgnore]
+        [XmlIgnore]
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
         [ObservableProperty]
-        [JsonPropertyName("Client")]
+        [XmlElement("Client")]
         private string _client = "";
 
         [ObservableProperty]
-        [JsonPropertyName("Practice")]
+        [XmlElement("Practice")]
         private string _practice = "";
 
         [ObservableProperty]
-        [JsonPropertyName("By")]
+        [XmlElement("By")]
         private string _by = "";
 
         [ObservableProperty]
-        [JsonPropertyName("Date")]
+        [XmlElement("Date")]
         private Nullable<DateTimeOffset> _date = null;
 
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _states = new();
 
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _counties = new();
 
-        [JsonPropertyName("SelectedState")]
+        [XmlElement("SelectedState")]
         private string _selectedState = "";
 
-        [JsonPropertyName("SelectedCounty")]
+        [XmlElement("SelectedCounty")]
         private string _selectedCounty = "";
 
-        [JsonIgnore]
+        [XmlIgnore]
         private int _selectedStateIndex = 0;
 
-        [JsonIgnore]
+        [XmlIgnore]
         private int _selectedCountyIndex = 0;
 
         [ObservableProperty]
-        [JsonPropertyName("DrainageArea")]
+        [XmlElement("DrainageArea")]
         private double _drainageArea = double.NaN;
 
         [ObservableProperty]
-        [JsonPropertyName("RunoffCurveNumber")]
+        [XmlElement("RunoffCurveNumber")]
         private double _runoffCurveNumber = double.NaN;
 
         [ObservableProperty]
-        [JsonPropertyName("WatershedLength")]
+        [XmlElement("WatershedLength")]
         private double _watershedLength = double.NaN;
 
         [ObservableProperty]
-        [JsonPropertyName("WatershedSlope")]
+        [XmlElement("WatershedSlope")]
         private double _watershedSlope = double.NaN;
 
         [ObservableProperty]
-        [JsonPropertyName("TimeOfConcentration")]
+        [XmlElement("TimeOfConcentration")]
         private double _timeOfConcentration = double.NaN;
 
         [ObservableProperty]
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         private string _drainageAreaStatus = "";
 
         [ObservableProperty]
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         private string _runoffCurveNumberStatus = "";
 
         [ObservableProperty]
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         private string _watershedLengthStatus = "";
 
         [ObservableProperty]
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         private string _watershedSlopeStatus = "";
 
         [ObservableProperty]
-        [property: JsonIgnore]
+        [property: XmlIgnore]
         private string _timeOfConcentrationStatus = "";
 
-        [JsonIgnore]
+        [XmlIgnore]
         public int SelectedStateIndex
         {
             get => _selectedStateIndex;
@@ -131,7 +132,7 @@ namespace EFH2
             }
         }
 
-        [JsonIgnore]
+        [XmlIgnore]
         public int SelectedCountyIndex
         {
             get => _selectedCountyIndex;
@@ -170,10 +171,10 @@ namespace EFH2
             {
                 string line = reader.ReadLine();
 
-                string[] elements = line.Split(',');
+                string[] XmlElements = line.Split(',');
 
-                string state = elements[1];
-                string county = elements[2].Trim('"');
+                string state = XmlElements[1];
+                string county = XmlElements[2].Trim('"');
 
                 if (!_stateCountyDictionary.ContainsKey(state))
                 {

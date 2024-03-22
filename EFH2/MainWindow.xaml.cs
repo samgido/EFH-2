@@ -47,11 +47,9 @@ namespace EFH2
 
         private async void SaveClicked(object sender, RoutedEventArgs e)
         {
-            string data = FileOperations.SerializeData(MainViewModel.BasicDataViewModel);
-
             var savePicker = new FileSavePicker();
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            savePicker.FileTypeChoices.Add("JSON", new List<string> { ".json" });
+            savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
             savePicker.SuggestedFileName = "WIP";
 
             var window = this;
@@ -62,7 +60,8 @@ namespace EFH2
             if (file != null)
             {
                 CachedFileManager.DeferUpdates(file);
-                await Windows.Storage.FileIO.WriteTextAsync(file, data);
+                TextWriter writer = new StreamWriter(file.Path);
+                FileOperations.SerializeData(MainViewModel, writer);
                 await CachedFileManager.CompleteUpdatesAsync(file);
             }
         }
