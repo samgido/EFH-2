@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="EFH2.BasicDataControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EFH2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <RelativePanel>
+            <TextBox x:Name="ClientTextBox" Header="Client:" Margin="50,0,0,0" Width="300">
+                <ToolTipService.ToolTip>
+                    Identifies property owner
+                </ToolTipService.ToolTip> 
+            </TextBox>
+
+            <ComboBox x:Name="StateSelectionBox" Header="State:" RelativePanel.RightOf="ClientTextBox" Margin="50,0,0,0"/>
+
+            <ComboBox x:Name="CountySelectionBox" Header="Count:" RelativePanel.RightOf="StateSelectionBox" 
+                      Width="250" Margin="50,0,0,0">
+                <ToolTipService.ToolTip>
+                    Project county or parish - used to retrieve rainfall-frequency data
+                </ToolTipService.ToolTip>
+            </ComboBox>
+
+            <TextBox x:Name="PracticeTextBox" Header="Practice:" Margin="50,10,0,0" Width="650" 
+                     RelativePanel.AlignLeftWith="ClientTextBox" RelativePanel.Below="ClientTextBox">
+                <ToolTipService.ToolTip>
+                    Description of associated conservation measure
+                </ToolTipService.ToolTip>
+            </TextBox>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Name="ByAndDatePickerFields"
+                        RelativePanel.Below="PracticeTextBox" RelativePanel.AlignLeftWith="ClientTextBox">
+                <TextBox x:Name="ByTextBox" Header="By:" Margin="50,0,0,0">
+                    <ToolTipService.ToolTip>
+                        Initials of data enterer
+                    </ToolTipService.ToolTip>
+                </TextBox>
+
+                <DatePicker x:Name="DatePicker" Header="Date:" Margin="200,5,0,0">
+                    <ToolTipService.ToolTip>
+                        Today's date
+                    </ToolTipService.ToolTip>
+                </DatePicker>
+            </StackPanel>
+        </RelativePanel>
+
+        <StackPanel Margin="60,40">
+            <RelativePanel Margin="0,5">
+                <TextBlock x:Name="DrainageAreaLabel" RelativePanel.AlignVerticalCenterWithPanel="True"
+                    Text="Drainage Area: " Margin="20,0,0,0" />
+
+                <NumberBox x:Name="DrainageArea" ValueChanged="DrainageArea_ValueChanged" Minimum="0"
+                    PlaceholderText="" Margin= "200,0,0,0">
+                    <ToolTipService.ToolTip>
+                        Watershed area in acres (limits 1 to 2000)
+                    </ToolTipService.ToolTip> 
+                </NumberBox>
+
+                <TextBlock x:Name="AcresLabel" Text="acres" Margin="10,0,0,0"
+                           RelativePanel.RightOf="DrainageArea" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                <TextBlock x:Name="DrainageAreaStatus" Padding="75,0,0,0" Foreground="HotPink"
+                           RelativePanel.RightOf="DrainageArea" RelativePanel.AlignVerticalCenterWith="DrainageArea"/>
+            </RelativePanel>
+
+            <RelativePanel Margin="0, 5">
+
+                <TextBlock x:Name="RunoffCurveNumberLabel" Text="Runoff Curve Number:" Margin="20,0,0,0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                <NumberBox x:Name="RunoffCurveNumber"  Minimum="0" Margin="200,0,0,0"
+                           ValueChanged="RunoffCurveNumber_ValueChanged">
+                    <ToolTipService.ToolTip>
+                        Weighted NRCS watershed curve number (limits 40 to 98)
+                    </ToolTipService.ToolTip>
+                </NumberBox>
+
+                <TextBlock x:Name="RunoffCurveNumberStatus" Padding="75,0,0,0" Foreground="HotPink"
+                           RelativePanel.RightOf="RunoffCurveNumber" RelativePanel.AlignVerticalCenterWith="RunoffCurveNumber"/>
+            </RelativePanel>
+
+            <RelativePanel Margin="0,5">
+                <TextBlock Text="Watershed Length:" Margin="20,0,0,0"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                <NumberBox x:Name="WatershedLength" Minimum="0" Margin="200,0,0,0" 
+                           ValueChanged="WatershedLength_ValueChanged">
+                    <ToolTipService.ToolTip>
+                        Length in feet along the flow path from the hydraulically most distant point to point of interest (limits 200 to 26000)
+                    </ToolTipService.ToolTip>
+                </NumberBox>
+
+                <TextBlock Text="feet" Margin="10,0,0,0"
+                    RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="WatershedLength"/>
+
+                <TextBlock x:Name="WatershedLengthStatus" Padding="75,0,0,0" Foreground="HotPink" 
+                           RelativePanel.RightOf="WatershedLength" RelativePanel.AlignVerticalCenterWith="WatershedLength"/>
+            </RelativePanel>
+
+            <RelativePanel Margin="0,5">
+                <TextBlock Text="Watershed Slope:" Margin="20,0,0,0"
+                           RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                <NumberBox x:Name="WatershedSlope" ValueChanged="WatershedSlope_ValueChanged"
+                           Minimum="0" Margin="200,0,0,0">
+                    <ToolTipService.ToolTip>
+                        Average watershed slope in percent (limits 0.5 to 64)
+                    </ToolTipService.ToolTip>
+                </NumberBox>
+
+                <TextBlock Text="percent" Margin="10,0,0,0" 
+                           RelativePanel.RightOf="WatershedSlope" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+
+                <TextBlock x:Name="WatershedSlopeStatus" Padding="75,0,0,0" Foreground="HotPink"
+                           RelativePanel.RightOf="WatershedSlope" RelativePanel.AlignVerticalCenterWith="WatershedSlope"/>
+            </RelativePanel>
+
+            <RelativePanel Margin="0,5">
+                <TextBlock
+                Margin="20,0,0,0"
+                Text="Time of Concentration:"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                />
+
+                <NumberBox x:Name="TimeOfConcentration" ValueChanged="TimeOfConcentration_ValueChanged"
+                           Minimum="0" Margin="200,0,0,0">
+                    <ToolTipService.ToolTip>
+                        Time of concentration, in hours, is calculated from Watershed Length and Slope using Tc Lag Method
+                    </ToolTipService.ToolTip>
+                </NumberBox>
+
+                <TextBlock Text="hours" Margin="10,0,0,0" 
+                    RelativePanel.RightOf="TimeOfConcentration" RelativePanel.AlignVerticalCenterWithPanel="True" />
+
+                <TextBlock x:Name="TimeOfConcentrationStatus" TextWrapping="Wrap" Padding="75,0,0,0" Foreground="HotPink" 
+                           RelativePanel.RightOf="TimeOfConcentration" RelativePanel.AlignVerticalCenterWith="TimeOfConcentration" />
+            </RelativePanel>
+            
+        </StackPanel>
+    </StackPanel>
+</UserControl>
