@@ -24,5 +24,13 @@ namespace EFH2
         {
             this.InitializeComponent();
         }
+
+        private void ClearButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void AcceptButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }

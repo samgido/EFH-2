@@ -36,6 +36,7 @@ namespace EFH2
             MainViewModel = new MainViewModel();
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
+            RCNDataControl.DataContext = MainViewModel.RcnDataViewModel;
         }
 
         private void NewClicked(object sender, RoutedEventArgs e)

@@ -8,7 +8,7 @@ namespace EFH2
 {
     public class RCNEntryModel
     {
-        public uint Weight { get; init; }
+        public int Weight { get; set; } = 0;
 
         public double Area = double.NaN;
     }

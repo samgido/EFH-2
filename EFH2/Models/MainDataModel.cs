@@ -105,11 +105,6 @@ namespace EFH2
 
         public string DUHType = "";
 
-        public List<StormModel> Storms = new List<StormModel> { };
-    }
-
-    public class RCNDataModel
-    {
-        public RCNGroupModel[] RCNGroups;
+        public List<StormModel> Storms = new List<StormModel>();
     }
 }

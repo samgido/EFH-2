@@ -6,9 +6,239 @@
     xmlns:local="using:EFH2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:EFH2.Converters"
     mc:Ignorable="d">
 
-    <Grid>
+    <UserControl.Resources>
+        <local:RCNRow x:Key="RCNColumn"/>
+        <local:RCNCategory x:Key="RCNCategory"/>
+        <converters:RCNConverter x:Key="RCNConverter"/>
+    </UserControl.Resources>
 
-    </Grid>
+    <RelativePanel
+        Background="Black"
+        x:Name="RootPanel">
+
+        <RadioButtons
+            x:Name="CoverDescriptionButtons"
+            MaxColumns="5"
+            Margin="60,0,0,0"
+            RelativePanel.AlignTopWithPanel="True">
+
+            <RadioButton Content="Urban Area"
+                         />
+            <RadioButton Content="Developing Urban"
+                         />
+            <RadioButton Content="Cultivated Agriculture"
+                         />
+            <RadioButton Content="Other Agriculture"
+                         />
+            <RadioButton Content="Arid Rangeland"
+                         />
+        </RadioButtons>
+
+        <ScrollViewer
+            RelativePanel.Below="CoverDescriptionButtons"
+            RelativePanel.Above="ConversionSettings"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            HorizontalAlignment="Stretch"
+            HorizontalScrollMode="Enabled">
+
+            <ItemsRepeater
+                ItemsSource="{Binding Path=RcnCategories}"
+                VerticalCacheLength="1000"
+                x:Name="MainRepeater">
+
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="local:RCNCategory">
+
+                        <StackPanel>
+                            <TextBlock
+                                Text="{Binding Path=Label}"
+                                Margin="10,10,0,0"
+                                />
+                            <ItemsRepeater
+                                ItemsSource="{Binding Path=Rows}"
+                                Margin="10,0,0,0"
+                                x:Name="NestedRepeater">
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="local:RCNRow">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition
+                                                    MinWidth="300"/>
+                                                <ColumnDefinition
+                                                    MinWidth="150"/>
+                                                <ColumnDefinition
+                                                    MinWidth="50"/>
+                                                <ColumnDefinition
+                                                    MinWidth="90"/>
+                                                <ColumnDefinition
+                                                    MinWidth="55"/>
+                                                <ColumnDefinition
+                                                    MinWidth="90"/>
+                                                <ColumnDefinition
+                                                    MinWidth="55"/>
+                                                <ColumnDefinition
+                                                    MinWidth="90"/>
+                                                <ColumnDefinition
+                                                    MinWidth="55"/>
+                                                <ColumnDefinition
+                                                    MinWidth="90"/>
+                                                <ColumnDefinition
+                                                    MinWidth="55"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                Text="{Binding Path=Text[0]}"
+                                                Margin="0,0,0,0"
+                                                VerticalAlignment="Center"/>
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Text="{Binding Path=Text[1]}"
+                                                VerticalAlignment="Center"/>
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                Text="{Binding Path=Text[2]}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="3"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                IsEnabled="{Binding Path=Entries[0].Enabled}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="4"
+                                                Text="{Binding Path=Entries[0].Weight, Converter={StaticResource RCNConverter}, Mode=OneWay}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="5"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[1].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="6"
+                                                Text="{Binding Path=Entries[1].Weight, Mode=OneWay}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="7"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[2].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="8"
+                                                Text="{Binding Path=Entries[2].Weight, Mode=OneWay}"
+                                                VerticalAlignment="Center"/>
+
+                                            <NumberBox
+                                                Grid.Column="9"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[3].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                VerticalAlignment="Center"/>
+
+                                            <TextBlock
+                                                Grid.Column="10"
+                                                Text="{Binding Path=Entries[3].Weight, Mode=OneWay}"
+                                                VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+
+                                <ItemsRepeater.Layout>
+                                    <UniformGridLayout
+                                        Orientation="Vertical"/>
+                                </ItemsRepeater.Layout>
+                            </ItemsRepeater>
+
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+
+                <ItemsRepeater.Layout>
+                    <StackLayout
+                        Orientation="Vertical"/>
+                </ItemsRepeater.Layout>
+
+            </ItemsRepeater>
+
+        </ScrollViewer>
+
+
+        <RelativePanel
+            x:Name="ConversionSettings"
+            RelativePanel.AlignBottomWithPanel="True"
+            Padding="0,0,0,10"
+            >
+
+            <RadioButtons
+                Margin="60,0,0,0"
+                x:Name="RCNDataConversionButtons">
+                <RadioButton Content="Acres"
+                             x:Name="AcresButton"/>
+                <RadioButton Content="Percentage"/>
+            </RadioButtons>
+
+            <RelativePanel
+                x:Name="labels"
+                RelativePanel.AlignVerticalCenterWith="RCNDataConversionButtons"
+                RelativePanel.RightOf="RCNDataConversionButtons"
+                Padding="0,8,0,0">
+
+                <TextBlock
+                    x:Name="WeightedCurveNumberLabel"
+                    Text="Weighted Curve Number = "/>
+
+                <TextBlock
+                    x:Name="WeightedCurveNumber"
+                    Text="{Binding Path=RCNModel.WeightedCurveNumber, Mode=OneWay}"
+                    RelativePanel.RightOf="WeightedCurveNumberLabel"
+                    Padding="5,0,0,0"
+                    />
+
+                <TextBlock
+                    x:Name="AccumulatedAreaLabel"
+                    Text="Accumulated Area (%) = "
+                    RelativePanel.Below="WeightedCurveNumberLabel"
+                    Padding="0,22,0,0"/>
+
+                <TextBlock
+                    x:Name="AccumulatedArea"
+                    Text="{Binding Path=RCNModel.AccumulatedArea, Mode=OneWay}"
+                    RelativePanel.RightOf="AccumulatedAreaLabel"
+                    RelativePanel.Below="WeightedCurveNumberLabel"
+                    Padding="5,22,0,0"
+                    />
+
+            </RelativePanel>
+
+            <Button
+                x:Name="AcceptButton"
+                Content="Accept"
+                RelativePanel.RightOf="labels"
+                RelativePanel.AlignVerticalCenterWith="labels"
+                Margin="100,0,0,0"
+                Click="AcceptButtonClick"/>
+
+            <Button
+                x:Name="ClearButton"
+                Content="Clear"
+                RelativePanel.RightOf="AcceptButton"
+                RelativePanel.AlignVerticalCenterWith="AcceptButton"
+                Margin="100,0,0,0"
+                Click="ClearButtonClick"/>
+
+        </RelativePanel>
+
+    </RelativePanel>
 </UserControl>

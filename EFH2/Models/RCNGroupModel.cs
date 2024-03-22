@@ -8,6 +8,8 @@ namespace EFH2
 {
     public class RCNGroupModel
     {
+        public string Header = "";
+
         public List<RCNEntryModel> Entries = new List<RCNEntryModel>();
     }
 }
