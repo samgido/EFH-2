@@ -16,9 +16,9 @@
                 </ToolTipService.ToolTip> 
             </TextBox>
 
-            <ComboBox x:Name="StateSelectionBox" SelectedIndex="{Binding Path=SelectedStateIndex, Mode=TwoWay}" Header="State:" RelativePanel.RightOf="ClientTextBox" Margin="50,0,0,0"/>
+            <ComboBox x:Name="StateSelectionBox" ItemsSource="{Binding Path=States}" SelectedIndex="{Binding Path=SelectedStateIndex, Mode=TwoWay}" Header="State:" RelativePanel.RightOf="ClientTextBox" Margin="50,0,0,0"/>
 
-            <ComboBox x:Name="CountySelectionBox" Header="Count:" Width="250" Margin="50,0,0,0" SelectedIndex="{Binding Path=SelectedCountyIndex, Mode=TwoWay}"
+            <ComboBox x:Name="CountySelectionBox" ItemsSource="{Binding Path=Counties}" SelectedIndex="{Binding Path=SelectedCountyIndex, Mode=TwoWay}" Header="Count:" Width="250" Margin="50,0,0,0" 
                       RelativePanel.RightOf="StateSelectionBox">
                 <ToolTipService.ToolTip>
                     Project county or parish - used to retrieve rainfall-frequency data
@@ -55,7 +55,7 @@
                 <TextBlock x:Name="DrainageAreaLabel" RelativePanel.AlignVerticalCenterWithPanel="True"
                     Text="Drainage Area: " Margin="20,0,0,0" />
 
-                <NumberBox x:Name="DrainageArea" ValueChanged="DrainageArea_ValueChanged" Minimum="0"
+                <NumberBox x:Name="DrainageArea" Value="{Binding Path=DrainageArea, Mode=TwoWay}"  ValueChanged="DrainageArea_ValueChanged" Minimum="0"
                     PlaceholderText="" Margin= "200,0,0,0">
                     <ToolTipService.ToolTip>
                         Watershed area in acres (limits 1 to 2000)
@@ -74,7 +74,7 @@
                 <TextBlock x:Name="RunoffCurveNumberLabel" Text="Runoff Curve Number:" Margin="20,0,0,0"
                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="RunoffCurveNumber"  Minimum="0" Margin="200,0,0,0"
+                <NumberBox x:Name="RunoffCurveNumber" Value="{Binding Path=RunoffCurveNumber, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0"
                            ValueChanged="RunoffCurveNumber_ValueChanged">
                     <ToolTipService.ToolTip>
                         Weighted NRCS watershed curve number (limits 40 to 98)
@@ -89,7 +89,7 @@
                 <TextBlock Text="Watershed Length:" Margin="20,0,0,0"
                     RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="WatershedLength" Minimum="0" Margin="200,0,0,0" 
+                <NumberBox x:Name="WatershedLength" Value="{Binding Path=WatershedLength, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0" 
                            ValueChanged="WatershedLength_ValueChanged">
                     <ToolTipService.ToolTip>
                         Length in feet along the flow path from the hydraulically most distant point to point of interest (limits 200 to 26000)
@@ -107,7 +107,7 @@
                 <TextBlock Text="Watershed Slope:" Margin="20,0,0,0"
                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="WatershedSlope" ValueChanged="WatershedSlope_ValueChanged"
+                <NumberBox x:Name="WatershedSlope" Value="{Binding Path=WatershedSlope, Mode=TwoWay}" ValueChanged="WatershedSlope_ValueChanged"
                            Minimum="0" Margin="200,0,0,0">
                     <ToolTipService.ToolTip>
                         Average watershed slope in percent (limits 0.5 to 64)
@@ -128,7 +128,7 @@
                 RelativePanel.AlignVerticalCenterWithPanel="True"
                 />
 
-                <NumberBox x:Name="TimeOfConcentration" ValueChanged="TimeOfConcentration_ValueChanged"
+                <NumberBox x:Name="TimeOfConcentration" Value="{Binding Path=TimeOfConcentration, Mode=TwoWay}" ValueChanged="TimeOfConcentration_ValueChanged"
                            Minimum="0" Margin="200,0,0,0">
                     <ToolTipService.ToolTip>
                         Time of concentration, in hours, is calculated from Watershed Length and Slope using Tc Lag Method

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,11 @@ namespace EFH2
         public MainViewModel()
         {
             BasicDataViewModel = new BasicDataViewModel();
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
+            {
+                BasicDataViewModel.LoadStatesAndCounties(reader);
+            }
         }
     }
 }

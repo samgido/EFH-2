@@ -14,21 +14,32 @@ namespace EFH2
 {
     public partial class BasicDataViewModel : ObservableObject
     {
+        [JsonIgnore]
         public static int DrainageAreaMin => 1;
+        [JsonIgnore]
         public static int DrainageAreaMax => 2000;
 
+        [JsonIgnore]
         public static int RunoffCurveNumberMin => 40;
+        [JsonIgnore]
         public static int RunoffCurveNumberMax => 98;
 
+        [JsonIgnore]
         public static int WatershedLengthMin => 200;
+        [JsonIgnore]
         public static int WatershedLengthMax => 26000;
 
+        [JsonIgnore]
         public static double WatershedSlopeMin => 0.5;
+        [JsonIgnore]
         public static double WatershedSlopeMax => 64;
 
+        [JsonIgnore]
         public static double TimeOfConcentrationMin => 0.1;
+        [JsonIgnore]
         public static double TimeOfConcentrationMax => 10;
 
+        [JsonIgnore]
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
         [ObservableProperty]
@@ -47,9 +58,11 @@ namespace EFH2
         [JsonPropertyName("Date")]
         private Nullable<DateTimeOffset> _date = null;
 
+        [property: JsonIgnore]
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _states = new();
 
+        [property: JsonIgnore]
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _counties = new();
 
@@ -59,8 +72,10 @@ namespace EFH2
         [JsonPropertyName("SelectedCounty")]
         private string _selectedCounty = "";
 
+        [JsonIgnore]
         private int _selectedStateIndex = 0;
 
+        [JsonIgnore]
         private int _selectedCountyIndex = 0;
 
         [ObservableProperty]
@@ -84,20 +99,26 @@ namespace EFH2
         private double _timeOfConcentration = double.NaN;
 
         [ObservableProperty]
+        [property: JsonIgnore]
         private string _drainageAreaStatus = "";
 
         [ObservableProperty]
+        [property: JsonIgnore]
         private string _runoffCurveNumberStatus = "";
 
         [ObservableProperty]
+        [property: JsonIgnore]
         private string _watershedLengthStatus = "";
 
         [ObservableProperty]
+        [property: JsonIgnore]
         private string _watershedSlopeStatus = "";
 
         [ObservableProperty]
+        [property: JsonIgnore]
         private string _timeOfConcentrationStatus = "";
 
+        [JsonIgnore]
         public int SelectedStateIndex
         {
             get => _selectedStateIndex;
@@ -110,6 +131,7 @@ namespace EFH2
             }
         }
 
+        [JsonIgnore]
         public int SelectedCountyIndex
         {
             get => _selectedCountyIndex;

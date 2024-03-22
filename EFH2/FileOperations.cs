@@ -14,7 +14,14 @@ namespace EFH2
     {
         public static string SerializeData(BasicDataViewModel model)
         {
-            return JsonSerializer.Serialize(model);
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.AllowNamedFloatingPointLiterals,
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true,
+            };
+
+            return JsonSerializer.Serialize(model, options);
         }
     }
 }

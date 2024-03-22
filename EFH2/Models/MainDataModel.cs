@@ -76,7 +76,6 @@ namespace EFH2
             get => _by;
             set
             {
-
             }
         }
 
