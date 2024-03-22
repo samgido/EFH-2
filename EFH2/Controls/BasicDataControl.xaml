@@ -16,10 +16,10 @@
                 </ToolTipService.ToolTip> 
             </TextBox>
 
-            <ComboBox x:Name="StateSelectionBox" Header="State:" RelativePanel.RightOf="ClientTextBox" Margin="50,0,0,0"/>
+            <ComboBox x:Name="StateSelectionBox" SelectedIndex="{Binding Path=SelectedStateIndex, Mode=TwoWay}" Header="State:" RelativePanel.RightOf="ClientTextBox" Margin="50,0,0,0"/>
 
-            <ComboBox x:Name="CountySelectionBox" Header="Count:" RelativePanel.RightOf="StateSelectionBox" 
-                      Width="250" Margin="50,0,0,0">
+            <ComboBox x:Name="CountySelectionBox" Header="Count:" Width="250" Margin="50,0,0,0" SelectedIndex="{Binding Path=SelectedCountyIndex, Mode=TwoWay}"
+                      RelativePanel.RightOf="StateSelectionBox">
                 <ToolTipService.ToolTip>
                     Project county or parish - used to retrieve rainfall-frequency data
                 </ToolTipService.ToolTip>
