@@ -10,7 +10,7 @@
 
     <StackPanel>
         <RelativePanel>
-            <TextBox x:Name="ClientTextBox" Header="Client:" Margin="50,0,0,0" Width="300">
+            <TextBox x:Name="ClientTextBox" Text="{Binding Path=Client, Mode=TwoWay}" Header="Client:" Margin="50,0,0,0" Width="300">
                 <ToolTipService.ToolTip>
                     Identifies property owner
                 </ToolTipService.ToolTip> 
@@ -25,7 +25,8 @@
                 </ToolTipService.ToolTip>
             </ComboBox>
 
-            <TextBox x:Name="PracticeTextBox" Header="Practice:" Margin="50,10,0,0" Width="650" 
+            <TextBox x:Name="PracticeTextBox" Text="{Binding Path=Practice, Mode=TwoWay}" 
+                     Header="Practice:" Margin="50,10,0,0" Width="650" 
                      RelativePanel.AlignLeftWith="ClientTextBox" RelativePanel.Below="ClientTextBox">
                 <ToolTipService.ToolTip>
                     Description of associated conservation measure
@@ -34,13 +35,14 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Name="ByAndDatePickerFields"
                         RelativePanel.Below="PracticeTextBox" RelativePanel.AlignLeftWith="ClientTextBox">
-                <TextBox x:Name="ByTextBox" Header="By:" Margin="50,0,0,0">
+                <TextBox x:Name="ByTextBox" Header="By:" Margin="50,0,0,0" Text="{Binding Path=By, Mode=TwoWay}">
                     <ToolTipService.ToolTip>
                         Initials of data enterer
                     </ToolTipService.ToolTip>
                 </TextBox>
 
-                <DatePicker x:Name="DatePicker" Header="Date:" Margin="200,5,0,0">
+                <DatePicker x:Name="DatePicker" Header="Date:" Margin="200,5,0,0"
+                            SelectedDate="{Binding Path=Date, Mode=TwoWay}">
                     <ToolTipService.ToolTip>
                         Today's date
                     </ToolTipService.ToolTip>

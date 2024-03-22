@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,17 +12,73 @@ namespace EFH2
     {
     }
 
-    public class BasicDataModel
+    public class BasicDataModel : INotifyPropertyChanged
     {
-        public string Client = "";
+        private string _client = "";
+        public string Client
+        {
+            get => _client;
+            set
+            {
+                if (_client != value)
+                {
+                    _client = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public string State = "";
+        private string _state = "";
+        public string State
+        {
+            get => _state;
+            set
+            {
+                if (_state != value)
+                {
+                    _state = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public string County = "";
+        private string _county = "";
+        public string County
+        {
+            get => _county;
+            set
+            {
+                if (_county != value)
+                {
+                    _county = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public string Practice = "";
+        private string _practice = "";
+        public string Practice
+        {
+            get => _practice;
+            set
+            {
+                if (_practice != value)
+                {
+                    _practice = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public string By = "";
+        private string _by = "";
+        public string By
+        {
+            get => _by;
+            set
+            {
+
+            }
+        }
 
         public DateTime Date = DateTime.Now;
 
@@ -33,6 +91,13 @@ namespace EFH2
         public double WatershedSlope = double.NaN;
 
         public double TimeOfConcentration = double.NaN;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class RainfallDischargeDataModel
