@@ -31,8 +31,11 @@ namespace EFH2
         {
             this.InitializeComponent();
 
+            Navigation.SelectedItem = IntroNavButton;
+
             MainViewModel = new MainViewModel();
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
+            RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
         }
 
         private void NewClicked(object sender, RoutedEventArgs e)

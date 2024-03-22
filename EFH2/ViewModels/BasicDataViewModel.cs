@@ -68,10 +68,10 @@ namespace EFH2
         private ObservableCollection<ComboBoxItem> _counties = new();
 
         [XmlElement("SelectedState")]
-        private string _selectedState = "";
+        public string selectedState = "";
 
         [XmlElement("SelectedCounty")]
-        private string _selectedCounty = "";
+        public string selectedCounty = "";
 
         [XmlIgnore]
         private int _selectedStateIndex = 0;
@@ -126,9 +126,9 @@ namespace EFH2
             set
             {
                 this.SetProperty(ref this._selectedStateIndex, value);
-                this._selectedState = States[_selectedStateIndex].Content.ToString();
+                this.selectedState = States[_selectedStateIndex].Content.ToString();
 
-                SetCounties(_stateCountyDictionary[_selectedState]);                
+                SetCounties(_stateCountyDictionary[selectedState]);                
             }
         }
 
@@ -140,7 +140,7 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedCountyIndex, value);
                 if (value == -1) return;
-                this._selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
+                this.selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
             }
         }
 
@@ -191,6 +191,64 @@ namespace EFH2
 
                 States.Add(cbox);
             }
+        }
+
+        public void CheckDrainageArea()
+        {
+            if (DrainageArea >= DrainageAreaMin && DrainageArea <= DrainageAreaMax) DrainageAreaStatus = MainViewModel.UserEnteredMessage; 
+            else DrainageAreaStatus = MainViewModel.DrainageAreaInvalidEntryMessage;
+        }
+
+        public void CheckRunoffCurveNumber()
+        {
+            if (RunoffCurveNumber >= RunoffCurveNumberMin && RunoffCurveNumber <= RunoffCurveNumberMax) RunoffCurveNumberStatus = MainViewModel.UserEnteredMessage; 
+            else RunoffCurveNumberStatus = MainViewModel.RunoffCurveNumberInvalidEntryMessage;
+        }
+
+        public void CheckWatershedLength()
+        {
+            if (WatershedLength >= WatershedLengthMin && WatershedLength <= WatershedLengthMax) WatershedLengthStatus = MainViewModel.UserEnteredMessage; 
+            else WatershedLengthStatus = MainViewModel.WatershedLengthInvalidEntryMessage;
+        }
+
+        public void CheckWatershedSlope()
+        {
+            if (WatershedSlope >= WatershedSlopeMin && WatershedSlope <= WatershedSlopeMax) WatershedSlopeStatus = MainViewModel.UserEnteredMessage;
+            else WatershedSlopeStatus = MainViewModel.WatershedSlopeInvalidEntryMessage;
+        }
+
+        public void CheckTimeOfConcentration()
+        {
+            if (TimeOfConcentration >= TimeOfConcentrationMin && TimeOfConcentration <= TimeOfConcentrationMax) TimeOfConcentrationStatus = MainViewModel.UserEnteredMessage;
+            else TimeOfConcentrationStatus = MainViewModel.TimeOfConcentrationInvalidEntryMessage;
+        }
+
+        public void Default()
+        {
+            Client = "";
+            selectedState = MainViewModel.ChooseMessage;
+            selectedCounty = MainViewModel.ChooseMessage;
+            SelectedCountyIndex = 0;
+            Practice = "";
+            Date = DateTime.Now;
+            By = "";
+
+            DrainageArea = double.NaN;
+            RunoffCurveNumber = double.NaN;
+            WatershedLength = double.NaN;
+            WatershedSlope = double.NaN;
+            TimeOfConcentration = double.NaN;
+        }
+
+        public void Clear()
+        {
+            Default();
+
+            TimeOfConcentrationStatus = MainViewModel.ClearedMessage;
+            WatershedSlopeStatus = MainViewModel.ClearedMessage;
+            WatershedLengthStatus = MainViewModel.ClearedMessage;
+            RunoffCurveNumberStatus = MainViewModel.ClearedMessage;
+            DrainageAreaStatus = MainViewModel.ClearedMessage;
         }
     }
 }

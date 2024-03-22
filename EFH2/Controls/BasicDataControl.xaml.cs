@@ -25,34 +25,49 @@ namespace EFH2
             this.InitializeComponent();
         }
 
-        private void DrainageArea_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void DrainageAreaValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-
+            if (DataContext is BasicDataViewModel model)
+            {
+                model.DrainageArea = sender.Value;
+                model.CheckDrainageArea();
+            }
         }
 
-        private void RunoffCurveNumber_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void RunoffCurveNumberValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-
+            if (DataContext is BasicDataViewModel model)
+            {
+                model.RunoffCurveNumber = sender.Value;
+                model.CheckRunoffCurveNumber();
+            }
         }
 
-        private void WatershedLength_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void WatershedLengthValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-
+            if (DataContext is BasicDataViewModel model)
+            {
+                model.WatershedLength = sender.Value;
+                model.CheckWatershedLength();
+            }
         }
 
-        private void uxWatershedSlope_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void WatershedSlopeValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-
+            if (DataContext is BasicDataViewModel model)
+            {
+                model.WatershedSlope = sender.Value;
+                model.CheckWatershedSlope();
+            }
         }
 
-        private void WatershedSlope_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void TimeOfConcentrationValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-
-        }
-
-        private void TimeOfConcentration_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-
+            if (DataContext is BasicDataViewModel model)
+            {
+                model.TimeOfConcentration = sender.Value;
+                model.CheckTimeOfConcentration();
+            }
         }
     }
 }

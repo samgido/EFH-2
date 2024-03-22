@@ -112,11 +112,16 @@
             </NavigationView.MenuItems>
         </NavigationView>
 
-        <Grid RelativePanel.Below="Navigation">
-            <local:IntroControl x:Name="IntroControl" Visibility="Visible"/>
-            <local:BasicDataControl x:Name="BasicDataControl" Visibility="Collapsed"/>
-            <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Collapsed"/>
-            <local:RCNDataControl x:Name="RCNDataControl" Visibility="Collapsed"/>
+        <Grid RelativePanel.Below="Navigation" HorizontalAlignment="Stretch"
+              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <local:IntroControl x:Name="IntroControl" Visibility="Visible" Grid.Column="0"/>
+            <local:BasicDataControl x:Name="BasicDataControl" Visibility="Collapsed" Grid.Column="0"/>
+            <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Collapsed" Grid.Column="0"/>
+            <local:RCNDataControl x:Name="RCNDataControl" Visibility="Collapsed" Grid.Column="0"/>
         </Grid>
     </RelativePanel>
 </Window>

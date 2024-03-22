@@ -25,12 +25,23 @@ namespace EFH2
             this.InitializeComponent();
         }
 
-        private void DUHType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DUHTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (DataContext is RainfallDischargeDataViewModel model)
+            {
+                if (model.SelectedRainfallDistributionTypeIndex != 0) model.RainfallDistributionTypeStatus = "User selected.";
+            }
         }
 
-        private void RainfallDistributionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RainfallDistributionTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is RainfallDischargeDataViewModel model)
+            {
+                if (model.SelectedDuhTypeIndex != 0) model.DuhTypeStatus = "User selected.";
+            }
+        }
+
+        private void ButtonClick(object sender, RoutedEventArgs e)
         {
 
         }
