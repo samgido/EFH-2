@@ -45,51 +45,35 @@
             HorizontalAlignment="Stretch"
             HorizontalScrollMode="Enabled">
 
-            <ItemsRepeater
-                ItemsSource="{Binding Path=RcnCategories}"
-                VerticalCacheLength="1000"
-                x:Name="MainRepeater">
+            <ScrollViewer.Resources>
+                <Style TargetType="ListView">
+                    <Setter Property="SelectionMode" Value="None"/>
+                </Style>
+            </ScrollViewer.Resources>
 
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="local:RCNCategory">
+            <ListView ItemsSource="{Binding Path=RcnCategories}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <RelativePanel>
+                            <TextBlock Text="{Binding Path=Label}" Margin="10,10,0,0" Name="Label"/>
 
-                        <StackPanel>
-                            <TextBlock
-                                Text="{Binding Path=Label}"
-                                Margin="10,10,0,0"
-                                />
-                            <ItemsRepeater
-                                ItemsSource="{Binding Path=Rows}"
-                                Margin="10,0,0,0"
-                                x:Name="NestedRepeater">
-                                <ItemsRepeater.ItemTemplate>
-                                    <DataTemplate x:DataType="local:RCNRow">
-
+                            <ListView ItemsSource="{Binding Path=Rows}" RelativePanel.Below="Label">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition
-                                                    MinWidth="300"/>
-                                                <ColumnDefinition
-                                                    MinWidth="150"/>
-                                                <ColumnDefinition
-                                                    MinWidth="50"/>
-                                                <ColumnDefinition
-                                                    MinWidth="90"/>
-                                                <ColumnDefinition
-                                                    MinWidth="55"/>
-                                                <ColumnDefinition
-                                                    MinWidth="90"/>
-                                                <ColumnDefinition
-                                                    MinWidth="55"/>
-                                                <ColumnDefinition
-                                                    MinWidth="90"/>
-                                                <ColumnDefinition
-                                                    MinWidth="55"/>
-                                                <ColumnDefinition
-                                                    MinWidth="90"/>
-                                                <ColumnDefinition
-                                                    MinWidth="55"/>
-                                            </Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="300"/>
+                                                <ColumnDefinition MinWidth="150"/>
+                                                <ColumnDefinition MinWidth="50"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                            </Grid.ColumnDefinitions> 
 
                                             <TextBlock
                                                 Grid.Column="0"
@@ -150,27 +134,14 @@
                                                 Text="{Binding Path=Entries[3].Weight, Mode=OneWay}"
                                                 VerticalAlignment="Center"/>
                                         </Grid>
-
                                     </DataTemplate>
-                                </ItemsRepeater.ItemTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
-                                <ItemsRepeater.Layout>
-                                    <UniformGridLayout
-                                        Orientation="Vertical"/>
-                                </ItemsRepeater.Layout>
-                            </ItemsRepeater>
-
-                        </StackPanel>
-
+                        </RelativePanel>
                     </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-
-                <ItemsRepeater.Layout>
-                    <StackLayout
-                        Orientation="Vertical"/>
-                </ItemsRepeater.Layout>
-
-            </ItemsRepeater>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </ScrollViewer>
 
