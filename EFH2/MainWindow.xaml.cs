@@ -38,14 +38,28 @@ namespace EFH2
 
             BasicDataControl.Visibility = Visibility.Collapsed;
             RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
-            RCNDataControl.Visibility = Visibility.Collapsed;
+            RcnDataControl.Visibility = Visibility.Collapsed;
 
             MainViewModel = new MainViewModel();
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
-            RCNDataControl.DataContext = MainViewModel.RcnDataViewModel;
+            RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
+            RcnDataControl.AcceptRcnValues += AcceptRcnValues;
 
             FocusManager.GotFocus += FocusManagerGotFocus;
+        }
+
+        private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
+        {
+            MainViewModel.BasicDataViewModel.DrainageArea = e.AccumulatedArea;
+            MainViewModel.BasicDataViewModel.RunoffCurveNumber = e.WeightedCurveNumber;
+
+            MainViewModel.BasicDataViewModel.DrainageAreaStatus = "From RCN.";
+            MainViewModel.BasicDataViewModel.RunoffCurveNumberStatus = "From RCN.";
+
+            HideControls();
+            BasicDataControl.Visibility = Visibility.Visible;
+            Navigation.SelectedItem = BasicDataNavButton;
         }
 
         private void FocusManagerGotFocus(object sender, FocusManagerGotFocusEventArgs e)
@@ -192,7 +206,7 @@ namespace EFH2
             if ((NavigationViewItem)sender.SelectedItem == IntroNavButton) IntroControl.Visibility = Visibility.Visible;
             else if ((NavigationViewItem)sender.SelectedItem == BasicDataNavButton) BasicDataControl.Visibility = Visibility.Visible;
             else if ((NavigationViewItem)sender.SelectedItem == RainfallDischargeDataNavButton) RainfallDischargeDataControl.Visibility = Visibility.Visible;
-            else if ((NavigationViewItem)sender.SelectedItem == RCNDataNavButton) RCNDataControl.Visibility = Visibility.Visible;
+            else if ((NavigationViewItem)sender.SelectedItem == RCNDataNavButton) RcnDataControl.Visibility = Visibility.Visible;
 
             HsgFlyout.IsEnabled = HsgButton.IsEnabled = (NavigationViewItem)sender.SelectedItem == RCNDataNavButton;
             SlopeCalculatorFlyout.IsEnabled = SlopeCalculatorButton.IsEnabled = (NavigationViewItem)sender.SelectedItem == BasicDataNavButton;
@@ -203,7 +217,7 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Collapsed;
             BasicDataControl.Visibility = Visibility.Collapsed;
             RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
-            RCNDataControl.Visibility = Visibility.Collapsed;
+            RcnDataControl.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -172,7 +172,7 @@
 
                 <TextBlock
                     x:Name="WeightedCurveNumber"
-                    Text="{Binding Path=AccumulatedWeightedArea, Mode=OneWay}"
+                    Text="{Binding Path=WeightedCurveNumber, Mode=OneWay}"
                     RelativePanel.RightOf="WeightedCurveNumberLabel"
                     Padding="5,0,0,0"
                     />

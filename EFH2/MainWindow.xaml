@@ -121,7 +121,7 @@
             <local:IntroControl x:Name="IntroControl" Visibility="Visible" Grid.Column="0"/>
             <local:BasicDataControl x:Name="BasicDataControl" Visibility="Visible" Grid.Column="0"/>
             <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Visible" Grid.Column="0"/>
-            <local:RcnDataControl x:Name="RCNDataControl" Visibility="Visible" Grid.Column="0"/>
+            <local:RcnDataControl x:Name="RcnDataControl" Visibility="Visible" Grid.Column="0"/>
         </Grid>
     </RelativePanel>
 </Window>

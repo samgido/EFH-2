@@ -37,7 +37,7 @@ namespace EFH2
             }
         }
 
-        public double AccumulatedWeightedArea
+        public double WeightedCurveNumber
         {
             get
             {
@@ -129,7 +129,7 @@ namespace EFH2
         private void EntryChanged(object? sender, PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(AccumulatedArea));
-            this.OnPropertyChanged(nameof(AccumulatedWeightedArea));
+            this.OnPropertyChanged(nameof(WeightedCurveNumber));
         }
 
         public void Default()

@@ -5,9 +5,9 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
@@ -20,6 +20,8 @@ namespace EFH2
 {
     public sealed partial class RcnDataControl : UserControl
     {
+        public event EventHandler<AcceptRcnValuesEventArgs>? AcceptRcnValues;
+
         public RcnDataControl()
         {
             this.InitializeComponent();
@@ -31,6 +33,10 @@ namespace EFH2
 
         private void AcceptButtonClick(object sender, RoutedEventArgs e)
         {
+            if (DataContext is RcnDataViewModel model)
+            {
+                this.AcceptRcnValues?.Invoke(this, new AcceptRcnValuesEventArgs(model.AccumulatedArea, model.WeightedCurveNumber));
+            }
         }
     }
 }
