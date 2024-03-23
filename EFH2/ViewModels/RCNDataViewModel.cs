@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -9,10 +10,50 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public partial class RCNDataViewModel : ObservableObject
+    public struct HsgEntry
+    {
+        public string Field1 { get; set; }
+        public string Field2 { get; set; }
+        public string Field3 { get; set; }
+    }
+
+    public partial class RcnDataViewModel : ObservableObject
     {
         [ObservableProperty]
         private List<RCNCategory> rcnCategories;
+
+        public ObservableCollection<HsgEntry> HsgEntries { get; } = new();
+
+        public double AccumulatedArea
+        {
+            get
+            {
+                double total = 0;
+                foreach (RCNCategory category in RcnCategories)
+                {
+                    if (!(category.AccumulatedArea.Equals(double.NaN))) total += category.AccumulatedArea;
+                }
+                return total;
+            }
+        }
+
+        public double AccumulatedWeightedArea
+        {
+            get
+            {
+                double total = 0;
+                foreach (RCNCategory category in RcnCategories)
+                {
+                    if (!(category.AccumulatedArea.Equals(double.NaN))) total += category.AccumulatedWeightedArea;
+                }
+
+                //if (AccumulatedArea.Equals(double.NaN) || AccumulatedArea.Equals(0)) return double.NaN;
+                //else return total / AccumulatedArea;
+
+                if (AccumulatedArea > 0) return total / AccumulatedArea;
+                else return 0;
+            }
+        }
 
         public void LoadRCNTableEntries(StreamReader reader)
         {
@@ -67,8 +108,34 @@ namespace EFH2
             }
         }
 
+        public void LoadHsgEntries(StreamReader reader)
+        {
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+
+                string[] lineParts = line.Split("\t");
+
+                HsgEntries.Add(new HsgEntry()
+                {
+                    Field1 = lineParts[0],
+                    Field2 = lineParts[1],
+                    Field3 = lineParts[2],
+                });
+
+            }
+        }
+
         private void EntryChanged(object? sender, PropertyChangedEventArgs e)
         {
+            this.OnPropertyChanged(nameof(AccumulatedArea));
+            this.OnPropertyChanged(nameof(AccumulatedWeightedArea));
         }
+
+        public void Default()
+        {
+            foreach (RCNCategory category in RcnCategories) category.Default();
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserControl
-    x:Class="EFH2.RCNDataControl"
+    x:Class="EFH2.RcnDataControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EFH2"
@@ -172,7 +172,7 @@
 
                 <TextBlock
                     x:Name="WeightedCurveNumber"
-                    Text="{Binding Path=RCNModel.WeightedCurveNumber, Mode=OneWay}"
+                    Text="{Binding Path=AccumulatedWeightedArea, Mode=OneWay}"
                     RelativePanel.RightOf="WeightedCurveNumberLabel"
                     Padding="5,0,0,0"
                     />
@@ -185,7 +185,7 @@
 
                 <TextBlock
                     x:Name="AccumulatedArea"
-                    Text="{Binding Path=RCNModel.AccumulatedArea, Mode=OneWay}"
+                    Text="{Binding Path=AccumulatedArea, Mode=OneWay}"
                     RelativePanel.RightOf="AccumulatedAreaLabel"
                     RelativePanel.Below="WeightedCurveNumberLabel"
                     Padding="5,22,0,0"

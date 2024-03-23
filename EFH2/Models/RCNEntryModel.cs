@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public class RCNEntryModel
+    public class RcnEntryModel
     {
         public int Weight { get; set; } = 0;
 
         public double Area = double.NaN;
+
+        public double WeightedArea
+        {
+            get
+            {
+                if (!(Area.Equals(double.NaN))) return Area * Weight;
+                else return double.NaN;
+            }
+        }
     }
 }

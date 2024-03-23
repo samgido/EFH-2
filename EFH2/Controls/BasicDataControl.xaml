@@ -18,7 +18,7 @@
 
             <ComboBox x:Name="StateSelectionBox" ItemsSource="{Binding Path=States}" SelectedIndex="{Binding Path=SelectedStateIndex, Mode=TwoWay}" Header="State:" RelativePanel.RightOf="ClientTextBox" Margin="50,0,0,0"/>
 
-            <ComboBox x:Name="CountySelectionBox" ItemsSource="{Binding Path=Counties}" SelectedIndex="{Binding Path=SelectedCountyIndex, Mode=TwoWay}" Header="Count:" Width="250" Margin="50,0,0,0" 
+            <ComboBox x:Name="CountySelectionBox" ItemsSource="{Binding Path=Counties}" SelectedIndex="{Binding Path=SelectedCountyIndex, Mode=TwoWay}" Header="County:" Width="250" Margin="50,0,0,0" 
                       RelativePanel.RightOf="StateSelectionBox">
                 <ToolTipService.ToolTip>
                     Project county or parish - used to retrieve rainfall-frequency data

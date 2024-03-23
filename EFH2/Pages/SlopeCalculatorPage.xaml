@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EFH2.SlopeCalculatorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EFH2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <RelativePanel
+        Padding="0,30,0,0"
+        HorizontalAlignment="Center"
+        x:Name="RootPanel"
+        >
+
+        <TextBlock
+            x:Name="InfoText"
+            Text="Step 1 - Measure the lengths of all the contours within the watershed boundary and sum their total."
+            TextWrapping="Wrap"
+            HorizontalAlignment="Center"
+            HorizontalTextAlignment="Center"
+            Padding="10,0,10,0"
+            />
+
+        <TextBlock
+            x:Name="ContourLengthLabel"
+            Text="Length of contours"
+            RelativePanel.Below="InfoText"
+            RelativePanel.LeftOf="ContourLengthBox"
+            RelativePanel.AlignVerticalCenterWith="ContourLengthBox"
+            Padding="20,20,0,0"
+            />
+
+        <TextBlock
+            x:Name="ContourIntervalLabel"
+            Text="Countour Interval"
+            RelativePanel.Below="ContourLengthLabel"
+            RelativePanel.LeftOf="ContourIntervalBox"
+            RelativePanel.AlignVerticalCenterWith="ContourIntervalBox"
+            Padding="20,20,0,0"
+            />
+
+        <TextBlock
+            x:Name="DrainageAreaLabel"
+            Text="Drainage Area"
+            RelativePanel.Below="ContourIntervalLabel"
+            RelativePanel.LeftOf="DrainageAreaBox"
+            RelativePanel.AlignVerticalCenterWith="DrainageAreaBox"
+            Padding="20,20,0,0"
+            />
+
+        <TextBlock
+            x:Name="AverageSlopeLabel"
+            Text="Average Slope"
+            RelativePanel.Below="DrainageAreaLabel"
+            RelativePanel.LeftOf="AverageSlopeBox"
+            RelativePanel.AlignVerticalCenterWith="AverageSlopeBox"
+            Padding="20,20,0,0"
+            />
+
+        <NumberBox
+            x:Name="ContourLengthBox"
+            RelativePanel.Below="InfoText"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Margin="0,20,0,0"
+            ValueChanged="NumberBoxesChanged"
+            />
+
+        <NumberBox
+            x:Name="ContourIntervalBox"
+            RelativePanel.Below="ContourLengthBox"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Margin="0,20,0,0"
+            ValueChanged="NumberBoxesChanged"
+            />
+
+        <NumberBox
+            x:Name="DrainageAreaBox"
+            RelativePanel.Below="ContourIntervalBox"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Margin="0,20,0,0"
+            Value="{Binding Path=DrainageArea, Mode=TwoWay}"
+            ValueChanged="NumberBoxesChanged"
+            />
+
+        <TextBox
+            x:Name="AverageSlopeBox"
+            RelativePanel.Below="DrainageAreaBox"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Margin="0,20,0,0"
+            Text="{Binding Path=WatershedSlope, Mode=TwoWay}"
+            IsReadOnly="True"
+            />
+
+        <TextBlock
+            x:Name="ContourLengthUnitLabel"
+            RelativePanel.RightOf="ContourLengthBox"
+            RelativePanel.AlignVerticalCenterWith="ContourLengthBox"
+            Text="feet"
+            Margin="20,20,0,0"
+            />
+
+        <TextBlock
+            x:Name="ContourIntervalUnitLabel"
+            RelativePanel.RightOf="ContourIntervalBox"
+            RelativePanel.AlignVerticalCenterWith="ContourIntervalBox"
+            Text="feet"
+            Margin="20,20,0,0"
+            />
+
+        <TextBlock
+            x:Name="DrainageAreaUnitLabel"
+            RelativePanel.RightOf="DrainageAreaBox"
+            RelativePanel.AlignVerticalCenterWith="DrainageAreaBox"
+            Text="acres"
+            Margin="20,20,0,0"
+            />
+
+        <TextBlock
+            x:Name="AverageSlopeUnitLabel"
+            RelativePanel.RightOf="AverageSlopeBox"
+            RelativePanel.AlignVerticalCenterWith="AverageSlopeBox"
+            RelativePanel.Below="DrainageAreaUnitLabel"
+            Text="percent"
+            Margin="20,20,0,0"
+            />
+
+        <Button
+            RelativePanel.Below="AverageSlopeBox"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Content="Close"
+            Margin="0,15,0,0"
+            />
+    </RelativePanel>
+</Page>

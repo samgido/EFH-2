@@ -36,9 +36,9 @@
             </MenuBarItem>
 
             <MenuBarItem Title="Tools" AccessKey="T">
-                <MenuFlyoutItem Text="Average Slope Calculator" x:Name="AverageSlopeCalculatorButton"
+                <MenuFlyoutItem Text="Average Slope Calculator" x:Name="SlopeCalculatorFlyout"
                                 AccessKey="A" Click="ShowAverageSlopeCalculator"/>
-                <MenuFlyoutItem Text="Hydrologic Soil Groups" x:Name="HSGButton"
+                <MenuFlyoutItem Text="Hydrologic Soil Groups" x:Name="HsgFlyout"
                                 AccessKey="H" Click="ShowHydrologicSoilGroups"/>
             </MenuBarItem>
 
@@ -66,12 +66,12 @@
             <AppBarButton Icon="Copy" Label="Copy" Click="CopyClicked"/>
             <AppBarButton Icon="Paste" Label="Paste" Click="PasteClicked"/>
             <AppBarSeparator/>
-            <AppBarButton Label="Slope Calculator" Click="ShowAverageSlopeCalculator">
+            <AppBarButton Label="Slope Calculator" Click="ShowAverageSlopeCalculator" Name="SlopeCalculatorButton">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xEB3C;"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Label="Hydrologic Soil Group" Click="ShowHydrologicSoilGroups">
+            <AppBarButton Label="Hydrologic Soil Group" Click="ShowHydrologicSoilGroups" Name="HsgButton">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE773;" />
                 </AppBarButton.Icon>
@@ -119,9 +119,9 @@
             </Grid.ColumnDefinitions>
 
             <local:IntroControl x:Name="IntroControl" Visibility="Visible" Grid.Column="0"/>
-            <local:BasicDataControl x:Name="BasicDataControl" Visibility="Collapsed" Grid.Column="0"/>
-            <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Collapsed" Grid.Column="0"/>
-            <local:RCNDataControl x:Name="RCNDataControl" Visibility="Collapsed" Grid.Column="0"/>
+            <local:BasicDataControl x:Name="BasicDataControl" Visibility="Visible" Grid.Column="0"/>
+            <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Visible" Grid.Column="0"/>
+            <local:RcnDataControl x:Name="RCNDataControl" Visibility="Visible" Grid.Column="0"/>
         </Grid>
     </RelativePanel>
 </Window>

@@ -40,20 +40,28 @@ namespace EFH2
 
         public RainfallDischargeDataViewModel RainfallDischargeDataViewModel { get; set; }
 
-        public RCNDataViewModel RcnDataViewModel { get; set; } 
+        public RcnDataViewModel RcnDataViewModel { get; set; } 
 
         public MainViewModel()
         {
             BasicDataViewModel = new BasicDataViewModel();
             RainfallDischargeDataViewModel = new RainfallDischargeDataViewModel();
-            RcnDataViewModel = new RCNDataViewModel();
+            RcnDataViewModel = new RcnDataViewModel();
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv")) BasicDataViewModel.LoadStatesAndCounties(reader);
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt")) RainfallDischargeDataViewModel.LoadDuhTypes(reader);
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt")) RainfallDischargeDataViewModel.LoadRainfallDistributionTypes(reader);
 
-            using (StreamReader reader = new("C:\\ProgramData\\USDA-dev\\Cover.txt")) RcnDataViewModel.LoadRCNTableEntries(reader);
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover.txt")) RcnDataViewModel.LoadRCNTableEntries(reader);
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg")) RcnDataViewModel.LoadHsgEntries(reader);
+        }
+
+        public void Default()
+        {
+            BasicDataViewModel.Default();
+            RainfallDischargeDataViewModel.Default();
+            RcnDataViewModel.Default();
         }
     }
 }

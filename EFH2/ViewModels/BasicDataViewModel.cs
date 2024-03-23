@@ -147,9 +147,9 @@ namespace EFH2
         private void SetCounties(List<string> list)
         {
             Counties.Clear();
-            ComboBoxItem c = new();
-            c.Content = MainViewModel.ChooseMessage;
-            Counties.Add(c);
+            //ComboBoxItem c = new();
+            //c.Content = MainViewModel.ChooseMessage;
+            //Counties.Add(c);
 
             foreach (string county in list)
             {
@@ -159,13 +159,13 @@ namespace EFH2
                 Counties.Add(countyItem);
             }
 
-            SelectedCountyIndex = 0;
+            if (Counties.Count != 0) SelectedCountyIndex = 0;
         }
 
         public void LoadStatesAndCounties(StreamReader reader)
         {
             reader.ReadLine();
-            _stateCountyDictionary.Add("Choose", new List<string>() { "Choose" });
+            _stateCountyDictionary.Add("Choose", new List<string>());
 
             while (!reader.EndOfStream)
             {
@@ -179,6 +179,7 @@ namespace EFH2
                 if (!_stateCountyDictionary.ContainsKey(state))
                 {
                     _stateCountyDictionary.Add(state, new());
+                    _stateCountyDictionary[state].Add("Choose");
                 }
 
                 _stateCountyDictionary[state].Add(county);
@@ -186,10 +187,7 @@ namespace EFH2
 
             foreach (string s in _stateCountyDictionary.Keys)
             {
-                ComboBoxItem cbox = new();
-                cbox.Content = s;
-
-                States.Add(cbox);
+                States.Add(new ComboBoxItem() { Content = s });
             }
         }
 
@@ -227,8 +225,8 @@ namespace EFH2
         {
             Client = "";
             selectedState = MainViewModel.ChooseMessage;
-            selectedCounty = MainViewModel.ChooseMessage;
-            SelectedCountyIndex = 0;
+            selectedCounty = "";
+            SelectedStateIndex = 0;
             Practice = "";
             Date = DateTime.Now;
             By = "";
@@ -238,6 +236,12 @@ namespace EFH2
             WatershedLength = double.NaN;
             WatershedSlope = double.NaN;
             TimeOfConcentration = double.NaN;
+
+            TimeOfConcentrationStatus = "";
+            WatershedSlopeStatus = "";
+            WatershedLengthStatus = "";
+            RunoffCurveNumberStatus = "";
+            DrainageAreaStatus = "";
         }
 
         public void Clear()

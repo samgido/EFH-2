@@ -14,6 +14,20 @@ namespace EFH2
 
         public int Weight { get; set; }
 
+        public double WeightedArea
+        {
+            get
+            {
+                if (!(Area.Equals(double.NaN))) return Area * Weight;
+                else return double.NaN;
+            }
+        }
+
         public bool Enabled => Weight != -1;
+
+        public void Default()
+        {
+            Area = double.NaN;
+        }
     }
 }

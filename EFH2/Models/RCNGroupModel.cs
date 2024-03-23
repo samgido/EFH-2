@@ -6,10 +6,34 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public class RCNGroupModel
+    public class RcnGroupModel
     {
-        public string Header = "";
+        public List<RcnEntryModel> Entries = new List<RcnEntryModel>();
 
-        public List<RCNEntryModel> Entries = new List<RCNEntryModel>();
+        public double AccumulatedArea
+        {
+            get
+            {
+                double total = 0;
+                foreach (RcnEntryModel entry in Entries)
+                {
+                    if (!(entry.Area.Equals(double.NaN))) total += entry.Area;
+                }
+                return total;
+            }
+        }
+
+        public double AccumulatedWeightedArea
+        {
+            get
+            {
+                double total = 0;
+                foreach (RcnEntryModel entry in Entries)
+                {
+                    if (!(entry.Area.Equals(double.NaN))) total += entry.WeightedArea;
+                }
+                return total;
+            }
+        }
     }
 }

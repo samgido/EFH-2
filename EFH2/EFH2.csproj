@@ -16,6 +16,8 @@
     <None Remove="Controls\IntroControl.xaml" />
     <None Remove="Controls\RainfallDischargeDataControl.xaml" />
     <None Remove="Controls\RCNDataControl.xaml" />
+    <None Remove="Pages\HsgPage.xaml" />
+    <None Remove="Pages\SlopeCalculatorPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230913002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -43,6 +46,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\SlopeCalculatorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\RCNDataControl.xaml">
@@ -61,6 +69,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\IntroControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\HsgPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
