@@ -91,24 +91,21 @@
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
             Text="{Binding Path=WatershedSlope, Mode=TwoWay}"
-            IsReadOnly="True"
-            />
+            IsReadOnly="True"/>
 
         <TextBlock
             x:Name="ContourLengthUnitLabel"
             RelativePanel.RightOf="ContourLengthBox"
             RelativePanel.AlignVerticalCenterWith="ContourLengthBox"
             Text="feet"
-            Margin="20,20,0,0"
-            />
+            Margin="20,20,0,0" />
 
         <TextBlock
             x:Name="ContourIntervalUnitLabel"
             RelativePanel.RightOf="ContourIntervalBox"
             RelativePanel.AlignVerticalCenterWith="ContourIntervalBox"
             Text="feet"
-            Margin="20,20,0,0"
-            />
+            Margin="20,20,0,0"/>
 
         <TextBlock
             x:Name="DrainageAreaUnitLabel"

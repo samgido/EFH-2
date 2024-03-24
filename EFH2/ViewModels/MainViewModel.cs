@@ -36,10 +36,17 @@ namespace EFH2
         [XmlIgnore]
         public static string TimeOfConcentrationInvalidEntryMessage = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
 
+        [XmlElement("Basic Data")]
         public BasicDataViewModel BasicDataViewModel { get; set; }
 
+        [XmlElement("Rainfall Discharge Data")]
         public RainfallDischargeDataViewModel RainfallDischargeDataViewModel { get; set; }
 
+        // for prettier serialization
+        [XmlElement("RCN Data")]
+        public RcnDataModel RcnDataModel { get; set; }
+
+        [XmlIgnore]
         public RcnDataViewModel RcnDataViewModel { get; set; } 
 
         public MainViewModel()

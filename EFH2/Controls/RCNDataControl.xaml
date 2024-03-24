@@ -10,8 +10,8 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <local:RCNRow x:Key="RCNColumn"/>
-        <local:RCNCategory x:Key="RCNCategory"/>
+        <local:RcnRow x:Key="RCNColumn"/>
+        <local:RcnCategory x:Key="RCNCategory"/>
         <converters:RCNConverter x:Key="RCNConverter"/>
     </UserControl.Resources>
 

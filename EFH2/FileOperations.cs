@@ -19,5 +19,13 @@ namespace EFH2
             XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
             serializer.Serialize(writer, model);
         }
+
+        public static MainViewModel? DeserializeData(StreamReader reader)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
+
+            if (serializer.Deserialize(reader) is MainViewModel model) return model;
+            else return null;
+        }
     }
 }

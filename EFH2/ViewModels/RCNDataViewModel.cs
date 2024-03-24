@@ -20,7 +20,7 @@ namespace EFH2
     public partial class RcnDataViewModel : ObservableObject
     {
         [ObservableProperty]
-        private List<RCNCategory> rcnCategories;
+        private List<RcnCategory> rcnCategories;
 
         public ObservableCollection<HsgEntry> HsgEntries { get; } = new();
 
@@ -29,7 +29,7 @@ namespace EFH2
             get
             {
                 double total = 0;
-                foreach (RCNCategory category in RcnCategories)
+                foreach (RcnCategory category in RcnCategories)
                 {
                     if (!(category.AccumulatedArea.Equals(double.NaN))) total += category.AccumulatedArea;
                 }
@@ -42,7 +42,7 @@ namespace EFH2
             get
             {
                 double total = 0;
-                foreach (RCNCategory category in RcnCategories)
+                foreach (RcnCategory category in RcnCategories)
                 {
                     if (!(category.AccumulatedArea.Equals(double.NaN))) total += category.AccumulatedWeightedArea;
                 }
@@ -59,8 +59,8 @@ namespace EFH2
         {
             var _ = reader.ReadLine();
 
-            RCNCategory currentCategory = new();
-            List<RCNCategory> categories = new();
+            RcnCategory currentCategory = new();
+            List<RcnCategory> categories = new();
 
             while (!reader.EndOfStream)
             {
@@ -76,7 +76,7 @@ namespace EFH2
                 }
                 else // add to the current category as long as there are input fields
                 {
-                    RCNRow row = new();
+                    RcnRow row = new();
                     row.Text[0] = splitLine[1];
                     row.Text[1] = splitLine[2];
                     row.Text[2] = splitLine[3];
@@ -96,9 +96,9 @@ namespace EFH2
 
             RcnCategories = categories;
 
-            foreach (RCNCategory category in RcnCategories)
+            foreach (RcnCategory category in RcnCategories)
             {
-                foreach (RCNRow row in category.Rows)
+                foreach (RcnRow row in category.Rows)
                 {
                     row.Entries[0].PropertyChanged += EntryChanged;
                     row.Entries[1].PropertyChanged += EntryChanged;
@@ -132,10 +132,57 @@ namespace EFH2
             this.OnPropertyChanged(nameof(WeightedCurveNumber));
         }
 
-        public void Default()
+        public RcnDataModel ToRcnDataModel()
         {
-            foreach (RCNCategory category in RcnCategories) category.Default();
+            RcnDataModel model = new RcnDataModel();
+
+            foreach (RcnCategory category in RcnCategories)
+            {
+                foreach (RcnRow row in category.Rows)
+                {
+                    model.GroupA.Entries.Add(new RcnEntryModel()
+                    {
+                        Area = row.Entries[0].Area,
+                        Weight = row.Entries[0].Weight,
+                    });
+
+                    model.GroupB.Entries.Add(new RcnEntryModel()
+                    {
+                        Area = row.Entries[1].Area,
+                        Weight = row.Entries[1].Weight,
+                    });
+                    
+                    model.GroupC.Entries.Add(new RcnEntryModel()
+                    {
+                        Area = row.Entries[2].Area,
+                        Weight = row.Entries[2].Weight,
+                    });
+
+                    model.GroupD.Entries.Add(new RcnEntryModel()
+                    {
+                        Area = row.Entries[3].Area,
+                        Weight = row.Entries[3].Weight,
+                    });
+
+                }
+            }
+
+            return model;
         }
 
+        public void LoadRcnDataModel(RcnDataModel data)
+        {
+            foreach (RcnCategory category in RcnCategories)
+            {
+                foreach (RcnRow row in category.Rows)
+                {
+                }
+            }
+        }
+
+        public void Default()
+        {
+            foreach (RcnCategory category in RcnCategories) category.Default();
+        }
     }
 }

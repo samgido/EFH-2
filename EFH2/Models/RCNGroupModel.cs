@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,10 @@ namespace EFH2
 {
     public class RcnGroupModel
     {
+        [XmlElement("Entries")]
         public List<RcnEntryModel> Entries = new List<RcnEntryModel>();
 
+        [XmlIgnore]
         public double AccumulatedArea
         {
             get
@@ -23,6 +26,7 @@ namespace EFH2
             }
         }
 
+        [XmlIgnore]
         public double AccumulatedWeightedArea
         {
             get

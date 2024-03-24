@@ -26,8 +26,8 @@ namespace EFH2
         private int _selectedDuhTypeIndex = 0;
 
         [ObservableProperty]
-        [property: XmlIgnore]
-        private ObservableCollection<StormModel> _storms = new();
+        [XmlElement("Storm Data")]
+        private ObservableCollection<StormViewModel> _storms = new();
 
         [ObservableProperty]
         [property: XmlIgnore]
@@ -114,7 +114,7 @@ namespace EFH2
             selectedRainfallDistributionType = MainViewModel.ChooseMessage;
             selectedDuhType = MainViewModel.ChooseMessage;
 
-            foreach (StormModel storm in Storms)
+            foreach (StormViewModel storm in Storms)
             {
                 storm.Default();
             }
@@ -131,7 +131,7 @@ namespace EFH2
         {
             for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
             {
-                StormModel storm = new StormModel() { Name = "Storm #" + (i + 1) };
+                StormViewModel storm = new StormViewModel() { Name = "Storm #" + (i + 1) };
                 Storms.Add(storm);
             }
         }

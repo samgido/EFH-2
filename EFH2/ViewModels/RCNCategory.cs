@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public partial class RCNCategory : ObservableObject
+    public partial class RcnCategory : ObservableObject
     {
         [ObservableProperty]
         private string _label = "";
 
         [ObservableProperty]
-        private List<RCNRow> _rows = new();
+        private List<RcnRow> _rows = new();
 
         public double AccumulatedArea
         {
             get
             {
                 double total = 0;
-                foreach (RCNRow row in Rows)
+                foreach (RcnRow row in Rows)
                 {
                     if (!(row.AccumulatedArea.Equals(double.NaN))) total += row.AccumulatedArea;
                 }
@@ -33,7 +33,7 @@ namespace EFH2
             get
             {
                 double total = 0;
-                foreach (RCNRow row in Rows)
+                foreach (RcnRow row in Rows)
                 {
                     if (!(row.AccumulatedArea.Equals(double.NaN))) total += row.AccumulatedWeightedArea;
                 }
@@ -43,7 +43,7 @@ namespace EFH2
 
         public void Default()
         {
-            foreach (RCNRow row in Rows) row.Default();
+            foreach (RcnRow row in Rows) row.Default();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public partial class RCNRow : ObservableObject
+    public partial class RcnRow : ObservableObject
     {
         [ObservableProperty]
         private string[] _text = { "", "", "", "" };

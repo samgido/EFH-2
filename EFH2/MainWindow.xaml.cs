@@ -72,13 +72,36 @@ namespace EFH2
             MainViewModel.Default();
         }
 
-        private void OpenClicked(object sender, RoutedEventArgs e)
+        private async void OpenClicked(object sender, RoutedEventArgs e)
         {
 
+            var openPicker = new FileOpenPicker();
+
+            var window = this;
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
+
+            openPicker.FileTypeFilter.Add("*.xml");
+            var file = await openPicker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                using (StreamReader reader = new StreamReader(file.Path))
+                {
+                    if (FileOperations.DeserializeData(reader) != null)
+                    {
+                        MainViewModel = FileOperations.DeserializeData(reader);
+                        
+                    }
+                    // TODO - show error
+                }
+            }
         }
 
         private async void SaveClicked(object sender, RoutedEventArgs e)
         {
+            MainViewModel.RcnDataModel = MainViewModel.RcnDataViewModel.ToRcnDataModel();
+
             var savePicker = new FileSavePicker();
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });

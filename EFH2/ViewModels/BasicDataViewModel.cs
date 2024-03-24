@@ -67,10 +67,10 @@ namespace EFH2
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _counties = new();
 
-        [XmlElement("SelectedState")]
+        [XmlElement("Selected State")]
         public string selectedState = "";
 
-        [XmlElement("SelectedCounty")]
+        [XmlElement("Selected County")]
         public string selectedCounty = "";
 
         [XmlIgnore]
@@ -80,23 +80,23 @@ namespace EFH2
         private int _selectedCountyIndex = 0;
 
         [ObservableProperty]
-        [XmlElement("DrainageArea")]
+        [XmlElement("Drainage Area")]
         private double _drainageArea = double.NaN;
 
         [ObservableProperty]
-        [XmlElement("RunoffCurveNumber")]
+        [XmlElement("Runoff Curve Number")]
         private double _runoffCurveNumber = double.NaN;
 
         [ObservableProperty]
-        [XmlElement("WatershedLength")]
+        [XmlElement("Watershed Length")]
         private double _watershedLength = double.NaN;
 
         [ObservableProperty]
-        [XmlElement("WatershedSlope")]
+        [XmlElement("Watershed Slope")]
         private double _watershedSlope = double.NaN;
 
         [ObservableProperty]
-        [XmlElement("TimeOfConcentration")]
+        [XmlElement("Time Of Concentration")]
         private double _timeOfConcentration = double.NaN;
 
         [ObservableProperty]
