@@ -81,17 +81,21 @@ namespace EFH2
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
 
-            openPicker.FileTypeFilter.Add("*.xml");
+            openPicker.FileTypeFilter.Add(".xml");
             var file = await openPicker.PickSingleFileAsync();
 
             if (file != null)
             {
                 using (StreamReader reader = new StreamReader(file.Path))
                 {
-                    if (FileOperations.DeserializeData(reader) != null)
+                    reader.BaseStream.Position = 0;
+                    MainViewModel? model = FileOperations.DeserializeData(reader);
+                    if (model != null)
                     {
-                        MainViewModel = FileOperations.DeserializeData(reader);
-                        
+                        MainViewModel = model;
+                        MainViewModel.RcnDataViewModel.LoadRcnDataModel(MainViewModel.RcnDataModel);
+
+                        MainViewModel.BasicDataViewModel.Refresh();
                     }
                     // TODO - show error
                 }

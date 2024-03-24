@@ -73,10 +73,10 @@ namespace EFH2
         [XmlElement("Selected County")]
         public string selectedCounty = "";
 
-        [XmlIgnore]
+        [XmlElement("Selected State Index")]
         private int _selectedStateIndex = 0;
 
-        [XmlIgnore]
+        [XmlElement("Selected County Index")]
         private int _selectedCountyIndex = 0;
 
         [ObservableProperty]
@@ -219,6 +219,21 @@ namespace EFH2
         {
             if (TimeOfConcentration >= TimeOfConcentrationMin && TimeOfConcentration <= TimeOfConcentrationMax) TimeOfConcentrationStatus = MainViewModel.UserEnteredMessage;
             else TimeOfConcentrationStatus = MainViewModel.TimeOfConcentrationInvalidEntryMessage;
+        }
+
+        public void Refresh()
+        {
+            this.OnPropertyChanged(nameof(Client));
+            this.OnPropertyChanged(nameof(SelectedStateIndex));
+            this.OnPropertyChanged(nameof(SelectedCountyIndex));
+            this.OnPropertyChanged(nameof(Practice));
+            this.OnPropertyChanged(nameof(By));
+
+            this.OnPropertyChanged(nameof(DrainageArea));
+            this.OnPropertyChanged(nameof(RunoffCurveNumber));
+            this.OnPropertyChanged(nameof(WatershedLength));
+            this.OnPropertyChanged(nameof(WatershedSlope));
+            this.OnPropertyChanged(nameof(TimeOfConcentration));
         }
 
         public void Default()

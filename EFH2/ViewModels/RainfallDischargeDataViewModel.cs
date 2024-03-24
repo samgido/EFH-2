@@ -109,6 +109,10 @@ namespace EFH2
             SelectedDuhTypeIndex = 0;
         }
 
+        public void Load(RainfallDischargeDataViewModel newData)
+        {
+        }
+
         public void Default()
         {
             selectedRainfallDistributionType = MainViewModel.ChooseMessage;

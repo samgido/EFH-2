@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace EFH2
 {
@@ -20,7 +21,7 @@ namespace EFH2
     public partial class RcnDataViewModel : ObservableObject
     {
         [ObservableProperty]
-        private List<RcnCategory> rcnCategories;
+        private List<RcnCategory> _rcnCategories;
 
         public ObservableCollection<HsgEntry> HsgEntries { get; } = new();
 
@@ -172,12 +173,23 @@ namespace EFH2
 
         public void LoadRcnDataModel(RcnDataModel data)
         {
+            int i = 0;
             foreach (RcnCategory category in RcnCategories)
             {
                 foreach (RcnRow row in category.Rows)
                 {
+                    if (data.GroupA.Entries.Count > i)
+                    {
+                        row.Entries[0].Area = data.GroupA.Entries[i].Area;
+                        row.Entries[1].Area = data.GroupB.Entries[i].Area;
+                        row.Entries[2].Area = data.GroupC.Entries[i].Area;
+                        row.Entries[3].Area = data.GroupD.Entries[i].Area;
+                        i++;
+                    }
                 }
             }
+
+            this.OnPropertyChanged(nameof(RcnCategories));
         }
 
         public void Default()

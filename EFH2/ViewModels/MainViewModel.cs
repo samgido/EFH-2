@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
+    [XmlRoot("MainViewModel")]
     public class MainViewModel
     {
         [XmlIgnore]
@@ -42,12 +43,12 @@ namespace EFH2
         [XmlElement("Rainfall Discharge Data")]
         public RainfallDischargeDataViewModel RainfallDischargeDataViewModel { get; set; }
 
-        // for prettier serialization
+        // Only have to store areas and weights, probably don't have to store weights really
         [XmlElement("RCN Data")]
         public RcnDataModel RcnDataModel { get; set; }
 
         [XmlIgnore]
-        public RcnDataViewModel RcnDataViewModel { get; set; } 
+        public RcnDataViewModel RcnDataViewModel { get; set; }
 
         public MainViewModel()
         {
@@ -62,6 +63,10 @@ namespace EFH2
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover.txt")) RcnDataViewModel.LoadRCNTableEntries(reader);
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg")) RcnDataViewModel.LoadHsgEntries(reader);
+        }
+
+        public void Load(MainViewModel newData)
+        {
         }
 
         public void Default()
