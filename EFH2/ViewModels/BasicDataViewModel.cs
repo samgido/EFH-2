@@ -73,10 +73,12 @@ namespace EFH2
         [XmlElement("Selected County")]
         public string selectedCounty = "";
 
-        [XmlElement("Selected State Index")]
+        //[XmlElement("Selected State Index")]
+        [XmlIgnore]
         private int _selectedStateIndex = 0;
 
-        [XmlElement("Selected County Index")]
+        //[XmlElement("Selected County Index")]
+        [XmlIgnore]
         private int _selectedCountyIndex = 0;
 
         [ObservableProperty]
@@ -147,9 +149,6 @@ namespace EFH2
         private void SetCounties(List<string> list)
         {
             Counties.Clear();
-            //ComboBoxItem c = new();
-            //c.Content = MainViewModel.ChooseMessage;
-            //Counties.Add(c);
 
             foreach (string county in list)
             {
@@ -221,21 +220,6 @@ namespace EFH2
             else TimeOfConcentrationStatus = MainViewModel.TimeOfConcentrationInvalidEntryMessage;
         }
 
-        public void Refresh()
-        {
-            this.OnPropertyChanged(nameof(Client));
-            this.OnPropertyChanged(nameof(SelectedStateIndex));
-            this.OnPropertyChanged(nameof(SelectedCountyIndex));
-            this.OnPropertyChanged(nameof(Practice));
-            this.OnPropertyChanged(nameof(By));
-
-            this.OnPropertyChanged(nameof(DrainageArea));
-            this.OnPropertyChanged(nameof(RunoffCurveNumber));
-            this.OnPropertyChanged(nameof(WatershedLength));
-            this.OnPropertyChanged(nameof(WatershedSlope));
-            this.OnPropertyChanged(nameof(TimeOfConcentration));
-        }
-
         public void Default()
         {
             Client = "";
@@ -268,6 +252,43 @@ namespace EFH2
             WatershedLengthStatus = MainViewModel.ClearedMessage;
             RunoffCurveNumberStatus = MainViewModel.ClearedMessage;
             DrainageAreaStatus = MainViewModel.ClearedMessage;
+        }
+
+        public void Load(BasicDataViewModel model)
+        {
+            Client = model.Client;
+            Practice = model.Practice;
+            By = model.By;
+            Date = model.Date;
+
+            for (int i = 0; i < States.Count; i++)
+            {
+                string content = States[i].Content as string;
+                if (content == model.selectedState)
+                {
+                    SelectedStateIndex = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < Counties.Count; i++)
+            {
+                string content = Counties[i].Content as string;
+                if (content == model.selectedCounty)
+                {
+                    SelectedCountyIndex = i;
+                    break;
+                }
+            }
+
+            //SelectedStateIndex = model.SelectedStateIndex;
+            //if (Counties.Count != 0) SelectedCountyIndex = model.SelectedCountyIndex;
+
+            DrainageArea = model.DrainageArea;
+            RunoffCurveNumber = model.RunoffCurveNumber;
+            WatershedLength = model.WatershedLength;
+            WatershedSlope = model.WatershedSlope;
+            TimeOfConcentration = model.TimeOfConcentration;
         }
     }
 }

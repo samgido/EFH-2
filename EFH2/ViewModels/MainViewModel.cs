@@ -43,7 +43,7 @@ namespace EFH2
         [XmlElement("Rainfall Discharge Data")]
         public RainfallDischargeDataViewModel RainfallDischargeDataViewModel { get; set; }
 
-        // Only have to store areas and weights, probably don't have to store weights really
+        // Only have to store areas and weights,
         [XmlElement("RCN Data")]
         public RcnDataModel RcnDataModel { get; set; }
 
@@ -67,6 +67,9 @@ namespace EFH2
 
         public void Load(MainViewModel newData)
         {
+            BasicDataViewModel.Load(newData.BasicDataViewModel);
+            RcnDataViewModel.LoadDataModel(newData.RcnDataModel);
+            RainfallDischargeDataViewModel.Load(newData.RainfallDischargeDataViewModel);
         }
 
         public void Default()

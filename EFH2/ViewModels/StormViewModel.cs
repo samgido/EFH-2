@@ -52,5 +52,14 @@ namespace EFH2
 
             DisplayHydrograph = false;
         }
+
+        public void Load(StormViewModel model)
+        {
+            DayRain = model.DayRain;
+            Years = model.Years;
+            PeakFlow = model.PeakFlow;
+            Runoff = model.Runoff;
+            DisplayHydrograph = model.DisplayHydrograph;
+        }
     }
 }

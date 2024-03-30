@@ -90,13 +90,7 @@ namespace EFH2
                 {
                     reader.BaseStream.Position = 0;
                     MainViewModel? model = FileOperations.DeserializeData(reader);
-                    if (model != null)
-                    {
-                        MainViewModel = model;
-                        MainViewModel.RcnDataViewModel.LoadRcnDataModel(MainViewModel.RcnDataModel);
-
-                        MainViewModel.BasicDataViewModel.Refresh();
-                    }
+                    if (model != null) MainViewModel.Load(model);
                     // TODO - show error
                 }
             }

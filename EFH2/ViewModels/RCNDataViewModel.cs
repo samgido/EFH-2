@@ -171,9 +171,11 @@ namespace EFH2
             return model;
         }
 
-        public void LoadRcnDataModel(RcnDataModel data)
+        public void LoadDataModel(RcnDataModel data)
         {
             int i = 0;
+            if (data == null) return;
+
             foreach (RcnCategory category in RcnCategories)
             {
                 foreach (RcnRow row in category.Rows)
