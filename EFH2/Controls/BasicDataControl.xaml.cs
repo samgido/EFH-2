@@ -78,16 +78,18 @@ namespace EFH2
         {
             if (DataContext is BasicDataViewModel model)
             {
-                if (model.DrainageArea.Equals(double.NaN)) return;
-                if (model.RunoffCurveNumber.Equals(double.NaN)) return;
-                if (model.WatershedLength.Equals(double.NaN)) return;
-                if (model.WatershedSlope.Equals(double.NaN)) return;
-                if (model.WatershedSlope.Equals(double.NaN)) return;
-
                 double final = (Math.Pow(model.WatershedLength, 0.8) * Math.Pow(((1000 / model.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(model.WatershedSlope, 0.5));
 
-                model.TimeOfConcentration = Math.Round(final, 2);
-                model.TimeOfConcentrationStatus = "Calculated";
+                if (!final.Equals(double.NaN))
+                {
+                    model.TimeOfConcentration = Math.Round(final, 2);
+                    model.TimeOfConcentrationStatus = "Calculated";
+                }
+                else
+                {
+                    model.TimeOfConcentration = double.NaN;
+                    model.TimeOfConcentrationStatus = "";
+                }
             }
         }
     }
