@@ -28,6 +28,15 @@ namespace EFH2
             this.InitializeComponent();
         }
 
+        public void SetDataContext()
+        {
+            if (DataContext is BasicDataViewModel model)
+            {
+                DrainageAreaBox.DataContext = model.drainageAreaEntry;
+                AverageSlopeBox.DataContext = model.watershedSlopeEntry;
+            }
+        }
+
         private void NumberBoxesChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             if (DataContext is BasicDataViewModel model)
@@ -41,7 +50,7 @@ namespace EFH2
                     double slope = (contourLength * contourInterval) / (drainageArea * 435.6);
                     if (slope > 0 && slope != double.PositiveInfinity)
                     {
-                        model.WatershedSlope = Math.Round(slope, 2);
+                        model.watershedSlopeEntry.Value = Math.Round(slope, 2);
                     }
                 }
             }

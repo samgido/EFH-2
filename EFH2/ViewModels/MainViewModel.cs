@@ -26,17 +26,6 @@ namespace EFH2
         [XmlIgnore]
         private const string _importedStatusMessage = "Imported from file";
 
-        [XmlIgnore]
-        public static string DrainageAreaInvalidEntryMessage  = "Drainage area must be in the range 1 to 2000 acres!";
-        [XmlIgnore]
-        public static string RunoffCurveNumberInvalidEntryMessage = "Curve number must be in the range 40 to 98!";
-        [XmlIgnore]
-        public static string WatershedLengthInvalidEntryMessage = "Watershed length must be in the range 200 to 26000 feet!";
-        [XmlIgnore]
-        public static string WatershedSlopeInvalidEntryMessage = "Watershed slope must be the range 0.5 and 64 percent!";
-        [XmlIgnore]
-        public static string TimeOfConcentrationInvalidEntryMessage = "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!";
-
         [XmlElement("Basic Data")]
         public BasicDataViewModel BasicDataViewModel { get; set; }
 

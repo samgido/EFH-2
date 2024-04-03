@@ -36,26 +36,28 @@ namespace EFH2
 
             Navigation.SelectedItem = IntroNavButton;
 
-            BasicDataControl.Visibility = Visibility.Collapsed;
-            RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
-            RcnDataControl.Visibility = Visibility.Collapsed;
-
             MainViewModel = new MainViewModel();
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
+            BasicDataControl.SetDataContext();
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
 
             FocusManager.GotFocus += FocusManagerGotFocus;
+
+            RcnDataControl.Visibility = Visibility.Visible;
+            BasicDataControl.Visibility = Visibility.Visible;
+            RainfallDischargeDataControl.Visibility = Visibility.Visible;
+            IntroControl.Visibility = Visibility.Visible;
         }
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
         {
-            MainViewModel.BasicDataViewModel.DrainageArea = e.AccumulatedArea;
-            MainViewModel.BasicDataViewModel.RunoffCurveNumber = e.WeightedCurveNumber;
+            MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
+            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = e.WeightedCurveNumber;
 
-            MainViewModel.BasicDataViewModel.DrainageAreaStatus = "From RCN.";
-            MainViewModel.BasicDataViewModel.RunoffCurveNumberStatus = "From RCN.";
+            MainViewModel.BasicDataViewModel.drainageAreaEntry.Status = "From RCN.";
+            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Status = "From RCN.";
 
             HideControls();
             BasicDataControl.Visibility = Visibility.Visible;
@@ -187,6 +189,7 @@ namespace EFH2
         {
             Window newWindow = new Window();
             SlopeCalculatorPage page = new SlopeCalculatorPage() { DataContext = MainViewModel.BasicDataViewModel };
+            page.SetDataContext();
             newWindow.Content = page;
             newWindow.Title = "Average Slope Calculator";
             newWindow.Activate();

@@ -81,7 +81,7 @@
             RelativePanel.Below="ContourIntervalBox"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
-            Value="{Binding Path=DrainageArea, Mode=TwoWay}"
+            Value="{Binding Path=Value, Mode=TwoWay}"
             ValueChanged="NumberBoxesChanged"
             />
 
@@ -90,7 +90,7 @@
             RelativePanel.Below="DrainageAreaBox"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             Margin="0,20,0,0"
-            Text="{Binding Path=WatershedSlope, Mode=TwoWay}"
+            Text="{Binding Path=Value, Mode=TwoWay}"
             IsReadOnly="True"/>
 
         <TextBlock

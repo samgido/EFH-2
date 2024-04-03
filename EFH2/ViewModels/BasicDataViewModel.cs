@@ -15,30 +15,16 @@ namespace EFH2
 {
     public partial class BasicDataViewModel : ObservableObject
     {
-        [XmlIgnore]
-        public static int DrainageAreaMin => 1;
-        [XmlIgnore]
-        public static int DrainageAreaMax => 2000;
-
-        [XmlIgnore]
-        public static int RunoffCurveNumberMin => 40;
-        [XmlIgnore]
-        public static int RunoffCurveNumberMax => 98;
-
-        [XmlIgnore]
-        public static int WatershedLengthMin => 200;
-        [XmlIgnore]
-        public static int WatershedLengthMax => 26000;
-
-        [XmlIgnore]
-        public static double WatershedSlopeMin => 0.5;
-        [XmlIgnore]
-        public static double WatershedSlopeMax => 64;
-
-        [XmlIgnore]
-        public static double TimeOfConcentrationMin => 0.1;
-        [XmlIgnore]
-        public static double TimeOfConcentrationMax => 10;
+        [XmlElement("Drainage Area")]
+        public BasicDataEntryViewModel drainageAreaEntry = new BasicDataEntryViewModel(1, 2000, "Drainage Area", "Drainage area must be in the range 1 to 2000 acres!");
+        [XmlElement("Runoff Curve Number")]
+        public BasicDataEntryViewModel runoffCurveNumberEntry = new BasicDataEntryViewModel(40, 98, "Runoff Curve Number", "Curve number must be in the range 40 to 98!");
+        [XmlElement("Watershed Length")]
+        public BasicDataEntryViewModel watershedLengthEntry = new BasicDataEntryViewModel(200, 26000, "Watershed Length", "Watershed length must be in the range 200 to 26000 feet!");
+        [XmlElement("Watershed Slope")]
+        public BasicDataEntryViewModel watershedSlopeEntry = new BasicDataEntryViewModel(.5, 64, "Watershed Slope", "Watershed slope must be the range 0.5 and 64 percent!");
+        [XmlElement("Time Of Concentration")]
+        public BasicDataEntryViewModel timeOfConcentrationEntry = new BasicDataEntryViewModel(.1, 10, "Time Of Concentration", "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!");
 
         [XmlIgnore]
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
@@ -80,46 +66,6 @@ namespace EFH2
         //[XmlElement("Selected County Index")]
         [XmlIgnore]
         private int _selectedCountyIndex = 0;
-
-        [ObservableProperty]
-        [XmlElement("Drainage Area")]
-        private double _drainageArea = double.NaN;
-
-        [ObservableProperty]
-        [XmlElement("Runoff Curve Number")]
-        private double _runoffCurveNumber = double.NaN;
-
-        [ObservableProperty]
-        [XmlElement("Watershed Length")]
-        private double _watershedLength = double.NaN;
-
-        [ObservableProperty]
-        [XmlElement("Watershed Slope")]
-        private double _watershedSlope = double.NaN;
-
-        [ObservableProperty]
-        [XmlElement("Time Of Concentration")]
-        private double _timeOfConcentration = double.NaN;
-
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _drainageAreaStatus = "";
-
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _runoffCurveNumberStatus = "";
-
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _watershedLengthStatus = "";
-
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _watershedSlopeStatus = "";
-
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _timeOfConcentrationStatus = "";
 
         [XmlIgnore]
         public int SelectedStateIndex
@@ -190,34 +136,10 @@ namespace EFH2
             }
         }
 
-        public void CheckDrainageArea()
+        public void CheckFieldChange(BasicDataEntryViewModel model, double newValue)
         {
-            if (DrainageArea >= DrainageAreaMin && DrainageArea <= DrainageAreaMax) DrainageAreaStatus = MainViewModel.UserEnteredMessage; 
-            else DrainageAreaStatus = MainViewModel.DrainageAreaInvalidEntryMessage;
-        }
-
-        public void CheckRunoffCurveNumber()
-        {
-            if (RunoffCurveNumber >= RunoffCurveNumberMin && RunoffCurveNumber <= RunoffCurveNumberMax) RunoffCurveNumberStatus = MainViewModel.UserEnteredMessage; 
-            else RunoffCurveNumberStatus = MainViewModel.RunoffCurveNumberInvalidEntryMessage;
-        }
-
-        public void CheckWatershedLength()
-        {
-            if (WatershedLength >= WatershedLengthMin && WatershedLength <= WatershedLengthMax) WatershedLengthStatus = MainViewModel.UserEnteredMessage; 
-            else WatershedLengthStatus = MainViewModel.WatershedLengthInvalidEntryMessage;
-        }
-
-        public void CheckWatershedSlope()
-        {
-            if (WatershedSlope >= WatershedSlopeMin && WatershedSlope <= WatershedSlopeMax) WatershedSlopeStatus = MainViewModel.UserEnteredMessage;
-            else WatershedSlopeStatus = MainViewModel.WatershedSlopeInvalidEntryMessage;
-        }
-
-        public void CheckTimeOfConcentration()
-        {
-            if (TimeOfConcentration >= TimeOfConcentrationMin && TimeOfConcentration <= TimeOfConcentrationMax) TimeOfConcentrationStatus = MainViewModel.UserEnteredMessage;
-            else TimeOfConcentrationStatus = MainViewModel.TimeOfConcentrationInvalidEntryMessage;
+            if (newValue < model.Max && newValue > model.Min) model.Value = newValue;
+            else model.Status = model.InvalidEntryStatus;
         }
 
         public void Default()
@@ -230,28 +152,22 @@ namespace EFH2
             Date = DateTime.Now;
             By = "";
 
-            DrainageArea = double.NaN;
-            RunoffCurveNumber = double.NaN;
-            WatershedLength = double.NaN;
-            WatershedSlope = double.NaN;
-            TimeOfConcentration = double.NaN;
-
-            TimeOfConcentrationStatus = "";
-            WatershedSlopeStatus = "";
-            WatershedLengthStatus = "";
-            RunoffCurveNumberStatus = "";
-            DrainageAreaStatus = "";
+            drainageAreaEntry.Default();
+            runoffCurveNumberEntry.Default();
+            watershedLengthEntry.Default();
+            watershedSlopeEntry.Default();
+            timeOfConcentrationEntry.Default();
         }
 
         public void Clear()
         {
             Default();
 
-            TimeOfConcentrationStatus = MainViewModel.ClearedMessage;
-            WatershedSlopeStatus = MainViewModel.ClearedMessage;
-            WatershedLengthStatus = MainViewModel.ClearedMessage;
-            RunoffCurveNumberStatus = MainViewModel.ClearedMessage;
-            DrainageAreaStatus = MainViewModel.ClearedMessage;
+            timeOfConcentrationEntry.Status = MainViewModel.ClearedMessage;
+            watershedSlopeEntry.Status = MainViewModel.ClearedMessage;
+            watershedLengthEntry.Status = MainViewModel.ClearedMessage;
+            runoffCurveNumberEntry.Status = MainViewModel.ClearedMessage;
+            drainageAreaEntry.Status = MainViewModel.ClearedMessage;
         }
 
         public void Load(BasicDataViewModel model)
@@ -281,14 +197,11 @@ namespace EFH2
                 }
             }
 
-            //SelectedStateIndex = model.SelectedStateIndex;
-            //if (Counties.Count != 0) SelectedCountyIndex = model.SelectedCountyIndex;
-
-            DrainageArea = model.DrainageArea;
-            RunoffCurveNumber = model.RunoffCurveNumber;
-            WatershedLength = model.WatershedLength;
-            WatershedSlope = model.WatershedSlope;
-            TimeOfConcentration = model.TimeOfConcentration;
+            drainageAreaEntry.Value = model.drainageAreaEntry.Value;
+            runoffCurveNumberEntry.Value = model.runoffCurveNumberEntry.Value;
+            watershedLengthEntry.Value = model.watershedLengthEntry.Value;
+            watershedSlopeEntry.Value = model.watershedSlopeEntry.Value;
+            timeOfConcentrationEntry.Value = model.timeOfConcentrationEntry.Value;
         }
     }
 }

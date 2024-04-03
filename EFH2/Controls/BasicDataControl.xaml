@@ -51,11 +51,11 @@
         </RelativePanel>
 
         <StackPanel Margin="60,40">
-            <RelativePanel Margin="0,5">
+            <RelativePanel Margin="0,5" x:Name="DrainageAreaControls">
                 <TextBlock x:Name="DrainageAreaLabel" RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Text="Drainage Area: " Margin="20,0,0,0" />
+                    Text="{Binding Path=Name}" Margin="20,0,0,0" />
 
-                <NumberBox x:Name="DrainageArea" Value="{Binding Path=DrainageArea, Mode=TwoWay}"  ValueChanged="DrainageAreaValueChanged" Minimum="0"
+                <NumberBox x:Name="DrainageArea" Value="{Binding Path=Value, Mode=TwoWay}"  ValueChanged="BasicDataFieldValueChanged" Minimum="0"
                     PlaceholderText="" Margin= "200,0,0,0">
                     <ToolTipService.ToolTip>
                         Watershed area in acres (limits 1 to 2000)
@@ -65,32 +65,32 @@
                 <TextBlock x:Name="AcresLabel" Text="acres" Margin="10,0,0,0"
                            RelativePanel.RightOf="DrainageArea" RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <TextBlock x:Name="DrainageAreaStatus" Text="{Binding Path=DrainageAreaStatus, Mode=OneWay}"  Padding="75,0,0,0" Foreground="HotPink" 
+                <TextBlock x:Name="DrainageAreaStatus" Text="{Binding Path=Status, Mode=OneWay}"  Padding="75,0,0,0" Foreground="HotPink" 
                            RelativePanel.RightOf="DrainageArea" RelativePanel.AlignVerticalCenterWith="DrainageArea"/>
             </RelativePanel>
 
-            <RelativePanel Margin="0, 5">
+            <RelativePanel Margin="0, 5" x:Name="RunoffCurveNumberControls">
 
-                <TextBlock x:Name="RunoffCurveNumberLabel" Text="Runoff Curve Number:" Margin="20,0,0,0"
+                <TextBlock x:Name="RunoffCurveNumberLabel" Text="{Binding Path=Name}" Margin="20,0,0,0"
                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="RunoffCurveNumber" Value="{Binding Path=RunoffCurveNumber, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0"
-                           ValueChanged="RunoffCurveNumberValueChanged">
+                <NumberBox x:Name="RunoffCurveNumber" Value="{Binding Path=Value, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0"
+                           ValueChanged="BasicDataFieldValueChanged">
                     <ToolTipService.ToolTip>
                         Weighted NRCS watershed curve number (limits 40 to 98)
                     </ToolTipService.ToolTip>
                 </NumberBox>
 
-                <TextBlock x:Name="RunoffCurveNumberStatus" Text="{Binding Path=RunoffCurveNumberStatus, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink"
+                <TextBlock x:Name="RunoffCurveNumberStatus" Text="{Binding Path=Status, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink"
                            RelativePanel.RightOf="RunoffCurveNumber" RelativePanel.AlignVerticalCenterWith="RunoffCurveNumber"/>
             </RelativePanel>
 
-            <RelativePanel Margin="0,5">
-                <TextBlock Text="Watershed Length:" Margin="20,0,0,0"
+            <RelativePanel Margin="0,5" x:Name="WatershedLengthControls">
+                <TextBlock Text="{Binding Path=Name}" Margin="20,0,0,0"
                     RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="WatershedLength" Value="{Binding Path=WatershedLength, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0" 
-                           ValueChanged="WatershedLengthValueChanged">
+                <NumberBox x:Name="WatershedLength" Value="{Binding Path=Value, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0" 
+                           ValueChanged="BasicDataFieldValueChanged">
                     <ToolTipService.ToolTip>
                         Length in feet along the flow path from the hydraulically most distant point to point of interest (limits 200 to 26000)
                     </ToolTipService.ToolTip>
@@ -99,15 +99,15 @@
                 <TextBlock Text="feet" Margin="10,0,0,0"
                     RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="WatershedLength"/>
 
-                <TextBlock x:Name="WatershedLengthStatus" Text="{Binding Path=WatershedLengthStatus, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink" 
+                <TextBlock x:Name="WatershedLengthStatus" Text="{Binding Path=Status, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink" 
                            RelativePanel.RightOf="WatershedLength" RelativePanel.AlignVerticalCenterWith="WatershedLength"/>
             </RelativePanel>
 
-            <RelativePanel Margin="0,5">
-                <TextBlock Text="Watershed Slope:" Margin="20,0,0,0"
+            <RelativePanel Margin="0,5" x:Name="WatershedSlopeControls">
+                <TextBlock Text="{Binding Path=Name}" Margin="20,0,0,0"
                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="WatershedSlope" Value="{Binding Path=WatershedSlope, Mode=TwoWay}" ValueChanged="WatershedSlopeValueChanged"
+                <NumberBox x:Name="WatershedSlope" Value="{Binding Path=Value, Mode=TwoWay}" ValueChanged="BasicDataFieldValueChanged"
                            Minimum="0" Margin="200,0,0,0">
                     <ToolTipService.ToolTip>
                         Average watershed slope in percent (limits 0.5 to 64)
@@ -117,18 +117,18 @@
                 <TextBlock Text="percent" Margin="10,0,0,0" 
                            RelativePanel.RightOf="WatershedSlope" RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <TextBlock x:Name="WatershedSlopeStatus" Text="{Binding Path=WatershedSlopeStatus, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink"
+                <TextBlock x:Name="WatershedSlopeStatus" Text="{Binding Path=Status, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink"
                            RelativePanel.RightOf="WatershedSlope" RelativePanel.AlignVerticalCenterWith="WatershedSlope"/>
             </RelativePanel>
 
-            <RelativePanel Margin="0,5">
+            <RelativePanel Margin="0,5" x:Name="TimeOfConcentrationControls">
                 <TextBlock
                 Margin="20,0,0,0"
-                Text="Time of Concentration:"
+                Text="{Binding Path=Name}"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
                 />
 
-                <NumberBox x:Name="TimeOfConcentration" Value="{Binding Path=TimeOfConcentration, Mode=TwoWay}" ValueChanged="TimeOfConcentrationValueChanged"
+                <NumberBox x:Name="TimeOfConcentration" Value="{Binding Path=Value, Mode=TwoWay}" ValueChanged="BasicDataFieldValueChanged"
                            Minimum="0" Margin="200,0,0,0">
                     <ToolTipService.ToolTip>
                         Time of concentration, in hours, is calculated from Watershed Length and Slope using Tc Lag Method
@@ -138,7 +138,7 @@
                 <TextBlock Text="hours" Margin="10,0,0,0" 
                     RelativePanel.RightOf="TimeOfConcentration" RelativePanel.AlignVerticalCenterWithPanel="True" />
 
-                <TextBlock x:Name="TimeOfConcentrationStatus" Text="{Binding Path=TimeOfConcentrationStatus, Mode=OneWay}" TextWrapping="Wrap" Padding="75,0,0,0" Foreground="HotPink" 
+                <TextBlock x:Name="TimeOfConcentrationStatus" Text="{Binding Path=Status, Mode=OneWay}" TextWrapping="Wrap" Padding="75,0,0,0" Foreground="HotPink" 
                            RelativePanel.RightOf="TimeOfConcentration" RelativePanel.AlignVerticalCenterWith="TimeOfConcentration" />
             </RelativePanel>
             

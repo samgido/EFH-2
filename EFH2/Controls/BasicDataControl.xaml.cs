@@ -25,52 +25,27 @@ namespace EFH2
             this.InitializeComponent();
         }
 
-        private void DrainageAreaValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        public void SetDataContext()
         {
             if (DataContext is BasicDataViewModel model)
             {
-                model.DrainageArea = sender.Value;
-                model.CheckDrainageArea();
-                CalculateTimeOfConcentration();
+                DrainageAreaControls.DataContext = model.drainageAreaEntry;
+                RunoffCurveNumberControls.DataContext = model.runoffCurveNumberEntry;
+                WatershedLengthControls.DataContext = model.watershedLengthEntry;
+                WatershedSlopeControls.DataContext = model.watershedSlopeEntry;
+                TimeOfConcentrationControls.DataContext = model.timeOfConcentrationEntry;
             }
         }
 
-        private void RunoffCurveNumberValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void BasicDataFieldValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            if (DataContext is BasicDataViewModel model)
+            if (DataContext is BasicDataViewModel viewModel)
             {
-                model.RunoffCurveNumber = sender.Value;
-                model.CheckRunoffCurveNumber();
-                CalculateTimeOfConcentration();
-            }
-        }
-
-        private void WatershedLengthValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            if (DataContext is BasicDataViewModel model)
-            {
-                model.WatershedLength = sender.Value;
-                model.CheckWatershedLength();
-                CalculateTimeOfConcentration();
-            }
-        }
-
-        private void WatershedSlopeValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            if (DataContext is BasicDataViewModel model)
-            {
-                model.WatershedSlope = sender.Value;
-                model.CheckWatershedSlope();
-                CalculateTimeOfConcentration();
-            }
-        }
-
-        private void TimeOfConcentrationValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            if (DataContext is BasicDataViewModel model)
-            {
-                model.TimeOfConcentration = sender.Value;
-                model.CheckTimeOfConcentration();
+                if (sender.DataContext is BasicDataEntryViewModel model)
+                {
+                    viewModel.CheckFieldChange(model, sender.Value);
+                    CalculateTimeOfConcentration();
+                }
             }
         }
 
@@ -78,17 +53,17 @@ namespace EFH2
         {
             if (DataContext is BasicDataViewModel model)
             {
-                double final = (Math.Pow(model.WatershedLength, 0.8) * Math.Pow(((1000 / model.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(model.WatershedSlope, 0.5));
+                double final = (Math.Pow(model.watershedLengthEntry.Value, 0.8) * Math.Pow(((1000 / model.runoffCurveNumberEntry.Value) - 10) + 1, 0.7)) / (1140 * Math.Pow(model.watershedSlopeEntry.Value, 0.5));
 
-                if (!final.Equals(double.NaN))
+                if (final.Equals(double.NaN))
                 {
-                    model.TimeOfConcentration = Math.Round(final, 2);
-                    model.TimeOfConcentrationStatus = "Calculated";
+                    model.timeOfConcentrationEntry.Value = double.NaN;
+                    model.timeOfConcentrationEntry.Status = "";
                 }
                 else
                 {
-                    model.TimeOfConcentration = double.NaN;
-                    model.TimeOfConcentrationStatus = "";
+                    model.timeOfConcentrationEntry.Value = Math.Round(final, 2);
+                    model.timeOfConcentrationEntry.Status = "Calculated";
                 }
             }
         }
