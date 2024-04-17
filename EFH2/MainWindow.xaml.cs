@@ -41,6 +41,7 @@ namespace EFH2
             BasicDataControl.SetDataContext();
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
+            RcnDataControl.UnitsChanged += RcnDataControl_UnitsChanged;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
 
             FocusManager.GotFocus += FocusManagerGotFocus;
@@ -49,6 +50,11 @@ namespace EFH2
             BasicDataControl.Visibility = Visibility.Visible;
             RainfallDischargeDataControl.Visibility = Visibility.Visible;
             IntroControl.Visibility = Visibility.Visible;
+        }
+
+        private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)
+        {
+            RcnDataControl.CreatePopup(MainViewModel);
         }
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)

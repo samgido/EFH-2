@@ -155,9 +155,10 @@
             <RadioButtons
                 Margin="60,0,0,0"
                 x:Name="RCNDataConversionButtons">
-                <RadioButton Content="Acres"
-                             x:Name="AcresButton"/>
-                <RadioButton Content="Percentage"/>
+                <RadioButton x:Name="AcresButton" IsChecked="True" Click="UnitsButtonsClicked"
+                             GroupName="RadioButtons">Acres</RadioButton>
+                <RadioButton x:Name="PercentageButton" Click="UnitsButtonsClicked"
+                             GroupName="RadioButtons">Percentage</RadioButton>
             </RadioButtons>
 
             <RelativePanel
@@ -210,6 +211,5 @@
                 Click="ClearButtonClick"/>
 
         </RelativePanel>
-
     </RelativePanel>
 </UserControl>

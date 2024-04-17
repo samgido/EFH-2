@@ -22,9 +22,30 @@ namespace EFH2
     {
         public event EventHandler<AcceptRcnValuesEventArgs>? AcceptRcnValues;
 
+        public event EventHandler<RoutedEventArgs>? UnitsChanged;
+
         public RcnDataControl()
         {
             this.InitializeComponent();
+        }
+
+        public async void CreatePopup(MainViewModel model)
+        {
+            RcnDataConversionPage page = new RcnDataConversionPage();
+
+            page.DataContext = model;
+            page.SetDirection(AcresButton.IsChecked.GetValueOrDefault());
+
+            ContentDialog contentDialog = new ContentDialog()
+            {
+                Content = page,
+                Title = "RCN Data Conversion",
+                CloseButtonText = "OK",
+            };
+
+            contentDialog.XamlRoot = this.Content.XamlRoot;
+
+            await contentDialog.ShowAsync();
         }
 
         private void ClearButtonClick(object sender, RoutedEventArgs e)
@@ -37,6 +58,11 @@ namespace EFH2
             {
                 this.AcceptRcnValues?.Invoke(this, new AcceptRcnValuesEventArgs(model.AccumulatedArea, model.WeightedCurveNumber));
             }
+        }
+
+        private void UnitsButtonsClicked(object sender, RoutedEventArgs e)
+        {
+            this.UnitsChanged?.Invoke(this, e);
         }
     }
 }
