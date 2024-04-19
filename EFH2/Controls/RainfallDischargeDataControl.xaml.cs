@@ -20,6 +20,8 @@ namespace EFH2
 {
     public sealed partial class RainfallDischargeDataControl : UserControl
     {
+        public event EventHandler<RoutedEventArgs>? CreateInputFile;
+
         public RainfallDischargeDataControl()
         {
             this.InitializeComponent();
@@ -44,6 +46,20 @@ namespace EFH2
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            if (DataContext is RainfallDischargeDataViewModel model)
+            {
+                bool filledOut = true;
+                foreach (StormViewModel storm in model.Storms)
+                {
+                    if (storm.Years.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) filledOut = false;
+                }
+
+                
+            }
         }
     }
 }

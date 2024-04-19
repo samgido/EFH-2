@@ -27,6 +27,21 @@ namespace EFH2
         public BasicDataEntryViewModel timeOfConcentrationEntry = new BasicDataEntryViewModel(.1, 10, "Time Of Concentration", "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!");
 
         [XmlIgnore]
+        public double DrainageArea => drainageAreaEntry.Value;
+
+        [XmlIgnore]
+        public double RunoffCurveNumber => runoffCurveNumberEntry.Value;
+
+        [XmlIgnore]
+        public double WatershedLength => watershedLengthEntry.Value;
+
+        [XmlIgnore]
+        public double WatershedSlope => watershedSlopeEntry.Value;
+
+        [XmlIgnore]
+        public double TimeOfConcentration => timeOfConcentrationEntry.Value;
+
+        [XmlIgnore]
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
 
         [ObservableProperty]
@@ -197,11 +212,11 @@ namespace EFH2
                 }
             }
 
-            drainageAreaEntry.Value = model.drainageAreaEntry.Value;
-            runoffCurveNumberEntry.Value = model.runoffCurveNumberEntry.Value;
-            watershedLengthEntry.Value = model.watershedLengthEntry.Value;
-            watershedSlopeEntry.Value = model.watershedSlopeEntry.Value;
-            timeOfConcentrationEntry.Value = model.timeOfConcentrationEntry.Value;
+            drainageAreaEntry.Value = model.DrainageArea;
+            runoffCurveNumberEntry.Value = model.RunoffCurveNumber;
+            watershedLengthEntry.Value = model.WatershedLength;
+            watershedSlopeEntry.Value = model.WatershedSlope;
+            timeOfConcentrationEntry.Value = model.TimeOfConcentration;
         }
     }
 }
