@@ -32,27 +32,27 @@ namespace EFH2
         {
             if (DataContext is MainViewModel model)
             {
-                UseWorksheetSelection.Content = "Determine percentage from worksheet total area of " + model.RcnDataViewModel.AccumulatedArea;
+                UseWorksheetButton.Content = "Determine percentage from worksheet total area of " + model.RcnDataViewModel.AccumulatedArea;
 
-                UseWorksheetSelection.IsEnabled = !acresSelected;
-                UseBasicDataSelection.IsEnabled = acresSelected;
+                UseWorksheetButton.IsEnabled = !acresSelected;
+                UseBasicDataButton.IsEnabled = acresSelected;
 
                 if (acresSelected)
                 {
                     Title.Text = "Convert Percent to Acres";
                     Prompt.Text = "How would you like to convert the values in the worksheet from percent to acres?";
 
-                    UseWorksheetSelection.IsEnabled = false;
+                    UseWorksheetButton.IsEnabled = false;
 
                     if (!model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN))
                     {
-                        UseBasicDataSelection.IsEnabled = true;
-                        UseBasicDataSelection.Content = "Determine area by percentage of Basic Data drainage area of " + model.BasicDataViewModel.drainageAreaEntry.Value;
+                        UseBasicDataButton.IsEnabled = true;
+                        UseBasicDataButton.Content = "Determine area by percentage of Basic Data drainage area of " + model.BasicDataViewModel.drainageAreaEntry.Value;
                     }
                     else
                     {
-                        UseBasicDataSelection.IsEnabled = false;
-                        UseBasicDataSelection.Content = "Determine area by percentage of Basic Data drainage area of ";
+                        UseBasicDataButton.IsEnabled = false;
+                        UseBasicDataButton.Content = "Determine area by percentage of Basic Data drainage area of ";
                     }
                 }
                 else
@@ -60,16 +60,25 @@ namespace EFH2
                     Title.Text = "Convert Acres to Percent";
                     Prompt.Text = "How would you like to convert the values in the worksheet from acres to percent?";
 
-                    UseBasicDataSelection.Visibility = Visibility.Collapsed;
+                    UseBasicDataButton.Visibility = Visibility.Collapsed;
                 }
             }
         }
 
-        private void SelectionChanged(object sender, RoutedEventArgs e)
+        public void FinalizeConversion()
         {
-            if (sender is RadioButton radioButton && DataContext is MainViewModel model)
+            if (DataContext is MainViewModel model)
             {
-                
+                //if (UseNoConversionButton.IsChecked.GetValueOrDefault()) { } do nothing
+
+                if (UseWorksheetButton.IsChecked.GetValueOrDefault())
+                {
+                    model.RcnDataViewModel.ConvertToPercentageFromAcres(model.RcnDataViewModel.AccumulatedArea);
+                }
+                else if (UseBasicDataButton.IsChecked.GetValueOrDefault()) 
+                {
+                    model.RcnDataViewModel.ConvertToAcresFromPercentage(model.BasicDataViewModel.drainageAreaEntry.Value);
+                }
             }
         }
     }

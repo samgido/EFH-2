@@ -46,6 +46,8 @@ namespace EFH2
             contentDialog.XamlRoot = this.Content.XamlRoot;
 
             await contentDialog.ShowAsync();
+
+            page.FinalizeConversion();
         }
 
         private void ClearButtonClick(object sender, RoutedEventArgs e)

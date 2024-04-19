@@ -198,5 +198,39 @@ namespace EFH2
         {
             foreach (RcnCategory category in RcnCategories) category.Default();
         }
+
+        public void ConvertToPercentageFromAcres(double accumulatedArea)
+        {
+            foreach (RcnCategory category in RcnCategories)
+            {
+                foreach (RcnRow row in category.Rows)
+                {
+                    foreach (WeightAreaPair values in row.Entries)
+                    {
+                        if (!values.Area.Equals(double.NaN))
+                        {
+                            values.Area = (values.Area / accumulatedArea) * 100;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void ConvertToAcresFromPercentage(double accumulatedArea)
+        {
+            foreach (RcnCategory category in RcnCategories)
+            {
+                foreach (RcnRow row in category.Rows)
+                {
+                    foreach (WeightAreaPair values in row.Entries)
+                    {
+                        if (!values.Area.Equals(double.NaN))
+                        {
+                            values.Area = (values.Area * accumulatedArea) / 100;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

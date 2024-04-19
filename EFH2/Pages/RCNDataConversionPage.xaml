@@ -19,9 +19,9 @@
         <TextBlock x:Name="Prompt" Grid.Row="1"/>
 
         <StackPanel Grid.Row="2" Margin="0, 10">
-            <RadioButton GroupName="ConversionSelection" Click="SelectionChanged">No conversion, use current values directly.</RadioButton>
-            <RadioButton GroupName="ConversionSelection" x:Name="UseWorksheetSelection" Click="SelectionChanged"></RadioButton>
-            <RadioButton GroupName="ConversionSelection" x:Name="UseBasicDataSelection" Click="SelectionChanged"></RadioButton>
+            <RadioButton GroupName="ConversionSelection" x:Name="UseNoConversionButton">No conversion, use current values directly.</RadioButton>
+            <RadioButton GroupName="ConversionSelection" x:Name="UseWorksheetButton"/>
+            <RadioButton GroupName="ConversionSelection" x:Name="UseBasicDataButton"/>
         </StackPanel>
     </Grid>
 </Page>
