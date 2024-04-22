@@ -43,14 +43,21 @@ namespace EFH2
                 content.AppendLine("SUB-AREA:");
                 // no clue where the .78125 came from
                 //content.AppendLine($"          Area      Outlet              .78125    {model.BasicDataViewModel.RunoffCurveNumber}       {model.BasicDataViewModel.TimeOfConcentration}\r");
-                content.AppendLine(String.Format("          {0,10}{1,20}{2,10}{3,10}", "Area", "Outlet", .78125, model.BasicDataViewModel.RunoffCurveNumber, model.BasicDataViewModel.TimeOfConcentration));
+                content.AppendLine(String.Format("          {0,10}{1,20}{2,10}{3,10}", "Area", "Outlet", 
+                    Math.Round(model.BasicDataViewModel.DrainageArea / 640, 4),
+                    model.BasicDataViewModel.RunoffCurveNumber,
+                    model.BasicDataViewModel.TimeOfConcentration));
                 content.AppendLine("");
                 content.AppendLine("");
                 content.AppendLine("");
                 content.AppendLine("STORM ANALYSIS:");
                 foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
                 {
-                    content.AppendLine(String.Format("          {0,30}{1,10}{2,10}{3}", storm.Years + "-Yr", storm.DayRain, model.RainfallDischargeDataViewModel.selectedRainfallDistributionType, 2));
+                    content.AppendLine(String.Format("          {0,30}{1,10}{2,10}{3}", 
+                        storm.Years + "-Yr", 
+                        storm.DayRain, 
+                        model.RainfallDischargeDataViewModel.selectedRainfallDistributionType, 
+                        2));
                 }
                 content.AppendLine("");
                 content.AppendLine("RAINFALL DISTRIBUTION:");
