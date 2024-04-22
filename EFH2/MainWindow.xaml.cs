@@ -40,6 +40,7 @@ namespace EFH2
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
+            RainfallDischargeDataControl.CreateInputFile += CreateWinTr20InputFile;
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.UnitsChanged += RcnDataControl_UnitsChanged;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
@@ -50,6 +51,11 @@ namespace EFH2
             BasicDataControl.Visibility = Visibility.Visible;
             RainfallDischargeDataControl.Visibility = Visibility.Visible;
             IntroControl.Visibility = Visibility.Visible;
+        }
+
+        private void CreateWinTr20InputFile(object sender, RoutedEventArgs e)
+        {
+            FileOperations.CreateInpFile(MainViewModel);
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)

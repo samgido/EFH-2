@@ -33,6 +33,8 @@ namespace EFH2
             {
                 if (model.SelectedRainfallDistributionTypeIndex != 0) model.RainfallDistributionTypeStatus = "User selected.";
             }
+
+            CheckIfFilledOut();
         }
 
         private void RainfallDistributionTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -41,6 +43,8 @@ namespace EFH2
             {
                 if (model.SelectedDuhTypeIndex != 0) model.DuhTypeStatus = "User selected.";
             }
+
+            CheckIfFilledOut();
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
@@ -50,6 +54,11 @@ namespace EFH2
 
         private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            CheckIfFilledOut();
+        }
+
+        private void CheckIfFilledOut()
+        {
             if (DataContext is RainfallDischargeDataViewModel model)
             {
                 bool filledOut = true;
@@ -58,7 +67,12 @@ namespace EFH2
                     if (storm.Years.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) filledOut = false;
                 }
 
-                
+                if (model.SelectedRainfallDistributionTypeIndex == 0) filledOut = false; 
+
+                if (filledOut)
+                {
+
+                }
             }
         }
     }
