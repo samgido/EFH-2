@@ -24,51 +24,81 @@ namespace EFH2
         {
             XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
 
-            if (serializer.Deserialize(reader) is MainViewModel model) return model;
-            else return null;
+			if (serializer.Deserialize(reader) is MainViewModel model) return model;
+			else return null;
         }
 
         public static void CreateInpFile(MainViewModel model)
         {
-            string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+			if (!IsWinTR20Ready(model)) return;
 
+            string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string filePath = Path.Combine(programDataPath, "EFH2/tr20.inp");
 
-            if (!File.Exists(filePath))
-            {
-                StringBuilder content = new StringBuilder();
-                content.AppendLine("WinTR-20: Version 3.30                  0         0         0.01      0\r");
-                content.AppendLine("Single watershed using lag method for Tc");
-                content.AppendLine("");
-                content.AppendLine("SUB-AREA:");
-                // no clue where the .78125 came from
-                //content.AppendLine($"          Area      Outlet              .78125    {model.BasicDataViewModel.RunoffCurveNumber}       {model.BasicDataViewModel.TimeOfConcentration}\r");
-                content.AppendLine(String.Format("          {0,10}{1,20}{2,10}{3,10}", "Area", "Outlet", 
-                    Math.Round(model.BasicDataViewModel.DrainageArea / 640, 4),
-                    model.BasicDataViewModel.RunoffCurveNumber,
-                    model.BasicDataViewModel.TimeOfConcentration));
-                content.AppendLine("");
-                content.AppendLine("");
-                content.AppendLine("");
-                content.AppendLine("STORM ANALYSIS:");
-                foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
-                {
-                    content.AppendLine(String.Format("          {0,30}{1,10}{2,10}{3}", 
-                        storm.Years + "-Yr", 
-                        storm.DayRain, 
-                        model.RainfallDischargeDataViewModel.selectedRainfallDistributionType, 
-                        2));
-                }
-                content.AppendLine("");
-                content.AppendLine("RAINFALL DISTRIBUTION:");
+   //         if (File.Exists(filePath)) File.Delete(filePath);
+			//File.Create(filePath);
 
-                string rainfallDistributionFilePath = Path.Combine(programDataPath, "USDA/Shared Engineering Data/EFH2/RainfallDistributions/Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
+			using (StreamWriter writer = new StreamWriter(filePath, append: false))
+			{
+				StringBuilder content = new StringBuilder();
+				content.AppendLine("WinTR-20: Version 3.30                  0         0         0.01      0\r");
+				content.AppendLine("Single watershed using lag method for Tc");
+				content.AppendLine("");
+				content.AppendLine("SUB-AREA:");
+				content.AppendLine(String.Format("          {0,10}{1,20}{2,10}{3,10}", "Area", "Outlet",
+					Math.Round(model.BasicDataViewModel.DrainageArea / 640, 4),
+					model.BasicDataViewModel.RunoffCurveNumber,
+					model.BasicDataViewModel.TimeOfConcentration));
 
-                if (File.Exists(rainfallDistributionFilePath))
-                {
-                    content.Append(File.ReadAllText(rainfallDistributionFilePath));
-                }
-            }
+				content.AppendLine("");
+				content.AppendLine("");
+				content.AppendLine("");
+				content.AppendLine("STORM ANALYSIS:");
+				foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+				{
+					content.AppendLine(String.Format("          {0,30}{1,10}{2,10}{3}",
+						storm.Years + "-Yr",
+						storm.DayRain,
+						model.RainfallDischargeDataViewModel.selectedRainfallDistributionType,
+						2));
+				}
+				content.AppendLine("");
+				content.AppendLine("RAINFALL DISTRIBUTION:");
+
+				string rainfallDistributionFilePath = Path.Combine(programDataPath, "USDA/Shared Engineering Data/EFH2/RainfallDistributions/Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
+
+				if (File.Exists(rainfallDistributionFilePath))
+				{
+					content.Append(File.ReadAllText(rainfallDistributionFilePath));
+				}
+
+				//File.WriteAllText(filePath, content.ToString());
+				writer.Write(content.ToString());
+			}
         }
+
+		/// <summary>
+		/// Checks the main view model if all the data is ready to run through the WinTR20 program
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		public static bool IsWinTR20Ready(MainViewModel model)
+		{
+			// Basic data check 
+			if (!model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
+			if (!model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
+			if (!model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
+
+			// Rainfall discharge data check
+			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+			{
+				if (storm.Years.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) return false;
+			}
+
+			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
+
+			// If everything is ready
+			return true;
+		}
     }
 }

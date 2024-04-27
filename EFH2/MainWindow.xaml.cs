@@ -53,7 +53,7 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
         }
 
-        private void CreateWinTr20InputFile(object sender, RoutedEventArgs e)
+        private void CreateWinTr20InputFile(object sender, EventArgs e)
         {
             FileOperations.CreateInpFile(MainViewModel);
         }

@@ -20,7 +20,7 @@ namespace EFH2
 {
     public sealed partial class RainfallDischargeDataControl : UserControl
     {
-        public event EventHandler<RoutedEventArgs>? CreateInputFile;
+        public event EventHandler<EventArgs>? CreateInputFile;
 
         public RainfallDischargeDataControl()
         {
@@ -64,14 +64,14 @@ namespace EFH2
                 bool filledOut = true;
                 foreach (StormViewModel storm in model.Storms)
                 {
-                    if (storm.Years.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) filledOut = false;
+                    if (storm.Years.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) { filledOut = false; break; }
                 }
 
-                if (model.SelectedRainfallDistributionTypeIndex == 0) filledOut = false; 
+                if (model.SelectedRainfallDistributionTypeIndex == 0) filledOut = false;
 
                 if (filledOut)
                 {
-
+                    this.CreateInputFile.Invoke(this, new EventArgs());
                 }
             }
         }
