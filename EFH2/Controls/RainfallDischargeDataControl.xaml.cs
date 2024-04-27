@@ -29,7 +29,7 @@ namespace EFH2
         {
             if (DataContext is RainfallDischargeDataViewModel model)
             {
-                if (model.SelectedRainfallDistributionTypeIndex != 0) model.RainfallDistributionTypeStatus = "User selected.";
+                if (model.SelectedDuhTypeIndex != 0) model.DuhTypeStatus = "User selected.";
             }
         }
 
@@ -37,7 +37,7 @@ namespace EFH2
         {
             if (DataContext is RainfallDischargeDataViewModel model)
             {
-                if (model.SelectedDuhTypeIndex != 0) model.DuhTypeStatus = "User selected.";
+                if (model.SelectedRainfallDistributionTypeIndex != 0) model.RainfallDistributionTypeStatus = "User selected.";
             }
         }
 
