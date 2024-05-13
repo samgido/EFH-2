@@ -41,14 +41,14 @@ namespace EFH2
 			using (StreamWriter writer = new StreamWriter(filePath, append: false))
 			{
 				StringBuilder content = new StringBuilder();
-				content.AppendLine("WinTR-20: Version 3.30                  0         0         0.01      0\r");
+				content.AppendLine("WinTR-20: Version 3.30                  0         0         0.01      0");
 				content.AppendLine("Single watershed using lag method for Tc");
 				content.AppendLine("");
 				content.AppendLine("SUB-AREA:");
-				content.AppendLine(String.Format("          {0,10}{1,20}{2,10}{3,10}", "Area", "Outlet",
-					Math.Round(model.BasicDataViewModel.DrainageArea / 640, 4),
-					model.BasicDataViewModel.RunoffCurveNumber,
-					model.BasicDataViewModel.TimeOfConcentration));
+				content.AppendLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}{4,-10}", "Area", "Outlet",
+					(model.BasicDataViewModel.DrainageArea / 640).ToString("0.00000"),
+					model.BasicDataViewModel.RunoffCurveNumber.ToString("0."),
+					model.BasicDataViewModel.TimeOfConcentration.ToString("0.00")));
 
 				content.AppendLine("");
 				content.AppendLine("");
@@ -56,11 +56,14 @@ namespace EFH2
 				content.AppendLine("STORM ANALYSIS:");
 				foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 				{
-					content.AppendLine(String.Format("          {0,30}{1,10}{2,10}{3}",
-						storm.Frequency + "-Yr",
-						storm.DayRain,
-						model.RainfallDischargeDataViewModel.selectedRainfallDistributionType,
-						2));
+					if (!storm.Frequency.Equals(double.NaN) && !storm.DayRain.Equals(double.NaN))
+					{
+						content.AppendLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
+							storm.Frequency + "-Yr",
+							storm.DayRain.ToString("0.0"),
+							model.RainfallDischargeDataViewModel.selectedRainfallDistributionType,
+							2));
+					}
 				}
 				content.AppendLine("");
 				content.AppendLine("RAINFALL DISTRIBUTION:");
@@ -84,16 +87,17 @@ namespace EFH2
 		/// <returns></returns>
 		public static bool IsWinTR20Ready(MainViewModel model)
 		{
-			// Basic data check 
 			if (model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
-			if (model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
-			if (model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
 
 			// Rainfall discharge data check
 			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 			{
-				if (storm.Frequency.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) return false;
+				if (storm.Frequency.Equals(double.NaN) !^ storm.DayRain.Equals(double.NaN)) return false;
 			}
+
+			// Basic data check 
+			if (model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
+			if (model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
 
 			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
 

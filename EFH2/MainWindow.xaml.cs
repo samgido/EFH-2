@@ -37,11 +37,15 @@ namespace EFH2
             Navigation.SelectedItem = IntroNavButton;
 
             MainViewModel = new MainViewModel();
+
+            MainViewModel.RainfallDischargeDataViewModel.CreateInputFile += CreateWinTr20InputFile;
+            MainViewModel.BasicDataViewModel.CreateInputFile += CreateWinTr20InputFile;
+
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
-            BasicDataControl.CreateInputFile += CreateWinTr20InputFile;
+            //BasicDataControl.CreateInputFile += CreateWinTr20InputFile;
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
-            RainfallDischargeDataControl.CreateInputFile += CreateWinTr20InputFile;
+            //RainfallDischargeDataControl.CreateInputFile += CreateWinTr20InputFile;
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.UnitsChanged += RcnDataControl_UnitsChanged;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;

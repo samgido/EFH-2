@@ -11,8 +11,10 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class RainfallDischargeDataViewModel : ObservableObject
+    public partial class RainfallDischargeDataViewModel : ObservableObject, ICreateInputFile
     {
+        public event EventHandler<EventArgs>? CreateInputFile;
+
         [XmlElement("RainfallDistributionType")]
         public string selectedRainfallDistributionType = "";
 
@@ -26,7 +28,7 @@ namespace EFH2
         private int _selectedDuhTypeIndex = 0;
 
         [ObservableProperty]
-        [XmlElement("Storm Data")]
+        [XmlElement("Storms")]
         private ObservableCollection<StormViewModel> _storms = new();
 
         [ObservableProperty]
@@ -56,6 +58,8 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
                 this.selectedRainfallDistributionType = RainfallDistributionTypes[value].Content as string;
+
+                this.CreateInputFile?.Invoke(this, new EventArgs());
             }
         }
 
@@ -67,6 +71,8 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedDuhTypeIndex, value);
                 this.selectedDuhType = DuhTypes[value].Content as string;
+
+                this.CreateInputFile?.Invoke(this, new EventArgs());
             }
         }
 
@@ -137,6 +143,7 @@ namespace EFH2
             for (int i = 0; i < Storms.Count; i++)
             {
                 Storms[i].Load(model.Storms[i]);
+                Storms[i].CreateInputFile += StormPropertyChanged;
             }
         }
 
@@ -145,7 +152,11 @@ namespace EFH2
             selectedRainfallDistributionType = MainViewModel.ChooseMessage;
             selectedDuhType = MainViewModel.ChooseMessage;
 
-            foreach (StormViewModel storm in Storms) storm.Default();
+            foreach (StormViewModel storm in Storms)
+            {
+                storm.CreateInputFile -= StormPropertyChanged;
+                storm.Default();
+            }
         }
 
         public void Clear()
@@ -159,9 +170,20 @@ namespace EFH2
         {
             for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
             {
-                StormViewModel storm = new StormViewModel() { Name = "Storm #" + (i + 1) };
-                Storms.Add(storm);
+                StormViewModel storm = new StormViewModel() { Number = i + 1 };
+                AddStorm(storm);
             }
+        }
+
+        private void AddStorm(StormViewModel storm)
+        {
+            storm.CreateInputFile += StormPropertyChanged;
+            Storms.Add(storm);
+        }
+
+        public void StormPropertyChanged(object? sender, EventArgs e)
+        {
+            this.CreateInputFile?.Invoke(this, new EventArgs());
         }
     }
 }

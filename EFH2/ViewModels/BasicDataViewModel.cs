@@ -13,8 +13,10 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class BasicDataViewModel : ObservableObject
+    public partial class BasicDataViewModel : ObservableObject, ICreateInputFile
     {
+        public event EventHandler<EventArgs>? CreateInputFile;
+
         [XmlElement("Drainage Area")]
         public BasicDataEntryViewModel drainageAreaEntry = new BasicDataEntryViewModel(1, 2000, "Drainage Area", "Drainage area must be in the range 1 to 2000 acres!");
         [XmlElement("Runoff Curve Number")]
@@ -107,7 +109,21 @@ namespace EFH2
             }
         }
 
-        private void SetCounties(List<string> list)
+        public BasicDataViewModel()
+        {
+			drainageAreaEntry.CreateInputFile += EntryChanged;
+			runoffCurveNumberEntry.CreateInputFile += EntryChanged;
+            watershedLengthEntry.CreateInputFile += EntryChanged;
+            watershedSlopeEntry.CreateInputFile += EntryChanged;
+            timeOfConcentrationEntry.CreateInputFile += EntryChanged;
+        }
+
+		private void EntryChanged(object sender, EventArgs e)
+		{
+            this.CreateInputFile?.Invoke(this, new EventArgs());
+		}
+
+		private void SetCounties(List<string> list)
         {
             Counties.Clear();
 

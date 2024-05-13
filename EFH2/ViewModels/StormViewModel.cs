@@ -8,17 +8,20 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public partial class StormViewModel : ObservableObject
+    public partial class StormViewModel : ObservableObject, ICreateInputFile
     {
+        public event EventHandler<EventArgs>? CreateInputFile;
+
         [XmlIgnore]
         private double _dayRain = double.NaN;
 
-        [XmlElement("Name")]
-        public string Name { get; init; }
-
-        [ObservableProperty]
-        [XmlElement("Peak Flow")]
+        [XmlIgnore]
         private double _frequency = double.NaN;
+
+        [XmlElement("Name")]
+        public string Name => "Storm #" + Number;
+
+        public int Number { get; init; }
 
         [ObservableProperty]
         [XmlElement("Peak Flow")]
@@ -39,7 +42,26 @@ namespace EFH2
             set
             {
                 if (value == 0) this.SetProperty(ref this._dayRain, double.NaN);
-                else if (value <= RainfallDischargeDataViewModel.DayRainMax) this.SetProperty(ref this._dayRain, value);
+                else if (value <= RainfallDischargeDataViewModel.DayRainMax)
+                {
+                    this.SetProperty(ref this._dayRain, value);
+                    this.CreateInputFile?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
+        [XmlElement("Frequency")]
+        public double Frequency
+        {
+            get => _frequency;
+            set
+            {
+                if (value == 0) this.SetProperty(ref this._frequency, double.NaN);
+                else 
+                {
+                    this.SetProperty(ref this._frequency, value);
+                    this.CreateInputFile?.Invoke(this, new EventArgs());
+                }
             }
         }
 

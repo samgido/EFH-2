@@ -34,7 +34,7 @@ namespace EFH2
                 if (model.SelectedRainfallDistributionTypeIndex != 0) model.RainfallDistributionTypeStatus = "User selected.";
             }
 
-            this.CreateInputFile?.Invoke(this, new EventArgs());
+            //this.CreateInputFile?.Invoke(this, new EventArgs());
         }
 
         private void RainfallDistributionTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -44,17 +44,20 @@ namespace EFH2
                 if (model.SelectedDuhTypeIndex != 0) model.DuhTypeStatus = "User selected.";
             }
 
-            this.CreateInputFile?.Invoke(this, new EventArgs());
+            //this.CreateInputFile?.Invoke(this, new EventArgs());
+        }
+
+        private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            //if (DataContext is RainfallDischargeDataViewModel model)
+            //{
+            //    this.CreateInputFile?.Invoke(this, new EventArgs());
+            //}
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            this.CreateInputFile?.Invoke(this, new EventArgs());
         }
     }
 }
