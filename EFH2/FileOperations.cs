@@ -57,7 +57,7 @@ namespace EFH2
 				foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 				{
 					content.AppendLine(String.Format("          {0,30}{1,10}{2,10}{3}",
-						storm.Years + "-Yr",
+						storm.Frequency + "-Yr",
 						storm.DayRain,
 						model.RainfallDischargeDataViewModel.selectedRainfallDistributionType,
 						2));
@@ -85,14 +85,14 @@ namespace EFH2
 		public static bool IsWinTR20Ready(MainViewModel model)
 		{
 			// Basic data check 
-			if (!model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
-			if (!model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
-			if (!model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
+			if (model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
+			if (model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
+			if (model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
 
 			// Rainfall discharge data check
 			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 			{
-				if (storm.Years.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) return false;
+				if (storm.Frequency.Equals(double.NaN) || storm.DayRain.Equals(double.NaN)) return false;
 			}
 
 			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
