@@ -87,7 +87,6 @@ namespace EFH2
 		/// <returns></returns>
 		public static bool IsWinTR20Ready(MainViewModel model)
 		{
-			if (model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
 
 			// Rainfall discharge data check
 			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
@@ -96,6 +95,7 @@ namespace EFH2
 			}
 
 			// Basic data check 
+			if (model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
 			if (model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
 			if (model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
 
