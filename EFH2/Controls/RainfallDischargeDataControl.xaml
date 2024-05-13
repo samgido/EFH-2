@@ -104,7 +104,7 @@
                                 <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" Grid.Column="0" 
                                            TextAlignment="Right" Margin="0,0,10,0"/>
 
-                                <NumberBox Grid.Column="1" ValueChanged="NumberBox_ValueChanged" Value="{Binding Path=Years, Mode=TwoWay}"/>
+                                <NumberBox Grid.Column="1" ValueChanged="NumberBox_ValueChanged" Value="{Binding Path=Frequency, Mode=TwoWay}"/>
                                 <NumberBox Grid.Column="2" ValueChanged="NumberBox_ValueChanged" Value="{Binding Path=DayRain, Mode=TwoWay}"/>
 
                                 <NumberBox Grid.Column="3" Value="{Binding Path=PeakFlow, Mode=TwoWay}"/>
@@ -123,6 +123,7 @@ Plot Selected
 Hydrograph(s)
                     </Button.Content>
                 </Button>
+
             </RelativePanel>
         </ScrollViewer>
     </RelativePanel>
