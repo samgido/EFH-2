@@ -36,7 +36,7 @@ namespace EFH2
 			if (!IsWinTR20Ready(model)) return;
 
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string filePath = Path.Combine(appDataPath, "EFH2/tr20.inp");
+            string filePath = Path.Combine(appDataPath, "EFH2\\tr20.inp");
 
    //         if (File.Exists(filePath)) File.Delete(filePath);
 			//File.Create(filePath);
@@ -44,7 +44,8 @@ namespace EFH2
 			using (StreamWriter writer = new StreamWriter(filePath, append: false))
 			{
 				StringBuilder content = new StringBuilder();
-				content.AppendLine("WinTR-20: Version 3.30                  0         0         0.01      0");
+				//content.AppendLine("WinTR-20: Version 3.30                  0         0         0.01      0");
+				content.AppendLine(String.Format("WinTR-20: {0,-30}{1,-10}{2,-10}{3,-10}{4}", "Version 3.30", 0, 0, 0.01, 0));
 				content.AppendLine("Single watershed using lag method for Tc");
 				content.AppendLine("");
 				content.AppendLine("SUB-AREA:");
@@ -96,7 +97,7 @@ namespace EFH2
 				{
 					FileName = executableName,
 					Arguments = filePath,
-					CreateNoWindow = false,
+					CreateNoWindow = true,
 					UseShellExecute = false,
 				};
 
