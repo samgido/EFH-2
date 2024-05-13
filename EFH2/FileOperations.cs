@@ -90,14 +90,13 @@ namespace EFH2
 		{
 			try
 			{
-				string executableName = "WinTR20_V32.exe";
-				string projectDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.Parent.FullName;
+				string executableDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "\\USDA\\EFH2\\";
+				string executableName = executableDirectory + "WinTR20_V32.exe";
 				ProcessStartInfo psi = new ProcessStartInfo()
 				{
 					FileName = executableName,
-					WorkingDirectory = projectDirectory,
 					Arguments = filePath,
-					CreateNoWindow = true,
+					CreateNoWindow = false,
 					UseShellExecute = false,
 				};
 
