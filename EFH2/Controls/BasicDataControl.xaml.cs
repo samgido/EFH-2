@@ -20,6 +20,8 @@ namespace EFH2
 {
     public sealed partial class BasicDataControl : UserControl
     {
+        public event EventHandler<EventArgs>? CreateInputFile;
+
         public BasicDataControl()
         {
             this.InitializeComponent();
@@ -45,6 +47,8 @@ namespace EFH2
                 {
                     viewModel.CheckFieldChange(model, sender.Value);
                     CalculateTimeOfConcentration();
+                    
+                    this.CreateInputFile?.Invoke(this, new EventArgs());
                 }
             }
         }
