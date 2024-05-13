@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,8 +35,8 @@ namespace EFH2
         {
 			if (!IsWinTR20Ready(model)) return;
 
-            string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string filePath = Path.Combine(programDataPath, "EFH2/tr20.inp");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string filePath = Path.Combine(appDataPath, "EFH2/tr20.inp");
 
    //         if (File.Exists(filePath)) File.Delete(filePath);
 			//File.Create(filePath);
@@ -47,7 +50,7 @@ namespace EFH2
 				content.AppendLine("SUB-AREA:");
 				content.AppendLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}{4,-10}", "Area", "Outlet",
 					(model.BasicDataViewModel.DrainageArea / 640).ToString("0.00000"),
-					model.BasicDataViewModel.RunoffCurveNumber.ToString("0."),
+					(model.BasicDataViewModel.RunoffCurveNumber + "."),
 					model.BasicDataViewModel.TimeOfConcentration.ToString("0.00")));
 
 				content.AppendLine("");
@@ -68,17 +71,47 @@ namespace EFH2
 				content.AppendLine("");
 				content.AppendLine("RAINFALL DISTRIBUTION:");
 
-				string rainfallDistributionFilePath = Path.Combine(programDataPath, "USDA/Shared Engineering Data/EFH2/RainfallDistributions/Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
+				string rainfallDistributionTypeFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), 
+					"USDA\\Shared Engineering Data\\EFH2\\RainfallDistributions\\Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
 
-				if (File.Exists(rainfallDistributionFilePath))
+				if (File.Exists(rainfallDistributionTypeFilePath))
 				{
-					content.Append(File.ReadAllText(rainfallDistributionFilePath));
+					content.Append(File.ReadAllText(rainfallDistributionTypeFilePath));
 				}
 
 				//File.WriteAllText(filePath, content.ToString());
 				writer.Write(content.ToString());
+
+				RunWinTr20(filePath);
 			}
-        }
+		}
+
+		private static void RunWinTr20(string filePath)
+		{
+			try
+			{
+				string executableName = "WinTR20_V32.exe";
+				string projectDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.Parent.FullName;
+				ProcessStartInfo psi = new ProcessStartInfo()
+				{
+					FileName = executableName,
+					WorkingDirectory = projectDirectory,
+					Arguments = filePath,
+					CreateNoWindow = true,
+					UseShellExecute = false,
+				};
+
+				using (Process process = new Process() { StartInfo = psi })
+				{
+					process.Start();
+					process.WaitForExit();
+				}
+			}
+			catch (Exception ex)
+			{
+				
+			}
+		}
 
 		/// <summary>
 		/// Checks the main view model if all the data is ready to run through the WinTR20 program
@@ -94,12 +127,12 @@ namespace EFH2
 				if (storm.Frequency.Equals(double.NaN) !^ storm.DayRain.Equals(double.NaN)) return false;
 			}
 
+			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
+
 			// Basic data check 
 			if (model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
 			if (model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
 			if (model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
-
-			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
 
 			// If everything is ready
 			return true;
