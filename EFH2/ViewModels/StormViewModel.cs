@@ -17,8 +17,8 @@ namespace EFH2
         public string Name { get; init; }
 
         [ObservableProperty]
-        [XmlElement("Frequency")]
-        private double _years = double.NaN;
+        [XmlElement("Peak Flow")]
+        private double _frequency = double.NaN;
 
         [ObservableProperty]
         [XmlElement("Peak Flow")]
@@ -45,7 +45,7 @@ namespace EFH2
 
         public void Default()
         {
-            Years = double.NaN;
+            Frequency = double.NaN;
             DayRain = 0;
             PeakFlow = double.NaN;
             Runoff = double.NaN;
@@ -56,7 +56,7 @@ namespace EFH2
         public void Load(StormViewModel model)
         {
             DayRain = model.DayRain;
-            Years = model.Years;
+            Frequency = model.Frequency;
             PeakFlow = model.PeakFlow;
             Runoff = model.Runoff;
             DisplayHydrograph = model.DisplayHydrograph;
