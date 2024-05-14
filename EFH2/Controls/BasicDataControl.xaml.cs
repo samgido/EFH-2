@@ -20,6 +20,8 @@ namespace EFH2
 {
     public sealed partial class BasicDataControl : UserControl
     {
+        public event EventHandler<EventArgs>? CreateInputFile;
+
         public BasicDataControl()
         {
             this.InitializeComponent();
@@ -45,6 +47,8 @@ namespace EFH2
                 {
                     viewModel.CheckFieldChange(model, sender.Value);
                     CalculateTimeOfConcentration();
+                    
+                    this.CreateInputFile?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -53,7 +57,7 @@ namespace EFH2
         {
             if (DataContext is BasicDataViewModel model)
             {
-                double final = (Math.Pow(model.watershedLengthEntry.Value, 0.8) * Math.Pow(((1000 / model.runoffCurveNumberEntry.Value) - 10) + 1, 0.7)) / (1140 * Math.Pow(model.watershedSlopeEntry.Value, 0.5));
+                double final = (Math.Pow(model.WatershedLength, 0.8) * Math.Pow(((1000 / model.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(model.WatershedSlope, 0.5));
 
                 if (final.Equals(double.NaN))
                 {

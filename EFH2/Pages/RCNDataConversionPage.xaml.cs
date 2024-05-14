@@ -44,10 +44,10 @@ namespace EFH2
 
                     UseWorksheetButton.IsEnabled = false;
 
-                    if (!model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN))
+                    if (!model.BasicDataViewModel.DrainageArea.Equals(double.NaN))
                     {
                         UseBasicDataButton.IsEnabled = true;
-                        UseBasicDataButton.Content = "Determine area by percentage of Basic Data drainage area of " + model.BasicDataViewModel.drainageAreaEntry.Value;
+                        UseBasicDataButton.Content = "Determine area by percentage of Basic Data drainage area of " + model.BasicDataViewModel.DrainageArea;
                     }
                     else
                     {
@@ -77,7 +77,7 @@ namespace EFH2
                 }
                 else if (UseBasicDataButton.IsChecked.GetValueOrDefault()) 
                 {
-                    model.RcnDataViewModel.ConvertToAcresFromPercentage(model.BasicDataViewModel.drainageAreaEntry.Value);
+                    model.RcnDataViewModel.ConvertToAcresFromPercentage(model.BasicDataViewModel.DrainageArea);
                 }
             }
         }

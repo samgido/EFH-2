@@ -13,8 +13,10 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class BasicDataViewModel : ObservableObject
+    public partial class BasicDataViewModel : ObservableObject, ICreateInputFile
     {
+        public event EventHandler<EventArgs>? CreateInputFile;
+
         [XmlElement("Drainage Area")]
         public BasicDataEntryViewModel drainageAreaEntry = new BasicDataEntryViewModel(1, 2000, "Drainage Area", "Drainage area must be in the range 1 to 2000 acres!");
         [XmlElement("Runoff Curve Number")]
@@ -25,6 +27,21 @@ namespace EFH2
         public BasicDataEntryViewModel watershedSlopeEntry = new BasicDataEntryViewModel(.5, 64, "Watershed Slope", "Watershed slope must be the range 0.5 and 64 percent!");
         [XmlElement("Time Of Concentration")]
         public BasicDataEntryViewModel timeOfConcentrationEntry = new BasicDataEntryViewModel(.1, 10, "Time Of Concentration", "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!");
+
+        [XmlIgnore]
+        public double DrainageArea => drainageAreaEntry.Value;
+
+        [XmlIgnore]
+        public double RunoffCurveNumber => runoffCurveNumberEntry.Value;
+
+        [XmlIgnore]
+        public double WatershedLength => watershedLengthEntry.Value;
+
+        [XmlIgnore]
+        public double WatershedSlope => watershedSlopeEntry.Value;
+
+        [XmlIgnore]
+        public double TimeOfConcentration => timeOfConcentrationEntry.Value;
 
         [XmlIgnore]
         private Dictionary<string, List<string>> _stateCountyDictionary = new();
@@ -92,7 +109,21 @@ namespace EFH2
             }
         }
 
-        private void SetCounties(List<string> list)
+        public BasicDataViewModel()
+        {
+			drainageAreaEntry.CreateInputFile += EntryChanged;
+			runoffCurveNumberEntry.CreateInputFile += EntryChanged;
+            watershedLengthEntry.CreateInputFile += EntryChanged;
+            watershedSlopeEntry.CreateInputFile += EntryChanged;
+            timeOfConcentrationEntry.CreateInputFile += EntryChanged;
+        }
+
+		private void EntryChanged(object sender, EventArgs e)
+		{
+            this.CreateInputFile?.Invoke(this, new EventArgs());
+		}
+
+		private void SetCounties(List<string> list)
         {
             Counties.Clear();
 
@@ -197,11 +228,11 @@ namespace EFH2
                 }
             }
 
-            drainageAreaEntry.Value = model.drainageAreaEntry.Value;
-            runoffCurveNumberEntry.Value = model.runoffCurveNumberEntry.Value;
-            watershedLengthEntry.Value = model.watershedLengthEntry.Value;
-            watershedSlopeEntry.Value = model.watershedSlopeEntry.Value;
-            timeOfConcentrationEntry.Value = model.timeOfConcentrationEntry.Value;
+            drainageAreaEntry.Value = model.DrainageArea;
+            runoffCurveNumberEntry.Value = model.RunoffCurveNumber;
+            watershedLengthEntry.Value = model.WatershedLength;
+            watershedSlopeEntry.Value = model.WatershedSlope;
+            timeOfConcentrationEntry.Value = model.TimeOfConcentration;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace EFH2
     {
         public MainViewModel MainViewModel { get; set; }
 
-        public TextBox? _previousFocusedTextBox { get; set; }
+        public TextBox? previousFocusedTextBox { get; set; }
 
         public MainWindow()
         {
@@ -37,6 +37,10 @@ namespace EFH2
             Navigation.SelectedItem = IntroNavButton;
 
             MainViewModel = new MainViewModel();
+
+            MainViewModel.RainfallDischargeDataViewModel.CreateInputFile += CreateWinTr20InputFile;
+            MainViewModel.BasicDataViewModel.CreateInputFile += CreateWinTr20InputFile;
+
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
@@ -50,6 +54,13 @@ namespace EFH2
             BasicDataControl.Visibility = Visibility.Visible;
             RainfallDischargeDataControl.Visibility = Visibility.Visible;
             IntroControl.Visibility = Visibility.Visible;
+        }
+
+        private void CreateWinTr20InputFile(object sender, EventArgs e)
+        {
+            string fileName = FileOperations.CreateInpFile(MainViewModel);
+
+            if (fileName != null) FileOperations.RunWinTr20(fileName);
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)
@@ -72,7 +83,7 @@ namespace EFH2
 
         private void FocusManagerGotFocus(object sender, FocusManagerGotFocusEventArgs e)
         {
-            if (e.NewFocusedElement is TextBox textBox) _previousFocusedTextBox = textBox;
+            if (e.NewFocusedElement is TextBox textBox) previousFocusedTextBox = textBox;
         }
 
         private void NewClicked(object sender, RoutedEventArgs e)
@@ -138,13 +149,13 @@ namespace EFH2
             dataPackage.RequestedOperation = DataPackageOperation.Move;
 
             string text = "";
-            if (_previousFocusedTextBox != null)
+            if (previousFocusedTextBox != null)
             {
-                text = _previousFocusedTextBox.SelectedText;
-                int index = _previousFocusedTextBox.Text.IndexOf(text);
+                text = previousFocusedTextBox.SelectedText;
+                int index = previousFocusedTextBox.Text.IndexOf(text);
 
-                _previousFocusedTextBox.Text = _previousFocusedTextBox.Text.Replace(text, "");
-                _previousFocusedTextBox.Select(index, 0);
+                previousFocusedTextBox.Text = previousFocusedTextBox.Text.Replace(text, "");
+                previousFocusedTextBox.Select(index, 0);
             }
             dataPackage.SetText(text);
             Clipboard.SetContent(dataPackage);
@@ -154,7 +165,7 @@ namespace EFH2
         {
             DataPackage dataPackage = new();
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
-            dataPackage.SetText(_previousFocusedTextBox.SelectedText);
+            dataPackage.SetText(previousFocusedTextBox.SelectedText);
             Clipboard.SetContent(dataPackage);
         }
 
@@ -164,21 +175,21 @@ namespace EFH2
 
             if (dataPackageView.Contains(StandardDataFormats.Text) is true)
             {
-                int index = _previousFocusedTextBox.SelectionStart;
+                int index = previousFocusedTextBox.SelectionStart;
                 string replace = await dataPackageView.GetTextAsync();
 
-                if (_previousFocusedTextBox.SelectionLength == 0)
+                if (previousFocusedTextBox.SelectionLength == 0)
                 {
-                    _previousFocusedTextBox.Text = _previousFocusedTextBox.Text.Insert(index, replace);
+                    previousFocusedTextBox.Text = previousFocusedTextBox.Text.Insert(index, replace);
                 }
                 else
                 {
-                    string initial = _previousFocusedTextBox.Text;
-                    initial = initial.Replace(_previousFocusedTextBox.SelectedText, replace);
-                    _previousFocusedTextBox.Text = initial;
+                    string initial = previousFocusedTextBox.Text;
+                    initial = initial.Replace(previousFocusedTextBox.SelectedText, replace);
+                    previousFocusedTextBox.Text = initial;
                 }
 
-                _previousFocusedTextBox.SelectionStart = index + replace.Length;
+                previousFocusedTextBox.SelectionStart = index + replace.Length;
             }
         }
 

@@ -8,8 +8,10 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class BasicDataEntryViewModel : ObservableObject
+    public partial class BasicDataEntryViewModel : ObservableObject, ICreateInputFile
     {
+		public event EventHandler<EventArgs> CreateInputFile;
+
         [XmlIgnore]
         private double _value = double.NaN;
         [XmlElement("Value")] 
@@ -20,7 +22,11 @@ namespace EFH2
             {
                 this.SetProperty(ref _value, value);
 
-                if (value < Max && value > Min) Status = MainViewModel.UserEnteredMessage;
+                if (value < Max && value > Min)
+                {
+                    Status = MainViewModel.UserEnteredMessage;
+                    this.CreateInputFile?.Invoke(this, new EventArgs());
+                }
                 else if (value.Equals(double.NaN)) Status = "";
                 else Status = InvalidEntryStatus;
             }
@@ -42,7 +48,7 @@ namespace EFH2
         [property: XmlIgnore]
         private string _status = "";
 
-        public BasicDataEntryViewModel()
+		public BasicDataEntryViewModel()
         {
             Min = 0;
             Max = 0;
