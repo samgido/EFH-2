@@ -137,7 +137,7 @@ namespace EFH2
 				using (Process process = new Process() { StartInfo = psi })
 				{
 					process.Start();
-					while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
+					//while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
 				}
