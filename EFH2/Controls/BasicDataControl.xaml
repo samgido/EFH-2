@@ -6,8 +6,14 @@
     xmlns:local="using:EFH2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:f="using:Windows.Globalization.NumberFormatting"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <local:DoubleFormatter x:Key="DoubleFormatter"/>
+        </Style>
+    </UserControl.Resources>
+    
     <StackPanel>
         <RelativePanel>
             <TextBox x:Name="ClientTextBox" Text="{Binding Path=Client, Mode=TwoWay}" Header="Client:" Margin="50,0,0,0" Width="300">
@@ -129,7 +135,7 @@
                 />
 
                 <NumberBox x:Name="TimeOfConcentration" Value="{Binding Path=Value, Mode=TwoWay}" ValueChanged="BasicDataFieldValueChanged"
-                           Minimum="0" Margin="200,0,0,0">
+                           Minimum="0" Margin="200,0,0,0" NumberFormatter="{StaticResource DoubleFormatter}">
                     <ToolTipService.ToolTip>
                         Time of concentration, in hours, is calculated from Watershed Length and Slope using Tc Lag Method
                     </ToolTipService.ToolTip>
