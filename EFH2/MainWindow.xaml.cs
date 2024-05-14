@@ -58,7 +58,9 @@ namespace EFH2
 
         private void CreateWinTr20InputFile(object sender, EventArgs e)
         {
-            FileOperations.CreateInpFile(MainViewModel);
+            string fileName = FileOperations.CreateInpFile(MainViewModel);
+
+            if (fileName != null) FileOperations.RunWinTr20(fileName);
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)
