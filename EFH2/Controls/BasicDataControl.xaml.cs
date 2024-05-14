@@ -20,7 +20,7 @@ namespace EFH2
 {
     public sealed partial class BasicDataControl : UserControl
     {
-        public event EventHandler<EventArgs>? CreateInputFile;
+        public event EventHandler<EventArgs>? ValueChanged;
 
         public BasicDataControl()
         {
@@ -41,35 +41,7 @@ namespace EFH2
 
         private void BasicDataFieldValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            if (DataContext is BasicDataViewModel viewModel)
-            {
-                if (sender.DataContext is BasicDataEntryViewModel model)
-                {
-                    viewModel.CheckFieldChange(model, sender.Value);
-                    CalculateTimeOfConcentration();
-                    
-                    this.CreateInputFile?.Invoke(this, new EventArgs());
-                }
-            }
-        }
-
-        private void CalculateTimeOfConcentration()
-        {
-            if (DataContext is BasicDataViewModel model)
-            {
-                double final = (Math.Pow(model.WatershedLength, 0.8) * Math.Pow(((1000 / model.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(model.WatershedSlope, 0.5));
-
-                if (final.Equals(double.NaN))
-                {
-                    model.timeOfConcentrationEntry.Value = double.NaN;
-                    model.timeOfConcentrationEntry.Status = "";
-                }
-                else
-                {
-                    model.timeOfConcentrationEntry.Value = Math.Round(final, 2);
-                    model.timeOfConcentrationEntry.Status = "Calculated";
-                }
-            }
+            this.ValueChanged?.Invoke(this, new EventArgs());
         }
     }
 }

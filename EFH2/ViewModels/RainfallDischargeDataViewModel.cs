@@ -13,7 +13,7 @@ namespace EFH2
 {
     public partial class RainfallDischargeDataViewModel : ObservableObject, ICreateInputFile
     {
-        public event EventHandler<EventArgs>? CreateInputFile;
+        public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlElement("RainfallDistributionType")]
         public string selectedRainfallDistributionType = "";
@@ -59,7 +59,7 @@ namespace EFH2
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
                 this.selectedRainfallDistributionType = RainfallDistributionTypes[value].Content as string;
 
-                this.CreateInputFile?.Invoke(this, new EventArgs());
+                this.ValueChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -72,7 +72,7 @@ namespace EFH2
                 this.SetProperty(ref this._selectedDuhTypeIndex, value);
                 this.selectedDuhType = DuhTypes[value].Content as string;
 
-                this.CreateInputFile?.Invoke(this, new EventArgs());
+                this.ValueChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -143,7 +143,7 @@ namespace EFH2
             for (int i = 0; i < Storms.Count; i++)
             {
                 Storms[i].Load(model.Storms[i]);
-                Storms[i].CreateInputFile += StormPropertyChanged;
+                Storms[i].ValueChanged += StormPropertyChanged;
             }
         }
 
@@ -154,7 +154,7 @@ namespace EFH2
 
             foreach (StormViewModel storm in Storms)
             {
-                storm.CreateInputFile -= StormPropertyChanged;
+                storm.ValueChanged -= StormPropertyChanged;
                 storm.Default();
             }
         }
@@ -177,13 +177,13 @@ namespace EFH2
 
         private void AddStorm(StormViewModel storm)
         {
-            storm.CreateInputFile += StormPropertyChanged;
+            storm.ValueChanged += StormPropertyChanged;
             Storms.Add(storm);
         }
 
         public void StormPropertyChanged(object? sender, EventArgs e)
         {
-            this.CreateInputFile?.Invoke(this, new EventArgs());
+            this.ValueChanged?.Invoke(this, new EventArgs());
         }
     }
 }

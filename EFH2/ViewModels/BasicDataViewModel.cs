@@ -15,7 +15,7 @@ namespace EFH2
 {
     public partial class BasicDataViewModel : ObservableObject, ICreateInputFile
     {
-        public event EventHandler<EventArgs>? CreateInputFile;
+        public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlElement("Drainage Area")]
         public BasicDataEntryViewModel drainageAreaEntry = new BasicDataEntryViewModel(1, 2000, "Drainage Area", "Drainage area must be in the range 1 to 2000 acres!");
@@ -44,7 +44,7 @@ namespace EFH2
         public double TimeOfConcentration => timeOfConcentrationEntry.Value;
 
         [XmlIgnore]
-        private Dictionary<string, List<string>> _stateCountyDictionary = new();
+        private readonly Dictionary<string, List<string>> _stateCountyDictionary = new();
 
         [ObservableProperty]
         [XmlElement("Client")]
@@ -111,16 +111,32 @@ namespace EFH2
 
         public BasicDataViewModel()
         {
-			drainageAreaEntry.CreateInputFile += EntryChanged;
-			runoffCurveNumberEntry.CreateInputFile += EntryChanged;
-            watershedLengthEntry.CreateInputFile += EntryChanged;
-            watershedSlopeEntry.CreateInputFile += EntryChanged;
-            timeOfConcentrationEntry.CreateInputFile += EntryChanged;
+			drainageAreaEntry.ValueChanged += EntryChanged;
+			runoffCurveNumberEntry.ValueChanged += EntryChanged;
+            watershedLengthEntry.ValueChanged += EntryChanged;
+            watershedSlopeEntry.ValueChanged += EntryChanged;
+            timeOfConcentrationEntry.ValueChanged += EntryChanged;
+        }
+
+        public void CalculateTimeOfConcentration()
+        {
+			double final = (Math.Pow(this.WatershedLength, 0.8) * Math.Pow(((1000 / this.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(this.WatershedSlope, 0.5));
+
+			if (final.Equals(double.NaN))
+			{
+				this.timeOfConcentrationEntry.Value = double.NaN;
+				this.timeOfConcentrationEntry.Status = "";
+			}
+			else
+			{
+				this.timeOfConcentrationEntry.Value = Math.Round(final, 2);
+				this.timeOfConcentrationEntry.Status = "Calculated";
+			}
         }
 
 		private void EntryChanged(object sender, EventArgs e)
 		{
-            this.CreateInputFile?.Invoke(this, new EventArgs());
+            this.ValueChanged?.Invoke(this, new EventArgs());
 		}
 
 		private void SetCounties(List<string> list)
@@ -165,12 +181,6 @@ namespace EFH2
             {
                 States.Add(new ComboBoxItem() { Content = s });
             }
-        }
-
-        public void CheckFieldChange(BasicDataEntryViewModel model, double newValue)
-        {
-            if (newValue < model.Max && newValue > model.Min) model.Value = newValue;
-            else model.Status = model.InvalidEntryStatus;
         }
 
         public void Default()

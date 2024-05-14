@@ -10,7 +10,7 @@ namespace EFH2
 {
     public partial class BasicDataEntryViewModel : ObservableObject, ICreateInputFile
     {
-		public event EventHandler<EventArgs> CreateInputFile;
+		public event EventHandler<EventArgs> ValueChanged;
 
         [XmlIgnore]
         private double _value = double.NaN;
@@ -20,15 +20,18 @@ namespace EFH2
             get => _value;
             set
             {
-                this.SetProperty(ref _value, value);
-
-                if (value < Max && value > Min)
+                if (value != _value) // Dirty fix to stack overflow exception when calculating and setting time of conc.
                 {
-                    Status = MainViewModel.UserEnteredMessage;
-                    this.CreateInputFile?.Invoke(this, new EventArgs());
+					this.SetProperty(ref _value, value);
+
+					if (value <= Max && value >= Min)
+					{
+						Status = MainViewModel.UserEnteredMessage;
+						this.ValueChanged?.Invoke(this, new EventArgs());
+					}
+					else if (value.Equals(double.NaN)) Status = "";
+					else Status = InvalidEntryStatus;
                 }
-                else if (value.Equals(double.NaN)) Status = "";
-                else Status = InvalidEntryStatus;
             }
         }
 

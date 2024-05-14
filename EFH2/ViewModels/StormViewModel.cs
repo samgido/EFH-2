@@ -10,7 +10,7 @@ namespace EFH2
 {
     public partial class StormViewModel : ObservableObject, ICreateInputFile
     {
-        public event EventHandler<EventArgs>? CreateInputFile;
+        public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlIgnore]
         private double _dayRain = double.NaN;
@@ -45,7 +45,7 @@ namespace EFH2
                 else if (value <= RainfallDischargeDataViewModel.DayRainMax)
                 {
                     this.SetProperty(ref this._dayRain, value);
-                    this.CreateInputFile?.Invoke(this, new EventArgs());
+                    this.ValueChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace EFH2
                 else 
                 {
                     this.SetProperty(ref this._frequency, value);
-                    this.CreateInputFile?.Invoke(this, new EventArgs());
+                    this.ValueChanged?.Invoke(this, new EventArgs());
                 }
             }
         }

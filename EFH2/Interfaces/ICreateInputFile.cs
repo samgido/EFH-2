@@ -8,6 +8,6 @@ namespace EFH2
 {
 	public interface ICreateInputFile
 	{
-		event EventHandler<EventArgs>? CreateInputFile;
+		event EventHandler<EventArgs>? ValueChanged;
 	}
 }
