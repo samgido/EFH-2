@@ -44,7 +44,9 @@ namespace EFH2
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
+
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
+
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.UnitsChanged += RcnDataControl_UnitsChanged;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
