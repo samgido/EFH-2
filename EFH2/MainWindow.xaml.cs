@@ -68,7 +68,11 @@ namespace EFH2
         {
             string fileName = FileOperations.CreateInpFile(MainViewModel);
 
-            if (fileName != null) FileOperations.RunWinTr20(fileName);
+            if (fileName != null)
+            {
+                FileOperations.RunWinTr20(fileName);
+                FileOperations.ParseWinTR20Output(MainViewModel.RainfallDischargeDataViewModel);
+            }
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)

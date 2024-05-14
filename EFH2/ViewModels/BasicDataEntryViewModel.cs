@@ -59,12 +59,12 @@ namespace EFH2
             InvalidEntryStatus = "";
         }
 
-        public BasicDataEntryViewModel(double min, double max, string name, string invalid)
+        public BasicDataEntryViewModel(double min, double max, string name, string invalidStatus)
         {
             Min = min;
             Max = max;
             Name = name;
-            InvalidEntryStatus = invalid;
+            InvalidEntryStatus = invalidStatus;
         }
 
         public void Default()
