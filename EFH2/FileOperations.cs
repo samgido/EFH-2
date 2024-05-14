@@ -178,8 +178,10 @@ namespace EFH2
 		/// Reads the peak-flow and runoff values from the tr20.out file and inserts them into the view model
 		/// </summary>
 		/// <param name="model"></param>
-		public static void ParseWinTR20Output(RainfallDischargeDataViewModel model)
+		public static List<StormViewModel> ParseWinTR20Output()
 		{
+			List<StormViewModel> list = new List<StormViewModel>();
+
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			string filePath = Path.Combine(appDataPath, "EFH2\\tr20.out");
 
@@ -196,7 +198,8 @@ namespace EFH2
 					}
 				}
 			}
-		}
 
+			return list;
+		}
 	}
 }
