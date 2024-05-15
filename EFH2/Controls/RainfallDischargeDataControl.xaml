@@ -94,7 +94,6 @@
                                     <Style TargetType="NumberBox">
                                         <Setter Property="MaxWidth" Value="100"/>
                                         <Setter Property="MinWidth" Value="10"/>
-                                        <Setter Property="NumberFormatter" Value="{StaticResource DoubleFormatter}"/>
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
@@ -112,8 +111,8 @@
                                 <NumberBox Grid.Column="1" Value="{Binding Path=Frequency, Mode=TwoWay}"/>
                                 <NumberBox Grid.Column="2" Value="{Binding Path=DayRain, Mode=TwoWay}"/>
 
-                                <NumberBox Grid.Column="3" Value="{Binding Path=PeakFlow, Mode=OneWay}" IsEnabled="False"/>
-                                <NumberBox Grid.Column="4" Value="{Binding Path=Runoff, Mode=OneWay}" IsEnabled="False"/>
+                                <NumberBox Grid.Column="3" Value="{Binding Path=PeakFlow, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                                <NumberBox Grid.Column="4" Value="{Binding Path=Runoff, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
 
                                 <ToggleSwitch Grid.Column="5" HorizontalContentAlignment="Center" Margin="30,0"/>
                             </Grid>

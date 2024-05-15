@@ -157,11 +157,11 @@ namespace EFH2
 		public static bool IsWinTR20Ready(MainViewModel model)
 		{
 			// Rainfall discharge data check
-			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
-			{
-				// If any entry is invalid data, ie one field in storm is filled but the other isn't, data isn't ready
-				if (storm.Frequency.Equals(double.NaN) ^ storm.DayRain.Equals(double.NaN)) return false;
-			}
+			//foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+			//{
+			//	// If any entry is invalid data, ie one field in storm is filled but the other isn't, data isn't ready
+			//	if (storm.Frequency.Equals(double.NaN) ^ storm.DayRain.Equals(double.NaN)) return false;
+			//}
 
 			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
 
