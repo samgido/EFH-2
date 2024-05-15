@@ -15,6 +15,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using Windows.ApplicationModel.DataTransfer;
+using OxyPlot;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,6 +29,8 @@ namespace EFH2
     {
         public MainViewModel MainViewModel { get; set; }
 
+        public HydrographDataViewModel HydrographDataViewModel { get; set; }
+
         public TextBox? previousFocusedTextBox { get; set; }
 
         public MainWindow()
@@ -37,6 +40,7 @@ namespace EFH2
             Navigation.SelectedItem = IntroNavButton;
 
             MainViewModel = new MainViewModel();
+            HydrographDataViewModel = new HydrographDataViewModel();
 
             MainViewModel.RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
             MainViewModel.BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
@@ -59,10 +63,40 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
         }
 
-		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
+		private async void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
-		}
+            // check if any are selected to be plotted
+            List<HydrographLineModel> plots = new List<HydrographLineModel>();
+
+            bool plotGraph = false;
+            foreach (StormViewModel storm in MainViewModel.RainfallDischargeDataViewModel.Storms)
+            {
+                if (storm.DisplayHydrograph) { plotGraph = true; break; }
+            }
+
+            if (!plotGraph) return;
+
+            for (int i = 0; i < plots.Count; i++)
+            {
+                HydrographDataViewModel.AddPlot(plots[i], MarkerType.Plus, OxyColors.AliceBlue);
+            }
+            // Hydrograph data is ready, make a page and set the data context
+
+            ShowHydrographPage page = new ShowHydrographPage()
+            {
+                DataContext = HydrographDataViewModel,
+            };
+
+            ContentDialog contentDialog = new ContentDialog()
+            {
+                Title = "Hydrograph",
+                Content = page,
+                CloseButtonText = "Close",
+                XamlRoot = this.Content.XamlRoot,
+            };
+
+            await contentDialog.ShowAsync();
+        }
 
         private void CreateWinTr20InputFile(object sender, EventArgs e)
         {
@@ -72,7 +106,7 @@ namespace EFH2
             {
                 FileOperations.RunWinTr20(fileName);
             }
-			FileOperations.ParseWinTR20Output(MainViewModel.RainfallDischargeDataViewModel);
+			FileOperations.ParseWinTR20Output(MainViewModel.RainfallDischargeDataViewModel.Storms);
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)

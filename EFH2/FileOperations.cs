@@ -178,14 +178,14 @@ namespace EFH2
 		/// Reads the peak-flow and runoff values from the tr20.out file and inserts them into the view model
 		/// </summary>
 		/// <param name="model"></param>
-		public static void ParseWinTR20Output(RainfallDischargeDataViewModel model)
+		public static void ParseWinTR20Output(IEnumerable<StormViewModel> storms)
 		{
 			try
 			{
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 				string filePath = Path.Combine(appDataPath, "EFH2\\tr20.out");
 
-				foreach (StormViewModel storm in model.Storms) storm.PeakFlow = storm.Runoff = double.NaN;
+				foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
 				if (File.Exists(filePath))
 				{
@@ -214,7 +214,7 @@ namespace EFH2
 									//Debug.WriteLine("runoff: " + runoff.ToString());
 									//Debug.WriteLine("flow: " + peakFlow.ToString());
 
-									foreach (StormViewModel storm in model.Storms)
+									foreach (StormViewModel storm in storms)
 									{
 										if (storm.Frequency == year && !storm.DayRain.Equals(double.NaN))
 										{// found the match, put the runoff and peakflow values into this storm
@@ -233,6 +233,64 @@ namespace EFH2
 			{
 				Debug.WriteLine(ex.Message);
 			}
+		}
+
+		public static List<HydrographLineModel> GetHydrographData(IEnumerable<StormViewModel> storms)
+		{
+			// First find all storms, specifically their frequencies, that need to be plotted
+			List<int> plottedFrequencies = new List<int>();
+			foreach (StormViewModel storm in storms) if (storm.DisplayHydrograph) plottedFrequencies.Add((int)storm.Frequency);
+
+			List<HydrographLineModel> list = new List<HydrographLineModel>();
+
+			// this check should be done in mainwindow code behind
+			//if (plottedFrequencies.Count == 0) return list;
+
+			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			string filePath = Path.Combine(appDataPath, "EFH2\\tr20.hyd");
+
+			if (File.Exists(filePath))
+			{
+				using (StreamReader reader = new StreamReader(filePath))
+				{
+					while (!reader.EndOfStream)
+					{
+						string line = reader.ReadLine();
+						List<string> splitLine = SplitLine(line);
+
+						if (splitLine.Count == 7 && splitLine[0] == "Area" && plottedFrequencies.Contains(int.Parse(splitLine[2].Replace("-Yr", ""))))
+						{
+							int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
+							double startTime = double.Parse(splitLine[3]);
+							double increment = double.Parse(splitLine[4]);
+
+							List<double> values = new List<double>();
+
+							line = reader.ReadLine(); 
+							splitLine = SplitLine(line);
+							while (splitLine.Count == 5)
+							{
+								foreach (string val in splitLine)
+								{
+									values.Add(double.Parse(val));
+								}
+
+								line = reader.ReadLine(); 
+								splitLine = SplitLine(line);
+							}
+
+							list.Add(new HydrographLineModel(frequency, startTime, increment, values));
+						}
+					}
+				}
+			}
+
+			return list;
+		}
+
+		private static List<string> SplitLine(string line)
+		{
+			return line.Split().Where(elem => !string.IsNullOrEmpty(elem)).ToList();
 		}
 	}
 }
