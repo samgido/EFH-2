@@ -20,8 +20,6 @@ namespace EFH2
 {
     public sealed partial class BasicDataControl : UserControl
     {
-        public event EventHandler<EventArgs>? ValueChanged;
-
         public BasicDataControl()
         {
             this.InitializeComponent();
@@ -37,11 +35,6 @@ namespace EFH2
                 WatershedSlopeControls.DataContext = model.watershedSlopeEntry;
                 TimeOfConcentrationControls.DataContext = model.timeOfConcentrationEntry;
             }
-        }
-
-        private void BasicDataFieldValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            this.ValueChanged?.Invoke(this, new EventArgs());
         }
     }
 }

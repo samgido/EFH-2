@@ -41,12 +41,8 @@ namespace EFH2
             get => _dayRain;
             set
             {
-                if (value == 0) this.SetProperty(ref this._dayRain, double.NaN);
-                else if (value <= RainfallDischargeDataViewModel.DayRainMax)
-                {
-                    this.SetProperty(ref this._dayRain, value);
-                    this.ValueChanged?.Invoke(this, new EventArgs());
-                }
+                this.SetProperty(ref this._dayRain, value);
+				this.ValueChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -56,12 +52,8 @@ namespace EFH2
             get => _frequency;
             set
             {
-                if (value == 0) this.SetProperty(ref this._frequency, double.NaN);
-                else 
-                {
-                    this.SetProperty(ref this._frequency, value);
-                    this.ValueChanged?.Invoke(this, new EventArgs());
-                }
+				this.SetProperty(ref this._frequency, value);
+				this.ValueChanged?.Invoke(this, new EventArgs());
             }
         }
 

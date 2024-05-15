@@ -60,7 +60,7 @@
                 <TextBlock x:Name="DrainageAreaLabel" RelativePanel.AlignVerticalCenterWithPanel="True"
                     Text="{Binding Path=Name}" Margin="20,0,0,0" />
 
-                <NumberBox x:Name="DrainageArea" Value="{Binding Path=Value, Mode=TwoWay}"  ValueChanged="BasicDataFieldValueChanged" Minimum="0"
+                <NumberBox x:Name="DrainageArea" Value="{Binding Path=Value, Mode=TwoWay}"  Minimum="0"
                     PlaceholderText="" Margin= "200,0,0,0">
                     <ToolTipService.ToolTip>
                         Watershed area in acres (limits 1 to 2000)
@@ -80,7 +80,7 @@
                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
                 <NumberBox x:Name="RunoffCurveNumber" Value="{Binding Path=Value, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0"
-                           ValueChanged="BasicDataFieldValueChanged">
+                           >
                     <ToolTipService.ToolTip>
                         Weighted NRCS watershed curve number (limits 40 to 98)
                     </ToolTipService.ToolTip>
@@ -95,7 +95,7 @@
                     RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
                 <NumberBox x:Name="WatershedLength" Value="{Binding Path=Value, Mode=TwoWay}" Minimum="0" Margin="200,0,0,0" 
-                           ValueChanged="BasicDataFieldValueChanged">
+                           >
                     <ToolTipService.ToolTip>
                         Length in feet along the flow path from the hydraulically most distant point to point of interest (limits 200 to 26000)
                     </ToolTipService.ToolTip>
@@ -112,7 +112,7 @@
                 <TextBlock Text="{Binding Path=Name}" Margin="20,0,0,0"
                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <NumberBox x:Name="WatershedSlope" Value="{Binding Path=Value, Mode=TwoWay}" ValueChanged="BasicDataFieldValueChanged"
+                <NumberBox x:Name="WatershedSlope" Value="{Binding Path=Value, Mode=TwoWay}" 
                            Minimum="0" Margin="200,0,0,0">
                     <ToolTipService.ToolTip>
                         Average watershed slope in percent (limits 0.5 to 64)
@@ -133,7 +133,7 @@
                 RelativePanel.AlignVerticalCenterWithPanel="True"
                 />
 
-                <NumberBox x:Name="TimeOfConcentration" Value="{Binding Path=Value, Mode=TwoWay}" ValueChanged="BasicDataFieldValueChanged"
+                <NumberBox x:Name="TimeOfConcentration" Value="{Binding Path=Value, Mode=TwoWay}" 
                            Minimum="0" Margin="200,0,0,0" NumberFormatter="{StaticResource DoubleFormatter}">
                     <ToolTipService.ToolTip>
                         Time of concentration, in hours, is calculated from Watershed Length and Slope using Tc Lag Method

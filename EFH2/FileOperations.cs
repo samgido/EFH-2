@@ -178,28 +178,59 @@ namespace EFH2
 		/// Reads the peak-flow and runoff values from the tr20.out file and inserts them into the view model
 		/// </summary>
 		/// <param name="model"></param>
-		public static List<StormViewModel> ParseWinTR20Output()
+		public static void ParseWinTR20Output(RainfallDischargeDataViewModel model)
 		{
-			List<StormViewModel> list = new List<StormViewModel>();
-
-			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			string filePath = Path.Combine(appDataPath, "EFH2\\tr20.out");
-
-			if (File.Exists(filePath))
+			try
 			{
-				using (StreamReader reader = new StreamReader(filePath))
-				{
-					while (!reader.EndOfStream)
-					{
-						string line = reader.ReadLine();
-						string[] splitLine = line.Split();
+				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+				string filePath = Path.Combine(appDataPath, "EFH2\\tr20.out");
 
-						if (splitLine.Length == 2 & splitLine[1].Contains("-YR")) { }
+				if (File.Exists(filePath))
+				{
+					using (StreamReader reader = new StreamReader(filePath))
+					{
+						while (!reader.EndOfStream)
+						{
+							string line = reader.ReadLine();
+							string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+
+							if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+							{ // Now at the line "___STORM_##-YR____"
+								string yrLabel = splitLine[1].Replace("-Yr", "");
+								int year = int.Parse(yrLabel);
+
+								for (int i = 0; i < 6; i++) line = reader.ReadLine();
+
+								splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+								if (splitLine.Length == 6 && splitLine[0] == "Area")
+								{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+									Debug.WriteLine("Found: " + line);
+
+									double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+									double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+
+									Debug.WriteLine("runoff: " + runoff.ToString());
+									Debug.WriteLine("flow: " + peakFlow.ToString());
+
+									foreach (StormViewModel storm in model.Storms)
+									{
+										if (storm.Frequency == year)
+										{// found the match, put the runoff and peakflow values into this storm
+											storm.PeakFlow = peakFlow;
+											storm.Runoff = runoff;
+										}
+									}
+								}
+							}
+						}
 					}
+					Debug.WriteLine("");
 				}
 			}
-
-			return list;
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+			}
 		}
 	}
 }
