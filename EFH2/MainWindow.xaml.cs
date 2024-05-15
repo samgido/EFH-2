@@ -40,12 +40,12 @@ namespace EFH2
 
             MainViewModel.RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
             MainViewModel.BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
-            MainViewModel.BasicDataViewModel.ValueChanged += BasicDataValuesChanged;
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
 
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
+			RainfallDischargeDataControl.CreateHydrograph += RainfallDischargeDataControl_CreateHydrograph;
 
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.UnitsChanged += RcnDataControl_UnitsChanged;
@@ -59,10 +59,10 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
         }
 
-        private void BasicDataValuesChanged(object sender, EventArgs e)
-        {
-            MainViewModel.BasicDataViewModel.CalculateTimeOfConcentration();
-        }
+		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 
         private void CreateWinTr20InputFile(object sender, EventArgs e)
         {

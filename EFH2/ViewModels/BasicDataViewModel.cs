@@ -76,11 +76,9 @@ namespace EFH2
         [XmlElement("Selected County")]
         public string selectedCounty = "";
 
-        //[XmlElement("Selected State Index")]
         [XmlIgnore]
         private int _selectedStateIndex = 0;
 
-        //[XmlElement("Selected County Index")]
         [XmlIgnore]
         private int _selectedCountyIndex = 0;
 
@@ -136,7 +134,7 @@ namespace EFH2
 
 		private void EntryChanged(object sender, EventArgs e)
 		{
-            this.ValueChanged?.Invoke(this, new EventArgs());
+            this.CalculateTimeOfConcentration();
 		}
 
 		private void SetCounties(List<string> list)

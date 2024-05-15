@@ -20,6 +20,8 @@ namespace EFH2
 {
     public sealed partial class RainfallDischargeDataControl : UserControl
     {
+		public event EventHandler? CreateHydrograph;
+
         public RainfallDischargeDataControl()
         {
             this.InitializeComponent();
@@ -43,7 +45,7 @@ namespace EFH2
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-
+            this.CreateHydrograph?.Invoke(this, new EventArgs());
         }
     }
 }

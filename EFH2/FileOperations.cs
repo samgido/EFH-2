@@ -206,13 +206,13 @@ namespace EFH2
 								splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
 								if (splitLine.Length == 6 && splitLine[0] == "Area")
 								{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-									Debug.WriteLine("Found: " + line);
+									//Debug.WriteLine("Found: " + line);
 
 									double runoff = Math.Round(double.Parse(splitLine[2]), 2);
 									double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
 
-									Debug.WriteLine("runoff: " + runoff.ToString());
-									Debug.WriteLine("flow: " + peakFlow.ToString());
+									//Debug.WriteLine("runoff: " + runoff.ToString());
+									//Debug.WriteLine("flow: " + peakFlow.ToString());
 
 									foreach (StormViewModel storm in model.Storms)
 									{
@@ -226,7 +226,7 @@ namespace EFH2
 							}
 						}
 					}
-					Debug.WriteLine("");
+					//Debug.WriteLine("");
 				}
 			}
 			catch (Exception ex)
