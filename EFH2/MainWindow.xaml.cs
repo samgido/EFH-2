@@ -71,8 +71,8 @@ namespace EFH2
             if (fileName != null)
             {
                 FileOperations.RunWinTr20(fileName);
-                FileOperations.ParseWinTR20Output(MainViewModel.RainfallDischargeDataViewModel);
             }
+			FileOperations.ParseWinTR20Output(MainViewModel.RainfallDischargeDataViewModel);
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)

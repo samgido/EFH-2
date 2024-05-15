@@ -185,6 +185,8 @@ namespace EFH2
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 				string filePath = Path.Combine(appDataPath, "EFH2\\tr20.out");
 
+				foreach (StormViewModel storm in model.Storms) storm.PeakFlow = storm.Runoff = double.NaN;
+
 				if (File.Exists(filePath))
 				{
 					using (StreamReader reader = new StreamReader(filePath))
@@ -214,7 +216,7 @@ namespace EFH2
 
 									foreach (StormViewModel storm in model.Storms)
 									{
-										if (storm.Frequency == year)
+										if (storm.Frequency == year && !storm.DayRain.Equals(double.NaN))
 										{// found the match, put the runoff and peakflow values into this storm
 											storm.PeakFlow = peakFlow;
 											storm.Runoff = runoff;

@@ -8,6 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=local:RainfallDischargeDataViewModel}"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <local:DoubleFormatter x:Key="DoubleFormatter"/>
+    </UserControl.Resources>
+
     <RelativePanel Background="Black" x:Name="RootPanel">
 
         <RelativePanel Padding="0,15" Name="TopPanel" 
@@ -90,6 +94,7 @@
                                     <Style TargetType="NumberBox">
                                         <Setter Property="MaxWidth" Value="100"/>
                                         <Setter Property="MinWidth" Value="10"/>
+                                        <Setter Property="NumberFormatter" Value="{StaticResource DoubleFormatter}"/>
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
