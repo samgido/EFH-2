@@ -18,7 +18,7 @@ namespace EFH2
         [XmlElement("Group D")]
         public RcnGroupModel GroupD = new();
 
-        // Doesn't make much sense to store these 
+        // Doesn't make sense to store these 
         //public double AccumulatedArea => GroupA.AccumulatedArea + GroupB.AccumulatedArea + GroupC.AccumulatedArea + GroupD.AccumulatedArea;
 
         //public double AccumulatedWeightedArea => GroupA.AccumulatedWeightedArea + GroupB.AccumulatedWeightedArea + GroupC.AccumulatedWeightedArea + GroupD.AccumulatedWeightedArea;

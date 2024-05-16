@@ -91,7 +91,7 @@ namespace EFH2
                 this.SetProperty(ref this._selectedStateIndex, value);
                 this.selectedState = States[_selectedStateIndex].Content.ToString();
 
-                SetCounties(_stateCountyDictionary[selectedState]);                
+                SetCounties(_stateCountyDictionary[selectedState]);
             }
         }
 
@@ -161,13 +161,14 @@ namespace EFH2
             {
                 string line = reader.ReadLine();
 
-                string[] XmlElements = line.Split(',');
+                string[] elements = line.Split(',');
 
-                string state = XmlElements[1];
-                string county = XmlElements[2].Trim('"');
+                string state = elements[1];
+                string county = elements[2].Trim('"');
 
                 if (!_stateCountyDictionary.ContainsKey(state))
-                {
+                { // found new state 
+
                     _stateCountyDictionary.Add(state, new());
                     _stateCountyDictionary[state].Add("Choose");
                 }
