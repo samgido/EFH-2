@@ -44,7 +44,7 @@ namespace EFH2
         public double TimeOfConcentration => timeOfConcentrationEntry.Value;
 
         [XmlIgnore]
-        private readonly Dictionary<string, List<string>> _stateCountyDictionary = new();
+        public Dictionary<string, List<string>> stateCountyDictionary = new Dictionary<string, List<string>>();
 
         [ObservableProperty]
         [XmlElement("Client")]
@@ -91,7 +91,7 @@ namespace EFH2
                 this.SetProperty(ref this._selectedStateIndex, value);
                 this.selectedState = States[_selectedStateIndex].Content.ToString();
 
-                SetCounties(_stateCountyDictionary[selectedState]);
+                SetCounties(stateCountyDictionary[selectedState]);
             }
         }
 
@@ -150,36 +150,6 @@ namespace EFH2
             }
 
             if (Counties.Count != 0) SelectedCountyIndex = 0;
-        }
-
-        public void LoadStatesAndCounties(StreamReader reader)
-        {
-            reader.ReadLine();
-            _stateCountyDictionary.Add("Choose", new List<string>());
-
-            while (!reader.EndOfStream)
-            {
-                string line = reader.ReadLine();
-
-                string[] elements = line.Split(',');
-
-                string state = elements[1];
-                string county = elements[2].Trim('"');
-
-                if (!_stateCountyDictionary.ContainsKey(state))
-                { // found new state 
-
-                    _stateCountyDictionary.Add(state, new());
-                    _stateCountyDictionary[state].Add("Choose");
-                }
-
-                _stateCountyDictionary[state].Add(county);
-            }
-
-            foreach (string state in _stateCountyDictionary.Keys)
-            {
-                States.Add(new ComboBoxItem() { Content = state });
-            }
         }
 
         public void Default()

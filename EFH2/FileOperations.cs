@@ -12,6 +12,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage;
 using System.Xml.Serialization;
 using System.IO;
+using Microsoft.UI.Xaml.Controls;
 
 namespace EFH2
 {
@@ -30,6 +31,166 @@ namespace EFH2
 			if (serializer.Deserialize(reader) is MainViewModel model) return model;
 			else return null;
         }
+
+		public static void LoadMainViewModel(MainViewModel model)
+		{
+			model.BasicDataViewModel = new BasicDataViewModel();
+			model.RainfallDischargeDataViewModel = new RainfallDischargeDataViewModel();
+			model.RcnDataViewModel = new RcnDataViewModel();
+
+			LoadBasicData(model.BasicDataViewModel);
+			LoadRainfallDischargeData(model.RainfallDischargeDataViewModel);
+			LoadRcnData(model.RcnDataViewModel);
+		}
+
+		private static void LoadBasicData(BasicDataViewModel model)
+		{
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
+			{
+				reader.ReadLine();
+				model.stateCountyDictionary.Add("Choose", new List<string>());
+
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine();
+
+					string[] elements = line.Split(',');
+
+					string state = elements[1];
+					string county = elements[2].Trim('"');
+
+					if (!model.stateCountyDictionary.ContainsKey(state))
+					{ // found new state 
+
+						model.stateCountyDictionary.Add(state, new());
+						model.stateCountyDictionary[state].Add("Choose");
+					}
+
+					model.stateCountyDictionary[state].Add(county);
+				}
+
+				foreach (string state in model.stateCountyDictionary.Keys)
+				{
+					model.States.Add(new ComboBoxItem() { Content = state });
+				}
+
+			}
+		}
+
+		private static void LoadRainfallDischargeData(RainfallDischargeDataViewModel model)
+		{
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt"))
+			{
+				ComboBoxItem c = new();
+				c.Content = "";
+				model.RainfallDistributionTypes.Clear();
+				model.RainfallDistributionTypes.Add(c);
+
+				string line = reader.ReadLine();
+
+				while (line != "")
+				{
+					string[] lineParts = line.Split(',');
+					string type = lineParts[0];
+
+					c = new();
+					c.Content = type.Trim('"');
+
+					model.RainfallDistributionTypes.Add(c);
+					line = reader.ReadLine();
+				}
+				model.SelectedRainfallDistributionTypeIndex = 0;
+			}
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt"))
+			{
+				model.DuhTypes.Clear();
+				string line = reader.ReadLine();
+
+				while (line != "")
+				{
+					ComboBoxItem c = new();
+					c.Content = line;
+
+					model.DuhTypes.Add(c);
+					line = reader.ReadLine();
+				}
+				model.SelectedDuhTypeIndex = 0;
+			}
+		}
+
+		private static void LoadRcnData(RcnDataViewModel model)
+		{
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover.txt"))
+			{
+				var _ = reader.ReadLine();
+
+				RcnCategory currentCategory = new();
+				List<RcnCategory> categories = new();
+
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine();
+					string[] splitLine = line.Split('\t');
+
+					if (splitLine[0] == "") // start a new category if there aren't any input fields on a row
+					{
+						categories.Add(currentCategory);
+
+						currentCategory = new();
+						currentCategory.Label = splitLine[1].Replace('"', (char)0);
+					}
+					else // add to the current category as long as there are input fields
+					{
+						RcnRow row = new();
+						row.Text[0] = splitLine[1];
+						row.Text[1] = splitLine[2];
+						row.Text[2] = splitLine[3];
+
+						if (splitLine[5] == "**") row.Entries[0] = new WeightAreaPair() { Weight = -1 };
+						else row.Entries[0] = new WeightAreaPair() { Weight = int.Parse(splitLine[5].Trim()) };
+
+						row.Entries[1] = new WeightAreaPair() { Weight = int.Parse(splitLine[7].Trim()) };
+						row.Entries[2] = new WeightAreaPair() { Weight = int.Parse(splitLine[9].Trim()) };
+						row.Entries[3] = new WeightAreaPair() { Weight = int.Parse(splitLine[11].Trim()) };
+
+						currentCategory.Rows.Add(row);
+					}
+				}
+
+				categories.Add(currentCategory);
+
+				model.RcnCategories = categories;
+
+				foreach (RcnCategory category in model.RcnCategories)
+				{
+					foreach (RcnRow row in category.Rows)
+					{
+						row.Entries[0].PropertyChanged += model.EntryChanged;
+						row.Entries[1].PropertyChanged += model.EntryChanged;
+						row.Entries[2].PropertyChanged += model.EntryChanged;
+						row.Entries[3].PropertyChanged += model.EntryChanged;
+					}
+				}
+			}
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
+			{
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine();
+
+					string[] lineParts = line.Split("\t");
+
+					model.HsgEntries.Add(new HsgEntry()
+					{
+						Field1 = lineParts[0],
+						Field2 = lineParts[1],
+						Field3 = lineParts[2],
+					});
+				}
+			}
+		}
 
         public static string? CreateInpFile(MainViewModel model)
 		{

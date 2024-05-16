@@ -41,17 +41,7 @@ namespace EFH2
 
         public MainViewModel()
         {
-            BasicDataViewModel = new BasicDataViewModel();
-            RainfallDischargeDataViewModel = new RainfallDischargeDataViewModel();
-            RcnDataViewModel = new RcnDataViewModel();
-
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv")) BasicDataViewModel.LoadStatesAndCounties(reader);
-
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt")) RainfallDischargeDataViewModel.LoadDuhTypes(reader);
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt")) RainfallDischargeDataViewModel.LoadRainfallDistributionTypes(reader);
-
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover.txt")) RcnDataViewModel.LoadRCNTableEntries(reader);
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg")) RcnDataViewModel.LoadHsgEntries(reader);
+            FileOperations.LoadMainViewModel(this);
         }
 
         public void Load(MainViewModel newData)
