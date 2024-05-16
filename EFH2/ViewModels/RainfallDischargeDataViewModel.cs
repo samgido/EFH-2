@@ -79,6 +79,18 @@ namespace EFH2
             }
         }
 
+        public void SetRainfallType(string type)
+        {
+            for (int i = 0; i < RainfallDistributionTypes.Count; i++)
+            {
+                if ((RainfallDistributionTypes[i].Content as string) == type)
+                {
+                    SelectedRainfallDistributionTypeIndex = i;
+                    RainfallDistributionTypeStatus = "";
+                }
+            }
+        }
+
         public void LoadRainfallDistributionTypes(StreamReader reader)
         {
             ComboBoxItem c = new();

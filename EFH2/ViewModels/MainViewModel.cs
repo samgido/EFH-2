@@ -51,8 +51,8 @@ namespace EFH2
 
 		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)
 		{
-            //FileOperations.SearchForDataAfterCountyChanged( RainfallDischargeDataViewModel, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
-		}
+            FileOperations.SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
+        }
 
 		public void Load(MainViewModel newData)
         {

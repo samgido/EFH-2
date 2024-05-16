@@ -450,19 +450,35 @@ namespace EFH2
 
 		public static void SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel model, string state, string county)
 		{
-			string rfType = model.selectedRainfallDistributionType;
+			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
 			{
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine();
-
 					string[] elements = line.Split(',');
-					//if (elements.Length == 11 && elements[1].Trim('"') == state && elements[2].Trim('"') == county && elements[3] == rfType.Replace("Type ", ""))
-					//{
 
-					//}
+					if (elements.Length == 11 && elements[1].Trim('"') == state && elements[2].Trim('"') == county)
+					{
+						string rfType = elements[3];
+						if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
+
+						model.SetRainfallType(rfType);
+
+						model.Storms[0].Frequency = 1;
+						model.Storms[1].Frequency = 2;
+						model.Storms[2].Frequency = 5;
+						model.Storms[3].Frequency = 10;
+						model.Storms[4].Frequency = 25;
+						model.Storms[5].Frequency = 50;
+						model.Storms[6].Frequency = 100;
+
+						for (int i = 0; i < 7; i++)
+						{
+							model.Storms[i].DayRain = double.Parse(elements[4 + i]);
+						}
+					}
 				}
 			}
 		}
