@@ -451,6 +451,7 @@ namespace EFH2
 		public static void SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel model, string state, string county)
 		{
 			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
+			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100 };
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
 			{
@@ -466,17 +467,14 @@ namespace EFH2
 
 						model.SetRainfallType(rfType);
 
-						model.Storms[0].Frequency = 1;
-						model.Storms[1].Frequency = 2;
-						model.Storms[2].Frequency = 5;
-						model.Storms[3].Frequency = 10;
-						model.Storms[4].Frequency = 25;
-						model.Storms[5].Frequency = 50;
-						model.Storms[6].Frequency = 100;
-
 						for (int i = 0; i < 7; i++)
 						{
-							model.Storms[i].DayRain = double.Parse(elements[4 + i]);
+							double dayRain = double.Parse(elements[4 + i]);
+							if (dayRain != 0)
+							{
+								model.Storms[i].DayRain = dayRain;
+								model.Storms[i].Frequency = automaticStormFrequencies[i];
+							}
 						}
 					}
 				}
