@@ -175,9 +175,9 @@ namespace EFH2
                 _stateCountyDictionary[state].Add(county);
             }
 
-            foreach (string s in _stateCountyDictionary.Keys)
+            foreach (string state in _stateCountyDictionary.Keys)
             {
-                States.Add(new ComboBoxItem() { Content = s });
+                States.Add(new ComboBoxItem() { Content = state });
             }
         }
 

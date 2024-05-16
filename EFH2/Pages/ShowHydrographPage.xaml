@@ -11,6 +11,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <oxyplot:PlotView Model="{Binding Path=Model}"/>
+        <oxyplot:PlotView Model="{Binding Path=Model}" Grid.Row="0" Grid.Column="1"/>
     </Grid>
 </Page>

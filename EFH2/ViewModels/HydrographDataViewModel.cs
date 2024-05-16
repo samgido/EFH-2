@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using OxyPlot.Legends;
 
 namespace EFH2
 {
@@ -19,23 +20,32 @@ namespace EFH2
 
 		public HydrographDataViewModel(string county, string state)
 		{
+			// county string has the rftype appended to it, need to remove
+			string[] splitCounty = county.Split(" ");
+			if (splitCounty.Length > 1) county = county.Replace(splitCounty[splitCounty.Length - 1], "");
+
 			_model = new PlotModel()
 			{
 				Title = "Hydrographs",
 				Subtitle = county + " COUNTY, " + state,
-				IsLegendVisible = true,
 			};
-		}
 
-		public void SetCountyAndState(string county, string state)
-		{
-			_model.Title = "Hydrographs  " +
-				county + " COUNTY, " + state;
+			// make legend
+			_model.Legends.Add(new Legend());
+
+			// add axes 
+			LinearAxis axis = new LinearAxis();
+
+			_model.Axes.Add(new LinearAxis() { Title = "Discharge (cfs)" });
+			_model.Axes.Add(new LinearAxis() { Title = "Time (hrs)", Position = AxisPosition.Bottom });
 		}
 
 		public void AddPlot(HydrographLineModel model)
 		{
-			LineSeries series = new LineSeries();
+			LineSeries series = new LineSeries()
+			{
+				Title = model.Frequency + "-Yr",
+			};
 
 			for (int i = 0; i < model.Values.Count; i++)
 			{
