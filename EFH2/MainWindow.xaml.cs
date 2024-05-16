@@ -29,7 +29,7 @@ namespace EFH2
     {
         public MainViewModel MainViewModel { get; set; }
 
-        public HydrographDataViewModel HydrographDataViewModel { get; set; }
+        //public HydrographDataViewModel HydrographDataViewModel { get; set; }
 
         public TextBox? previousFocusedTextBox { get; set; }
 
@@ -40,7 +40,8 @@ namespace EFH2
             Navigation.SelectedItem = IntroNavButton;
 
             MainViewModel = new MainViewModel();
-            HydrographDataViewModel = new HydrographDataViewModel();
+
+            //HydrographDataViewModel = new HydrographDataViewModel();
 
             MainViewModel.RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
             MainViewModel.BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
@@ -65,6 +66,10 @@ namespace EFH2
 
 		private async void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
 		{
+            HydrographDataViewModel model = new HydrographDataViewModel(
+                MainViewModel.BasicDataViewModel.selectedCounty,
+                MainViewModel.BasicDataViewModel.selectedState);
+
             // check if any are selected to be plotted
             List<HydrographLineModel> plots = new List<HydrographLineModel>();
 
@@ -73,29 +78,32 @@ namespace EFH2
             {
                 if (storm.DisplayHydrograph) { plotGraph = true; break; }
             }
-
             if (!plotGraph) return;
 
-            for (int i = 0; i < plots.Count; i++)
-            {
-                HydrographDataViewModel.AddPlot(plots[i], MarkerType.Plus, OxyColors.AliceBlue);
-            }
-            // Hydrograph data is ready, make a page and set the data context
+            plots = FileOperations.GetHydrographData(MainViewModel.RainfallDischargeDataViewModel.Storms);
+            plots.ForEach(plot => model.AddPlot(plot));
 
-            ShowHydrographPage page = new ShowHydrographPage()
-            {
-                DataContext = HydrographDataViewModel,
-            };
+            //ContentDialog contentDialog = new ContentDialog()
+            //{
+            //    Title = "Hydrograph",
+            //    Content = page,
+            //    CloseButtonText = "Close",
+            //    XamlRoot = this.Content.XamlRoot,
+            //};
 
-            ContentDialog contentDialog = new ContentDialog()
-            {
-                Title = "Hydrograph",
-                Content = page,
-                CloseButtonText = "Close",
-                XamlRoot = this.Content.XamlRoot,
-            };
+            //await contentDialog.ShowAsync();
 
-            await contentDialog.ShowAsync();
+            Window newWindow = new Window();
+            ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
+            newWindow.Content = page;
+            newWindow.Title = "Input / Output Plots";
+            newWindow.Activate();
+
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 500, Width = 650 });
         }
 
         private void CreateWinTr20InputFile(object sender, EventArgs e)
@@ -139,7 +147,6 @@ namespace EFH2
 
         private async void OpenClicked(object sender, RoutedEventArgs e)
         {
-
             var openPicker = new FileOpenPicker();
 
             var window = this;

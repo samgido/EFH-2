@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,29 @@ namespace EFH2
 {
 	public partial class HydrographDataViewModel : ObservableObject
 	{
-		private PlotModel _model = new PlotModel();
+		private PlotModel _model;
 
 		public PlotModel Model => _model;
 
-		public void AddPlot(HydrographLineModel model, MarkerType marker, OxyColor color)
+		public HydrographDataViewModel(string county, string state)
 		{
-			LineSeries series = new LineSeries()
+			_model = new PlotModel()
 			{
-				// these should be automatic, not sure yet
-				//MarkerType = marker, 
-				//MarkerStroke = color,
+				Title = "Hydrographs",
+				Subtitle = county + " COUNTY, " + state,
+				IsLegendVisible = true,
 			};
+		}
+
+		public void SetCountyAndState(string county, string state)
+		{
+			_model.Title = "Hydrographs  " +
+				county + " COUNTY, " + state;
+		}
+
+		public void AddPlot(HydrographLineModel model)
+		{
+			LineSeries series = new LineSeries();
 
 			for (int i = 0; i < model.Values.Count; i++)
 			{
