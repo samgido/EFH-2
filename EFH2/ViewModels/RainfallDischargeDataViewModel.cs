@@ -27,6 +27,9 @@ namespace EFH2
         [XmlIgnore]
         private int _selectedDuhTypeIndex = 0;
 
+        [XmlIgnore]
+        public Dictionary<string, string> rfTypeToFileName = new Dictionary<string, string>();
+
         [ObservableProperty]
         [XmlElement("Storms")]
         private ObservableCollection<StormViewModel> _storms = new();

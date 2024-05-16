@@ -42,9 +42,16 @@ namespace EFH2
         public MainViewModel()
         {
             FileOperations.LoadMainViewModel(this);
+
+			BasicDataViewModel.CountyChanged += BasicDataViewModel_CountyChanged;
         }
 
-        public void Load(MainViewModel newData)
+		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)
+		{
+            //FileOperations.SearchForDataAfterCountyChanged( RainfallDischargeDataViewModel, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
+		}
+
+		public void Load(MainViewModel newData)
         {
             BasicDataViewModel.Load(newData.BasicDataViewModel);
             RcnDataViewModel.LoadDataModel(newData.RcnDataModel);

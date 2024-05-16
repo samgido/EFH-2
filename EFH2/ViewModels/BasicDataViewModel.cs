@@ -17,6 +17,8 @@ namespace EFH2
     {
         public event EventHandler<EventArgs>? ValueChanged;
 
+        public event EventHandler? CountyChanged;
+
         [XmlElement("Drainage Area")]
         public BasicDataEntryViewModel drainageAreaEntry = new BasicDataEntryViewModel(1, 2000, "Drainage Area", "Drainage area must be in the range 1 to 2000 acres!");
         [XmlElement("Runoff Curve Number")]
@@ -104,6 +106,8 @@ namespace EFH2
                 this.SetProperty(ref this._selectedCountyIndex, value);
                 if (value == -1) return;
                 this.selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
+
+                this.CountyChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -135,6 +139,7 @@ namespace EFH2
 		private void EntryChanged(object sender, EventArgs e)
 		{
             this.CalculateTimeOfConcentration();
+            this.ValueChanged?.Invoke(this, new EventArgs());
 		}
 
 		private void SetCounties(List<string> list)

@@ -41,8 +41,6 @@ namespace EFH2
 
             MainViewModel = new MainViewModel();
 
-            //HydrographDataViewModel = new HydrographDataViewModel();
-
             MainViewModel.RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
             MainViewModel.BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
 
@@ -64,7 +62,7 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
         }
 
-		private async void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
+		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
 		{
             HydrographDataViewModel model = new HydrographDataViewModel(
                 MainViewModel.BasicDataViewModel.selectedCounty,
@@ -82,16 +80,6 @@ namespace EFH2
 
             plots = FileOperations.GetHydrographData(MainViewModel.RainfallDischargeDataViewModel.Storms);
             plots.ForEach(plot => model.AddPlot(plot));
-
-            //ContentDialog contentDialog = new ContentDialog()
-            //{
-            //    Title = "Hydrograph",
-            //    Content = page,
-            //    CloseButtonText = "Close",
-            //    XamlRoot = this.Content.XamlRoot,
-            //};
-
-            //await contentDialog.ShowAsync();
 
             Window newWindow = new Window();
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };

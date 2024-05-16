@@ -88,7 +88,7 @@ namespace EFH2
 
 				string line = reader.ReadLine();
 
-				while (line != "")
+				while (!reader.EndOfStream)
 				{
 					string[] lineParts = line.Split(',');
 					string type = lineParts[0];
@@ -97,6 +97,9 @@ namespace EFH2
 					c.Content = type.Trim('"');
 
 					model.RainfallDistributionTypes.Add(c);
+
+					model.rfTypeToFileName.Add(type, lineParts[1].Trim('"'));
+
 					line = reader.ReadLine();
 				}
 				model.SelectedRainfallDistributionTypeIndex = 0;
@@ -107,7 +110,7 @@ namespace EFH2
 				model.DuhTypes.Clear();
 				string line = reader.ReadLine();
 
-				while (line != "")
+				while (!reader.EndOfStream)
 				{
 					ComboBoxItem c = new();
 					c.Content = line;
@@ -404,9 +407,6 @@ namespace EFH2
 
 			List<HydrographLineModel> list = new List<HydrographLineModel>();
 
-			// this check should be done in mainwindow code behind
-			//if (plottedFrequencies.Count == 0) return list;
-
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			string filePath = Path.Combine(appDataPath, "EFH2\\tr20.hyd");
 
@@ -447,6 +447,25 @@ namespace EFH2
 			}
 
 			return list;
+		}
+
+		public static void SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel model, string state, string county)
+		{
+			string rfType = model.selectedRainfallDistributionType;
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
+			{
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine();
+
+					string[] elements = line.Split(',');
+					//if (elements.Length == 11 && elements[1].Trim('"') == state && elements[2].Trim('"') == county && elements[3] == rfType.Replace("Type ", ""))
+					//{
+
+					//}
+				}
+			}
 		}
 
 		private static List<string> SplitLine(string line)
