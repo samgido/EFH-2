@@ -34,10 +34,6 @@ namespace EFH2
 
 		public static void LoadMainViewModel(MainViewModel model)
 		{
-			model.BasicDataViewModel = new BasicDataViewModel();
-			model.RainfallDischargeDataViewModel = new RainfallDischargeDataViewModel();
-			model.RcnDataViewModel = new RcnDataViewModel();
-
 			LoadBasicData(model.BasicDataViewModel);
 			LoadRainfallDischargeData(model.RainfallDischargeDataViewModel);
 			LoadRcnData(model.RcnDataViewModel);
@@ -177,7 +173,7 @@ namespace EFH2
 				}
 			}
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
+			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
 			{
 				while (!reader.EndOfStream)
 				{

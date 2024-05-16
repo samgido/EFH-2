@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -41,9 +42,11 @@ namespace EFH2
 
         public MainViewModel()
         {
-            FileOperations.LoadMainViewModel(this);
+            BasicDataViewModel = new BasicDataViewModel();
+            RainfallDischargeDataViewModel = new RainfallDischargeDataViewModel();
+            RcnDataViewModel = new RcnDataViewModel();
 
-			BasicDataViewModel.CountyChanged += BasicDataViewModel_CountyChanged;
+            BasicDataViewModel.CountyChanged += BasicDataViewModel_CountyChanged;
         }
 
 		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)

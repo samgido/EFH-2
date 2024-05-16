@@ -29,17 +29,16 @@ namespace EFH2
     {
         public MainViewModel MainViewModel { get; set; }
 
-        //public HydrographDataViewModel HydrographDataViewModel { get; set; }
-
         public TextBox? previousFocusedTextBox { get; set; }
 
         public MainWindow()
         {
             this.InitializeComponent();
 
-            Navigation.SelectedItem = IntroNavButton;
-
             MainViewModel = new MainViewModel();
+            FileOperations.LoadMainViewModel(MainViewModel);
+
+            Navigation.SelectedItem = IntroNavButton;
 
             MainViewModel.RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
             MainViewModel.BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
