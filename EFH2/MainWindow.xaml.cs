@@ -40,9 +40,6 @@ namespace EFH2
 
             Navigation.SelectedItem = IntroNavButton;
 
-            MainViewModel.RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
-            MainViewModel.BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
-
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
 
@@ -91,17 +88,6 @@ namespace EFH2
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 500, Width = 650 });
-        }
-
-        private void CreateWinTr20InputFile(object sender, EventArgs e)
-        {
-            string fileName = FileOperations.CreateInpFile(MainViewModel);
-
-            if (fileName != null)
-            {
-                FileOperations.RunWinTr20(fileName);
-				FileOperations.ParseWinTR20Output(MainViewModel.RainfallDischargeDataViewModel.Storms);
-            }
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)

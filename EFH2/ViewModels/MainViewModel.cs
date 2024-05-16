@@ -46,7 +46,22 @@ namespace EFH2
             RainfallDischargeDataViewModel = new RainfallDischargeDataViewModel();
             RcnDataViewModel = new RcnDataViewModel();
 
+            RainfallDischargeDataViewModel.ValueChanged += CreateWinTr20InputFile;
+
+            BasicDataViewModel.ValueChanged += CreateWinTr20InputFile;
             BasicDataViewModel.CountyChanged += BasicDataViewModel_CountyChanged;
+        }
+
+        private void CreateWinTr20InputFile(object sender, EventArgs e)
+        {
+            string fileName = FileOperations.CreateInpFile(this);
+
+            // file being null doubles as a message that not all data is ready
+            if (fileName != null)
+            {
+                FileOperations.RunWinTr20(fileName);
+				FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
+            }
         }
 
 		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)
