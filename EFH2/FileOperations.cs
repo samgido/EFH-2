@@ -94,7 +94,10 @@ namespace EFH2
 
 					model.RainfallDistributionTypes.Add(c);
 
-					model.rfTypeToFileName.Add(type, lineParts[1].Trim('"'));
+					if (lineParts.Length == 2)
+					{
+						model.rfTypeToFileName.Add(type, lineParts[1].Trim('"'));
+					}
 
 					line = reader.ReadLine();
 				}
