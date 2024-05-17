@@ -11,19 +11,13 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public struct HsgEntry
-    {
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-    }
-
     public partial class RcnDataViewModel : ObservableObject
     {
         [ObservableProperty]
         private List<RcnCategory> _rcnCategories;
 
-        public ObservableCollection<HsgEntry> HsgEntries { get; } = new();
+        [ObservableProperty]
+        private ObservableCollection<HsgEntryViewModel> _hsgEntries = new();
 
         public double AccumulatedArea
         {

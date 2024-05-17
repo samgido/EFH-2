@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,22 +23,42 @@ namespace EFH2
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HsgPage : Page
+    public sealed partial class HsgPage : Page, INotifyPropertyChanged
     {
         public HsgPage()
         {
             this.InitializeComponent();
         }
 
-        private void SearchBoxTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (DataContext is RcnDataViewModel model)
-            {
-                string filter = (sender as TextBox).Text.ToUpper();
+		public event PropertyChangedEventHandler PropertyChanged;
 
-                uxDataGrid.ItemsSource = new ObservableCollection<HsgEntry>(
-                    from item in model.HsgEntries where item.Field1.Contains(filter) select item);
+        private string _searchBox = "";
+
+        private ObservableCollection<HsgEntryViewModel> _filteredHsgEntries = new ObservableCollection<HsgEntryViewModel>();
+        public ObservableCollection<HsgEntryViewModel> FilteredHsgEntries
+        {
+            get
+            {
+                if (DataContext is RcnDataViewModel model)
+                {
+                    List<HsgEntryViewModel> filteredList = model.HsgEntries.Where(entry =>
+                        entry.Row[0].Contains(_searchBox, StringComparison.CurrentCultureIgnoreCase) ||
+                        entry.Row[1].Contains(_searchBox, StringComparison.CurrentCultureIgnoreCase) ||
+                        entry.Row[2].Contains(_searchBox, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+                    _filteredHsgEntries.Clear();
+                    filteredList.ForEach(entry => _filteredHsgEntries.Add(entry));
+
+                    return _filteredHsgEntries;
+                }
+                else return new ObservableCollection<HsgEntryViewModel>();
             }
         }
-    }
+
+		private void TextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+		{
+            _searchBox = sender.Text;
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilteredHsgEntries)));
+		}
+	}
 }

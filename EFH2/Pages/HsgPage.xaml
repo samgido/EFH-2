@@ -13,25 +13,37 @@
     <RelativePanel
         x:Name="RootPanel"
         Height="400"
+        Width="500"
         Background="Transparent"
-        HorizontalAlignment="Center">
+        HorizontalAlignment="Stretch">
+
+        <ListView ItemsSource="{x:Bind FilteredHsgEntries, Mode=OneWay}" SelectionMode="None"
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+                  RelativePanel.Above="SearchBoxContainer" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Row[0]}" TextWrapping="WrapWholeWords"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Row[1]}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Path=Row[2]}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
 
         <RelativePanel
-            VerticalAlignment="Top"
-            RelativePanel.Above="uxSearchBoxContainer"
-            RelativePanel.AlignTopWithPanel="True" >
-            <controls:DataGrid
-                x:Name="uxDataGrid"
-                HeadersVisibility="None"
-                Background="Transparent"
-                ItemsSource="{Binding Path=HsgEntries}"
-                RelativePanel.AlignTopWithPanel="True">
-            </controls:DataGrid>
-        </RelativePanel>
-
-
-        <RelativePanel
-            x:Name="uxSearchBoxContainer"
+            x:Name="SearchBoxContainer"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.AlignBottomWithPanel="True"
             Margin="0,10,0,0"
@@ -51,11 +63,7 @@
                     VerticalAlignment="Center"
                     />
 
-                <TextBox
-                    Grid.Column="1"
-                    Width="150"
-                    TextChanged="SearchBoxTextChanged"
-                    />
+                <TextBox Grid.Column="1" Width="150" TextChanging="TextBox_TextChanging"/>
             </Grid>
         </RelativePanel>
     </RelativePanel>

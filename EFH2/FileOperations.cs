@@ -13,6 +13,7 @@ using Windows.Storage;
 using System.Xml.Serialization;
 using System.IO;
 using Microsoft.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
 
 namespace EFH2
 {
@@ -184,12 +185,18 @@ namespace EFH2
 
 					string[] lineParts = line.Split("\t");
 
-					model.HsgEntries.Add(new HsgEntry()
+					if (lineParts.Length == 3)
 					{
-						Field1 = lineParts[0],
-						Field2 = lineParts[1],
-						Field3 = lineParts[2],
-					});
+						model.HsgEntries.Add(new HsgEntryViewModel()
+						{
+							Row = new ObservableCollection<string>
+							{
+								lineParts[0],
+								lineParts[1],
+								lineParts[2]
+							}
+						});
+					}
 				}
 			}
 		}
