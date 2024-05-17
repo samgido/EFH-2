@@ -126,7 +126,7 @@ namespace EFH2
 		{
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover.txt"))
 			{
-				var _ = reader.ReadLine();
+				//var _ = reader.ReadLine();
 
 				RcnCategory currentCategory = new();
 				List<RcnCategory> categories = new();
@@ -162,6 +162,7 @@ namespace EFH2
 				}
 
 				categories.Add(currentCategory);
+				categories.RemoveAt(0);
 
 				model.RcnCategories = categories;
 
