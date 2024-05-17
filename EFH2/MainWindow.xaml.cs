@@ -18,6 +18,8 @@ using Windows.Storage.Pickers;
 using Windows.Storage;
 using Windows.ApplicationModel.DataTransfer;
 using OxyPlot;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -36,8 +38,9 @@ namespace EFH2
         public MainWindow()
         {
             this.InitializeComponent();
+            Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
 
-            MainViewModel = new MainViewModel();
+			MainViewModel = new MainViewModel();
             FileOperations.LoadMainViewModel(MainViewModel);
 
             Navigation.SelectedItem = IntroNavButton;
@@ -193,7 +196,7 @@ namespace EFH2
         {
             DataPackage dataPackage = new();
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
-            dataPackage.SetText(previousFocusedTextBox.SelectedText);
+            dataPackage.SetText(previousFocusedTextBox?.SelectedText);
             Clipboard.SetContent(dataPackage);
         }
 

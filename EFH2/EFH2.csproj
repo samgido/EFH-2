@@ -12,6 +12,9 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\EFH2.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Controls\BasicDataControl.xaml" />
     <None Remove="Controls\IntroControl.xaml" />
     <None Remove="Controls\RainfallDischargeDataControl.xaml" />

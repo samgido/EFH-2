@@ -21,9 +21,6 @@ namespace EFH2
         [ObservableProperty]
         private ObservableCollection<HsgEntryViewModel> _hsgEntries = new();
 
-        private DelegateCommand _scrollUp;
-        public ICommand ScrollUp => _scrollUp ??= new DelegateCommand(PerformScrollUp);
-
         public double AccumulatedArea
         {
             get
