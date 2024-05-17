@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.VisualStudio.PlatformUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,17 +8,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class RcnDataViewModel : ObservableObject
+    public partial class RcnDataViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         [ObservableProperty]
         private List<RcnCategory> _rcnCategories;
 
         [ObservableProperty]
         private ObservableCollection<HsgEntryViewModel> _hsgEntries = new();
+
+        private DelegateCommand _scrollUp;
+        public ICommand ScrollUp => _scrollUp ??= new DelegateCommand(PerformScrollUp);
 
         public double AccumulatedArea
         {
@@ -48,6 +53,11 @@ namespace EFH2
                 if (AccumulatedArea > 0) return total / AccumulatedArea;
                 else return 0;
             }
+        }
+
+        private void PerformScrollUp(object commandParameter)
+        {
+            
         }
 
         public void EntryChanged(object? sender, PropertyChangedEventArgs e)

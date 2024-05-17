@@ -61,6 +61,8 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
                 this.selectedRainfallDistributionType = RainfallDistributionTypes[value].Content as string;
+                if (value != 0) this.RainfallDistributionTypeStatus = "User Selected.";
+                else this.RainfallDistributionTypeStatus = "";
 
                 this.ValueChanged?.Invoke(this, new EventArgs());
             }
@@ -74,6 +76,8 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedDuhTypeIndex, value);
                 this.selectedDuhType = DuhTypes[value].Content as string;
+                if (value != 0) this.DuhTypeStatus = "User Selected.";
+                else this.DuhTypeStatus = "";
 
                 this.ValueChanged?.Invoke(this, new EventArgs());
             }

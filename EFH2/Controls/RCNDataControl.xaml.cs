@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -65,6 +66,21 @@ namespace EFH2
         private void UnitsButtonsClicked(object sender, RoutedEventArgs e)
         {
             this.UnitsChanged?.Invoke(this, e);
+        }
+
+		private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            int index = 0;
+			if (sender as RadioButton == DevUrbanAreaRadioButton) { index = 7; }
+			else if (sender as RadioButton == CultivatedAgRadioButton) { index = 8; }
+			else if (sender as RadioButton == OtherAgRadioButton) { index = 9; }
+			else if (sender as RadioButton == AridRangelandRadioButton) { index = 10; }
+
+            if (index < CategoriesListView.Items.Count)
+            {
+				var targetItem = CategoriesListView.Items[index];
+				CategoriesListView.ScrollIntoView(targetItem);
+            }
         }
     }
 }
