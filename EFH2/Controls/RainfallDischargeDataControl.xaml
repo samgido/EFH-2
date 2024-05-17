@@ -12,123 +12,122 @@
         <local:DoubleFormatter x:Key="DoubleFormatter"/>
     </UserControl.Resources>
 
-    <RelativePanel Background="Black" x:Name="RootPanel">
-
-        <RelativePanel Padding="0,15" Name="TopPanel" 
-                       RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-            <ComboBox x:Name="RainfallDistributionType" SelectionChanged="RainfallDistributionTypeSelectionChanged" Width="175" 
-                      SelectedIndex="{Binding Path=SelectedRainfallDistributionTypeIndex, Mode=TwoWay}" ItemsSource="{Binding Path=RainfallDistributionTypes, Mode=OneWay}"
-                      RelativePanel.AlignHorizontalCenterWithPanel="True">
+    <RelativePanel>
+        <RelativePanel Name="RainfallDistributionContainer" 
+                       RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+            <ComboBox x:Name="RainfallDistributionType" Width="175" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                      SelectedIndex="{Binding Path=SelectedRainfallDistributionTypeIndex, Mode=TwoWay}" ItemsSource="{Binding Path=RainfallDistributionTypes, Mode=OneWay}">
                 <ToolTipService.ToolTip>
                     Rainfall distribution - choose from the list
                 </ToolTipService.ToolTip>
             </ComboBox>
 
-            <TextBlock x:Name="RainfallDistributionTypeLabel" Text="Rainfall Distribution-Type:" Margin="0,5,10,0"
-                       RelativePanel.LeftOf="RainfallDistributionType" RelativePanel.AlignVerticalCenterWith="RainfallDistributionType"/>
-            <TextBlock x:Name="RainfallDistributionTypeStatus" Text="{Binding Path=RainfallDistributionTypeStatus, Mode=OneWay}" Padding="20,0,0,0" Foreground="HotPink" 
-                       RelativePanel.RightOf="RainfallDistributionType" RelativePanel.AlignVerticalCenterWith="RainfallDistributionType"/>
-
-
-            <ComboBox x:Name="DUHType" SelectionChanged="DUHTypeSelectionChanged"  Margin="0,10,0,0" Width="175" 
-                      SelectedIndex="{Binding Path=SelectedDuhTypeIndex, Mode=TwoWay}" ItemsSource="{Binding Path=DuhTypes, Mode=OneWay}"
-                      RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="RainfallDistributionType">
-                <ToolTipService.ToolTip>
-                    Rainfall distribution - choose from the list
-                </ToolTipService.ToolTip>
-            </ComboBox>
-
-            <TextBlock x:Name="DUHTypeLabel" Text="Dimesionless Unit Hydrograph:" Margin="0,4,10,0"
-                       RelativePanel.LeftOf="DUHType" RelativePanel.AlignVerticalCenterWith="DUHType"/>
-            <TextBlock x:Name="DUHTypeStatus" Text="{Binding Path=DuhTypeStatus, Mode=OneWay}" Padding="20,0,0,0" Foreground="HotPink" 
-                       RelativePanel.RightOf="DUHType" RelativePanel.AlignVerticalCenterWith="DUHType"/>
+            <TextBlock Text="Rainfall Distribution-Type:" VerticalAlignment="Center" Margin="0,0,10,0"
+                       RelativePanel.AlignVerticalCenterWith="RainfallDistributionType" RelativePanel.LeftOf="RainfallDistributionType"/>
+            <TextBlock Text="{Binding Path=RainfallDistributionTypeStatus, Mode=OneWay}" Foreground="HotPink" VerticalAlignment="Center" Margin="10,0,0,0"
+                       RelativePanel.AlignVerticalCenterWith="RainfallDistributionType" RelativePanel.RightOf="RainfallDistributionType"/>
         </RelativePanel>
 
-        <ScrollViewer HorizontalScrollMode="Enabled" Height="Auto" MaxWidth="900"
-                      RelativePanel.Below="TopPanel" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-            <RelativePanel>
-                <ListView Name="StormsListView" ItemsSource="{Binding Path=Storms, Mode=TwoWay}" SelectionMode="None"
-                          RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                    <ListView.Resources>
-                        <Style TargetType="NumberBox">
-                            <Setter Property="Margin" Value="10,0"/>
-                        </Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Margin" Value="10,0"/>
-                        </Style>
-                    </ListView.Resources>
 
-                    <ListView.HeaderTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="FrequencyLabel" Text="Frequency (yrs)"
-                                           Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"/>
+        <RelativePanel Name="DuhContainer" RelativePanel.Below="RainfallDistributionContainer"
+                       RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+            <ComboBox x:Name="DUHType" Margin="0,10,0,0" Width="175" RelativePanel.AlignHorizontalCenterWithPanel="True"
+                      SelectedIndex="{Binding Path=SelectedDuhTypeIndex, Mode=TwoWay}" ItemsSource="{Binding Path=DuhTypes, Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    Rainfall distribution - choose from the list
+                </ToolTipService.ToolTip>
+            </ComboBox>
 
-                                <TextBlock x:Name="DayRainLabel" Text="24-HR Rain (in)"
-                                           Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Dimesionless Unit Hydrograph:" VerticalAlignment="Center" Margin="0,0,10,0"
+                       RelativePanel.AlignVerticalCenterWith="DUHType" RelativePanel.LeftOf="DUHType"/>
+            <TextBlock Text="{Binding Path=DuhTypeStatus, Mode=OneWay}" Foreground="HotPink" VerticalAlignment="Center" Margin="10,0,0,0"
+                       RelativePanel.AlignVerticalCenterWith="DUHType" RelativePanel.RightOf="DUHType"/>
+        </RelativePanel>
 
-                                <TextBlock x:Name="PeakFlowLabel" Text="Peak Flow (cfs)"
-                                           Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
+        <ListView Name="StormsListView" ItemsSource="{Binding Path=Storms, Mode=TwoWay}" SelectionMode="None"
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+                  RelativePanel.Below="DuhContainer" RelativePanel.Above="PlotHydrograph">
+            <ListView.Resources>
+                <Style TargetType="NumberBox">
+                    <Setter Property="Margin" Value="0,0"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,0"/>
+                </Style>
+            </ListView.Resources>
 
-                                <TextBlock x:Name="RunoffLabel" Text="Runoff (in)" 
-                                           Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center"/>
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
 
-                                <TextBlock x:Name="SelectHydrographLabel" Text="Select Hydrograph" MaxWidth="100"
-                                           TextWrapping="Wrap"  Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.HeaderTemplate>
-                    
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,5,0,0">
-                                <Grid.Resources>
-                                    <Style TargetType="NumberBox">
-                                        <Setter Property="MaxWidth" Value="100"/>
-                                        <Setter Property="MinWidth" Value="10"/>
-                                    </Style>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="FrequencyLabel" Text="Frequency (yrs)"
+                                   Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"/>
 
-                                <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" Grid.Column="0" 
-                                           TextAlignment="Right" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="DayRainLabel" Text="24-HR Rain (in)"
+                                   Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
 
-                                <NumberBox Grid.Column="1" Value="{Binding Path=Frequency, Mode=TwoWay}"/>
-                                <NumberBox Grid.Column="2" Value="{Binding Path=DayRain, Mode=TwoWay}" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                        <TextBlock x:Name="PeakFlowLabel" Text="Peak Flow (cfs)"
+                                   Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center"/>
 
-                                <NumberBox Grid.Column="3" Value="{Binding Path=PeakFlow, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
-                                <NumberBox Grid.Column="4" Value="{Binding Path=Runoff, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                        <TextBlock x:Name="RunoffLabel" Text="Runoff (in)" 
+                                   Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center"/>
 
-                                <ToggleSwitch Grid.Column="5" IsOn="{Binding Path=DisplayHydrograph, Mode=TwoWay}" HorizontalContentAlignment="Center" Margin="30,0"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                        <TextBlock x:Name="SelectHydrographLabel" Text="Select Hydrograph" MaxWidth="100"
+                                   TextWrapping="Wrap"  Grid.Column="6" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
 
-                <Button x:Name="PlotHydrograph" RelativePanel.Below="StormsListView" RelativePanel.AlignHorizontalCenterWithPanel="True" Click="ButtonClick"
-                        Height="50" Width="120" xml:space="preserve" Margin="0,10,0,20" Padding="0,-14,0,0">
-                    <Button.Content>
-Plot Selected
-Hydrograph(s)
-                    </Button.Content>
-                </Button>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,5,0,0">
+                        <Grid.Resources>
+                            <Style TargetType="NumberBox">
+                                <Setter Property="MaxWidth" Value="100"/>
+                                <Setter Property="MinWidth" Value="10"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
 
-            </RelativePanel>
-        </ScrollViewer>
+                        <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" Grid.Column="0" 
+                                   TextAlignment="Right" Margin="0,0,10,0"/>
+
+                        <NumberBox Grid.Column="2" Value="{Binding Path=Frequency, Mode=TwoWay}"/>
+                        <NumberBox Grid.Column="3" Value="{Binding Path=DayRain, Mode=TwoWay}" NumberFormatter="{StaticResource DoubleFormatter}"/>
+
+                        <NumberBox Grid.Column="4" Value="{Binding Path=PeakFlow, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                        <NumberBox Grid.Column="5" Value="{Binding Path=Runoff, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
+
+                        <ToggleSwitch Grid.Column="6" IsOn="{Binding Path=DisplayHydrograph, Mode=TwoWay}" HorizontalAlignment="Center" MinWidth="0" Margin="0,0,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button HorizontalAlignment="Center" Name="PlotHydrograph" Click="ButtonClick" Height="50" Width="120" Margin="0,10,0,10"
+                RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
+            <Button.Content>
+                <TextBlock TextWrapping="WrapWholeWords">Plot Selected Hydrograph(s)</TextBlock>
+            </Button.Content>
+        </Button>
     </RelativePanel>
 </UserControl>
