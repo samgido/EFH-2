@@ -1,3 +1,5 @@
+// Author: Samuel Gido
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -146,7 +148,7 @@ namespace EFH2
             MainViewModel.RcnDataModel = MainViewModel.RcnDataViewModel.ToRcnDataModel();
 
             var savePicker = new FileSavePicker();
-            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+			savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
             savePicker.SuggestedFileName = "WIP";
 
@@ -246,15 +248,13 @@ namespace EFH2
 
         private async void ShowHydrologicSoilGroups(object sender, RoutedEventArgs e)
         {
-            HsgPage hsgPage = new HsgPage()
-            {
-                DataContext = MainViewModel.RcnDataViewModel,
-            };
-
             ContentDialog dialog = new ContentDialog()
             {
                 Title = "Search for Hydrologic Soil Group",
-                Content = hsgPage,
+                Content = new HsgPage()
+                {
+                    DataContext = MainViewModel.RcnDataViewModel,
+                },
                 CloseButtonText = "Close",
                 XamlRoot = this.Content.XamlRoot,
             };
