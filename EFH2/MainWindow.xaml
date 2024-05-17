@@ -8,11 +8,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <RelativePanel
-        x:Name="RootPanel">
+    <RelativePanel x:Name="RootPanel">
+        <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="TitleBarIcon" Source="Assets/EFH2.png" Grid.Column="0" Width="16" Height="16" Margin="10,5,5,0"/>
+            <TextBlock x:Name="TitleBarTextBlock" Text="EFH-2 Estimating Runoff Volume and Peak Discharge" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
+        </Grid>
+        
+<!--RelativePanel.AlignTopWithPanel="True"-->
         <MenuBar
             x:Name="MainMenuBar"
-            RelativePanel.AlignTopWithPanel="True">
+            RelativePanel.Below="TitleBar">
+
             <MenuBarItem Title="File" AccessKey="F">
                 <MenuFlyoutItem Text="New" AccessKey="N" Click="NewClicked"/>
                 <MenuFlyoutItem Text="Open..." AccessKey="O" Click="OpenClicked"/>

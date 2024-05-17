@@ -38,9 +38,12 @@ namespace EFH2
         public MainWindow()
         {
             this.InitializeComponent();
+			//this.Activated += MainWindow_Activated;
             Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
 
-			MainViewModel = new MainViewModel();
+            ExtendsContentIntoTitleBar = true;
+
+            MainViewModel = new MainViewModel();
             FileOperations.LoadMainViewModel(MainViewModel);
 
             Navigation.SelectedItem = IntroNavButton;
@@ -62,6 +65,14 @@ namespace EFH2
             RainfallDischargeDataControl.Visibility = Visibility.Visible;
             IntroControl.Visibility = Visibility.Visible;
         }
+
+		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+		{
+			IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
+			WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+			AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+			appWindow.SetIcon(@"Assets\EFH2-16x16.ico");
+		}
 
 		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
 		{
