@@ -173,7 +173,6 @@ namespace EFH2
 
             foreach (StormViewModel storm in Storms)
             {
-                storm.ValueChanged -= StormPropertyChanged;
                 storm.Default();
             }
         }

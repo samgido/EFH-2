@@ -327,13 +327,7 @@ namespace EFH2
 		/// <returns></returns>
 		public static bool IsWinTR20Ready(MainViewModel model)
 		{
-			// Rainfall discharge data check
-			//foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
-			//{
-			//	// If any entry is invalid data, ie one field in storm is filled but the other isn't, data isn't ready
-			//	if (storm.Frequency.Equals(double.NaN) ^ storm.DayRain.Equals(double.NaN)) return false;
-			//}
-
+			// If rainfall distribution type has been selected
 			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
 
 			// Basic data check 
@@ -377,13 +371,8 @@ namespace EFH2
 								splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
 								if (splitLine.Length == 6 && splitLine[0] == "Area")
 								{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-									//Debug.WriteLine("Found: " + line);
-
 									double runoff = Math.Round(double.Parse(splitLine[2]), 2);
 									double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
-
-									//Debug.WriteLine("runoff: " + runoff.ToString());
-									//Debug.WriteLine("flow: " + peakFlow.ToString());
 
 									foreach (StormViewModel storm in storms)
 									{
@@ -397,7 +386,6 @@ namespace EFH2
 							}
 						}
 					}
-					//Debug.WriteLine("");
 				}
 			}
 			catch (Exception ex)

@@ -19,7 +19,6 @@
             <TextBlock x:Name="TitleBarTextBlock" Text="EFH-2 Estimating Runoff Volume and Peak Discharge" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
         </Grid>
         
-<!--RelativePanel.AlignTopWithPanel="True"-->
         <MenuBar
             x:Name="MainMenuBar"
             RelativePanel.Below="TitleBar">
