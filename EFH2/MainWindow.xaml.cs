@@ -20,6 +20,10 @@ using Windows.ApplicationModel.DataTransfer;
 using OxyPlot;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
+using System.Diagnostics;
+using Windows.Graphics.Printing;
+using PdfSharp.Pdf;
+using Microsoft.UI.Xaml.Printing;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,6 +35,10 @@ namespace EFH2
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private PrintManager _printManager;
+        private PrintDocument _printDocument;
+        private IPrintDocumentSource _printDocumentSource;
+        
         public MainViewModel MainViewModel { get; set; }
 
         public TextBox? previousFocusedTextBox { get; set; }
@@ -38,7 +46,8 @@ namespace EFH2
         public MainWindow()
         {
             this.InitializeComponent();
-			//this.Activated += MainWindow_Activated;
+            RegisterPrinting();
+
             Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
 
             ExtendsContentIntoTitleBar = true;
@@ -65,14 +74,6 @@ namespace EFH2
             RainfallDischargeDataControl.Visibility = Visibility.Visible;
             IntroControl.Visibility = Visibility.Visible;
         }
-
-		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
-		{
-			IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
-			WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
-			AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
-			appWindow.SetIcon(@"Assets\EFH2-16x16.ico");
-		}
 
 		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
 		{
@@ -276,9 +277,126 @@ namespace EFH2
             await dialog.ShowAsync();
         }
 
-        private void PrintClicked(object sender, RoutedEventArgs e)
+        private void RegisterPrinting()
         {
+			// register for printing
+			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
+			_printManager = PrintManagerInterop.GetForWindow(hWnd);
+			_printManager.PrintTaskRequested += _printManager_PrintTaskRequested;
+
+			// Build a PrintDocument and register for callbacks
+			_printDocument = new PrintDocument();
+			_printDocumentSource = _printDocument.DocumentSource;
+			_printDocument.Paginate += _printDocument_Paginate;
+			_printDocument.GetPreviewPage += _printDocument_GetPreviewPage;
+			_printDocument.AddPages += _printDocument_AddPages;
+        }
+
+        private async void PrintClicked(object sender, RoutedEventArgs e)
+        {
+            //var savePicker = new FileSavePicker();
+            //savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            //savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
+            //savePicker.SuggestedFileName = "WIP";
+
+            //var window = this;
+            //var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            //WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
+            //StorageFile file = await savePicker.PickSaveFileAsync();
+            //if (file != null)
+            //{
+            //    CachedFileManager.DeferUpdates(file);
+
+            //    FileOperations.MakePdf(MainViewModel, file.Path);
+
+            //    await CachedFileManager.CompleteUpdatesAsync(file);
+            //}
+
+
+			if (PrintManager.IsSupported())
+			{
+				try
+				{
+					// Show print UI
+					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+					await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
+				}
+				catch
+				{
+					// Printing cannot proceed at this time
+					ContentDialog noPrintingDialog = new ContentDialog()
+					{
+						XamlRoot = (sender as Button).XamlRoot,
+						Title = "Printing error",
+						Content = "\nSorry, printing can' t proceed at this time.",
+						PrimaryButtonText = "OK"
+					};
+					await noPrintingDialog.ShowAsync();
+				}
+			}
+			else
+			{
+				// Printing is not supported on this device
+				ContentDialog noPrintingDialog = new ContentDialog()
+				{
+					XamlRoot = (sender as Button).XamlRoot,
+					Title = "Printing not supported",
+					Content = "\nSorry, printing is not supported on this device.",
+					PrimaryButtonText = "OK"
+				};
+				await noPrintingDialog.ShowAsync();
+			}
+		}
+
+		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
+		{
+            _printDocument.AddPage(Page1Control);
+
+            _printDocument.AddPagesComplete();
+		}
+
+		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)
+		{
+            //TODO: Add control to print as second parameter
+            _printDocument.SetPreviewPage(e.PageNumber, Page1Control);
+        }
+
+        private void _printDocument_Paginate(object sender, PaginateEventArgs e)
+		{
+            _printDocument.SetPreviewPageCount(1, PreviewPageCountType.Final);
+		}
+
+		private void _printManager_PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
+		{
+            var printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
+
+			printTask.Completed += PrintTask_Completed;
+		}
+
+		private void PrintTask_Completed(PrintTask sender, PrintTaskCompletedEventArgs args)
+		{
+            // notify if failure
+			if (args.Completion == PrintTaskCompletion.Failed)
+			{
+				this.DispatcherQueue.TryEnqueue(async () =>
+				{
+					ContentDialog noPrintingDialog = new ContentDialog()
+					{
+						XamlRoot = this.Content.XamlRoot,
+						Title = "Printing error",
+						Content = "\nSorry, failed to print.",
+						PrimaryButtonText = "OK"
+					};
+					await noPrintingDialog.ShowAsync();
+				});
+			}
+		}
+
+		private void PrintTaskSourceRequested(PrintTaskSourceRequestedArgs args)
+        {
+            args.SetSource(_printDocumentSource);
         }
 
         private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

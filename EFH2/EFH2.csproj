@@ -17,9 +17,11 @@
   <ItemGroup>
     <None Remove="Controls\BasicDataControl.xaml" />
     <None Remove="Controls\IntroControl.xaml" />
+    <None Remove="Controls\Page1.xaml" />
     <None Remove="Controls\RainfallDischargeDataControl.xaml" />
     <None Remove="Controls\RCNDataControl.xaml" />
     <None Remove="Pages\HsgPage.xaml" />
+    <None Remove="Pages\PrintHelperPage.xaml" />
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
     <None Remove="Pages\SlopeCalculatorPage.xaml" />
@@ -42,6 +44,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230913002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PDFsharp" Version="6.0.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -52,6 +55,16 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Page1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\PrintHelperPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\ShowHydrographPage.xaml">

@@ -8,130 +8,136 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <RelativePanel x:Name="RootPanel">
-        <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-
-            <Image x:Name="TitleBarIcon" Source="Assets/EFH2.png" Grid.Column="0" Width="16" Height="16" Margin="10,5,5,0"/>
-            <TextBlock x:Name="TitleBarTextBlock" Text="EFH-2 Estimating Runoff Volume and Peak Discharge" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
-        </Grid>
+    <Grid>
+        <local:Page1 x:Name="Page1Control" Foreground="Black">
+            
+        </local:Page1>
         
-        <MenuBar
-            x:Name="MainMenuBar"
-            RelativePanel.Below="TitleBar">
+        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Collapsed">
+            <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
 
-            <MenuBarItem Title="File" AccessKey="F">
-                <MenuFlyoutItem Text="New" AccessKey="N" Click="NewClicked"/>
-                <MenuFlyoutItem Text="Open..." AccessKey="O" Click="OpenClicked"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Recalculate" AccessKey="R"/>
-                <MenuFlyoutItem Text="Save" AccessKey="S" Click="SaveClicked"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Export Hydrograph(s)" AccessKey="E"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Exit" AccessKey="X" Click="ExitClicked"/>
-            </MenuBarItem>
+                <Image x:Name="TitleBarIcon" Source="Assets/EFH2.png" Grid.Column="0" Width="16" Height="16" Margin="10,5,5,0"/>
+                <TextBlock x:Name="TitleBarTextBlock" Text="EFH-2 Estimating Runoff Volume and Peak Discharge" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
+            
+            <MenuBar
+                x:Name="MainMenuBar"
+                RelativePanel.Below="TitleBar">
 
-            <MenuBarItem Title="Edit" AccessKey="E">
-                <MenuFlyoutItem Text="Cut" AccessKey="T" Click="CutClicked"/>
-                <MenuFlyoutItem Text="Copy" AccessKey="C" Click="CopyClicked"/>
-                <MenuFlyoutItem Text="Paste" AccessKey="P" Click="PasteClicked"/>
-            </MenuBarItem>
+                <MenuBarItem Title="File" AccessKey="F">
+                    <MenuFlyoutItem Text="New" AccessKey="N" Click="NewClicked"/>
+                    <MenuFlyoutItem Text="Open..." AccessKey="O" Click="OpenClicked"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="Recalculate" AccessKey="R"/>
+                    <MenuFlyoutItem Text="Save" AccessKey="S" Click="SaveClicked"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="Export Hydrograph(s)" AccessKey="E"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="Exit" AccessKey="X" Click="ExitClicked"/>
+                </MenuBarItem>
 
-            <MenuBarItem Title="View" AccessKey="V">
-                <ToggleMenuFlyoutItem Text="Toolbar" x:Name="ToolbarToggle" AccessKey="T" Click="ToggleToolbar"/>
-            </MenuBarItem>
+                <MenuBarItem Title="Edit" AccessKey="E">
+                    <MenuFlyoutItem Text="Cut" AccessKey="T" Click="CutClicked"/>
+                    <MenuFlyoutItem Text="Copy" AccessKey="C" Click="CopyClicked"/>
+                    <MenuFlyoutItem Text="Paste" AccessKey="P" Click="PasteClicked"/>
+                </MenuBarItem>
 
-            <MenuBarItem Title="Tools" AccessKey="T">
-                <MenuFlyoutItem Text="Average Slope Calculator" x:Name="SlopeCalculatorFlyout"
-                                AccessKey="A" Click="ShowAverageSlopeCalculator"/>
-                <MenuFlyoutItem Text="Hydrologic Soil Groups" x:Name="HsgFlyout"
-                                AccessKey="H" Click="ShowHydrologicSoilGroups"/>
-            </MenuBarItem>
+                <MenuBarItem Title="View" AccessKey="V">
+                    <ToggleMenuFlyoutItem Text="Toolbar" x:Name="ToolbarToggle" AccessKey="T" Click="ToggleToolbar"/>
+                </MenuBarItem>
 
-            <MenuBarItem Title="Help" AccessKey="H">
-                <MenuFlyoutItem Text="Help Contents (chm)" AccessKey="H"/>
-                <MenuFlyoutItem Text="User Manual (pdf)" AccessKey="U"/>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="About" AccessKey="A"/>
-            </MenuBarItem>
-        </MenuBar>
+                <MenuBarItem Title="Tools" AccessKey="T">
+                    <MenuFlyoutItem Text="Average Slope Calculator" x:Name="SlopeCalculatorFlyout"
+                                    AccessKey="A" Click="ShowAverageSlopeCalculator"/>
+                    <MenuFlyoutItem Text="Hydrologic Soil Groups" x:Name="HsgFlyout"
+                                    AccessKey="H" Click="ShowHydrologicSoilGroups"/>
+                </MenuBarItem>
 
-        <CommandBar x:Name="Toolbar" FlowDirection="LeftToRight" 
-                    DefaultLabelPosition="Bottom" RelativePanel.Below="MainMenuBar">
-            <AppBarButton Icon="Page" Label="New" Click="NewClicked"/>
-            <AppBarButton Label="Open" Click="OpenClicked">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE838;"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Icon="Save" Label="Save" Click="SaveClicked"/>
-            <AppBarSeparator/>
-            <AppBarButton Icon="Print" Label="Print" Click="PrintClicked"/>
-            <AppBarSeparator/>
-            <AppBarButton Icon="Cut" Label="Cut" Click="CutClicked"/>
-            <AppBarButton Icon="Copy" Label="Copy" Click="CopyClicked"/>
-            <AppBarButton Icon="Paste" Label="Paste" Click="PasteClicked"/>
-            <AppBarSeparator/>
-            <AppBarButton Label="Slope Calculator" Click="ShowAverageSlopeCalculator" Name="SlopeCalculatorButton">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xEB3C;"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Label="Hydrologic Soil Group" Click="ShowHydrologicSoilGroups" Name="HsgButton">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE773;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+                <MenuBarItem Title="Help" AccessKey="H">
+                    <MenuFlyoutItem Text="Help Contents (chm)" AccessKey="H"/>
+                    <MenuFlyoutItem Text="User Manual (pdf)" AccessKey="U"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="About" AccessKey="A"/>
+                </MenuBarItem>
+            </MenuBar>
 
-            <AppBarSeparator/>
+            <CommandBar x:Name="Toolbar" FlowDirection="LeftToRight" 
+                        DefaultLabelPosition="Bottom" RelativePanel.Below="MainMenuBar">
+                <AppBarButton Icon="Page" Label="New" Click="NewClicked"/>
+                <AppBarButton Label="Open" Click="OpenClicked">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE838;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Icon="Save" Label="Save" Click="SaveClicked"/>
+                <AppBarSeparator/>
+                <AppBarButton Icon="Print" Label="Print" Click="PrintClicked"/>
+                <AppBarSeparator/>
+                <AppBarButton Icon="Cut" Label="Cut" Click="CutClicked"/>
+                <AppBarButton Icon="Copy" Label="Copy" Click="CopyClicked"/>
+                <AppBarButton Icon="Paste" Label="Paste" Click="PasteClicked"/>
+                <AppBarSeparator/>
+                <AppBarButton Label="Slope Calculator" Click="ShowAverageSlopeCalculator" Name="SlopeCalculatorButton">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xEB3C;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="Hydrologic Soil Group" Click="ShowHydrologicSoilGroups" Name="HsgButton">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE773;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-            <AppBarButton
-                Icon="Help"
-                Label="Help"/>
+                <AppBarSeparator/>
 
-        </CommandBar>
+                <AppBarButton
+                    Icon="Help"
+                    Label="Help"/>
 
-        <NavigationView PaneDisplayMode="Top" x:Name="Navigation" IsBackButtonVisible="Collapsed"
-                        IsSettingsVisible="False" SelectionChanged="NavigationSelectionChanged"
-                        RelativePanel.Below="Toolbar">
-            <NavigationView.MenuItems>
-                <NavigationViewItem 
-                    Content="Introduction"
-                    x:Name="IntroNavButton"
-                    Background="Transparent">
-                </NavigationViewItem>
+            </CommandBar>
 
-                <NavigationViewItem 
-                    Content="Basic Data"
-                    x:Name="BasicDataNavButton">
-                </NavigationViewItem>
+            <NavigationView PaneDisplayMode="Top" x:Name="Navigation" IsBackButtonVisible="Collapsed"
+                            IsSettingsVisible="False" SelectionChanged="NavigationSelectionChanged"
+                            RelativePanel.Below="Toolbar">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem 
+                        Content="Introduction"
+                        x:Name="IntroNavButton"
+                        Background="Transparent">
+                    </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="Rainfall/Discharge Data"
-                    x:Name="RainfallDischargeDataNavButton">
-                </NavigationViewItem>
+                    <NavigationViewItem 
+                        Content="Basic Data"
+                        x:Name="BasicDataNavButton">
+                    </NavigationViewItem>
 
-                <NavigationViewItem
-                    Content="RCN"
-                    x:Name="RCNDataNavButton">
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
-        </NavigationView>
+                    <NavigationViewItem
+                        Content="Rainfall/Discharge Data"
+                        x:Name="RainfallDischargeDataNavButton">
+                    </NavigationViewItem>
 
-        <Grid RelativePanel.Below="Navigation" HorizontalAlignment="Stretch"
-              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+                    <NavigationViewItem
+                        Content="RCN"
+                        x:Name="RCNDataNavButton">
+                    </NavigationViewItem>
+                </NavigationView.MenuItems>
+            </NavigationView>
 
-            <local:BasicDataControl x:Name="BasicDataControl" Visibility="Visible" Grid.Column="0"/>
-            <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Visible" Grid.Column="0"/>
-            <local:RcnDataControl x:Name="RcnDataControl" Visibility="Visible" Grid.Column="0"/>
-            <local:IntroControl x:Name="IntroControl" Visibility="Visible" Grid.Column="0"/>
-        </Grid>
-    </RelativePanel>
+            <Grid RelativePanel.Below="Navigation" HorizontalAlignment="Stretch"
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <local:BasicDataControl x:Name="BasicDataControl" Visibility="Visible" Grid.Column="0"/>
+                <local:RainfallDischargeDataControl x:Name="RainfallDischargeDataControl" Visibility="Visible" Grid.Column="0"/>
+                <local:RcnDataControl x:Name="RcnDataControl" Visibility="Visible" Grid.Column="0"/>
+                <local:IntroControl x:Name="IntroControl" Visibility="Visible" Grid.Column="0"/>
+            </Grid>
+        </RelativePanel>
+    </Grid>
 </Window>

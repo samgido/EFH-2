@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="EFH2.Page1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EFH2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    RequestedTheme="Light"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="10"/>
+            <Setter Property="Margin" Value="0,30,0,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0">EFH-2</TextBlock>
+            <TextBlock Grid.Column="1">ESTIMATING RUNOFF VOLUME AND PEAK DISCHARGE</TextBlock>
+            <TextBlock Grid.Column="2">Version 2.0.12</TextBlock>
+        </Grid>
+
+        <Grid ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Client:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">County:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Practice:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Calculated By:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right">Checked By:</TextBlock>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="NAME"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="COUNTY"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="PRACTICE"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="BY"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="_____________"/>
+
+            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right">State:</TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right">Date:</TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right">Date:</TextBlock>
+
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="STATE"/>
+            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="DATE"/>
+            <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="_____________"/>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Drainage Area:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Curve Number:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Watershed Length:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Watershed Slope:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right">Time Of Concentration:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Rainfall Distribution - Type:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right">Dimensionless Unit Hydrograph:</TextBlock>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="AREA"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="CURVENUM"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="LENGTH"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="SLOPE"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="TIME"/>
+            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="RFTYPE"/>
+            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="DUHTYPE"/>
+
+            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left">Acres</TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left">Feet</TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left">Percent</TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left">Hours</TextBlock>
+
+            <!--Statuses-->
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+        </Grid>
+
+        <Grid BorderBrush="Black" BorderThickness="1" Margin="40,30,40,0" ColumnSpacing="0">
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="0" Grid.Row="0">
+                <TextBlock>Storm Number</TextBlock>
+            </Border>
+
+            <Border Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+                <StackPanel>
+                    <TextBlock>Frequency (yrs)</TextBlock>
+                    <TextBlock>24-Hr rainfall (in)</TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="2">
+                <StackPanel>
+                    <TextBlock>Runoff (in)</TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Text="                      (ac-ft)"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="0" Grid.Row="5">
+                <TextBlock>Peak Discharge (cfs)</TextBlock>
+            </Border>
+
+            <Border Grid.Column="1" Grid.Row="0">
+                <TextBlock>1</TextBlock> 
+            </Border>
+            <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="FREQ"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="DAYRAIN"/>
+
+            <Border Grid.Column="1" Grid.Row="3" Grid.RowSpan="2"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" Text="RUNOFF"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" Text="RUNOFFAC-FT"/>
+
+            <Border Grid.Column="1" Grid.Row="5">
+                <TextBlock Text="PEAKFLOW"/>
+            </Border>
+        </Grid>
+
+    </StackPanel>
+</UserControl>
