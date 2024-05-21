@@ -15,6 +15,8 @@ namespace EFH2
 {
     public partial class RcnDataViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
+        public static bool Used = false;
+
         [ObservableProperty]
         private List<RcnCategory> _rcnCategories;
 
@@ -52,15 +54,12 @@ namespace EFH2
             }
         }
 
-        private void PerformScrollUp(object commandParameter)
-        {
-            
-        }
-
         public void EntryChanged(object? sender, PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(AccumulatedArea));
             this.OnPropertyChanged(nameof(WeightedCurveNumber));
+
+            Used = true;
         }
 
         public RcnDataModel ToRcnDataModel()

@@ -9,11 +9,15 @@
     mc:Ignorable="d">
 
     <Grid>
-        <local:Page1 x:Name="Page1Control" Foreground="Black" Visibility="Visible">
+        <!--<local:Page1 x:Name="Page1Control" Foreground="Black" Visibility="Visible">
             
-        </local:Page1>
+        </local:Page1>-->
+
+        <local:Page2 x:Name="Page2Control" Foreground="Black" Visibility="Visible">
+            
+        </local:Page2>
         
-        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible">
+        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Collapsed">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
