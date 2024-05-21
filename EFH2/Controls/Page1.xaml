@@ -119,74 +119,35 @@
             <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
         </Grid>
 
-        <Grid BorderBrush="Black" BorderThickness="1" Margin="40,30,40,0" ColumnSpacing="0">
-            <Grid.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="BorderBrush" Value="Black"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-            </Grid.RowDefinitions>
-
-            <!--<Border Grid.Column="0" Grid.Row="0">
-                <TextBlock>Storm Number</TextBlock>
-            </Border>
-
-            <Border Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
-                <StackPanel>
-                    <TextBlock>Frequency (yrs)</TextBlock>
-                    <TextBlock>24-Hr rainfall (in)</TextBlock>
-                </StackPanel>
-            </Border>
-
-            <Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="2">
-                <StackPanel>
-                    <TextBlock>Runoff (in)</TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Text="                      (ac-ft)"/>
-                </StackPanel>
-            </Border>
-
-            <Border Grid.Column="0" Grid.Row="5">
-                <TextBlock>Peak Discharge (cfs)</TextBlock>
-            </Border>
-
-            <Border Grid.Column="1" Grid.Row="0">
-                <TextBlock>1</TextBlock> 
-            </Border>
-            <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" Text="FREQ"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" Text="DAYRAIN"/>
-
-            <Border Grid.Column="1" Grid.Row="3" Grid.RowSpan="2"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" Text="RUNOFF"/>
-            <TextBlock Grid.Column="1" Grid.Row="4" Text="RUNOFFAC-FT"/>
-
-            <Border Grid.Column="1" Grid.Row="5">
-                <TextBlock Text="PEAKFLOW"/>
-            </Border>-->
-
+        <Grid Margin="20,30,20,0" ColumnSpacing="0">
             <ListView ItemsSource="{x:Bind Path=ViewModel.Storms}" SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal"/>
+                        <ItemsStackPanel Orientation="Horizontal" Margin="0" GroupPadding="0"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Width" Value="30"/>
+                        <Setter Property="MinWidth" Value="70"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
+
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <Grid Width="150" Height="150">
+                        <Grid>
                             <Grid.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
@@ -198,29 +159,33 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Row="0"/>
-                            <Border Grid.Row="1" Grid.RowSpan="2"/>
-                            <Border Grid.Row="3" Grid.RowSpan="2"/>
-                            <Border Grid.Row="5"/>
-
                             <TextBlock Grid.Row="0">StormNumber</TextBlock>
                             <TextBlock Grid.Row="1">Frequency (yrs)</TextBlock>
                             <TextBlock Grid.Row="2">24-Hr rainfall (in)</TextBlock>
                             <TextBlock Grid.Row="3">Runoff (in)</TextBlock>
                             <TextBlock Grid.Row="4" HorizontalAlignment="Right" Margin="0,0,20,0">(ac-ft)</TextBlock>
                             <TextBlock Grid.Row="5">Peak Discharge (cfs)</TextBlock>
+
+                            <Border Grid.Row="0"/>
+                            <Border Grid.Row="1" Grid.RowSpan="2"/>
+                            <Border Grid.Row="3" Grid.RowSpan="2"/>
+                            <Border Grid.Row="5"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.HeaderTemplate>
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="150">
+                        <Grid>
                             <Grid.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                 </Style>                                
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                </Style>
                             </Grid.Resources>
 
                             <Grid.RowDefinitions>
@@ -232,17 +197,18 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Row="0"/>
-                            <Border Grid.Row="1" Grid.RowSpan="2"/>
-                            <Border Grid.Row="3" Grid.RowSpan="2"/>
-                            <Border Grid.Row="5"/>
-
                             <TextBlock Text="{Binding Path=BaseStorm.Number}" Grid.Row="0"/>
                             <TextBlock Text="{Binding Path=BaseStorm.Frequency, Converter={StaticResource DoubleFormatter}}" Grid.Row="1"/>
                             <TextBlock Text="{Binding Path=BaseStorm.DayRain, Converter={StaticResource DoubleFormatter}}" Grid.Row="2"/>
                             <TextBlock Text="{Binding Path=BaseStorm.Runoff, Converter={StaticResource DoubleFormatter}}" Grid.Row="3"/>
                             <TextBlock Text="{Binding Path=RunoffInAcreFeet, Converter={StaticResource DoubleFormatter}}" Grid.Row="4"/>
                             <TextBlock Text="{Binding Path=BaseStorm.PeakFlow, Converter={StaticResource DoubleFormatter}}" Grid.Row="5"/>
+
+                            <Border Grid.Row="0"/>
+                            <Border Grid.Row="1" Grid.RowSpan="2"/>
+                            <Border Grid.Row="3" Grid.RowSpan="2"/>
+                            <Border Grid.Row="5"/>
+
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
