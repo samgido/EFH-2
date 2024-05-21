@@ -124,7 +124,7 @@ namespace EFH2
         {
 			double final = (Math.Pow(this.WatershedLength, 0.8) * Math.Pow(((1000 / this.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(this.WatershedSlope, 0.5));
 
-			if (final.Equals(double.NaN))
+			if (double.IsNaN(final))
 			{
 				this.timeOfConcentrationEntry.Value = double.NaN;
 				this.timeOfConcentrationEntry.Status = "";

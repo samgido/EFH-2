@@ -237,7 +237,7 @@ namespace EFH2
 					writer.WriteLine("STORM ANALYSIS:");
 					foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 					{
-						if (!storm.Frequency.Equals(double.NaN) && !storm.DayRain.Equals(double.NaN))
+						if (!double.IsNaN(storm.Frequency) && !double.IsNaN(storm.DayRain))
 						{
 							writer.WriteLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
 								storm.Frequency + "-Yr",
@@ -338,9 +338,9 @@ namespace EFH2
 			if (model.RainfallDischargeDataViewModel.SelectedRainfallDistributionTypeIndex == 0) return false;
 
 			// Basic data check 
-			if (model.BasicDataViewModel.drainageAreaEntry.Value.Equals(double.NaN)) return false;
-			if (model.BasicDataViewModel.runoffCurveNumberEntry.Value.Equals(double.NaN)) return false;
-			if (model.BasicDataViewModel.timeOfConcentrationEntry.Value.Equals(double.NaN)) return false;
+			if (double.IsNaN(model.BasicDataViewModel.drainageAreaEntry.Value)) return false;
+			if (double.IsNaN(model.BasicDataViewModel.runoffCurveNumberEntry.Value)) return false;
+			if (double.IsNaN(model.BasicDataViewModel.timeOfConcentrationEntry.Value)) return false;
 
 			// If everything is ready
 			return true;
@@ -383,7 +383,7 @@ namespace EFH2
 
 									foreach (StormViewModel storm in storms)
 									{
-										if (storm.Frequency == year && !storm.DayRain.Equals(double.NaN))
+										if (storm.Frequency == year && !double.IsNaN(storm.DayRain))
 										{// found the match, put the runoff and peakflow values into this storm
 											storm.PeakFlow = peakFlow;
 											storm.Runoff = runoff;

@@ -28,7 +28,7 @@ namespace EFH2
                 double total = 0;
                 foreach (RcnCategory category in RcnCategories)
                 {
-                    if (!(category.AccumulatedArea.Equals(double.NaN))) total += category.AccumulatedArea;
+                    if (!(double.IsNaN(category.AccumulatedArea))) total += category.AccumulatedArea;
                 }
                 return total;
             }
@@ -41,7 +41,7 @@ namespace EFH2
                 double total = 0;
                 foreach (RcnCategory category in RcnCategories)
                 {
-                    if (!(category.AccumulatedArea.Equals(double.NaN))) total += category.AccumulatedWeightedArea;
+                    if (!(double.IsNaN(category.AccumulatedArea))) total += category.AccumulatedWeightedArea;
                 }
 
                 //if (AccumulatedArea.Equals(double.NaN) || AccumulatedArea.Equals(0)) return double.NaN;
@@ -137,7 +137,7 @@ namespace EFH2
                 {
                     foreach (WeightAreaPair values in row.Entries)
                     {
-                        if (!values.Area.Equals(double.NaN))
+                        if (!double.IsNaN(values.Area))
                         {
                             values.Area = (values.Area / accumulatedArea) * 100;
                         }
@@ -154,7 +154,7 @@ namespace EFH2
                 {
                     foreach (WeightAreaPair values in row.Entries)
                     {
-                        if (!values.Area.Equals(double.NaN))
+                        if (!double.IsNaN(values.Area))
                         {
                             values.Area = (values.Area * accumulatedArea) / 100;
                         }

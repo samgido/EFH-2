@@ -29,7 +29,7 @@ namespace EFH2
 						Status = MainViewModel.UserEnteredMessage;
 						this.ValueChanged?.Invoke(this, new EventArgs());
 					}
-					else if (value.Equals(double.NaN)) Status = "";
+					else if (double.IsNaN(value)) Status = "";
 					else Status = InvalidEntryStatus;
                 }
             }

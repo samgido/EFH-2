@@ -11,7 +11,12 @@ namespace EFH2
 	{
 		public virtual double? ParseDouble(string text) => double.TryParse(text, out var dbl) ? dbl : null;
 		public virtual string Format { get; set; } = "{0:F2}"; 
-		public virtual string FormatDouble(double value) => string.Format(Format, value);
+		public virtual string FormatDouble(double value)
+		{
+			if (double.IsNaN(value)) return "";
+			return string.Format(Format, value);
+		}
+
 
 		// Only need to do doubles 
 		public string FormatInt(long value) => throw new NotSupportedException();

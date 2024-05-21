@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace EFH2
 {
-    public partial class StormViewModel : ObservableObject, ICreateInputFile
+    public partial class StormViewModel : ObservableObject, ICreateInputFile, INotifyPropertyChanged
     {
         public event EventHandler<EventArgs>? ValueChanged;
 
@@ -21,6 +22,7 @@ namespace EFH2
         [XmlElement("Name")]
         public string Name => "Storm #" + Number;
 
+        [XmlIgnore]
         public int Number { get; init; }
 
         [ObservableProperty]

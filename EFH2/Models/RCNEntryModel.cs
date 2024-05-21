@@ -20,7 +20,7 @@ namespace EFH2
         {
             get
             {
-                if (!(Area.Equals(double.NaN))) return Area * Weight;
+                if (!(double.IsNaN(Area))) return Area * Weight;
                 else return double.NaN;
             }
         }

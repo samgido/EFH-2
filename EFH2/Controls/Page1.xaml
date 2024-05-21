@@ -6,10 +6,11 @@
     xmlns:local="using:EFH2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    RequestedTheme="Light"
+    RequestedTheme="Light" 
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <local:DoubleToEmptyStringConverter x:Key="DoubleFormatter"/>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
@@ -20,7 +21,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Background="White">
+    <StackPanel Background="White" DataContext="{x:Bind MainViewModel.BasicDataViewModel}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -55,18 +56,18 @@
             <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right">Calculated By:</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right">Checked By:</TextBlock>
 
-            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="NAME"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="COUNTY"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="PRACTICE"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="BY"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=Client}"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="{Binding Path=selectedCounty}"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=Practice}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="{Binding Path=By}"/>
             <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="_____________"/>
 
             <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right">State:</TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right">Date:</TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="3" HorizontalAlignment="Right">Date:</TextBlock>
 
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="STATE"/>
-            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="DATE"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=selectedState}"/>
+            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=Date}"/>
             <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="_____________"/>
         </Grid>
 
@@ -95,13 +96,13 @@
             <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Rainfall Distribution - Type:</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right">Dimensionless Unit Hydrograph:</TextBlock>
 
-            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="AREA"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="CURVENUM"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="LENGTH"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="SLOPE"/>
-            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="TIME"/>
-            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="RFTYPE"/>
-            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="DUHTYPE"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.DrainageArea, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.RunoffCurveNumber}"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.WatershedLength}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.WatershedSlope}"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.TimeOfConcentration}"/>
+            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.selectedRainfallDistributionType}"/>
+            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.selectedDuhType}"/>
 
             <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left">Acres</TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left">Feet</TextBlock>
@@ -109,12 +110,13 @@
             <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left">Hours</TextBlock>
 
             <!--Statuses-->
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text=""/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.drainageAreaEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.watershedLengthEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.watershedSlopeEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="4" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.timeOfConcentrationEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="5" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
+            <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
         </Grid>
 
         <Grid BorderBrush="Black" BorderThickness="1" Margin="40,30,40,0" ColumnSpacing="0">
@@ -125,26 +127,11 @@
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Column="0" Grid.Row="0">
+            <!--<Border Grid.Column="0" Grid.Row="0">
                 <TextBlock>Storm Number</TextBlock>
             </Border>
 
@@ -179,7 +166,87 @@
 
             <Border Grid.Column="1" Grid.Row="5">
                 <TextBlock Text="PEAKFLOW"/>
-            </Border>
+            </Border>-->
+
+            <ListView ItemsSource="{x:Bind Path=Storms}" SelectionMode="None">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Width="150" Height="150">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0"/>
+                            <Border Grid.Row="1" Grid.RowSpan="2"/>
+                            <Border Grid.Row="3" Grid.RowSpan="2"/>
+                            <Border Grid.Row="5"/>
+
+                            <TextBlock Grid.Row="0">StormNumber</TextBlock>
+                            <TextBlock Grid.Row="1">Frequency (yrs)</TextBlock>
+                            <TextBlock Grid.Row="2">24-Hr rainfall (in)</TextBlock>
+                            <TextBlock Grid.Row="3">Runoff (in)</TextBlock>
+                            <TextBlock Grid.Row="4" HorizontalAlignment="Right" Margin="0,0,20,0">(ac-ft)</TextBlock>
+                            <TextBlock Grid.Row="5">Peak Discharge (cfs)</TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="150">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>                                
+                            </Grid.Resources>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0"/>
+                            <Border Grid.Row="1" Grid.RowSpan="2"/>
+                            <Border Grid.Row="3" Grid.RowSpan="2"/>
+                            <Border Grid.Row="5"/>
+
+                            <TextBlock Text="{Binding Path=BaseStorm.Number}" Grid.Row="0"/>
+                            <TextBlock Text="{Binding Path=BaseStorm.Frequency, Converter={StaticResource DoubleFormatter}}" Grid.Row="1"/>
+                            <TextBlock Text="{Binding Path=BaseStorm.DayRain, Converter={StaticResource DoubleFormatter}}" Grid.Row="2"/>
+                            <TextBlock Text="{Binding Path=BaseStorm.Runoff, Converter={StaticResource DoubleFormatter}}" Grid.Row="3"/>
+                            <TextBlock Text="{Binding Path=RunoffInAcreFeet, Converter={StaticResource DoubleFormatter}}" Grid.Row="4"/>
+                            <TextBlock Text="{Binding Path=BaseStorm.PeakFlow, Converter={StaticResource DoubleFormatter}}" Grid.Row="5"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
     </StackPanel>

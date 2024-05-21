@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,9 +21,43 @@ namespace EFH2
 {
 	public sealed partial class Page1 : UserControl
 	{
+		public MainViewModel MainViewModel
+		{
+			get
+			{
+				if (DataContext is MainViewModel model) return model;
+				else return null;
+			}
+		}
+
+		public ObservableCollection<StormVMWrapper> Storms { get; private set; } = new ObservableCollection<StormVMWrapper>();
+
 		public Page1()
 		{
 			this.InitializeComponent();
+		}
+
+		public void SetDataContext(MainViewModel model)
+		{
+			this.DataContext = model;
+			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+			{
+				Storms.Add(new StormVMWrapper(MainViewModel.BasicDataViewModel.DrainageArea, storm));
+			}
+		}
+
+		public class StormVMWrapper
+		{
+			private double _drainageArea;
+			public StormViewModel BaseStorm { get; private set; }
+			public double RunoffInAcreFeet => (_drainageArea * BaseStorm.Runoff) / 12;
+
+
+			public StormVMWrapper(double drainageArea, StormViewModel storm)
+			{
+				_drainageArea = drainageArea;
+				BaseStorm = storm;
+			}
 		}
 	}
 }

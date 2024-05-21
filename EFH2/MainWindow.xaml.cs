@@ -55,6 +55,8 @@ namespace EFH2
             MainViewModel = new MainViewModel();
             FileOperations.LoadMainViewModel(MainViewModel);
 
+            Page1Control.SetDataContext(MainViewModel);
+
             Navigation.SelectedItem = IntroNavButton;
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
@@ -295,26 +297,6 @@ namespace EFH2
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-            //var savePicker = new FileSavePicker();
-            //savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            //savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
-            //savePicker.SuggestedFileName = "WIP";
-
-            //var window = this;
-            //var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            //WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
-
-            //StorageFile file = await savePicker.PickSaveFileAsync();
-            //if (file != null)
-            //{
-            //    CachedFileManager.DeferUpdates(file);
-
-            //    FileOperations.MakePdf(MainViewModel, file.Path);
-
-            //    await CachedFileManager.CompleteUpdatesAsync(file);
-            //}
-
-
 			if (PrintManager.IsSupported())
 			{
 				try
@@ -352,7 +334,9 @@ namespace EFH2
 
 		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
 		{
-            _printDocument.AddPage(Page1Control);
+            Page1Wrapper page = new Page1Wrapper();
+            page.DataContext = MainViewModel;
+            _printDocument.AddPage(page);
 
             _printDocument.AddPagesComplete();
 		}
@@ -360,7 +344,9 @@ namespace EFH2
 		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
             //TODO: Add control to print as second parameter
-            _printDocument.SetPreviewPage(e.PageNumber, Page1Control);
+            Page1Wrapper page = new Page1Wrapper();
+            page.DataContext = MainViewModel;
+            _printDocument.SetPreviewPage(e.PageNumber, page);
         }
 
         private void _printDocument_Paginate(object sender, PaginateEventArgs e)

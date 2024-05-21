@@ -23,7 +23,7 @@ namespace EFH2
                 double total = 0;
                 foreach (RcnRow row in Rows)
                 {
-                    if (!(row.AccumulatedArea.Equals(double.NaN))) total += row.AccumulatedArea;
+                    if (!(double.IsNaN(row.AccumulatedArea))) total += row.AccumulatedArea;
                 }
                 return total;
             }
@@ -36,7 +36,7 @@ namespace EFH2
                 double total = 0;
                 foreach (RcnRow row in Rows)
                 {
-                    if (!(row.AccumulatedArea.Equals(double.NaN))) total += row.AccumulatedWeightedArea;
+                    if (!(double.IsNaN(row.AccumulatedArea))) total += row.AccumulatedWeightedArea;
                 }
                 return total;
             }

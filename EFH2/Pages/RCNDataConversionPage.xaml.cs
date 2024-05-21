@@ -44,7 +44,7 @@ namespace EFH2
 
                     UseWorksheetButton.IsEnabled = false;
 
-                    if (!model.BasicDataViewModel.DrainageArea.Equals(double.NaN))
+                    if (!double.IsNaN(model.BasicDataViewModel.DrainageArea))
                     {
                         UseBasicDataButton.IsEnabled = true;
                         UseBasicDataButton.Content = "Determine area by percentage of Basic Data drainage area of " + model.BasicDataViewModel.DrainageArea;

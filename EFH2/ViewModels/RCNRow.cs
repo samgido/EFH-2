@@ -23,7 +23,7 @@ namespace EFH2
                 double total = 0;
                 foreach (WeightAreaPair entry in Entries)
                 {
-                    if (!(entry.Area.Equals(double.NaN))) total += entry.Area;
+                    if (!double.IsNaN(entry.Area)) total += entry.Area;
                 }
                 return total;
             }
@@ -36,7 +36,7 @@ namespace EFH2
                 double total = 0;
                 foreach (WeightAreaPair entry in Entries)
                 {
-                    if (!(entry.Area.Equals(double.NaN))) total += entry.WeightedArea;
+                    if (!double.IsNaN(entry.Area)) total += entry.WeightedArea;
                 }
                 return total;
             }
