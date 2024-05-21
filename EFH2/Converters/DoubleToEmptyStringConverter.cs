@@ -14,7 +14,7 @@ namespace EFH2
 			if (value is double d && double.IsNaN(d))
 				return string.Empty;
 			else
-				return value?.ToString();
+				return string.Format("{0:F2}", value); 
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)

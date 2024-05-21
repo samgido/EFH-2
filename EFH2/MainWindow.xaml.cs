@@ -55,8 +55,6 @@ namespace EFH2
             MainViewModel = new MainViewModel();
             FileOperations.LoadMainViewModel(MainViewModel);
 
-            Page1Control.SetDataContext(MainViewModel);
-
             Navigation.SelectedItem = IntroNavButton;
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
@@ -334,8 +332,7 @@ namespace EFH2
 
 		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
 		{
-            Page1Wrapper page = new Page1Wrapper();
-            page.DataContext = MainViewModel;
+            Page1Wrapper page = new Page1Wrapper() { DataContext = new PrintedPageViewModel(MainViewModel) };
             _printDocument.AddPage(page);
 
             _printDocument.AddPagesComplete();
@@ -344,8 +341,7 @@ namespace EFH2
 		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
             //TODO: Add control to print as second parameter
-            Page1Wrapper page = new Page1Wrapper();
-            page.DataContext = MainViewModel;
+            Page1Wrapper page = new Page1Wrapper() { DataContext = new PrintedPageViewModel(MainViewModel) };
             _printDocument.SetPreviewPage(e.PageNumber, page);
         }
 

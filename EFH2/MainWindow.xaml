@@ -13,7 +13,7 @@
             
         </local:Page1>
         
-        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Collapsed">
+        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>

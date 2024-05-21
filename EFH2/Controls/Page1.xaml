@@ -21,7 +21,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Background="White" DataContext="{x:Bind MainViewModel.BasicDataViewModel}">
+    <StackPanel Background="White" DataContext="{x:Bind ViewModel.MainViewModel.BasicDataViewModel}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -71,7 +71,7 @@
             <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="_____________"/>
         </Grid>
 
-        <Grid>
+        <Grid DataContext="{x:Bind Path=ViewModel.MainViewModel}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="2*"/>
@@ -96,13 +96,13 @@
             <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Rainfall Distribution - Type:</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right">Dimensionless Unit Hydrograph:</TextBlock>
 
-            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.DrainageArea, Converter={StaticResource DoubleFormatter}}"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.RunoffCurveNumber}"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.WatershedLength}"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.WatershedSlope}"/>
-            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.TimeOfConcentration}"/>
-            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.selectedRainfallDistributionType}"/>
-            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.selectedDuhType}"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.DrainageArea}"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.RunoffCurveNumber}"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.WatershedLength}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.WatershedSlope}"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.TimeOfConcentration}"/>
+            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.selectedRainfallDistributionType}"/>
+            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.selectedDuhType}"/>
 
             <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left">Acres</TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left">Feet</TextBlock>
@@ -110,13 +110,13 @@
             <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left">Hours</TextBlock>
 
             <!--Statuses-->
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.drainageAreaEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.watershedLengthEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.watershedSlopeEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="4" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.BasicDataViewModel.timeOfConcentrationEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="5" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
-            <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Text="{x:Bind Path=MainViewModel.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.drainageAreaEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.runoffCurveNumberEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.watershedLengthEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.watershedSlopeEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="4" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.timeOfConcentrationEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="5" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
+            <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
         </Grid>
 
         <Grid BorderBrush="Black" BorderThickness="1" Margin="40,30,40,0" ColumnSpacing="0">
@@ -168,7 +168,7 @@
                 <TextBlock Text="PEAKFLOW"/>
             </Border>-->
 
-            <ListView ItemsSource="{x:Bind Path=Storms}" SelectionMode="None">
+            <ListView ItemsSource="{x:Bind Path=ViewModel.Storms}" SelectionMode="None">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsStackPanel Orientation="Horizontal"/>
