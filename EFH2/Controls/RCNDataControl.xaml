@@ -11,7 +11,7 @@
 
     <UserControl.Resources>
         <local:RcnRow x:Key="RCNColumn"/>
-        <local:RcnCategory x:Key="RCNCategory"/>
+        <local:RcnSubcategory x:Key="RCNCategory"/>
         <converters:RCNConverter x:Key="RCNConverter"/>
     </UserControl.Resources>
 
@@ -89,77 +89,80 @@
                     <RelativePanel HorizontalAlignment="Stretch">
                         <TextBlock Text="{Binding Path=Label}" Margin="0,10,0,0" Name="Label"/>
 
-                        <ListView ItemsSource="{Binding Path=Rows}" RelativePanel.Below="Label" 
-                                  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.Resources>
-                                        </Grid.Resources>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition MinWidth="300"/>
-                                            <ColumnDefinition MinWidth="150"/>
-                                            <ColumnDefinition MinWidth="50"/>
-                                            <ColumnDefinition MinWidth="90"/>
-                                            <ColumnDefinition MinWidth="55"/>
-                                            <ColumnDefinition MinWidth="90"/>
-                                            <ColumnDefinition MinWidth="55"/>
-                                            <ColumnDefinition MinWidth="90"/>
-                                            <ColumnDefinition MinWidth="55"/>
-                                            <ColumnDefinition MinWidth="90"/>
-                                            <ColumnDefinition MinWidth="55"/>
-                                        </Grid.ColumnDefinitions> 
+                        <ListView ItemsSource="{Binding Path=RcnSubcategories}" RelativePanel.Below="Label">
 
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Text="{Binding Path=Text[0]}"
-                                            Margin="0,0,0,0"/>
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Text="{Binding Path=Text[1]}"/>
-                                        <TextBlock
-                                            Grid.Column="2"
-                                            Text="{Binding Path=Text[2]}"/>
+                            <ListView ItemsSource="{Binding Path=Rows}"
+                                      ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.Resources>
+                                            </Grid.Resources>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="300"/>
+                                                <ColumnDefinition MinWidth="150"/>
+                                                <ColumnDefinition MinWidth="50"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                                <ColumnDefinition MinWidth="90"/>
+                                                <ColumnDefinition MinWidth="55"/>
+                                            </Grid.ColumnDefinitions> 
 
-                                        <NumberBox
-                                            Grid.Column="3"
-                                            Width="80"
-                                            Value="{Binding Path=Entries[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                            IsEnabled="{Binding Path=Entries[0].Enabled}"/>
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                Text="{Binding Path=Text[0]}"
+                                                Margin="0,0,0,0"/>
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Text="{Binding Path=Text[1]}"/>
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                Text="{Binding Path=Text[2]}"/>
 
-                                        <TextBlock
-                                            Grid.Column="4"
-                                            Text="{Binding Path=Entries[0].Weight, Converter={StaticResource RCNConverter}, Mode=OneWay}"/>
+                                            <NumberBox
+                                                Grid.Column="3"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[0].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                IsEnabled="{Binding Path=Entries[0].Enabled}"/>
 
-                                        <NumberBox
-                                            Grid.Column="5"
-                                            Width="80"
-                                            Value="{Binding Path=Entries[1].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <TextBlock
+                                                Grid.Column="4"
+                                                Text="{Binding Path=Entries[0].Weight, Converter={StaticResource RCNConverter}, Mode=OneWay}"/>
 
-                                        <TextBlock
-                                            Grid.Column="6"
-                                            Text="{Binding Path=Entries[1].Weight, Mode=OneWay}"/>
+                                            <NumberBox
+                                                Grid.Column="5"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[1].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-                                        <NumberBox
-                                            Grid.Column="7"
-                                            Width="80"
-                                            Value="{Binding Path=Entries[2].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <TextBlock
+                                                Grid.Column="6"
+                                                Text="{Binding Path=Entries[1].Weight, Mode=OneWay}"/>
 
-                                        <TextBlock
-                                            Grid.Column="8"
-                                            Text="{Binding Path=Entries[2].Weight, Mode=OneWay}"/>
+                                            <NumberBox
+                                                Grid.Column="7"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[2].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-                                        <NumberBox
-                                            Grid.Column="9"
-                                            Width="80"
-                                            Value="{Binding Path=Entries[3].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <TextBlock
+                                                Grid.Column="8"
+                                                Text="{Binding Path=Entries[2].Weight, Mode=OneWay}"/>
 
-                                        <TextBlock
-                                            Grid.Column="10"
-                                            Text="{Binding Path=Entries[3].Weight, Mode=OneWay}"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
+                                            <NumberBox
+                                                Grid.Column="9"
+                                                Width="80"
+                                                Value="{Binding Path=Entries[3].Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                                            <TextBlock
+                                                Grid.Column="10"
+                                                Text="{Binding Path=Entries[3].Weight, Mode=OneWay}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </ListView>
 
                     </RelativePanel>

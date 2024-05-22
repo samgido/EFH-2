@@ -20,11 +20,11 @@ namespace EFH2
 {
 	public sealed partial class Page2 : UserControl
 	{
-		public PrintedPageViewModel ViewModel 
+		public PrintableMainViewModel ViewModel 
 		{
 			get
 			{
-				if (DataContext is PrintedPageViewModel model) return model;
+				if (DataContext is PrintableMainViewModel model) return model;
 				else return null;
 			}
 		}

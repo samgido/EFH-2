@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class RcnCategory : ObservableObject
+    public partial class RcnSubcategory : ObservableObject
     {
         [ObservableProperty]
         private string _label = "";
@@ -42,9 +42,6 @@ namespace EFH2
             }
         }
 
-        public void Default()
-        {
-            foreach (RcnRow row in Rows) row.Default();
-        }
+        public void Default() => Rows.ForEach(row => row.Default());
     }
 }

@@ -218,7 +218,7 @@ namespace EFH2
 
             if (dataPackageView.Contains(StandardDataFormats.Text) is true)
             {
-                int index = previousFocusedTextBox.SelectionStart;
+                int index = (int)(previousFocusedTextBox?.SelectionStart);
                 string replace = await dataPackageView.GetTextAsync();
 
                 if (previousFocusedTextBox.SelectionLength == 0)
@@ -295,7 +295,7 @@ namespace EFH2
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-            Page2 page = new Page2() { DataContext = new PrintedPageViewModel(MainViewModel) };
+            Page2 page = new Page2() { DataContext = new PrintableMainViewModel(MainViewModel) };
             Window newWindow = new Window();
             newWindow.Content = page;
             newWindow.Title = "Preview";
@@ -344,7 +344,7 @@ namespace EFH2
 
 		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
 		{
-            PrintedPageViewModel model = new PrintedPageViewModel(MainViewModel);
+            PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
             Page1Wrapper page1 = new Page1Wrapper() { DataContext = model };
             Page2Wrapper page2 = new Page2Wrapper() { DataContext = model };
             _printDocument.AddPage(page1);
@@ -356,7 +356,7 @@ namespace EFH2
 		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
             //TODO: Add control to print as second parameter
-            Page1Wrapper page = new Page1Wrapper() { DataContext = new PrintedPageViewModel(MainViewModel) };
+            Page1Wrapper page = new Page1Wrapper() { DataContext = new PrintableMainViewModel(MainViewModel) };
             _printDocument.SetPreviewPage(e.PageNumber, page);
         }
 

@@ -30,10 +30,15 @@ namespace EFH2
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        public App()
-        {
-            this.InitializeComponent();
-        }
+          public App()
+		  {
+			  this.InitializeComponent();
+
+			  // Temporary solution for issue 8810
+			  this.AddOtherProvider(new Microsoft.UI.Xaml.XamlTypeInfo.XamlControlsXamlMetaDataProvider());
+			  this.AddOtherProvider(new CommunityToolkit.WinUI.UI.Controls.CommunityToolkit_WinUI_UI_Controls_DataGrid_XamlTypeInfo.XamlMetaDataProvider());
+			  //this.AddOtherProvider(new CommunityToolkit.WinUI.Controls.SettingsControlsRns.CommunityToolkit_WinUI_Controls_SettingsControls_XamlTypeInfo.XamlMetaDataProvider());
+		  }
 
         /// <summary>
         /// Invoked when the application is launched.

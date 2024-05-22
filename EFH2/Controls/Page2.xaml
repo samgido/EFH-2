@@ -15,6 +15,7 @@
         <local:DoubleToEmptyStringConverter x:Key="DoubleFormatter"/>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
         </Style>
 
         <Style TargetType="Grid">
@@ -23,7 +24,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Background="White" DataContext="{x:Bind ViewModel.MainViewModel.BasicDataViewModel}">
+    <StackPanel Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -40,7 +41,7 @@
             <TextBlock>Curve Number Computation</TextBlock>
         </Grid>
 
-        <Grid ColumnSpacing="10">
+        <Grid ColumnSpacing="10" DataContext="{x:Bind ViewModel.MainViewModel.BasicDataViewModel}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -77,138 +78,182 @@
             <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="_____________"/>
         </Grid>
 
-        <ListView Margin="20,20,20,0" ItemsSource="{x:Bind Path=ViewModel.Categories}">
-            <ListView.Resources>
-            </ListView.Resources>
+        <Grid Margin="20,30,20,0" ColumnSpacing="0">
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
 
-            <ListView.HeaderTemplate>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"/>
+            <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"/>
+            <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"/>
+
+            <Border Grid.Row="2" Grid.Column="1"/>
+            <Border Grid.Row="2" Grid.Column="2"/>
+            <Border Grid.Row="2" Grid.Column="3"/>
+            <Border Grid.Row="2" Grid.Column="4"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">COVER DESCRIPTION</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,3,0,3">Acres (CN)</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,3,0,3">Hydrologic Soil Group</TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,3,0,3">A</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="2">B</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="3">C</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="4">D</TextBlock>
+        </Grid>
+
+        <ItemsView ItemsSource="{x:Bind Path=ViewModel.Categories}" Margin="20,0,20,0" BorderBrush="Black" BorderThickness="1" CornerRadius="0">
+            <ItemsView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="760">
-                        <Grid.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="BorderBrush" Value="Black"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                        </Grid.Resources>
+                    <ItemContainer>
+                        <Grid Margin="0" ColumnSpacing="0">
+                            <Grid.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="BorderThickness" Value="1,0,1,0"/>
+                                </Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </Grid.Resources>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"/>
-                        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"/>
-                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <Border Grid.Row="2" Grid.Column="1"/>
-                        <Border Grid.Row="2" Grid.Column="2"/>
-                        <Border Grid.Row="2" Grid.Column="3"/>
-                        <Border Grid.Row="2" Grid.Column="4"/>
+                            <Border Grid.Column="0" BorderThickness="0,0,1,0"/>
+                            <Border Grid.Column="1"/>
+                            <Border Grid.Column="2"/>
+                            <Border Grid.Column="3"/>
+                            <Border Grid.Column="4" BorderThickness="1,0,0,0"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">COVER DESCRIPTION</TextBlock>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4">Acres (CN)</TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" >Hydrologic Soil Group</TextBlock>
+                            <TextBlock Text="{Binding Path=Label}" HorizontalAlignment="Left" Margin="5,0,0,0"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="1">A</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="2">B</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="3">C</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="4">D</TextBlock>
-                    </Grid>
-                </DataTemplate> 
-            </ListView.HeaderTemplate>
+                            <ItemsView ItemsSource="{Binding Path=Rows}" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1">
+                                <ItemsView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ItemContainer>
+                                            <Grid Margin="0" ColumnSpacing="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="4*"/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="760" Margin="0,0,4,0">
-                        <Grid.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="BorderBrush" Value="Black"/>
-                                <Setter Property="BorderThickness" Value="1,0,1,0"/>
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="380"/>
-                            <ColumnDefinition Width="95"/>
-                            <ColumnDefinition Width="95"/>
-                            <ColumnDefinition Width="95"/>
-                            <ColumnDefinition Width="95"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                                                <Border BorderThickness="0,0,1,0"/>
+                                                <Border Grid.Column="1"/>
+                                                <Border Grid.Column="2"/>
+                                                <Border Grid.Column="3"/>
+                                                <Border Grid.Column="4" BorderThickness="1,0,0,0"/>
 
-                        <Border Grid.Column="0"/>
-                        <Border Grid.Column="1"/>
-                        <Border Grid.Column="2"/>
-                        <Border Grid.Column="3"/>
-                        <Border Grid.Column="4"/>
+                                                <!--<StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,3,0,3">
+                                                    <TextBlock Text="{Binding Path=BaseRow.Text[0]}"/>
+                                                    <TextBlock Text="{Binding Path=BaseRow.Text[1]}"/>
+                                                    <TextBlock Text="{Binding Path=BaseRow.Text[2]}"/>
+                                                </StackPanel>-->
 
-                        <TextBlock Text="{Binding Path=Label}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                                <RelativePanel>
+                                                    <TextBlock Text="{Binding Path=BaseRow.Text[0]}" RelativePanel.AlignLeftWithPanel="True" Margin="3,0,0,0"/>
+                                                    <TextBlock Text="{Binding Path=BaseRow.Text[1]}" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                                                    <TextBlock Text="{Binding Path=BaseRow.Text[2]}" RelativePanel.AlignRightWithPanel="True" Margin="0,0,3,0"/>
+                                                </RelativePanel>
 
-                        <ListView ItemsSource="{Binding Path=Rows}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Width="760" Margin="0,0,0,0">
-                                        <Grid.Resources>
-                                            <Style TargetType="Border">
-                                                <Setter Property="BorderBrush" Value="Black"/>
-                                                <Setter Property="BorderThickness" Value="1,0,1,0"/>
-                                            </Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </Grid.Resources>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="380"/>
-                                            <ColumnDefinition Width="95"/>
-                                            <ColumnDefinition Width="95"/>
-                                            <ColumnDefinition Width="95"/>
-                                            <ColumnDefinition Width="95"/>
-                                        </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Path=EntryA.Summary}" Grid.Column="1" Margin="0,2,0,2"/>
+                                                <TextBlock Text="{Binding Path=EntryB.Summary}" Grid.Column="2"/>
+                                                <TextBlock Text="{Binding Path=EntryC.Summary}" Grid.Column="3"/>
+                                                <TextBlock Text="{Binding Path=EntryD.Summary}" Grid.Column="4"/>
+                                            </Grid>
+                                        </ItemContainer>
+                                    </DataTemplate>
+                                </ItemsView.ItemTemplate> 
+                            </ItemsView>
 
-                                        <Border Grid.Column="0"/>
-                                        <Border Grid.Column="1"/>
-                                        <Border Grid.Column="2"/>
-                                        <Border Grid.Column="3"/>
-                                        <Border Grid.Column="4"/>
-
-                                        <StackPanel Orientation="Horizontal" Grid.Column="0" Padding="0,0,0,0">
-                                            <TextBlock Text="{Binding Path=BaseRow.Text[0]}"/>
-                                            <TextBlock Text="{Binding Path=BaseRow.Text[1]}"/>
-                                            <TextBlock Text="{Binding Path=BaseRow.Text[2]}"/>
-                                        </StackPanel>
-
-                                        <TextBlock Text="{Binding Path=EntryA.Summary}" Grid.Column="1"/>
-                                        <TextBlock Text="{Binding Path=EntryB.Summary}" Grid.Column="2"/>
-                                        <TextBlock Text="{Binding Path=EntryC.Summary}" Grid.Column="3"/>
-                                        <TextBlock Text="{Binding Path=EntryD.Summary}" Grid.Column="4"/>
-
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate> 
-                        </ListView>
-    
-                    </Grid>
+                        </Grid>
+                    </ItemContainer>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsView.ItemTemplate>
+        </ItemsView>
+
+        <Grid ColumnSpacing="0" Margin="20,0,20,0">
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Column="0" Grid.Row="0"/>
+            <Border Grid.Column="1" Grid.Row="0"/>
+            <Border Grid.Column="2" Grid.Row="0"/>
+            <Border Grid.Column="3" Grid.Row="0"/>
+            <Border Grid.Column="4" Grid.Row="0"/>
+            <Border Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1"/>
+
+            <TextBlock Margin="0,3,0,3">Total Area (by Hydrologic Soil Group)</TextBlock>
+            <TextBlock Text="{x:Bind Path=ViewModel.GroupAAccumulatedArea}" Grid.Column="1"/>
+            <TextBlock Text="{x:Bind Path=ViewModel.GroupBAccumulatedArea}" Grid.Column="2"/>
+            <TextBlock Text="{x:Bind Path=ViewModel.GroupCAccumulatedArea}" Grid.Column="3"/>
+            <TextBlock Text="{x:Bind Path=ViewModel.GroupDAccumulatedArea}" Grid.Column="4"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
+                <TextBlock>TOTAL DRAINAGE AREA: </TextBlock>
+                <TextBlock Text="{x:Bind Path=ViewModel.MainViewModel.RcnDataViewModel.AccumulatedArea}" Margin="10,0,10,0"/>
+                <TextBlock>Acres</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Margin="0,3,0,3">
+                <TextBlock>WEIGHTED CURVE NUMBER: </TextBlock>
+                <TextBlock Text="{x:Bind Path=ViewModel.CurveNumber}" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
     </StackPanel>
 </UserControl>

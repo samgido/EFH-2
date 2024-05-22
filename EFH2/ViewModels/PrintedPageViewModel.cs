@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-	public partial class PrintedPageViewModel : ObservableObject
+	public partial class PrintableMainViewModel : ObservableObject
 	{
 		[ObservableProperty]
 		private ObservableCollection<StormVMWrapper> _storms = new ObservableCollection<StormVMWrapper>();
@@ -19,6 +19,21 @@ namespace EFH2
 
 		[ObservableProperty]
 		private MainViewModel _mainViewModel;
+
+		[ObservableProperty]
+		private double _groupAAccumulatedArea;
+
+		[ObservableProperty]
+		private double _groupBAccumulatedArea;
+
+		[ObservableProperty]
+		private double _groupCAccumulatedArea;
+
+		[ObservableProperty]
+		private double _groupDAccumulatedArea;
+
+		// to format for printing
+		public int CurveNumber => (int)MainViewModel.RcnDataViewModel.WeightedCurveNumber;
 
 		public Visibility CurveNumberMatches
 		{
@@ -39,7 +54,7 @@ namespace EFH2
 			}
 		}
 
-		public PrintedPageViewModel(MainViewModel model)
+		public PrintableMainViewModel(MainViewModel model)
 		{
 			MainViewModel = model;
 
@@ -48,27 +63,44 @@ namespace EFH2
 				Storms.Add(new StormVMWrapper(MainViewModel.BasicDataViewModel.DrainageArea, storm));
 			}
 
-			List<RcnCategory> list = new List<RcnCategory>();
-			foreach (RcnCategory category in model.RcnDataViewModel.RcnCategories)
+			List<RcnSubcategory> list = new List<RcnSubcategory>();
+			foreach (RcnMainCategory category in model.RcnDataViewModel.RcnCategories)
 			{
-				foreach (RcnRow row in category.Rows)
+				foreach (RcnSubcategory subcategory in category.RcnSubcategories)
 				{
-					if (!row.AccumulatedArea.Equals(0))
+					foreach (RcnRow row in subcategory.Rows)
 					{
-						if (!list.Contains(category)) list.Add(category);
+						if (!row.AccumulatedArea.Equals(0))
+						{
+							if (!list.Contains(subcategory)) list.Add(subcategory);
+						}
 					}
 				}
 			}
 
 			_categories = new ObservableCollection<PrintableRcnCategory>();
-			foreach (RcnCategory filledCategory in list)
+			foreach (RcnSubcategory filledCategory in list)
 			{
-				PrintableRcnCategory newCat = new PrintableRcnCategory(filledCategory.Label);
+				PrintableRcnCategory newCat = new PrintableRcnCategory(filledCategory.Label.Trim());
 				foreach (RcnRow row in filledCategory.Rows)
 				{
 					if (!row.AccumulatedArea.Equals(0)) newCat.Rows.Add(new RcnRowWrapper(row));
 				}
 				_categories.Add(newCat);
+			}
+
+			foreach (RcnMainCategory category in model.RcnDataViewModel.RcnCategories)
+			{
+				foreach (RcnSubcategory subcategory in category.RcnSubcategories)
+				{
+					foreach (RcnRow row in subcategory.Rows)
+					{
+						if (!double.IsNaN(row.Entries[0].Area)) _groupAAccumulatedArea += row.Entries[0].Area;
+						if (!double.IsNaN(row.Entries[1].Area)) _groupBAccumulatedArea += row.Entries[1].Area;
+						if (!double.IsNaN(row.Entries[2].Area)) _groupCAccumulatedArea += row.Entries[2].Area;
+						if (!double.IsNaN(row.Entries[3].Area)) _groupDAccumulatedArea += row.Entries[3].Area;
+					}
+				}
 			}
 		}
 

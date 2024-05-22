@@ -18,7 +18,7 @@ namespace EFH2
         public static bool Used = false;
 
         [ObservableProperty]
-        private List<RcnCategory> _rcnCategories;
+        private List<RcnMainCategory> _rcnCategories;
 
         [ObservableProperty]
         private ObservableCollection<HsgEntryViewModel> _hsgEntries = new();
@@ -28,9 +28,12 @@ namespace EFH2
             get
             {
                 double total = 0;
-                foreach (RcnCategory category in RcnCategories)
+                foreach (RcnMainCategory category in RcnCategories)
                 {
-                    if (!(double.IsNaN(category.AccumulatedArea))) total += category.AccumulatedArea;
+                    foreach (RcnSubcategory subcategory in category.RcnSubcategories)
+                    {
+						if (!(double.IsNaN(subcategory.AccumulatedArea))) total += subcategory.AccumulatedArea;
+                    }
                 }
                 return total;
             }
@@ -41,9 +44,12 @@ namespace EFH2
             get
             {
                 double total = 0;
-                foreach (RcnCategory category in RcnCategories)
+                foreach (RcnMainCategory category in RcnCategories)
                 {
-                    if (!(double.IsNaN(category.AccumulatedArea))) total += category.AccumulatedWeightedArea;
+                    foreach (RcnSubcategory subcategory in category.RcnSubcategories)
+                    {
+                        if (!(double.IsNaN(subcategory.AccumulatedArea))) total += subcategory.AccumulatedWeightedArea;
+                    }
                 }
 
                 //if (AccumulatedArea.Equals(double.NaN) || AccumulatedArea.Equals(0)) return double.NaN;
@@ -66,34 +72,36 @@ namespace EFH2
         {
             RcnDataModel model = new RcnDataModel();
 
-            foreach (RcnCategory category in RcnCategories)
+            foreach (RcnMainCategory category in RcnCategories)
             {
-                foreach (RcnRow row in category.Rows)
+                foreach (RcnSubcategory subcategory in category.RcnSubcategories)
                 {
-                    model.GroupA.Entries.Add(new RcnEntryModel()
+                    foreach (RcnRow row in subcategory.Rows)
                     {
-                        Area = row.Entries[0].Area,
-                        Weight = row.Entries[0].Weight,
-                    });
+                        model.GroupA.Entries.Add(new RcnEntryModel()
+                        {
+                            Area = row.Entries[0].Area,
+                            Weight = row.Entries[0].Weight,
+                        });
 
-                    model.GroupB.Entries.Add(new RcnEntryModel()
-                    {
-                        Area = row.Entries[1].Area,
-                        Weight = row.Entries[1].Weight,
-                    });
-                    
-                    model.GroupC.Entries.Add(new RcnEntryModel()
-                    {
-                        Area = row.Entries[2].Area,
-                        Weight = row.Entries[2].Weight,
-                    });
+                        model.GroupB.Entries.Add(new RcnEntryModel()
+                        {
+                            Area = row.Entries[1].Area,
+                            Weight = row.Entries[1].Weight,
+                        });
 
-                    model.GroupD.Entries.Add(new RcnEntryModel()
-                    {
-                        Area = row.Entries[3].Area,
-                        Weight = row.Entries[3].Weight,
-                    });
+                        model.GroupC.Entries.Add(new RcnEntryModel()
+                        {
+                            Area = row.Entries[2].Area,
+                            Weight = row.Entries[2].Weight,
+                        });
 
+                        model.GroupD.Entries.Add(new RcnEntryModel()
+                        {
+                            Area = row.Entries[3].Area,
+                            Weight = row.Entries[3].Weight,
+                        });
+                    }
                 }
             }
 
@@ -105,17 +113,20 @@ namespace EFH2
             int i = 0;
             if (data == null) return;
 
-            foreach (RcnCategory category in RcnCategories)
+            foreach (RcnMainCategory category in RcnCategories)
             {
-                foreach (RcnRow row in category.Rows)
+                foreach (RcnSubcategory subcategory in category.RcnSubcategories)
                 {
-                    if (data.GroupA.Entries.Count > i)
+                    foreach (RcnRow row in subcategory.Rows)
                     {
-                        row.Entries[0].Area = data.GroupA.Entries[i].Area;
-                        row.Entries[1].Area = data.GroupB.Entries[i].Area;
-                        row.Entries[2].Area = data.GroupC.Entries[i].Area;
-                        row.Entries[3].Area = data.GroupD.Entries[i].Area;
-                        i++;
+                        if (data.GroupA.Entries.Count > i)
+                        {
+                            row.Entries[0].Area = data.GroupA.Entries[i].Area;
+                            row.Entries[1].Area = data.GroupB.Entries[i].Area;
+                            row.Entries[2].Area = data.GroupC.Entries[i].Area;
+                            row.Entries[3].Area = data.GroupD.Entries[i].Area;
+                            i++;
+                        }
                     }
                 }
             }
@@ -125,20 +136,23 @@ namespace EFH2
 
         public void Default()
         {
-            foreach (RcnCategory category in RcnCategories) category.Default();
+            foreach (RcnMainCategory category in RcnCategories) category.Default();
         }
 
         public void ConvertToPercentageFromAcres(double accumulatedArea)
         {
-            foreach (RcnCategory category in RcnCategories)
+            foreach (RcnMainCategory category in RcnCategories)
             {
-                foreach (RcnRow row in category.Rows)
+                foreach (RcnSubcategory subcategory in category.RcnSubcategories)
                 {
-                    foreach (WeightAreaPair values in row.Entries)
+                    foreach (RcnRow row in subcategory.Rows)
                     {
-                        if (!double.IsNaN(values.Area))
+                        foreach (WeightAreaPair values in row.Entries)
                         {
-                            values.Area = (values.Area / accumulatedArea) * 100;
+                            if (!double.IsNaN(values.Area))
+                            {
+                                values.Area = (values.Area / accumulatedArea) * 100;
+                            }
                         }
                     }
                 }
@@ -147,15 +161,18 @@ namespace EFH2
 
         public void ConvertToAcresFromPercentage(double accumulatedArea)
         {
-            foreach (RcnCategory category in RcnCategories)
+            foreach (RcnMainCategory category in RcnCategories)
             {
-                foreach (RcnRow row in category.Rows)
+                foreach (RcnSubcategory subcategory in category.RcnSubcategories)
                 {
-                    foreach (WeightAreaPair values in row.Entries)
+                    foreach (RcnRow row in subcategory.Rows)
                     {
-                        if (!double.IsNaN(values.Area))
+                        foreach (WeightAreaPair values in row.Entries)
                         {
-                            values.Area = (values.Area * accumulatedArea) / 100;
+                            if (!double.IsNaN(values.Area))
+                            {
+                                values.Area = (values.Area * accumulatedArea) / 100;
+                            }
                         }
                     }
                 }

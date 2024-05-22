@@ -131,26 +131,36 @@ namespace EFH2
 
 		private static void LoadRcnData(RcnDataViewModel model)
 		{
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover.txt"))
+			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover2.txt"))
 			{
 				//var _ = reader.ReadLine();
 
-				RcnCategory currentCategory = new();
-				List<RcnCategory> categories = new();
+				List<RcnMainCategory> mainCategories = new();
+
+				RcnMainCategory currentMainCategory = null;
+				RcnSubcategory currentCategory = new();
+				List<RcnSubcategory> categories = new();
 
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine();
 					string[] splitLine = line.Split('\t');
 
-					if (splitLine[0] == "") // start a new category if there aren't any input fields on a row
+
+					if (splitLine[0].Contains('*')) // start new main category
 					{
-						categories.Add(currentCategory);
+						if (currentMainCategory != null) mainCategories.Add(currentMainCategory);
+						currentMainCategory = new();
+						currentMainCategory.Label = splitLine[1].Replace('"', (char)0);
+					}
+					else if (splitLine[1] != "") // start a new subcategory if there is a label 
+					{
+						if (currentCategory != null) currentMainCategory.RcnSubcategories.Add(currentCategory);
 
 						currentCategory = new();
 						currentCategory.Label = splitLine[1].Replace('"', (char)0);
 					}
-					else // add to the current category as long as there are input fields
+					if (!splitLine[0].Contains('*')) // add to the current category as long as there are input fields
 					{
 						RcnRow row = new();
 						row.Text[0] = splitLine[1];
@@ -168,19 +178,21 @@ namespace EFH2
 					}
 				}
 
-				categories.Add(currentCategory);
-				categories.RemoveAt(0);
+				mainCategories.Add(currentMainCategory);
 
-				model.RcnCategories = categories;
+				model.RcnCategories = mainCategories;
 
-				foreach (RcnCategory category in model.RcnCategories)
+				foreach (RcnMainCategory category in model.RcnCategories)
 				{
-					foreach (RcnRow row in category.Rows)
+					foreach (RcnSubcategory subcategory in category.RcnSubcategories)
 					{
-						row.Entries[0].PropertyChanged += model.EntryChanged;
-						row.Entries[1].PropertyChanged += model.EntryChanged;
-						row.Entries[2].PropertyChanged += model.EntryChanged;
-						row.Entries[3].PropertyChanged += model.EntryChanged;
+						foreach (RcnRow row in subcategory.Rows)
+						{
+							row.Entries[0].PropertyChanged += model.EntryChanged;
+							row.Entries[1].PropertyChanged += model.EntryChanged;
+							row.Entries[2].PropertyChanged += model.EntryChanged;
+							row.Entries[3].PropertyChanged += model.EntryChanged;
+						}
 					}
 				}
 			}
