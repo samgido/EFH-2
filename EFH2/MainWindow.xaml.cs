@@ -295,17 +295,17 @@ namespace EFH2
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-            Page2 page = new Page2() { DataContext = new PrintedPageViewModel(MainViewModel) };
-            Window newWindow = new Window();
-            newWindow.Content = page;
-            newWindow.Title = "Preview";
-            newWindow.Activate();
+            //Page2 page = new Page2() { DataContext = new PrintedPageViewModel(MainViewModel) };
+            //Window newWindow = new Window();
+            //newWindow.Content = page;
+            //newWindow.Title = "Preview";
+            //newWindow.Activate();
 
-            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            //IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+            //var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            //var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
-            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 1200, Width = 1000 });
+            //appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 1200, Width = 1000 });
 
 			//if (PrintManager.IsSupported())
 			//{
@@ -344,20 +344,20 @@ namespace EFH2
 
 		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
 		{
-            PrintedPageViewModel model = new PrintedPageViewModel(MainViewModel);
-            Page1Wrapper page1 = new Page1Wrapper() { DataContext = model };
-            Page2Wrapper page2 = new Page2Wrapper() { DataContext = model };
-            _printDocument.AddPage(page1);
-            _printDocument.AddPage(page2);
+            //PrintedPageViewModel model = new PrintedPageViewModel(MainViewModel);
+            //Page1Wrapper page1 = new Page1Wrapper() { DataContext = model };
+            //Page2Wrapper page2 = new Page2Wrapper() { DataContext = model };
+            //_printDocument.AddPage(page1);
+            //_printDocument.AddPage(page2);
 
-            _printDocument.AddPagesComplete();
+            //_printDocument.AddPagesComplete();
 		}
 
 		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
             //TODO: Add control to print as second parameter
-            Page1Wrapper page = new Page1Wrapper() { DataContext = new PrintedPageViewModel(MainViewModel) };
-            _printDocument.SetPreviewPage(e.PageNumber, page);
+            //Page1Wrapper page = new Page1Wrapper() { DataContext = new PrintedPageViewModel(MainViewModel) };
+            //_printDocument.SetPreviewPage(e.PageNumber, page);
         }
 
         private void _printDocument_Paginate(object sender, PaginateEventArgs e)
