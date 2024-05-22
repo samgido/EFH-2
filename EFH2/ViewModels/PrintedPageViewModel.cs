@@ -15,7 +15,7 @@ namespace EFH2
 		private ObservableCollection<StormVMWrapper> _storms = new ObservableCollection<StormVMWrapper>();
 
 		[ObservableProperty]
-		private ObservableCollection<RcnCategory> _categories = new ObservableCollection<RcnCategory>();
+		private ObservableCollection<PrintableRcnCategory> _categories = new ObservableCollection<PrintableRcnCategory>();
 
 		[ObservableProperty]
 		private MainViewModel _mainViewModel;
@@ -30,8 +30,8 @@ namespace EFH2
 				//if ((!double.IsNaN(basicData.DrainageArea) && !double.IsNaN(basicData.RunoffCurveNumber) &&
 				//	!double.IsNaN(rcnData.WeightedCurveNumber) && !double.IsNaN(rcnData.AccumulatedArea)) ||
 				//	(basicData.DrainageArea.Equals(rcnData.AccumulatedArea) && basicData.RunoffCurveNumber.Equals(rcnData.WeightedCurveNumber)))
-				if ((basicData.DrainageArea.Equals(rcnData.AccumulatedArea) && basicData.RunoffCurveNumber.Equals(rcnData.WeightedCurveNumber)) || 
-					(!double.IsNaN(basicData.DrainageArea) && !double.IsNaN(basicData.RunoffCurveNumber) && rcnData.AccumulatedArea.Equals(0) && rcnData.WeightedCurveNumber.Equals(0) ))
+				if ((basicData.DrainageArea.Equals(rcnData.AccumulatedArea) && basicData.RunoffCurveNumber.Equals(rcnData.WeightedCurveNumber)) ||
+					(!double.IsNaN(basicData.DrainageArea) && !double.IsNaN(basicData.RunoffCurveNumber) && rcnData.AccumulatedArea.Equals(0) && rcnData.WeightedCurveNumber.Equals(0)))
 				{
 					return Visibility.Collapsed;
 				}
@@ -41,7 +41,7 @@ namespace EFH2
 
 		public PrintedPageViewModel(MainViewModel model)
 		{
-			MainViewModel = model;	
+			MainViewModel = model;
 
 			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 			{
@@ -53,22 +53,20 @@ namespace EFH2
 			{
 				foreach (RcnRow row in category.Rows)
 				{
-					if (!double.IsNaN(row.AccumulatedArea))
+					if (!row.AccumulatedArea.Equals(0))
 					{
 						if (!list.Contains(category)) list.Add(category);
 					}
 				}
 			}
 
-			_categories = new ObservableCollection<RcnCategory>();
+			_categories = new ObservableCollection<PrintableRcnCategory>();
 			foreach (RcnCategory filledCategory in list)
 			{
-				RcnCategory newCat = new RcnCategory();
-				newCat.Label = filledCategory.Label;
-				newCat.Rows = new List<RcnRow>();
+				PrintableRcnCategory newCat = new PrintableRcnCategory(filledCategory.Label);
 				foreach (RcnRow row in filledCategory.Rows)
 				{
-					if (!double.IsNaN(row.AccumulatedArea)) newCat.Rows.Add(row);
+					if (!row.AccumulatedArea.Equals(0)) newCat.Rows.Add(new RcnRowWrapper(row));
 				}
 				_categories.Add(newCat);
 			}
@@ -80,11 +78,62 @@ namespace EFH2
 			public StormViewModel BaseStorm { get; private set; }
 			public double RunoffInAcreFeet => (_drainageArea * BaseStorm.Runoff) / 12;
 
-
 			public StormVMWrapper(double drainageArea, StormViewModel storm)
 			{
 				_drainageArea = drainageArea;
 				BaseStorm = storm;
+			}
+		}
+
+		public class PrintableRcnCategory
+		{
+			public string Label { get; private set; }
+			public List<RcnRowWrapper> Rows { get; set; } = new List<RcnRowWrapper>();
+
+			public PrintableRcnCategory(string label)
+			{
+				Label = label;
+			}
+		}
+
+		public class RcnRowWrapper
+		{
+			public RcnRow BaseRow { get; private set; }
+			public RowEntrySummary EntryA { get; private set; }
+			public RowEntrySummary EntryB { get; private set; }
+			public RowEntrySummary EntryC { get; private set; }
+			public RowEntrySummary EntryD { get; private set; }
+
+			public RcnRowWrapper(RcnRow row)
+			{
+				BaseRow = row;
+				EntryA = new RowEntrySummary(row.Entries[0]);
+				EntryB = new RowEntrySummary(row.Entries[1]);
+				EntryC = new RowEntrySummary(row.Entries[2]);
+				EntryD = new RowEntrySummary(row.Entries[3]);
+			}
+		}
+
+		public class RowEntrySummary
+		{
+			private double _area;
+			private double _weight;
+
+			public string Summary
+			{
+				get
+				{
+					if (double.IsNaN(_area))
+						return "-";
+					else
+						return _area + "(" + _weight + ")";
+				}
+			}
+
+			public RowEntrySummary(WeightAreaPair pair)
+			{
+				_area = pair.Area;
+				_weight = pair.Weight;
 			}
 		}
 	}
