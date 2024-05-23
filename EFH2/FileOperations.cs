@@ -133,68 +133,54 @@ namespace EFH2
 		{
 			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover2.txt"))
 			{
-				//var _ = reader.ReadLine();
-
-				List<RcnMainCategory> mainCategories = new();
-
-				RcnMainCategory currentMainCategory = null;
-				RcnSubcategory currentCategory = new();
-				List<RcnSubcategory> categories = new();
+				List<RcnCategory> topCategories = new List<RcnCategory>();
+				RcnCategory topCategory = null;
+				List<RcnRow> currentRowList = null;
 
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine();
-					string[] splitLine = line.Split('\t');
+					string[] elements = line.Split('\t');
 
-
-					if (splitLine[0].Contains('*')) // start new main category
+					if (elements[0].Contains('*')) // New 
 					{
-						if (currentMainCategory != null) mainCategories.Add(currentMainCategory);
-						currentMainCategory = new();
-						currentMainCategory.Label = splitLine[1].Replace('"', (char)0);
+						if (topCategory != null) topCategories.Add(topCategory);
+						topCategory = new RcnCategory();
+						topCategory.Label = elements[1].Trim('"');
+						currentRowList = topCategory.Rows;
 					}
-					else if (splitLine[1] != "") // start a new subcategory if there is a label 
+					else if (elements[1] != string.Empty)
 					{
-						if (currentCategory != null) currentMainCategory.RcnSubcategories.Add(currentCategory);
-
-						currentCategory = new();
-						currentCategory.Label = splitLine[1].Replace('"', (char)0);
-					}
-					if (!splitLine[0].Contains('*')) // add to the current category as long as there are input fields
-					{
-						RcnRow row = new();
-						row.Text[0] = splitLine[1];
-						row.Text[1] = splitLine[2];
-						row.Text[2] = splitLine[3];
-
-						if (splitLine[5] == "**") row.Entries[0] = new WeightAreaPair() { Weight = -1 };
-						else row.Entries[0] = new WeightAreaPair() { Weight = int.Parse(splitLine[5].Trim()) };
-
-						row.Entries[1] = new WeightAreaPair() { Weight = int.Parse(splitLine[7].Trim()) };
-						row.Entries[2] = new WeightAreaPair() { Weight = int.Parse(splitLine[9].Trim()) };
-						row.Entries[3] = new WeightAreaPair() { Weight = int.Parse(splitLine[11].Trim()) };
-
-						currentCategory.Rows.Add(row);
-					}
-				}
-
-				mainCategories.Add(currentMainCategory);
-
-				model.RcnCategories = mainCategories;
-
-				foreach (RcnMainCategory category in model.RcnCategories)
-				{
-					foreach (RcnSubcategory subcategory in category.RcnSubcategories)
-					{
-						foreach (RcnRow row in subcategory.Rows)
+						RcnCategory newSubCategory = new RcnCategory()
 						{
-							row.Entries[0].PropertyChanged += model.EntryChanged;
-							row.Entries[1].PropertyChanged += model.EntryChanged;
-							row.Entries[2].PropertyChanged += model.EntryChanged;
-							row.Entries[3].PropertyChanged += model.EntryChanged;
-						}
+							Label = elements[1].Trim('"'),
+							Extra = elements[3]
+						};
+						currentRowList = newSubCategory.Rows;
+						topCategory.RcnSubcategories.Add(newSubCategory);
+					}
+					else if (elements[5] != string.Empty)
+					{
+						RcnRow newRow = new RcnRow();
+						newRow.Text = elements[2];
+
+						int.TryParse(elements[5], out int weight1);
+						newRow.Entries[0].Weight = weight1;
+
+						int.TryParse(elements[7], out int weight2);
+						newRow.Entries[1].Weight = weight2;
+
+						int.TryParse(elements[9], out int weight3);
+						newRow.Entries[0].Weight = weight3;
+
+						int.TryParse(elements[11], out int weight4);
+						newRow.Entries[3].Weight = weight4;
+
+						currentRowList.Add(newRow);
 					}
 				}
+				topCategories.Add(topCategory);
+				model.RcnCategories = topCategories;
 			}
 
 			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))

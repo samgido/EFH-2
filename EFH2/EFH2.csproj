@@ -21,7 +21,9 @@
     <None Remove="Controls\Page1.xaml" />
     <None Remove="Controls\Page2.xaml" />
     <None Remove="Controls\RainfallDischargeDataControl.xaml" />
+    <None Remove="Controls\RcnCategoryControl.xaml" />
     <None Remove="Controls\RCNDataControl.xaml" />
+    <None Remove="Controls\RcnRowsControl.xaml" />
     <None Remove="Pages\HsgPage.xaml" />
     <None Remove="Pages\Page1Wrapper.xaml" />
     <None Remove="Pages\Page2Wrapper.xaml" />
@@ -59,6 +61,16 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\RcnCategoryControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\RcnRowsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\Page2Wrapper.xaml">

@@ -11,7 +11,7 @@ namespace EFH2
     public partial class RcnRow : ObservableObject
     {
         [ObservableProperty]
-        private string[] _text = { "", "", "", "" };
+        private string _text = "";
 
         [ObservableProperty]
         private WeightAreaPair[] _entries = { new WeightAreaPair(), new WeightAreaPair(), new WeightAreaPair(), new WeightAreaPair() };

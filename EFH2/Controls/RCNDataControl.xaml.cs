@@ -25,11 +25,50 @@ namespace EFH2
 
         public event EventHandler<RoutedEventArgs>? UnitsChanged;
 
+        public RcnDataViewModel ViewModel
+        {
+            get
+            {
+                if (DataContext is RcnDataViewModel model) return model;
+                else return null; 
+            }
+        }
+
         public RcnDataControl()
         {
             this.InitializeComponent();
         }
 
+        private void CreateCategoryItemsView()
+        {
+            ItemsView primaryItemsView = new ItemsView();
+
+            Grid grid = new Grid();
+            grid.ColumnDefinitions.Add(CreateColumn(8));
+            grid.ColumnDefinitions.Add(CreateColumn(8));
+            grid.ColumnDefinitions.Add(CreateColumn(4));
+            grid.ColumnDefinitions.Add(CreateColumn(3));
+            grid.ColumnDefinitions.Add(CreateColumn(1));
+            grid.ColumnDefinitions.Add(CreateColumn(3));
+            grid.ColumnDefinitions.Add(CreateColumn(1));
+            grid.ColumnDefinitions.Add(CreateColumn(3));
+            grid.ColumnDefinitions.Add(CreateColumn(1));
+            grid.ColumnDefinitions.Add(CreateColumn(3));
+            grid.ColumnDefinitions.Add(CreateColumn(1));
+
+            TextBlock label = new TextBlock();
+            Grid.SetColumn(label, 0);
+            Grid.SetColumnSpan(label, 11);
+
+
+            grid.Children.Add(label);
+        }
+
+        private ColumnDefinition CreateColumn(int weight)
+        {
+            return new ColumnDefinition() { Width = new GridLength(weight , GridUnitType.Star) };
+        }
+        
         public async void CreatePopup(MainViewModel model)
         {
             RcnDataConversionPage page = new RcnDataConversionPage();
@@ -76,11 +115,11 @@ namespace EFH2
 			else if (sender as RadioButton == OtherAgRadioButton) { index = 10; }
 			else if (sender as RadioButton == AridRangelandRadioButton) { index = 11; }
 
-            if (index < CategoriesListView.Items.Count && DataContext is RcnDataViewModel model)
-            {
-				var targetItem = model.RcnCategories[index];
-				CategoriesListView.ScrollIntoView(targetItem);
-            }
+    //        if (index < CategoriesListView.Items.Count && DataContext is RcnDataViewModel model)
+    //        {
+				//var targetItem = model.RcnCategories[index];
+				//CategoriesListView.ScrollIntoView(targetItem);
+    //        }
         }
     }
 }

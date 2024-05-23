@@ -63,43 +63,47 @@ namespace EFH2
 				Storms.Add(new StormVMWrapper(MainViewModel.BasicDataViewModel.DrainageArea, storm));
 			}
 
-			List<RcnSubcategory> list = new List<RcnSubcategory>();
-			foreach (RcnMainCategory category in model.RcnDataViewModel.RcnCategories)
+			List<RcnCategory> list = new List<RcnCategory>();
+			foreach (RcnCategory category in model.RcnDataViewModel.RcnCategories)
 			{
-				foreach (RcnSubcategory subcategory in category.RcnSubcategories)
+				foreach (RcnRow row in category.AllRows)
 				{
-					foreach (RcnRow row in subcategory.Rows)
+					if (!row.AccumulatedArea.Equals(0))
 					{
-						if (!row.AccumulatedArea.Equals(0))
-						{
-							if (!list.Contains(subcategory)) list.Add(subcategory);
-						}
+						if (!list.Contains(category)) list.Add(category);
 					}
 				}
 			}
 
 			_categories = new ObservableCollection<PrintableRcnCategory>();
-			foreach (RcnSubcategory filledCategory in list)
+			foreach (RcnCategory filledCategory in list)
 			{
 				PrintableRcnCategory newCat = new PrintableRcnCategory(filledCategory.Label.Trim());
 				foreach (RcnRow row in filledCategory.Rows)
 				{
 					if (!row.AccumulatedArea.Equals(0)) newCat.Rows.Add(new RcnRowWrapper(row));
 				}
+
+				foreach (RcnCategory category in filledCategory.RcnSubcategories)
+				{
+					PrintableRcnCategory newSubCat = new PrintableRcnCategory(category.Label.Trim());
+					foreach (RcnRow row in filledCategory.Rows)
+					{
+						if (!row.AccumulatedArea.Equals(0)) newSubCat.Rows.Add(new RcnRowWrapper(row));
+					}
+					newCat.Subcategories.Add(newSubCat);
+				}
 				_categories.Add(newCat);
 			}
 
-			foreach (RcnMainCategory category in model.RcnDataViewModel.RcnCategories)
+			foreach (RcnCategory category in model.RcnDataViewModel.RcnCategories)
 			{
-				foreach (RcnSubcategory subcategory in category.RcnSubcategories)
+				foreach (RcnRow row in category.AllRows)
 				{
-					foreach (RcnRow row in subcategory.Rows)
-					{
-						if (!double.IsNaN(row.Entries[0].Area)) _groupAAccumulatedArea += row.Entries[0].Area;
-						if (!double.IsNaN(row.Entries[1].Area)) _groupBAccumulatedArea += row.Entries[1].Area;
-						if (!double.IsNaN(row.Entries[2].Area)) _groupCAccumulatedArea += row.Entries[2].Area;
-						if (!double.IsNaN(row.Entries[3].Area)) _groupDAccumulatedArea += row.Entries[3].Area;
-					}
+					if (!double.IsNaN(row.Entries[0].Area)) _groupAAccumulatedArea += row.Entries[0].Area;
+					if (!double.IsNaN(row.Entries[1].Area)) _groupBAccumulatedArea += row.Entries[1].Area;
+					if (!double.IsNaN(row.Entries[2].Area)) _groupCAccumulatedArea += row.Entries[2].Area;
+					if (!double.IsNaN(row.Entries[3].Area)) _groupDAccumulatedArea += row.Entries[3].Area;
 				}
 			}
 		}
@@ -121,6 +125,8 @@ namespace EFH2
 		{
 			public string Label { get; private set; }
 			public List<RcnRowWrapper> Rows { get; set; } = new List<RcnRowWrapper>();
+
+			public List<PrintableRcnCategory> Subcategories { get; set; } = new List<PrintableRcnCategory>();
 
 			public PrintableRcnCategory(string label)
 			{

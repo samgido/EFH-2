@@ -7,14 +7,29 @@ using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public partial class RcnMainCategory : ObservableObject
+    public partial class RcnCategory : ObservableObject
     {
         [ObservableProperty]
         private string _label = "";
 
         [ObservableProperty]
-        private List<RcnSubcategory> _rcnSubcategories = new List<RcnSubcategory>();
+        private string _extra = "";
 
-        public void Default() => RcnSubcategories.ForEach(cat => cat.Default());
+        [ObservableProperty]
+        private List<RcnCategory> _rcnSubcategories = new List<RcnCategory>();
+
+        [ObservableProperty]
+        private List<RcnRow> _rows = new List<RcnRow>();
+
+        public IEnumerable<RcnRow> AllRows
+        {
+            get
+            {
+                List<RcnRow> rows = new List<RcnRow>();
+                foreach (RcnRow row in Rows) rows.Add(row);
+                foreach (RcnCategory category in RcnSubcategories) rows.Concat(category.AllRows);
+                return rows;
+            }
+        }
     }
 }

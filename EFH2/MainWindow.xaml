@@ -13,7 +13,7 @@
 
         <local:Page2 x:Name="Page2Control" Foreground="Black" Visibility="Visible"/>
 
-        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible">
+        <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
@@ -128,7 +128,8 @@
             </NavigationView>
 
             <Grid RelativePanel.Below="Navigation" HorizontalAlignment="Stretch"
-                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.AlignBottomWithPanel="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
