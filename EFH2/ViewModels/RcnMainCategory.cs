@@ -27,8 +27,31 @@ namespace EFH2
             {
                 List<RcnRow> rows = new List<RcnRow>();
                 foreach (RcnRow row in Rows) rows.Add(row);
-                foreach (RcnCategory category in RcnSubcategories) rows.Concat(category.AllRows);
+                foreach (RcnCategory category in RcnSubcategories)
+                {
+                    foreach (var row in category.AllRows) rows.Add(row);
+                }
                 return rows;
+            }
+        }
+
+        public double AccumulatedArea
+        {
+            get
+            {
+                double total = 0;
+                foreach (RcnRow row in AllRows) if (double.IsNormal(row.AccumulatedArea)) total += row.AccumulatedArea;
+                return total;
+            }
+        }
+
+        public double AccumulatedWeightedArea
+        {
+            get
+            {
+                double total = 0;
+                foreach (RcnRow row in AllRows) if (double.IsNormal(row.AccumulatedArea)) total += row.AccumulatedWeightedArea;
+                return total;
             }
         }
     }

@@ -122,22 +122,17 @@
             <TextBlock Grid.Row="2" Grid.Column="4">D</TextBlock>
         </Grid>
 
-        <ItemsView ItemsSource="{x:Bind Path=ViewModel.Categories}" Margin="20,0,20,0" BorderBrush="Black" BorderThickness="1" CornerRadius="0">
+        <ItemsView ItemsSource="{Binding Path=Categories}" Margin="20,0,20,0">
             <ItemsView.ItemTemplate>
                 <DataTemplate>
                     <ItemContainer>
-                        <Grid Margin="0" ColumnSpacing="0">
+                        <Grid Margin="0">
                             <Grid.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="BorderBrush" Value="Black"/>
-                                    <Setter Property="BorderThickness" Value="1,0,1,0"/>
-                                </Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
                                 </Style>
                             </Grid.Resources>
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="4*"/>
                                 <ColumnDefinition/>
@@ -145,59 +140,34 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-
                             <Grid.RowDefinitions>
+                                <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Column="0" BorderThickness="0,0,1,0"/>
-                            <Border Grid.Column="1"/>
-                            <Border Grid.Column="2"/>
-                            <Border Grid.Column="3"/>
-                            <Border Grid.Column="4" BorderThickness="1,0,0,0"/>
+                            <Border Grid.ColumnSpan="5" Grid.RowSpan="3" CornerRadius="0"/>
 
-                            <TextBlock Text="{Binding Path=Label}" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                            <TextBlock Text="{Binding Path=Label}" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0"/>
 
-                            <ItemsView ItemsSource="{Binding Path=Rows}" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1">
+                            <ItemsView ItemsSource="{Binding Path=Rows}" Grid.ColumnSpan="5" Grid.Row="1">
                                 <ItemsView.ItemTemplate>
                                     <DataTemplate>
                                         <ItemContainer>
-                                            <Grid Margin="0" ColumnSpacing="0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="4*"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-
-                                                <Border BorderThickness="0,0,1,0"/>
-                                                <Border Grid.Column="1"/>
-                                                <Border Grid.Column="2"/>
-                                                <Border Grid.Column="3"/>
-                                                <Border Grid.Column="4" BorderThickness="1,0,0,0"/>
-
-                                                <!--<StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,3,0,3">
-                                                    <TextBlock Text="{Binding Path=BaseRow.Text[0]}"/>
-                                                    <TextBlock Text="{Binding Path=BaseRow.Text[1]}"/>
-                                                    <TextBlock Text="{Binding Path=BaseRow.Text[2]}"/>
-                                                </StackPanel>-->
-
-                                                <RelativePanel>
-                                                    <TextBlock Text="{Binding Path=BaseRow.Text[0]}" RelativePanel.AlignLeftWithPanel="True" Margin="3,0,0,0"/>
-                                                    <TextBlock Text="{Binding Path=BaseRow.Text[1]}" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-                                                    <TextBlock Text="{Binding Path=BaseRow.Text[2]}" RelativePanel.AlignRightWithPanel="True" Margin="0,0,3,0"/>
-                                                </RelativePanel>
-
-                                                <TextBlock Text="{Binding Path=EntryA.Summary}" Grid.Column="1" Margin="0,2,0,2"/>
-                                                <TextBlock Text="{Binding Path=EntryB.Summary}" Grid.Column="2"/>
-                                                <TextBlock Text="{Binding Path=EntryC.Summary}" Grid.Column="3"/>
-                                                <TextBlock Text="{Binding Path=EntryD.Summary}" Grid.Column="4"/>
-                                            </Grid>
+                                            <local:PrintableRcnRowControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
                                         </ItemContainer>
                                     </DataTemplate>
-                                </ItemsView.ItemTemplate> 
+                                </ItemsView.ItemTemplate>        
+                            </ItemsView>
+
+                            <ItemsView ItemsSource="{Binding Path=Subcategories}" Grid.ColumnSpan="5" Grid.Row="1">
+                                <ItemsView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ItemContainer>
+                                            <local:PrintableRcnCategoryControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
+                                        </ItemContainer>
+                                    </DataTemplate>
+                                </ItemsView.ItemTemplate>        
                             </ItemsView>
 
                         </Grid>

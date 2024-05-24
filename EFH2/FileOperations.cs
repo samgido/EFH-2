@@ -164,8 +164,15 @@ namespace EFH2
 						RcnRow newRow = new RcnRow();
 						newRow.Text = elements[2];
 
-						int.TryParse(elements[5], out int weight1);
-						newRow.Entries[0].Weight = weight1;
+						//int.TryParse(elements[5], out int weight1);
+						//newRow.Entries[0].Weight = weight1;
+
+						if (elements[5] == "**") newRow.Entries[0].Weight = -1;
+						else
+						{
+							int.TryParse(elements[5], out int weight1);
+							newRow.Entries[0].Weight = weight1;
+						}
 
 						int.TryParse(elements[7], out int weight2);
 						newRow.Entries[1].Weight = weight2;
@@ -181,6 +188,17 @@ namespace EFH2
 				}
 				topCategories.Add(topCategory);
 				model.RcnCategories = topCategories;
+
+				foreach (RcnCategory category in model.RcnCategories)
+				{
+					foreach (RcnRow row in category.AllRows)
+					{
+                        foreach (var entry in row.Entries)
+                        {
+							entry.PropertyChanged += model.EntryChanged; 
+                        }
+                    }
+				}
 			}
 
 			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))

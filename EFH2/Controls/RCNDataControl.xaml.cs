@@ -110,16 +110,16 @@ namespace EFH2
 		private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             int index = 0;
-			if (sender as RadioButton == DevUrbanAreaRadioButton) { index = 8; }
-			else if (sender as RadioButton == CultivatedAgRadioButton) { index = 9; }
-			else if (sender as RadioButton == OtherAgRadioButton) { index = 10; }
-			else if (sender as RadioButton == AridRangelandRadioButton) { index = 11; }
+			if (sender as RadioButton == DevUrbanAreaRadioButton) { index = 5; }
+			else if (sender as RadioButton == CultivatedAgRadioButton) { index = 5; }
+			else if (sender as RadioButton == OtherAgRadioButton) { index = 7; }
+			else if (sender as RadioButton == AridRangelandRadioButton) { index = 8; }
 
-    //        if (index < CategoriesListView.Items.Count && DataContext is RcnDataViewModel model)
-    //        {
-				//var targetItem = model.RcnCategories[index];
-				//CategoriesListView.ScrollIntoView(targetItem);
-    //        }
+            if (index < CategoriesItemsView.Items.Count && DataContext is RcnDataViewModel model)
+            {
+                var targetItem = model.RcnCategories[index];
+                CategoriesItemsView.ScrollIntoView(targetItem);
+            }
         }
     }
 }

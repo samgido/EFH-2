@@ -46,16 +46,13 @@ namespace EFH2
                 double total = 0;
                 foreach (RcnCategory category in RcnCategories)
                 {
-                    foreach (RcnRow row in category.AllRows)
-                    {
-						if (!(double.IsNaN(row.AccumulatedArea))) total += row.AccumulatedArea;
-                    }
+					if (!(double.IsNaN(category.AccumulatedArea))) total += category.AccumulatedWeightedArea;
                 }
 
                 //if (AccumulatedArea.Equals(double.NaN) || AccumulatedArea.Equals(0)) return double.NaN;
                 //else return total / AccumulatedArea;
 
-                if (AccumulatedArea > 0) return total / AccumulatedArea;
+                if (AccumulatedArea > 0) return Math.Round(total / AccumulatedArea);
                 else return 0;
             }
         }

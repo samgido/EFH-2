@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFH2.Converters
+namespace EFH2
 {
     public class RCNConverter : IValueConverter
     {

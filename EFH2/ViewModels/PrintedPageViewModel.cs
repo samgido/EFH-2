@@ -76,25 +76,53 @@ namespace EFH2
 			}
 
 			_categories = new ObservableCollection<PrintableRcnCategory>();
-			foreach (RcnCategory filledCategory in list)
+
+			foreach (RcnCategory validCategory in list)
 			{
-				PrintableRcnCategory newCat = new PrintableRcnCategory(filledCategory.Label.Trim());
-				foreach (RcnRow row in filledCategory.Rows)
+				PrintableRcnCategory newCategory = new PrintableRcnCategory(validCategory.Label);
+
+				foreach (RcnRow row in validCategory.Rows)
 				{
-					if (!row.AccumulatedArea.Equals(0)) newCat.Rows.Add(new RcnRowWrapper(row));
+					if (double.IsNormal(row.AccumulatedArea)) newCategory.Rows.Add(new RcnRowWrapper(row));
 				}
 
-				foreach (RcnCategory category in filledCategory.RcnSubcategories)
+				foreach (RcnCategory subCategory in validCategory.RcnSubcategories)
 				{
-					PrintableRcnCategory newSubCat = new PrintableRcnCategory(category.Label.Trim());
-					foreach (RcnRow row in filledCategory.Rows)
+					if (double.IsNormal(subCategory.AccumulatedArea))
 					{
-						if (!row.AccumulatedArea.Equals(0)) newSubCat.Rows.Add(new RcnRowWrapper(row));
+						PrintableRcnCategory newSubCategory = new PrintableRcnCategory(subCategory.Label);
+
+						foreach (RcnRow row in subCategory.Rows)
+						{
+							if (double.IsNormal(row.AccumulatedArea)) newSubCategory.Rows.Add(new RcnRowWrapper(row));
+						}
+
+						newCategory.Subcategories.Add(newSubCategory);
 					}
-					newCat.Subcategories.Add(newSubCat);
 				}
-				_categories.Add(newCat);
+
+				_categories.Add(newCategory);
 			}
+
+			//foreach (RcnCategory filledCategory in list)
+			//{
+			//	PrintableRcnCategory newCat = new PrintableRcnCategory(filledCategory.Label.Trim());
+			//	foreach (RcnRow row in filledCategory.Rows)
+			//	{
+			//		if (!row.AccumulatedArea.Equals(0)) newCat.Rows.Add(new RcnRowWrapper(row));
+			//	}
+
+			//	foreach (RcnCategory category in filledCategory.RcnSubcategories)
+			//	{
+			//		PrintableRcnCategory newSubCat = new PrintableRcnCategory(category.Label.Trim());
+			//		foreach (RcnRow row in filledCategory.Rows)
+			//		{
+			//			if (!row.AccumulatedArea.Equals(0)) newSubCat.Rows.Add(new RcnRowWrapper(row));
+			//		}
+			//		newCat.Subcategories.Add(newSubCat);
+			//	}
+			//	_categories.Add(newCat);
+			//}
 
 			foreach (RcnCategory category in model.RcnDataViewModel.RcnCategories)
 			{
@@ -107,72 +135,73 @@ namespace EFH2
 				}
 			}
 		}
+	}
 
-		public class StormVMWrapper
+	public class StormVMWrapper
+	{
+		private double _drainageArea;
+		public StormViewModel BaseStorm { get; private set; }
+		public double RunoffInAcreFeet => (_drainageArea * BaseStorm.Runoff) / 12;
+
+		public StormVMWrapper(double drainageArea, StormViewModel storm)
 		{
-			private double _drainageArea;
-			public StormViewModel BaseStorm { get; private set; }
-			public double RunoffInAcreFeet => (_drainageArea * BaseStorm.Runoff) / 12;
+			_drainageArea = drainageArea;
+			BaseStorm = storm;
+		}
+	}
 
-			public StormVMWrapper(double drainageArea, StormViewModel storm)
+	public class PrintableRcnCategory
+	{
+		public string Label { get; private set; }
+		public List<RcnRowWrapper> Rows { get; set; } = new List<RcnRowWrapper>();
+
+		public List<PrintableRcnCategory> Subcategories { get; set; } = new List<PrintableRcnCategory>();
+
+		public PrintableRcnCategory(string label)
+		{
+			Label = label;
+		}
+	}
+
+	public class RcnRowWrapper
+	{
+		public RcnRow BaseRow { get; private set; }
+		public RowEntrySummary EntryA { get; private set; }
+		public RowEntrySummary EntryB { get; private set; }
+		public RowEntrySummary EntryC { get; private set; }
+		public RowEntrySummary EntryD { get; private set; }
+
+		public RcnRowWrapper(RcnRow row)
+		{
+			BaseRow = row;
+			EntryA = new RowEntrySummary(row.Entries[0]);
+			EntryB = new RowEntrySummary(row.Entries[1]);
+			EntryC = new RowEntrySummary(row.Entries[2]);
+			EntryD = new RowEntrySummary(row.Entries[3]);
+		}
+	}
+
+	public class RowEntrySummary
+	{
+		private double _area;
+		private double _weight;
+
+		public string Summary
+		{
+			get
 			{
-				_drainageArea = drainageArea;
-				BaseStorm = storm;
+				if (double.IsNaN(_area))
+					return "-";
+				else
+					return _area + "(" + _weight + ")";
 			}
 		}
 
-		public class PrintableRcnCategory
+		public RowEntrySummary(WeightAreaPair pair)
 		{
-			public string Label { get; private set; }
-			public List<RcnRowWrapper> Rows { get; set; } = new List<RcnRowWrapper>();
-
-			public List<PrintableRcnCategory> Subcategories { get; set; } = new List<PrintableRcnCategory>();
-
-			public PrintableRcnCategory(string label)
-			{
-				Label = label;
-			}
-		}
-
-		public class RcnRowWrapper
-		{
-			public RcnRow BaseRow { get; private set; }
-			public RowEntrySummary EntryA { get; private set; }
-			public RowEntrySummary EntryB { get; private set; }
-			public RowEntrySummary EntryC { get; private set; }
-			public RowEntrySummary EntryD { get; private set; }
-
-			public RcnRowWrapper(RcnRow row)
-			{
-				BaseRow = row;
-				EntryA = new RowEntrySummary(row.Entries[0]);
-				EntryB = new RowEntrySummary(row.Entries[1]);
-				EntryC = new RowEntrySummary(row.Entries[2]);
-				EntryD = new RowEntrySummary(row.Entries[3]);
-			}
-		}
-
-		public class RowEntrySummary
-		{
-			private double _area;
-			private double _weight;
-
-			public string Summary
-			{
-				get
-				{
-					if (double.IsNaN(_area))
-						return "-";
-					else
-						return _area + "(" + _weight + ")";
-				}
-			}
-
-			public RowEntrySummary(WeightAreaPair pair)
-			{
-				_area = pair.Area;
-				_weight = pair.Weight;
-			}
+			_area = pair.Area;
+			_weight = pair.Weight;
 		}
 	}
 }
+

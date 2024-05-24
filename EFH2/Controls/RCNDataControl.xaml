@@ -6,13 +6,12 @@
     xmlns:local="using:EFH2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="using:EFH2.Converters"
     mc:Ignorable="d">
 
     <UserControl.Resources>
         <local:RcnRow x:Key="RCNColumn"/>
         <local:RcnSubcategory x:Key="RCNCategory"/>
-        <converters:RCNConverter x:Key="RCNConverter"/>
+        <local:RCNConverter x:Key="RCNConverter"/>
 
         <Style TargetType="ItemsView">
             <Setter Property="SelectionMode" Value="None"/>
@@ -75,8 +74,82 @@
             <TextBlock Grid.Column="9" Grid.ColumnSpan="2">D</TextBlock>
         </Grid>
 
-        <ItemsView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="CategoriesItemsView"
-                   RelativePanel.Below="ItemsViewLabels" RelativePanel.Above="ConversionSettings">
+        <ListView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="CategoriesItemsView" 
+                  RelativePanel.Below="ItemsViewLabels" RelativePanel.Above="ConversionSettings"
+                  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Padding" Value="0,3,0,3"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Path=Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="11"/>
+
+                        <ListView ItemsSource="{Binding Path=Rows}" SelectionMode="None" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:RcnRowsControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <ListView ItemsSource="{Binding Path=RcnSubcategories}" SelectionMode="None" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="2" ScrollViewer.VerticalScrollMode="Disabled">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:RcnCategoryControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!--<ItemsView ItemsSource="{Binding Path=Rows}" SelectionMode="None" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="1">
+                            <ItemsView.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemContainer>
+                                        <local:RcnRowsControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
+                                    </ItemContainer>
+                                </DataTemplate>
+                            </ItemsView.ItemTemplate>
+                        </ItemsView>
+
+                        <ItemsView ItemsSource="{Binding Path=RcnSubcategories}" SelectionMode="None" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="2">
+                            <ItemsView.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemContainer>
+                                        <local:RcnCategoryControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
+                                    </ItemContainer>
+                                </DataTemplate>
+                            </ItemsView.ItemTemplate>
+                        </ItemsView>-->
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate> 
+        </ListView>
+
+        <!--<ItemsView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="CategoriesItemsView" RelativePanel.Below="ItemsViewLabels" RelativePanel.Above="ConversionSettings">
             <ItemsView.ItemTemplate>
                 <DataTemplate>
                     <ItemContainer>
@@ -133,7 +206,7 @@
                     </ItemContainer>
                 </DataTemplate>
             </ItemsView.ItemTemplate> 
-        </ItemsView>  
+        </ItemsView>-->  
 
         <!--<ItemsView ItemsSource="{Binding Path=RcnCategories}" x:Name="CategoriesItemsView" SelectionMode="None"
                 RelativePanel.Below="CoverDescriptionButtons" RelativePanel.Above="ConversionSettings" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
