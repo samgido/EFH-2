@@ -27,7 +27,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{x:Bind Path=ViewModel.Text}" Grid.Column="1"/>
+        <!--<TextBlock Text="{x:Bind Path=ViewModel.Text}" Grid.Column="1"/>
 
         <TextBlock Text="{x:Bind Path=ViewModel.Entries[0].Weight}" Grid.Column="4"/>
         <TextBlock Text="{x:Bind Path=ViewModel.Entries[1].Weight}" Grid.Column="6"/>
@@ -37,6 +37,18 @@
         <NumberBox Value="{x:Bind Path=ViewModel.Entries[0].Area, Mode=TwoWay}" Grid.Column="3"/>
         <NumberBox Value="{x:Bind Path=ViewModel.Entries[1].Area, Mode=TwoWay}" Grid.Column="5"/>
         <NumberBox Value="{x:Bind Path=ViewModel.Entries[2].Area, Mode=TwoWay}" Grid.Column="7"/>
-        <NumberBox Value="{x:Bind Path=ViewModel.Entries[3].Area, Mode=TwoWay}" Grid.Column="9"/>
+        <NumberBox Value="{x:Bind Path=ViewModel.Entries[3].Area, Mode=TwoWay}" Grid.Column="9"/>-->
+
+        <TextBlock Text="{Binding Path=Text}" Grid.Column="1"/>
+
+        <TextBlock Text="{Binding Path=Entries[0].Weight}" Grid.Column="4"/>
+        <TextBlock Text="{Binding Path=Entries[1].Weight}" Grid.Column="6"/>
+        <TextBlock Text="{Binding Path=Entries[2].Weight}" Grid.Column="8"/>
+        <TextBlock Text="{Binding Path=Entries[3].Weight}" Grid.Column="10"/>
+
+        <NumberBox IsEnabled="{Binding Path=Entries[0].Enabled}" Value="{Binding Path=Entries[0].Area, Mode=TwoWay}" Grid.Column="3"/>
+        <NumberBox Value="{Binding Path=Entries[1].Area, Mode=TwoWay}" Grid.Column="5"/>
+        <NumberBox Value="{Binding Path=Entries[2].Area, Mode=TwoWay}" Grid.Column="7"/>
+        <NumberBox Value="{Binding Path=Entries[3].Area, Mode=TwoWay}" Grid.Column="9"/>
     </Grid>
 </UserControl>

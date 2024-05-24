@@ -22,7 +22,6 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
 using Windows.Graphics.Printing;
-using PdfSharp.Pdf;
 using Microsoft.UI.Xaml.Printing;
 
 // To learn more about WinUI, the WinUI project structure,

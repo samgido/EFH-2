@@ -46,7 +46,7 @@
             <ItemsView.ItemTemplate>
                 <DataTemplate>
                     <ItemContainer>
-                        <local:RcnRowsControl/>
+                        <local:RcnRowsControl DataContext="{Binding RelativeSource={RelativeSource}}" Margin="0,3,0,0"/>
                     </ItemContainer>
                 </DataTemplate>
             </ItemsView.ItemTemplate>

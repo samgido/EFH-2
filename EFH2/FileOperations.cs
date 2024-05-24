@@ -171,7 +171,7 @@ namespace EFH2
 						newRow.Entries[1].Weight = weight2;
 
 						int.TryParse(elements[9], out int weight3);
-						newRow.Entries[0].Weight = weight3;
+						newRow.Entries[2].Weight = weight3;
 
 						int.TryParse(elements[11], out int weight4);
 						newRow.Entries[3].Weight = weight4;

@@ -75,7 +75,7 @@
             <TextBlock Grid.Column="9" Grid.ColumnSpan="2">D</TextBlock>
         </Grid>
 
-        <ItemsView ItemsSource="{x:Bind Path=ViewModel.RcnCategories}" SelectionMode="None" x:Name="CategoriesItemsView"
+        <ItemsView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="CategoriesItemsView"
                    RelativePanel.Below="ItemsViewLabels" RelativePanel.Above="ConversionSettings">
             <ItemsView.ItemTemplate>
                 <DataTemplate>
@@ -113,7 +113,7 @@
                                 <ItemsView.ItemTemplate>
                                     <DataTemplate>
                                         <ItemContainer>
-                                            <local:RcnRowsControl/>
+                                            <local:RcnRowsControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
                                         </ItemContainer>
                                     </DataTemplate>
                                 </ItemsView.ItemTemplate>
@@ -123,7 +123,7 @@
                                 <ItemsView.ItemTemplate>
                                     <DataTemplate>
                                         <ItemContainer>
-                                            <local:RcnCategoryControl/>
+                                            <local:RcnCategoryControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
                                         </ItemContainer>
                                     </DataTemplate>
                                 </ItemsView.ItemTemplate>
