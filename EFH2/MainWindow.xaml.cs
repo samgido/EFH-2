@@ -294,62 +294,70 @@ namespace EFH2
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-            Page2 page = new Page2() { DataContext = new PrintableMainViewModel(MainViewModel) };
-            Window newWindow = new Window();
-            newWindow.Content = page;
-            newWindow.Title = "Preview";
-            newWindow.Activate();
+            //Page2 page = new Page2() { DataContext = new PrintableMainViewModel(MainViewModel) };
 
-            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            //Page1 page = new Page1() { DataContext = new PrintableMainViewModel(MainViewModel) };
+            //Window newWindow = new Window();
+            //newWindow.Content = page;
+            //newWindow.Title = "Preview";
+            //newWindow.Activate();
 
-            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 1200, Width = 1000 });
+            //IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+            //var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            //var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
-			//if (PrintManager.IsSupported())
-			//{
-			//	try
-			//	{
-			//		// Show print UI
-			//		var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-			//		await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
-			//	}
-			//	catch
-			//	{
-			//		// Printing cannot proceed at this time
-			//		ContentDialog noPrintingDialog = new ContentDialog()
-			//		{
-			//			XamlRoot = (sender as Button).XamlRoot,
-			//			Title = "Printing error",
-			//			Content = "\nSorry, printing can' t proceed at this time.",
-			//			PrimaryButtonText = "OK"
-			//		};
-			//		await noPrintingDialog.ShowAsync();
-			//	}
-			//}
-			//else
-			//{
-			//	// Printing is not supported on this device
-			//	ContentDialog noPrintingDialog = new ContentDialog()
-			//	{
-			//		XamlRoot = (sender as Button).XamlRoot,
-			//		Title = "Printing not supported",
-			//		Content = "\nSorry, printing is not supported on this device.",
-			//		PrimaryButtonText = "OK"
-			//	};
-			//	await noPrintingDialog.ShowAsync();
-			//}
-		}
+            //appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 1200, Width = 1000 });
+
+            if (PrintManager.IsSupported())
+            {
+                try
+                {
+                    // Show print UI
+                    var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+                    await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
+                }
+                catch
+                {
+                    // Printing cannot proceed at this time
+                    ContentDialog noPrintingDialog = new ContentDialog()
+                    {
+                        XamlRoot = (sender as Button).XamlRoot,
+                        Title = "Printing error",
+                        Content = "\nSorry, printing can't proceed at this time.",
+                        PrimaryButtonText = "OK"
+                    };
+                    await noPrintingDialog.ShowAsync();
+                }
+            }
+            else
+            {
+                // Printing is not supported on this device
+                ContentDialog noPrintingDialog = new ContentDialog()
+                {
+                    XamlRoot = (sender as Button).XamlRoot,
+                    Title = "Printing not supported",
+                    Content = "\nSorry, printing is not supported on this device.",
+                    PrimaryButtonText = "OK"
+                };
+                await noPrintingDialog.ShowAsync();
+            }
+        }
 
 		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
 		{
             PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
-            Page1Wrapper page1 = new Page1Wrapper() { DataContext = model };
-            Page2Wrapper page2 = new Page2Wrapper() { DataContext = model };
-            _printDocument.AddPage(page1);
-            _printDocument.AddPage(page2);
+            Page1 page1 = new Page1() { DataContext = model };
+            Page1 page2 = new Page1() { DataContext = model };
 
-            _printDocument.AddPagesComplete();
+            if (RcnDataViewModel.Used)
+            {
+                page1.SetSecondPage();
+                _printDocument.AddPage(page1);
+                _printDocument.AddPage(page2);
+            }
+            else _printDocument.AddPage(page1);            
+
+            //_printDocument.AddPagesComplete();
 		}
 
 		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)

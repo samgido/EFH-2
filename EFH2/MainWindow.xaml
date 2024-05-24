@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <!--<local:Page1 x:Name="Page1Control" Foreground="Black" Visibility="Visible"/>-->
+        <local:Page1 x:Name="Page1Control" Foreground="Black" Visibility="Visible"/>
 
         <local:Page2 x:Name="Page2Control" Foreground="Black" Visibility="Visible"/>
 

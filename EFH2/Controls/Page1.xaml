@@ -22,7 +22,11 @@
     </UserControl.Resources>
 
     <StackPanel Background="White" DataContext="{x:Bind ViewModel.MainViewModel.BasicDataViewModel}">
-        <Grid>
+        <TextBlock x:Name="PageNumber" HorizontalAlignment="Left" FontSize="11" Margin="5,0,0,0">
+            Page 1 of 1
+        </TextBlock>
+
+        <Grid Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
@@ -128,22 +132,24 @@
                 </ListView.ItemsPanel>
 
                 <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
+                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         <Setter Property="Margin" Value="0"/>
                         <Setter Property="Padding" Value="0"/>
                         <Setter Property="Width" Value="30"/>
-                        <Setter Property="MinWidth" Value="70"/>
+                        <Setter Property="MinWidth" Value="65"/>
+                        <Setter Property="MinHeight" Value="0"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
 
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Margin="0">
                             <Grid.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="3,0,3,3"/>
                                 </Style>
                                 <Style TargetType="Border">
                                     <Setter Property="BorderBrush" Value="Black"/>
@@ -176,7 +182,7 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Margin="0" MinHeight="135">
                             <Grid.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
