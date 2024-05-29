@@ -448,7 +448,9 @@ namespace EFH2
 
 		private void UserManualclick(object sender, RoutedEventArgs e)
 		{
+            string pdfPath = "C:\\Users\\samue\\Source\\Repos\\samgido\\EFH-2\\EFH2\\Assets\\EFH-2 Users Manual.pdf";
 
+            Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
 		}
 	}
 }
