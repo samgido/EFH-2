@@ -17,7 +17,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding Path=Label}" Grid.Column="0"/>
+        <TextBlock Text="{Binding Path=Label}" FontWeight="SemiBold" Grid.Column="0" HorizontalAlignment="Left" Margin="30,0,0,0"/>
 
         <ItemsView ItemsSource="{Binding Path=Rows}" Grid.ColumnSpan="5">
             <ItemsView.ItemTemplate>

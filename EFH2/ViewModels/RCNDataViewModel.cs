@@ -127,7 +127,7 @@ namespace EFH2
 
         public void Default()
         {
-            //foreach (RcnCategory category in RcnCategories) category.Default();
+            foreach (RcnCategory category in RcnCategories) category.Default();
         }
 
         public void ConvertToPercentageFromAcres(double accumulatedArea)

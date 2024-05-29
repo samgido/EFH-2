@@ -79,8 +79,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -100,13 +100,13 @@
             <TextBlock Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right">Rainfall Distribution - Type:</TextBlock>
             <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right">Dimensionless Unit Hydrograph:</TextBlock>
 
-            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.DrainageArea}"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.RunoffCurveNumber}"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.WatershedLength}"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.WatershedSlope}"/>
-            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.TimeOfConcentration}"/>
-            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.selectedRainfallDistributionType}"/>
-            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.selectedDuhType}"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.DrainageArea, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.RunoffCurveNumber, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.WatershedLength, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.WatershedSlope, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.TimeOfConcentration, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.selectedRainfallDistributionType, Converter={StaticResource DoubleFormatter}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.selectedDuhType, Converter={StaticResource DoubleFormatter}}"/>
 
             <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left">Acres</TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left">Feet</TextBlock>
@@ -114,13 +114,13 @@
             <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left">Hours</TextBlock>
 
             <!--Statuses-->
-            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.drainageAreaEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.runoffCurveNumberEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.watershedLengthEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.watershedSlopeEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="4" HorizontalAlignment="Left" Text="{Binding Path=BasicDataViewModel.timeOfConcentrationEntry.Status}"/>
-            <TextBlock Grid.Column="3" Grid.Row="5" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
-            <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Text="{Binding Path=RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.BasicDataViewModel.drainageAreaEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.BasicDataViewModel.watershedLengthEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.BasicDataViewModel.watershedSlopeEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="4" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.BasicDataViewModel.timeOfConcentrationEntry.Status}"/>
+            <TextBlock Grid.Column="3" Grid.Row="5" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus}"/>
+            <TextBlock Grid.Column="3" Grid.Row="6" HorizontalAlignment="Left" Text="{x:Bind Path=ViewModel.MainViewModel.RainfallDischargeDataViewModel.DuhTypeStatus}"/>
         </Grid>
 
         <Grid Margin="20,30,20,0" ColumnSpacing="0">

@@ -36,6 +36,6 @@ namespace EFH2
 			this.InitializeComponent();
 		}
 
-		public void SetSecondPage() => PageNumber.Text = "Page 1 of 2";
+		public void ChangePageNumber() => PageNumber.Text = "Page 1 of 2";
 	}
 }

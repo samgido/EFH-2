@@ -54,5 +54,10 @@ namespace EFH2
                 return total;
             }
         }
+
+        public void Default()
+        {
+            foreach (RcnRow row in AllRows) { row.Default(); }
+        }
     }
 }

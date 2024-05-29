@@ -14,8 +14,6 @@ using System.Xml.Serialization;
 using System.IO;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
 using CommunityToolkit.WinUI.Helpers;
 using Windows.Graphics.Printing;
 using Microsoft.UI.Xaml;
@@ -498,22 +496,6 @@ namespace EFH2
 					}
 				}
 			}
-		}
-
-		public static async void MakePdf(MainViewModel model, string fileName)
-		{
-			PdfDocument document = new PdfDocument();
-
-			PdfPage page1 = document.AddPage();
-			page1.Size = PdfSharp.PageSize.A4;
-			page1.Orientation = PdfSharp.PageOrientation.Portrait;
-
-			XGraphics gfx = XGraphics.FromPdfPage(page1);
-			XFont font = new XFont("Arial", 14, XFontStyleEx.Regular);
-
-			gfx.DrawString("Hello vro", font, XBrushes.Black, new XRect(0, 0, page1.Width, page1.Height), XStringFormats.Center);
-
-			document.Save(fileName);
 		}
 
 		private static List<string> SplitLine(string line)

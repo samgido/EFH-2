@@ -86,7 +86,7 @@
             <Grid.Resources>
                 <Style TargetType="Border">
                     <Setter Property="BorderBrush" Value="Black"/>
-                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderThickness" Value="1,1,1,0"/>
                 </Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -152,7 +152,7 @@
 
                             <Border Grid.ColumnSpan="5" Grid.RowSpan="3" CornerRadius="0"/>
 
-                            <TextBlock Text="{Binding Path=Label}" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                            <TextBlock Text="{Binding Path=Label}" FontWeight="Bold" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0"/>
 
                             <ItemsView ItemsSource="{Binding Path=Rows}" Grid.ColumnSpan="5" Grid.Row="1">
                                 <ItemsView.ItemTemplate>

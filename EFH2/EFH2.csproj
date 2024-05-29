@@ -29,7 +29,6 @@
     <None Remove="Pages\HsgPage.xaml" />
     <None Remove="Pages\Page1Wrapper.xaml" />
     <None Remove="Pages\Page2Wrapper.xaml" />
-    <None Remove="Pages\PrintHelperPage.xaml" />
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
     <None Remove="Pages\SlopeCalculatorPage.xaml" />
@@ -96,11 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\Page1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\PrintHelperPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
