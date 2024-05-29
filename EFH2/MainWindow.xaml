@@ -16,8 +16,8 @@
         <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <Image x:Name="TitleBarIcon" Source="Assets/EFH2.png" Grid.Column="0" Width="16" Height="16" Margin="10,5,5,0"/>

@@ -434,16 +434,19 @@ namespace EFH2
 
 		private void HelpContentsClick(object sender, RoutedEventArgs e)
 		{
-            HelpContentsPage page = new HelpContentsPage();         
+   //         HelpContentsPage page = new HelpContentsPage();         
     
-			Window newWindow = new Window();
-			newWindow.Content = page;
-			newWindow.Title = "Preview";
-			newWindow.Activate();
+			//Window newWindow = new Window();
+			//newWindow.Content = page;
+			//newWindow.Title = "Preview";
+			//newWindow.Activate();
 
-			IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-			var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-			var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+			//IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+			//var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+			//var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+            //System.Windows.Forms.Help.ShowHelp(null, @"Assets/EFH2.chm");
+            System.Diagnostics.Process.Start(@"Assets/EFH2.chm");
 		}
 
 		private void UserManualclick(object sender, RoutedEventArgs e)
