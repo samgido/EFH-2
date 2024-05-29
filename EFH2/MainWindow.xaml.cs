@@ -431,5 +431,24 @@ namespace EFH2
             RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
-    }
+
+		private void HelpContentsClick(object sender, RoutedEventArgs e)
+		{
+            HelpContentsPage page = new HelpContentsPage();         
+    
+			Window newWindow = new Window();
+			newWindow.Content = page;
+			newWindow.Title = "Preview";
+			newWindow.Activate();
+
+			IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+			var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+			var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+		}
+
+		private void UserManualclick(object sender, RoutedEventArgs e)
+		{
+
+		}
+	}
 }
