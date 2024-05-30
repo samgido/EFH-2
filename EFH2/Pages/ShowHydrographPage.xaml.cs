@@ -27,5 +27,65 @@ namespace EFH2
 		{
 			this.InitializeComponent();
 		}
+
+		private void SaveAsClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void PrintPreviewClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void PrintClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void ExitClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void CopyClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		//private void ZoomInClick(object sender, RoutedEventArgs e)
+		//{
+
+		//}
+
+		//private void ZoomOutClick(object sender, RoutedEventArgs e)
+		//{
+
+		//}
+
+		//private void UsePointerClick(object sender, RoutedEventArgs e)
+		//{
+
+		//}
+
+		private void PlotPointsToggleClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void PlotLinesToggleClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void PlotGridToggleClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void PlotView_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+
+		}
 	}
 }

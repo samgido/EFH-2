@@ -11,6 +11,39 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <oxyplot:PlotView Model="{Binding Path=Model}" Grid.Row="0" Grid.Column="1"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <MenuBar Grid.Row="0">
+            <MenuBarItem Title="File">
+                <MenuFlyoutItem Text="Save As" Click="SaveAsClick"/>
+                <MenuFlyoutItem Text="Print Preview" Click="PrintPreviewClick"/>
+                <MenuFlyoutItem Text="Print" Click="PrintClick"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Exit" Click="ExitClick"/>
+            </MenuBarItem>
+            <MenuBarItem Title="Edit">
+                <MenuFlyoutItem Text="Copy" Click="CopyClick"/>
+                <!--<MenuFlyoutItem Text="Zoom In" Click="ZoomInClick"/>
+                <MenuFlyoutItem Text="Zoom Out" Click="ZoomOutClick"/>
+                <MenuFlyoutItem Text="Pointer" Click="UsePointerClick"/>-->
+                <MenuFlyoutSeparator/>
+                <RadioMenuFlyoutItem Text="Plot Points" Click="PlotPointsToggleClick"/>
+                <RadioMenuFlyoutItem Text="Plot Lines" Click="PlotLinesToggleClick"/>
+                <RadioMenuFlyoutItem Text="Plot Grid" Click="PlotGridToggleClick"/>
+            </MenuBarItem>
+        </MenuBar>
+
+        <CommandBar Grid.Row="1" FlowDirection="RightToLeft" OverflowButtonVisibility="Collapsed">
+            <AppBarButton Icon="Save" Click="SaveAsClick"/>
+            <AppBarButton Icon="Preview" Click="PrintPreviewClick"/>
+            <AppBarButton Icon="Print" Click="PrintClick"/>
+            <AppBarButton Icon="Copy" Click="CopyClick"/>
+        </CommandBar>
+
+        <oxyplot:PlotView Model="{Binding Path=Model}" Grid.Row="2" PointerPressed="PlotView_PointerPressed"/>
     </Grid>
 </Page>

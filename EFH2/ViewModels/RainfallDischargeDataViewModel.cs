@@ -48,7 +48,7 @@ namespace EFH2
 
         [ObservableProperty]
         [property: XmlIgnore]
-        private string _duhTypeStatus = "(default)";
+        private string _duhTypeStatus = "";
 
         [XmlIgnore]
         public static int DayRainMax => 26;
@@ -77,7 +77,7 @@ namespace EFH2
                 this.SetProperty(ref this._selectedDuhTypeIndex, value);
                 this.selectedDuhType = DuhTypes[value].Content as string;
                 if (value != 0) this.DuhTypeStatus = "User Selected.";
-                else this.DuhTypeStatus = "(default)";
+                else this.DuhTypeStatus = "";
 
                 this.ValueChanged?.Invoke(this, new EventArgs());
             }

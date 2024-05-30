@@ -104,7 +104,7 @@
                 <TextBlock Text="feet" Margin="10,0,0,0"
                     RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="WatershedLength"/>
 
-                <TextBlock x:Name="WatershedLengthStatus" Text="{Binding Path=Status, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink" 
+                <TextBlock x:Name="WatershedLengthStatus" Text="" Padding="75,0,0,0" Foreground="HotPink" 
                            RelativePanel.RightOf="WatershedLength" RelativePanel.AlignVerticalCenterWith="WatershedLength"/>
             </RelativePanel>
 
@@ -122,7 +122,7 @@
                 <TextBlock Text="percent" Margin="10,0,0,0" 
                            RelativePanel.RightOf="WatershedSlope" RelativePanel.AlignVerticalCenterWithPanel="True"/>
 
-                <TextBlock x:Name="WatershedSlopeStatus" Text="{Binding Path=Status, Mode=OneWay}" Padding="75,0,0,0" Foreground="HotPink"
+                <TextBlock x:Name="WatershedSlopeStatus" Text="" Padding="75,0,0,0" Foreground="HotPink"
                            RelativePanel.RightOf="WatershedSlope" RelativePanel.AlignVerticalCenterWith="WatershedSlope"/>
             </RelativePanel>
 
