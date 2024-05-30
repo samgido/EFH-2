@@ -254,8 +254,8 @@ namespace EFH2
             newWindow.Activate();
 
             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
 
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 500, Width = 650 });
         }
@@ -294,58 +294,39 @@ namespace EFH2
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-            if (true) 
-            { // for live xaml preview
-                Page1 page = new Page1() { DataContext = new PrintableMainViewModel(MainViewModel) };
-                //Page2 page = new Page2() { DataContext = new PrintableMainViewModel(MainViewModel) };
-
-				Window newWindow = new Window();
-				newWindow.Content = page;
-				newWindow.Title = "Preview";
-				newWindow.Activate();
-
-				IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-				var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-				var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-
-				appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 1200, Width = 1000 });
-            }
-            else
-            { // actual printing
-				if (PrintManager.IsSupported())
+			if (PrintManager.IsSupported())
+			{
+				try
 				{
-					try
-					{
-						// Show print UI
-						var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-						await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
-					}
-					catch
-					{
-						// Printing cannot proceed at this time
-						ContentDialog noPrintingDialog = new ContentDialog()
-						{
-							XamlRoot = (sender as Button).XamlRoot,
-							Title = "Printing error",
-							Content = "\nSorry, printing can't proceed at this time.",
-							PrimaryButtonText = "OK"
-						};
-						await noPrintingDialog.ShowAsync();
-					}
+					// Show print UI
+					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+					await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
 				}
-				else
+				catch
 				{
-					// Printing is not supported on this device
+					// Printing cannot proceed at this time
 					ContentDialog noPrintingDialog = new ContentDialog()
 					{
 						XamlRoot = (sender as Button).XamlRoot,
-						Title = "Printing not supported",
-						Content = "\nSorry, printing is not supported on this device.",
+						Title = "Printing error",
+						Content = "\nSorry, printing can't proceed at this time.",
 						PrimaryButtonText = "OK"
 					};
 					await noPrintingDialog.ShowAsync();
 				}
-            }
+			}
+			else
+			{
+				// Printing is not supported on this device
+				ContentDialog noPrintingDialog = new ContentDialog()
+				{
+					XamlRoot = (sender as Button).XamlRoot,
+					Title = "Printing not supported",
+					Content = "\nSorry, printing is not supported on this device.",
+					PrimaryButtonText = "OK"
+				};
+				await noPrintingDialog.ShowAsync();
+			}
         }
 
 		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
@@ -434,20 +415,8 @@ namespace EFH2
 
 		private void HelpContentsClick(object sender, RoutedEventArgs e)
 		{
-   //         HelpContentsPage page = new HelpContentsPage();         
-    
-			//Window newWindow = new Window();
-			//newWindow.Content = page;
-			//newWindow.Title = "Preview";
-			//newWindow.Activate();
-
-			//IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-			//var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-			//var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-
-            //System.Windows.Forms.Help.ShowHelp(null, @"Assets/EFH2.chm");
-            System.Diagnostics.Process.Start(@"Assets/EFH2.chm");
-		}
+            System.Windows.Forms.Help.ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
+        }
 
 		private void UserManualclick(object sender, RoutedEventArgs e)
 		{

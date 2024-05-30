@@ -1,0 +1,32 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=EFH2.chm
+Contents file=Table of Contents.hhc
+Default topic=What is EFH2.htm
+Display compile progress=No
+Index file=Index.hhk
+Language=0x409 English (United States)
+
+
+[FILES]
+Basic Data Files.htm
+Data Entry - Curve Number-Drainage.htm
+Data Entry - Entry help.htm
+Data Entry - General.htm
+Data Entry - RCN.htm
+Data Entry - State-County.htm
+Data Entry - Time of Concentration.htm
+EFH2 Overview.htm
+Glossary.htm
+Menu-Edit.htm
+Menu-File.htm
+Menu-Help.htm
+Menu-Tools.htm
+Menu-View.htm
+System requirements.htm
+What is EFH2.htm
+Program-Window.htm
+Rainfall-Discharge-Data.htm
+
+[INFOTYPES]
+

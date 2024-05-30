@@ -1,0 +1,187 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b><span style='font-size:16.0pt;line-height:107%;
+color:red'>BASIC DATA FILES:</span></b></p>
+
+<p class=MsoNormal><b><span style='color:#538135'>                </span></b><span
+style='font-size:12.0pt;line-height:107%;color:red'>Required Files:</span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:107%;
+color:red'>                        </span></b><b><span style='font-size:12.0pt;
+line-height:107%;color:#0070C0'>COVER.TXT</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:107%;
+color:#0070C0'>            </span></b><span style='font-size:12.0pt;line-height:
+107%;color:red'>Optional Files</span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:107%;
+color:red'>                        </span></b><b><span style='font-size:12.0pt;
+line-height:107%;color:#0070C0'>SOIL.HG</span></b></p>
+
+<p class=MsoNormal><b><span style='color:#6600CC'>COVER.TXT</span></b> – This
+file consists of the runoff curve number (CN) tables found in <b>NEH 630.09,
+Hydrologic Soil-Cover Complexes</b>.  These tables list CN by HSG, cover type,
+and hydrologic condition for various land use types.  The CN tables are used in
+computing a weighted CN for the watershed being evaluated.  The <b>COVER.TXT</b>
+file is required and must reside in the same folder as the program executable
+file (EFH2.EXE).  If the <b>COVER.TXT</b> file is not available, <b>EFH-2</b>
+computer program will not initialize and will not operate.  </p>
+
+<p><a name="Soils_hg"></a><b><span style='font-size:11.0pt;font-family:"Calibri",sans-serif;
+color:#6600CC'>SOILS.HG</span></b><span style='font-size:11.0pt;font-family:
+"Calibri",sans-serif'> – The Hydrologic Soil Group (HSG) lookup tool uses this
+file for populating the table. The file contains three columns, separated by
+the TAB character. The first column is the soil name. The second is the surface
+texture, useful when there are multiple textures for the same soil name. The
+third column is the hydrologic group. An easy way to create this file is to use
+a spreadsheet program, such as Excel. Fill in the three columns and save as a
+Text (Tab Delimited) file. Rename to <b>SOILS.HG</b> and store in the EFH2
+program folder.</span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=409
+ style='width:306.9pt;border-collapse:collapse'>
+ <tr style='height:1.0pt'>
+  <td width=77 style='width:57.95pt;border-top:navy 1.5pt;border-left:navy 1.5pt;
+  border-bottom:gray 1.0pt;border-right:gray 1.0pt;border-style:solid;
+  background:#E6E6E6;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><b><i><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif'>Column</span></i></b></p>
+  </td>
+  <td width=169 style='width:126.75pt;border-top:solid navy 1.5pt;border-left:
+  none;border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;background:
+  #E6E6E6;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><b><i><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>Maximum Number</span></i></b></p>
+  <p align=center style='text-align:center'><b><i><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>of Characters</span></i></b></p>
+  </td>
+  <td width=163 style='width:122.2pt;border-top:solid navy 1.5pt;border-left:
+  none;border-bottom:solid gray 1.0pt;border-right:solid navy 1.5pt;background:
+  #E6E6E6;padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p><b><i><span style='font-size:9.0pt;font-family:"Arial",sans-serif;
+  color:black'>Data Description</span></i></b></p>
+  </td>
+ </tr>
+ <tr style='height:1.0pt'>
+  <td width=77 style='width:57.95pt;border-top:none;border-left:solid navy 1.5pt;
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>1</span></p>
+  </td>
+  <td width=169 style='width:126.75pt;border-top:none;border-left:none;
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>40</span></p>
+  </td>
+  <td width=163 style='width:122.2pt;border-top:none;border-left:none;
+  border-bottom:solid gray 1.0pt;border-right:solid navy 1.5pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p><span style='font-size:9.0pt;font-family:"Arial",sans-serif;color:black'>Soil
+  map unit name</span></p>
+  </td>
+ </tr>
+ <tr style='height:1.0pt'>
+  <td width=77 style='width:57.95pt;border-top:none;border-left:solid navy 1.5pt;
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>2</span></p>
+  </td>
+  <td width=169 style='width:126.75pt;border-top:none;border-left:none;
+  border-bottom:solid gray 1.0pt;border-right:solid gray 1.0pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>10</span></p>
+  </td>
+  <td width=163 style='width:122.2pt;border-top:none;border-left:none;
+  border-bottom:solid gray 1.0pt;border-right:solid navy 1.5pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p><span style='font-size:9.0pt;font-family:"Arial",sans-serif;color:black'>Textural
+  class</span></p>
+  </td>
+ </tr>
+ <tr style='height:1.0pt'>
+  <td width=77 style='width:57.95pt;border-top:none;border-left:solid navy 1.5pt;
+  border-bottom:solid navy 1.5pt;border-right:solid gray 1.0pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>3</span></p>
+  </td>
+  <td width=169 style='width:126.75pt;border-top:none;border-left:none;
+  border-bottom:solid navy 1.5pt;border-right:solid gray 1.0pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p align=center style='text-align:center'><span style='font-size:9.0pt;
+  font-family:"Arial",sans-serif;color:black'>10</span></p>
+  </td>
+  <td width=163 style='width:122.2pt;border-top:none;border-left:none;
+  border-bottom:solid navy 1.5pt;border-right:solid navy 1.5pt;background:#E6E6E6;
+  padding:0in 5.4pt 0in 5.4pt;height:1.0pt'>
+  <p style='page-break-after:avoid'><span style='font-size:9.0pt;font-family:
+  "Arial",sans-serif;color:black'>Hydrologic soil group</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal style='line-height:normal'><span style='font-size:12.0pt;
+font-family:"Arial",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
