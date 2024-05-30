@@ -61,7 +61,7 @@
                     <MenuFlyoutItem Text="Help Contents (chm)" AccessKey="H" Click="HelpContentsClick"/>
                     <MenuFlyoutItem Text="User Manual (pdf)" AccessKey="P" Click="UserManualclick"/>
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="About" AccessKey="A"/>
+                    <MenuFlyoutItem Text="About" AccessKey="A" Click="AboutClick"/>
                 </MenuBarItem>
             </MenuBar>
 
@@ -94,10 +94,7 @@
 
                 <AppBarSeparator/>
 
-                <AppBarButton
-                    Icon="Help"
-                    Label="Help"/>
-
+                <AppBarButton Icon="Help" Label="Help" Click="HelpContentsClick"/> 
             </CommandBar>
 
             <NavigationView PaneDisplayMode="Top" x:Name="Navigation" IsBackButtonVisible="Collapsed"

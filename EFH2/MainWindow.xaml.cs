@@ -424,5 +424,19 @@ namespace EFH2
 
             Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
 		}
+
+		private async void AboutClick(object sender, RoutedEventArgs e)
+		{
+            AboutControl aboutControl = new AboutControl();
+            ContentDialog aboutDialog = new ContentDialog()
+            {
+                XamlRoot = this.Content.XamlRoot,
+                Title = "About EFH-2 Engineering Field Handbook, Chapter 2",
+                Content = aboutControl,
+                PrimaryButtonText = "OK",
+            };
+
+            await aboutDialog.ShowAsync();
+        }
 	}
 }
