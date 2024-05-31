@@ -74,6 +74,19 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
         }
 
+        private async void ShowWelcomePage()
+        {
+            WelcomePage welcomePage = new WelcomePage();
+            ContentDialog welcomeDialog = new ContentDialog()
+            {
+                Title = "Welcome to EFH-2",
+                Content = welcomePage,
+                PrimaryButtonText = "Continue",
+            };
+
+            await welcomeDialog.ShowAsync();
+        }
+
 		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
 		{
             HydrographDataViewModel model = new HydrographDataViewModel(

@@ -34,6 +34,7 @@
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
     <None Remove="Pages\SlopeCalculatorPage.xaml" />
+    <None Remove="Pages\WelcomePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +65,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\WelcomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\AboutControl.xaml">

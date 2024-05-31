@@ -470,27 +470,30 @@ namespace EFH2
 			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
 			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100 };
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv")) // TODO change path
 			{
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine();
 					string[] elements = line.Split(',');
 
-					if (elements.Length == 11 && elements[1].Trim('"') == state && elements[2].Trim('"') == county)
+					if (elements.Length == 11 && elements[1].Trim('"') == state) 
 					{
-						string rfType = elements[3];
-						if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
-
-						model.SetRainfallType(rfType);
-
-						for (int i = 0; i < 7; i++)
+						if (elements[2].Trim('"') == county) // performance is significantly better with this nested
 						{
-							double dayRain = double.Parse(elements[4 + i]);
-							if (dayRain != 0)
+							string rfType = elements[3];
+							if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
+
+							model.SetRainfallType(rfType);
+
+							for (int i = 0; i < 7; i++)
 							{
-								model.Storms[i].DayRain = dayRain;
-								model.Storms[i].Frequency = automaticStormFrequencies[i];
+								double dayRain = double.Parse(elements[4 + i]);
+								if (dayRain != 0)
+								{
+									model.Storms[i].DayRain = dayRain;
+									model.Storms[i].Frequency = automaticStormFrequencies[i];
+								}
 							}
 						}
 					}

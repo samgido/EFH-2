@@ -68,6 +68,10 @@ namespace EFH2
 		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)
 		{
             FileOperations.SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
+            foreach (StormViewModel storm in RainfallDischargeDataViewModel.Storms) storm.DisplayHydrograph = false;
+            RainfallDischargeDataViewModel.Storms[0].DisplayHydrograph = true;
+            RainfallDischargeDataViewModel.Storms[3].DisplayHydrograph = true;
+            RainfallDischargeDataViewModel.Storms[5].DisplayHydrograph = true;
         }
 
 		public void Load(MainViewModel newData)
