@@ -10,14 +10,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <MenuBar Grid.Row="0">
+        <Image Source="ms-appx:///Assets/NRCSLogo32x32.png" Grid.Row="0" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,7,0,0"/>
+        <TextBlock Margin="27,5,0,0" Grid.Row="0">Input / Output Plots</TextBlock>
+
+        <MenuBar Grid.Row="1">
             <MenuBarItem Title="File">
                 <MenuFlyoutItem Text="Save As" Click="SaveAsClick"/>
                 <MenuFlyoutItem Text="Print Preview" Click="PrintPreviewClick"/>
@@ -27,23 +31,27 @@
             </MenuBarItem>
             <MenuBarItem Title="Edit">
                 <MenuFlyoutItem Text="Copy" Click="CopyClick"/>
-                <!--<MenuFlyoutItem Text="Zoom In" Click="ZoomInClick"/>
+                <MenuFlyoutItem Text="Zoom In" Click="ZoomInClick"/>
                 <MenuFlyoutItem Text="Zoom Out" Click="ZoomOutClick"/>
-                <MenuFlyoutItem Text="Pointer" Click="UsePointerClick"/>-->
+                <MenuFlyoutItem Text="Pointer" Click="UsePointerClick"/>
                 <MenuFlyoutSeparator/>
-                <RadioMenuFlyoutItem Text="Plot Points" Click="PlotPointsToggleClick"/>
-                <RadioMenuFlyoutItem Text="Plot Lines" Click="PlotLinesToggleClick"/>
-                <RadioMenuFlyoutItem Text="Plot Grid" Click="PlotGridToggleClick"/>
+                <ToggleMenuFlyoutItem x:Name="plotPointsRadioButton" Text="Plot Points" Click="PlotSettingsChanged"/>
+                <ToggleMenuFlyoutItem x:Name="plotLinesRadioButton" IsChecked="True" Text="Plot Lines" Click="PlotSettingsChanged"/>
+                <ToggleMenuFlyoutItem x:Name="plotGridRadioButton" IsChecked="True" Text="Plot Grid" Click="PlotSettingsChanged"/>
             </MenuBarItem>
         </MenuBar>
 
-        <CommandBar Grid.Row="1" FlowDirection="RightToLeft" OverflowButtonVisibility="Collapsed">
+        <CommandBar Grid.Row="2" FlowDirection="RightToLeft" OverflowButtonVisibility="Collapsed">
+            <AppBarButton Icon="TouchPointer" Click="UsePointerClick"/>
+            <AppBarButton Icon="ZoomOut" Click="ZoomOutClick"/>
+            <AppBarButton Icon="ZoomIn" Click="ZoomInClick"/>
+
             <AppBarButton Icon="Save" Click="SaveAsClick"/>
             <AppBarButton Icon="Preview" Click="PrintPreviewClick"/>
             <AppBarButton Icon="Print" Click="PrintClick"/>
             <AppBarButton Icon="Copy" Click="CopyClick"/>
         </CommandBar>
 
-        <oxyplot:PlotView Model="{Binding Path=Model}" Grid.Row="2" PointerPressed="PlotView_PointerPressed"/>
+        <oxyplot:PlotView x:Name="plot" Model="{Binding Path=Model}" Grid.Row="3"/>
     </Grid>
 </Page>

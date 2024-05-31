@@ -80,9 +80,8 @@ namespace EFH2
                 MainViewModel.BasicDataViewModel.selectedCounty,
                 MainViewModel.BasicDataViewModel.selectedState);
 
-            // check if any are selected to be plotted
-            List<HydrographLineModel> plots = new List<HydrographLineModel>();
 
+            // check if any are selected to be plotted
             bool plotGraph = false;
             foreach (StormViewModel storm in MainViewModel.RainfallDischargeDataViewModel.Storms)
             {
@@ -90,10 +89,12 @@ namespace EFH2
             }
             if (!plotGraph) return;
 
+            List<HydrographLineModel> plots = new List<HydrographLineModel>();
             plots = FileOperations.GetHydrographData(MainViewModel.RainfallDischargeDataViewModel.Storms);
             plots.ForEach(plot => model.AddPlot(plot));
 
             Window newWindow = new Window();
+            newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
@@ -103,7 +104,7 @@ namespace EFH2
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
-            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 500, Width = 650 });
+            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 800 });
         }
 
         private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)

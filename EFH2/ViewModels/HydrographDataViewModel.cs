@@ -14,6 +14,28 @@ namespace EFH2
 {
 	public partial class HydrographDataViewModel : ObservableObject
 	{
+		private LinearAxis verticalGridLines = new LinearAxis()
+		{
+			Position = AxisPosition.Bottom,
+			MajorGridlineStyle = LineStyle.Dash,
+			MinorGridlineStyle = LineStyle.Solid,
+			MaximumPadding = 0,
+			MinimumPadding = 0,
+			TickStyle = TickStyle.None,
+			LabelFormatter = x => "",
+		};
+
+		private LinearAxis horizontalGridLines = new LinearAxis()
+		{
+			Position = AxisPosition.Left,
+			MajorGridlineStyle = LineStyle.Dash,
+			MinorGridlineStyle = LineStyle.Solid,
+			MaximumPadding = 0,
+			MinimumPadding = 0,
+			TickStyle = TickStyle.None,
+			LabelFormatter = x => "",
+		};
+
 		private PlotModel _model;
 
 		public PlotModel Model => _model;
@@ -38,6 +60,8 @@ namespace EFH2
 
 			_model.Axes.Add(new LinearAxis() { Title = "Discharge (cfs)" });
 			_model.Axes.Add(new LinearAxis() { Title = "Time (hrs)", Position = AxisPosition.Bottom });
+			_model.Axes.Add(verticalGridLines);
+			_model.Axes.Add(horizontalGridLines);
 		}
 
 		public void AddPlot(HydrographLineModel model)
@@ -56,6 +80,46 @@ namespace EFH2
 			}
 
 			_model.Series.Add(series);
+		}
+
+		public void ChangeSettings(bool showMarkers, bool showLines, bool showGrid)
+		{
+			for (int i = 0; i < _model.Series.Count; i++) 
+			{
+				if (_model.Series[i] is LineSeries series)
+				{
+					if (showMarkers)
+					{
+						int index = (i % 7) + 1;
+						object? markerObject = Enum.GetValues(typeof(MarkerType)).GetValue(index);
+						if (markerObject != null && markerObject is MarkerType markerType)
+						{
+							series.MarkerType = markerType;
+						}
+					}
+					else
+					{
+						series.MarkerType = MarkerType.None;
+					}
+
+					if (showLines) series.StrokeThickness = 2.0;
+					else series.StrokeThickness = 0;
+
+					if (showGrid)
+					{
+						if (!_model.Axes.Contains(verticalGridLines))
+						{
+							_model.Axes.Add(verticalGridLines);
+							_model.Axes.Add(horizontalGridLines);
+						}
+					}
+					else
+					{
+						_model.Axes.Remove(verticalGridLines);
+						_model.Axes.Remove(horizontalGridLines);
+					}
+				}
+			}
 		}
 	}
 }
