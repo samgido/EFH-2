@@ -387,21 +387,21 @@ namespace EFH2
 								string yrLabel = splitLine[1].Replace("-Yr", "");
 								int year = int.Parse(yrLabel);
 
-								for (int i = 0; i < 6; i++) line = reader.ReadLine();
-
 								splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-								if (splitLine.Length == 6 && splitLine[0] == "Area")
+								while (splitLine.Length != 6 || splitLine[0] != "Area")
 								{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-									double runoff = Math.Round(double.Parse(splitLine[2]), 2);
-									double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+									splitLine = SplitLine(reader.ReadLine()).ToArray();
+								}
 
-									foreach (StormViewModel storm in storms)
-									{
-										if (storm.Frequency == year && !double.IsNaN(storm.DayRain))
-										{// found the match, put the runoff and peakflow values into this storm
-											storm.PeakFlow = peakFlow;
-											storm.Runoff = runoff;
-										}
+								double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+								double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+
+								foreach (StormViewModel storm in storms)
+								{
+									if (storm.Frequency == year && !double.IsNaN(storm.DayRain))
+									{// found the match, put the runoff and peakflow values into this storm
+										storm.PeakFlow = peakFlow;
+										storm.Runoff = runoff;
 									}
 								}
 							}

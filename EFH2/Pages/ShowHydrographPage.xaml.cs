@@ -41,7 +41,6 @@ namespace EFH2
 
 		private void PrintPreviewClick(object sender, RoutedEventArgs e)
 		{
-
 		}
 
 		private void PrintClick(object sender, RoutedEventArgs e)
