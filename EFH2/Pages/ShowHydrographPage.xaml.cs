@@ -1,3 +1,4 @@
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -12,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -25,12 +27,15 @@ namespace EFH2
 	/// </summary>
 	public sealed partial class ShowHydrographPage : Page
 	{
+		private PrintHelper _printHelper;
+		private DataTemplate customPrintTemplate;
+		
 		public PlotController Controller = new PlotController();
 
 		public ShowHydrographPage()
 		{
 			this.InitializeComponent();
-			plot.Controller = Controller;
+			PlottedHydrograph.Controller = Controller;
 			Controller.UnbindAll();
 		}
 
@@ -45,7 +50,56 @@ namespace EFH2
 
 		private void PrintClick(object sender, RoutedEventArgs e)
 		{
+			Task _ = PrintHydrographAsync();
+		}
 
+		private async Task PrintHydrographAsync()
+		{
+			try
+			{
+				MainGrid.Children.Remove(PlottedHydrograph); // detach so plot can be printed
+
+				_printHelper = new PrintHelper(PrintContainer);
+				_printHelper.AddFrameworkElementToPrint(PlottedHydrograph);
+
+				_printHelper.OnPrintCanceled += _printHelper_OnPrintCanceled;
+				_printHelper.OnPrintFailed += _printHelper_OnPrintFailed;
+				_printHelper.OnPrintSucceeded += _printHelper_OnPrintSucceeded;
+
+				await _printHelper.ShowPrintUIAsync("Print Hydrograph");
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+			}
+		}
+
+		private void _printHelper_OnPrintSucceeded()
+		{
+			ReleasePrinter();
+			Debug.WriteLine("Success printing hydrograph");
+		}
+
+		private void _printHelper_OnPrintFailed()
+		{
+			ReleasePrinter();
+			Debug.WriteLine("Failure printing hydrograph");
+		}
+
+		private void _printHelper_OnPrintCanceled()
+		{
+			ReleasePrinter();
+			Debug.WriteLine("Printing hydrograph canceled");
+		}
+
+		private void ReleasePrinter()
+		{
+			_printHelper.Dispose();
+			if (!MainGrid.Children.Contains(PlottedHydrograph))
+			{
+				MainGrid.Children.Add(PlottedHydrograph);
+				Grid.SetRow(PlottedHydrograph, 3);
+			}
 		}
 
 		private void ExitClick(object sender, RoutedEventArgs e)
@@ -68,7 +122,7 @@ namespace EFH2
 		private void ZoomOutClick(object sender, RoutedEventArgs e)
 		{
 			Controller.UnbindAll();
-			plot.ResetAllAxes();
+			PlottedHydrograph.ResetAllAxes();
 		}
 
 		private void UsePointerClick(object sender, RoutedEventArgs e)
@@ -104,7 +158,7 @@ namespace EFH2
 
 				try
 				{
-					plot.InvalidatePlot();
+					PlottedHydrograph.InvalidatePlot();
 				}
 				catch (Exception ex) { Debug.WriteLine(ex); }
 			}
