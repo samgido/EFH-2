@@ -23,6 +23,7 @@ using Microsoft.UI.Windowing;
 using System.Diagnostics;
 using Windows.Graphics.Printing;
 using Microsoft.UI.Xaml.Printing;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -72,13 +73,20 @@ namespace EFH2
             BasicDataControl.Visibility = Visibility.Visible;
             RainfallDischargeDataControl.Visibility = Visibility.Visible;
             IntroControl.Visibility = Visibility.Visible;
+
+            var root = this.Content as FrameworkElement;
+            if (root != null)
+            {
+                root.Loaded += async (s, e) => await ShowWelcomePage();
+            }
         }
 
-        private async void ShowWelcomePage()
+        private async Task ShowWelcomePage()
         {
             WelcomePage welcomePage = new WelcomePage();
             ContentDialog welcomeDialog = new ContentDialog()
             {
+                XamlRoot = this.Content.XamlRoot,
                 Title = "Welcome to EFH-2",
                 Content = welcomePage,
                 PrimaryButtonText = "Continue",
