@@ -437,7 +437,7 @@ namespace EFH2
 
 		private void HelpContentsClick(object sender, RoutedEventArgs e)
 		{
-            System.Windows.Forms.Help.ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
+            //ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
         }
 
 		private void UserManualclick(object sender, RoutedEventArgs e)
