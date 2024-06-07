@@ -38,6 +38,8 @@ namespace EFH2
         private PrintManager _printManager;
         private PrintDocument _printDocument;
         private IPrintDocumentSource _printDocumentSource;
+
+        private List<UIElement> _printPreviewPages;
         
         public MainViewModel MainViewModel { get; set; }
 
@@ -117,6 +119,7 @@ namespace EFH2
             Window newWindow = new Window();
             newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
+			page.PrintHydrograph += PrintHydrograph;
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
             newWindow.Activate();
@@ -128,7 +131,53 @@ namespace EFH2
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 800 });
         }
 
-        private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)
+		private void PrintHydrograph(object sender, EventArgs e)
+		{
+            // add page to print preview pages list
+
+            // async call the print ui
+		}
+
+        private async Task PrintPagesAsync(List<UIElement> pages)
+        {
+            _printPreviewPages.Clear();
+
+			if (PrintManager.IsSupported())
+			{
+				try
+				{
+					// Show print UI
+					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+					await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
+				}
+				catch
+				{
+					// Printing cannot proceed at this time
+					ContentDialog noPrintingDialog = new ContentDialog()
+					{
+						XamlRoot = this.Content.XamlRoot,
+						Title = "Printing error",
+						Content = "\nSorry, printing can't proceed at this time.",
+						PrimaryButtonText = "OK"
+					};
+					await noPrintingDialog.ShowAsync();
+				}
+			}
+			else
+			{
+				// Printing is not supported on this device
+				ContentDialog noPrintingDialog = new ContentDialog()
+				{
+					XamlRoot = this.Content.XamlRoot,
+					Title = "Printing not supported",
+					Content = "\nSorry, printing is not supported on this device.",
+					PrimaryButtonText = "OK"
+				};
+				await noPrintingDialog.ShowAsync();
+			}
+        }
+
+		private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)
         {
             RcnDataControl.CreatePopup(MainViewModel);
         }
@@ -312,47 +361,14 @@ namespace EFH2
 			_printDocument.Paginate += _printDocument_Paginate;
 			_printDocument.GetPreviewPage += _printDocument_GetPreviewPage;
 			_printDocument.AddPages += _printDocument_AddPages;
+
+			_printPreviewPages = new List<UIElement>();
+
         }
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
         {
-			if (PrintManager.IsSupported())
-			{
-				try
-				{
-					// Show print UI
-					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-					await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
-				}
-				catch
-				{
-					// Printing cannot proceed at this time
-					ContentDialog noPrintingDialog = new ContentDialog()
-					{
-						XamlRoot = (sender as Button).XamlRoot,
-						Title = "Printing error",
-						Content = "\nSorry, printing can't proceed at this time.",
-						PrimaryButtonText = "OK"
-					};
-					await noPrintingDialog.ShowAsync();
-				}
-			}
-			else
-			{
-				// Printing is not supported on this device
-				ContentDialog noPrintingDialog = new ContentDialog()
-				{
-					XamlRoot = (sender as Button).XamlRoot,
-					Title = "Printing not supported",
-					Content = "\nSorry, printing is not supported on this device.",
-					PrimaryButtonText = "OK"
-				};
-				await noPrintingDialog.ShowAsync();
-			}
-        }
-
-		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
-		{
+            List<UIElement> list = new List<UIElement>();
             PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
             Page1 page1 = new Page1() { DataContext = model };
             Page2 page2 = new Page2() { DataContext = model };
@@ -360,10 +376,21 @@ namespace EFH2
             if (RcnDataViewModel.Used)
             {
                 page1.ChangePageNumber();
-                _printDocument.AddPage(page1);
-                _printDocument.AddPage(page2);
+                list.Add(page1);
+                list.Add(page2);
             }
-            else _printDocument.AddPage(page1);
+            else list.Add(page1);
+
+            Task _ = PrintPagesAsync(list);
+        }
+
+		private void _printDocument_AddPages(object sender, AddPagesEventArgs e)
+		{
+
+            foreach (UIElement page in _printPreviewPages)
+            {
+                _printDocument.AddPage(page);
+            }
 
             _printDocument.AddPagesComplete();
         }
@@ -371,20 +398,32 @@ namespace EFH2
 		private void _printDocument_GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
             //TODO: Add control to print as second parameter
-            PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
-            Page1Wrapper page = new Page1Wrapper() { DataContext = model };
-            Page2Wrapper page2 = new Page2Wrapper() { DataContext = model };
+   //         PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
+   //         Page1Wrapper page = new Page1Wrapper() { DataContext = model };
+   //         Page2Wrapper page2 = new Page2Wrapper() { DataContext = model };
 
-			_printDocument.SetPreviewPage(1, page);
-            if (RcnDataViewModel.Used) _printDocument.SetPreviewPage(2, page2);
+			//_printDocument.SetPreviewPage(1, page);
+   //         if (RcnDataViewModel.Used) _printDocument.SetPreviewPage(2, page2);
+
+            PrintDocument printDocument = (PrintDocument)_printDocument;
+            printDocument.SetPreviewPage(e.PageNumber, _printPreviewPages[e.PageNumber - 1]);
         }
 
         private void _printDocument_Paginate(object sender, PaginateEventArgs e)
-		{
-            _printDocument.SetPreviewPageCount(RcnDataViewModel.Used ? 2 : 1, PreviewPageCountType.Final);
-		}
+        {
+			lock (_printPreviewPages)
+			{
+				_printPreviewPages.Clear();
 
-		private void _printManager_PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
+				PrintCanvas.Children.Clear();
+
+				PrintDocument printDocument = (PrintDocument)sender;
+
+				printDocument.SetPreviewPageCount(_printPreviewPages.Count, PreviewPageCountType.Intermediate);
+			}
+        }
+
+        private void _printManager_PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
 		{
             var printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
 
@@ -440,7 +479,7 @@ namespace EFH2
             //ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
         }
 
-		private void UserManualclick(object sender, RoutedEventArgs e)
+		private void UserManualClick(object sender, RoutedEventArgs e)
 		{
             string pdfPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "EFH-2 Users Manual.pdf");
 

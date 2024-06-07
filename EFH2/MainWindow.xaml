@@ -13,6 +13,8 @@
 
         <local:Page2 x:Name="Page2Control" Foreground="Black" Visibility="Visible"/>
 
+        <Canvas x:Name="PrintCanvas" Opacity="0"/>
+
         <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -59,7 +61,7 @@
 
                 <MenuBarItem Title="Help" AccessKey="H">
                     <MenuFlyoutItem Text="Help Contents (chm)" AccessKey="H" Click="HelpContentsClick"/>
-                    <MenuFlyoutItem Text="User Manual (pdf)" AccessKey="P" Click="UserManualclick"/>
+                    <MenuFlyoutItem Text="User Manual (pdf)" AccessKey="P" Click="UserManualClick"/>
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem Text="About" AccessKey="A" Click="AboutClick"/>
                 </MenuBarItem>
