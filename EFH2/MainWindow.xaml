@@ -13,7 +13,7 @@
 
         <local:Page2 x:Name="Page2Control" Foreground="Black" Visibility="Visible"/>
 
-        <Canvas x:Name="PrintCanvas" Opacity="0"/>
+        <Grid x:Name="PrintCanvas" Opacity="0"/>
 
         <RelativePanel x:Name="RootPanel" Background="Black" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
