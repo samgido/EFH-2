@@ -22,10 +22,10 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
 using Windows.Graphics.Printing;
-using Microsoft.UI.Xaml.Printing;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Helpers;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Printing;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,9 +37,11 @@ namespace EFH2
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        private PrintManager _printManager;
-        private PrintDocument _printDocument;
-        private IPrintDocumentSource _printDocumentSource;
+        public PrintManager _printManager;
+        public PrintDocument _printDocument;
+        public IPrintDocumentSource _printDocumentSource;
+
+        private List<UIElement> uiElements;
 
 		public MainViewModel MainViewModel { get; set; }
 
@@ -303,14 +305,42 @@ namespace EFH2
 
 		#region Printing
 
-		private void PrintHydrograph(object sender, EventArgs e)
+		private async void PrintHydrograph(object sender, EventArgs e)
 		{
-            // add page to print preview pages list
+            uiElements = new List<UIElement>();
 
-            // async call the print ui
+            uiElements.Add(new Page()
+            {
+                Content = new TextBlock { Text = "Hello vro" },
+            });
+
+            Task _ = StartPrintAsync();
 		}
 
         private async void PrintClicked(object sender, RoutedEventArgs e)
+        {
+            //uiElements = new List<UIElement>();            
+
+            PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
+            Page1 page1 = new Page1() { DataContext = model };
+
+            //if (RcnDataViewModel.Used)
+            //{
+            //    page1.ChangePageNumber();
+            //    uiElements.Add(page1);
+            //    uiElements.Add(new Page2() { DataContext = model });
+            //}
+            //else uiElements.Add(page1);
+
+            //Task _ = StartPrintAsync();
+
+            var printHelper = new PrintHelper(PrintCanvas);
+            printHelper.AddFrameworkElementToPrint(page1);
+
+            await printHelper.ShowPrintUIAsync("Print");
+        }
+
+        private async Task StartPrintAsync()
         {
             RegisterForPrinting();
             if (PrintManager.IsSupported())
@@ -348,27 +378,31 @@ namespace EFH2
 		private void PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
 		{
             var printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
-			printTask.Completed += Completed;
-		}
+            printTask.Completed += Completed;
+        }
 
 		private void Completed(PrintTask sender, PrintTaskCompletedEventArgs args)
 		{
-            // notify if failure
-            Dispose();
+            if (args.Completion == PrintTaskCompletion.Failed)
+            {
+                this.DispatcherQueue.TryEnqueue(async () =>
+                {
+                    ContentDialog failureDialog = new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Title = "Printing Error",
+                        Content = "Failed to print",
+                        PrimaryButtonText = "OK",
+                    };
+
+                    await failureDialog.ShowAsync();
+                });
+            }
 		}
 
 		private void AddPages(object sender, AddPagesEventArgs e)
 		{
-            PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
-            Page1 page1 = new Page1() { DataContext = model };
-
-            if (RcnDataViewModel.Used)
-            {
-                page1.ChangePageNumber();
-                _printDocument.AddPage(page1);
-                _printDocument.AddPage(new Page2() { DataContext = model });
-            }
-            else _printDocument.AddPage(page1);
+            uiElements.ForEach(page => _printDocument.AddPage(page));
 
             _printDocument.AddPagesComplete();
 		}
@@ -389,12 +423,9 @@ namespace EFH2
 
         public void Dispose()
         {
-            Task _ = DispatcherQueue.EnqueueAsync(() =>
-            {
-                _printDocument.Paginate -= Paginate;
-                _printDocument.GetPreviewPage -= GetPreviewPage;
-                _printDocument.AddPages -= AddPages;
-            });
+			_printDocument.Paginate -= Paginate;
+			_printDocument.GetPreviewPage -= GetPreviewPage;
+			_printDocument.AddPages -= AddPages;
         }
 
 		#endregion

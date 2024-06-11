@@ -31,7 +31,7 @@ namespace EFH2
 	public sealed partial class ShowHydrographPage : Page
 	{
         private PrintManager _printManager;
-        private Microsoft.UI.Xaml.Printing.PrintDocument _printDocument;
+        private PrintDocument _printDocument;
         private IPrintDocumentSource _printDocumentSource;
 
 		public event EventHandler? PrintHydrograph;
@@ -43,6 +43,9 @@ namespace EFH2
 			this.InitializeComponent();
 			PlottedHydrograph.Controller = Controller;
 			Controller.UnbindAll();
+
+			Window m_window = (Application.Current as App)?.m_window;
+
 		}
 
 		private void SaveAsClick(object sender, RoutedEventArgs e)
@@ -56,26 +59,19 @@ namespace EFH2
 
 		private async void PrintClick(object sender, RoutedEventArgs e)
 		{
-			//Task _ = PrintHydrographAsync();
-			//this.PrintHydrograph?.Invoke(this, new EventArgs());
-
-            if (PrintManager.IsSupported())
-            {
-                try
-                {
-					var window = (Application.Current as App)?.m_window as MainWindow;
-					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+			RegisterPrinting();
+			if (PrintManager.IsSupported())
+			{
+				try
+				{
+					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
                     await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-            }
-            else
-            {
-                // TODO show content dialog to show failure
-            }
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine(ex.Message);
+				}
+			}
 		}
 
 		private void ExitClick(object sender, RoutedEventArgs e)
@@ -144,9 +140,9 @@ namespace EFH2
 		{
 			// register for printing
 			//var window = (Application.Current as App)?.m_window as MainWindow;
-			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+			//var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 
-			_printManager = PrintManagerInterop.GetForWindow(hWnd);
+			_printManager = PrintManager.GetForCurrentView();
 			_printManager.PrintTaskRequested += PrintTaskRequested;
 
 			// Build a PrintDocument and register for callbacks
