@@ -45,12 +45,12 @@ namespace EFH2
 
 		public MainViewModel MainViewModel { get; set; }
 
-        public TextBox? previousFocusedTextBox { get; set; }
+		private TextBox _previousFocusedTextBox;
+        public TextBox? PreviousFocusedTextBox { get => _previousFocusedTextBox; set => _previousFocusedTextBox = value; }
 
         public MainWindow()
         {
             this.InitializeComponent();
-            //RegisterForPrinting();
 
             Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
 
@@ -65,10 +65,10 @@ namespace EFH2
             BasicDataControl.SetDataContext();
 
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
-			RainfallDischargeDataControl.CreateHydrograph += RainfallDischargeDataControl_CreateHydrograph;
+			RainfallDischargeDataControl.CreateHydrograph += CreateHydrograph;
 
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
-            RcnDataControl.UnitsChanged += RcnDataControl_UnitsChanged;
+            RcnDataControl.UnitsChanged += ChangeRcnUnits;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
 
             FocusManager.GotFocus += FocusManagerGotFocus;
@@ -79,13 +79,15 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
 
             var root = this.Content as FrameworkElement;
-            if (root != null)
-            {
-                root.Loaded += async (s, e) => await ShowWelcomePage();
-            }
+			if (root != null)
+			{
+				root.Loaded += async (s, e) => await ShowWelcomePageAsync();
+			}
         }
 
-        private async Task ShowWelcomePage()
+		#region Event Handlers
+
+		private async Task ShowWelcomePageAsync()
         {
             WelcomePage welcomePage = new WelcomePage();
             ContentDialog welcomeDialog = new ContentDialog()
@@ -99,7 +101,7 @@ namespace EFH2
             await welcomeDialog.ShowAsync();
         }
 
-		private void RainfallDischargeDataControl_CreateHydrograph(object sender, EventArgs e)
+		private void CreateHydrograph(object sender, EventArgs e)
 		{
             HydrographDataViewModel model = new HydrographDataViewModel(
                 MainViewModel.BasicDataViewModel.selectedCounty,
@@ -121,7 +123,6 @@ namespace EFH2
             Window newWindow = new Window();
             newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
-			page.PrintHydrograph += PrintHydrograph;
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
             newWindow.Activate();
@@ -133,7 +134,7 @@ namespace EFH2
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 800 });
         }
 
-		private void RcnDataControl_UnitsChanged(object sender, RoutedEventArgs e)
+		private void ChangeRcnUnits(object sender, RoutedEventArgs e)
         {
             RcnDataControl.CreatePopup(MainViewModel);
         }
@@ -151,12 +152,11 @@ namespace EFH2
             Navigation.SelectedItem = BasicDataNavButton;
         }
 
-        private void FocusManagerGotFocus(object sender, FocusManagerGotFocusEventArgs e)
-        {
-            if (e.NewFocusedElement is TextBox textBox) previousFocusedTextBox = textBox;
-        }
+		#endregion
 
-        private void NewClicked(object sender, RoutedEventArgs e)
+		#region Toolbar Button Handlers
+
+		private void NewClicked(object sender, RoutedEventArgs e)
         {
             MainViewModel.Default();
         }
@@ -218,13 +218,13 @@ namespace EFH2
             dataPackage.RequestedOperation = DataPackageOperation.Move;
 
             string text = "";
-            if (previousFocusedTextBox != null)
+            if (PreviousFocusedTextBox != null)
             {
-                text = previousFocusedTextBox.SelectedText;
-                int index = previousFocusedTextBox.Text.IndexOf(text);
+                text = PreviousFocusedTextBox.SelectedText;
+                int index = PreviousFocusedTextBox.Text.IndexOf(text);
 
-                previousFocusedTextBox.Text = previousFocusedTextBox.Text.Replace(text, "");
-                previousFocusedTextBox.Select(index, 0);
+                PreviousFocusedTextBox.Text = PreviousFocusedTextBox.Text.Replace(text, "");
+                PreviousFocusedTextBox.Select(index, 0);
             }
             dataPackage.SetText(text);
             Clipboard.SetContent(dataPackage);
@@ -234,7 +234,7 @@ namespace EFH2
         {
             DataPackage dataPackage = new();
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
-            dataPackage.SetText(previousFocusedTextBox?.SelectedText);
+            dataPackage.SetText(PreviousFocusedTextBox?.SelectedText);
             Clipboard.SetContent(dataPackage);
         }
 
@@ -244,21 +244,21 @@ namespace EFH2
 
             if (dataPackageView.Contains(StandardDataFormats.Text) is true)
             {
-                int index = (int)(previousFocusedTextBox?.SelectionStart);
+                int index = (int)(PreviousFocusedTextBox?.SelectionStart);
                 string replace = await dataPackageView.GetTextAsync();
 
-                if (previousFocusedTextBox.SelectionLength == 0)
+                if (PreviousFocusedTextBox.SelectionLength == 0)
                 {
-                    previousFocusedTextBox.Text = previousFocusedTextBox.Text.Insert(index, replace);
+                    PreviousFocusedTextBox.Text = PreviousFocusedTextBox.Text.Insert(index, replace);
                 }
                 else
                 {
-                    string initial = previousFocusedTextBox.Text;
-                    initial = initial.Replace(previousFocusedTextBox.SelectedText, replace);
-                    previousFocusedTextBox.Text = initial;
+                    string initial = PreviousFocusedTextBox.Text;
+                    initial = initial.Replace(PreviousFocusedTextBox.SelectedText, replace);
+                    PreviousFocusedTextBox.Text = initial;
                 }
 
-                previousFocusedTextBox.SelectionStart = index + replace.Length;
+                PreviousFocusedTextBox.SelectionStart = index + replace.Length;
             }
         }
 
@@ -303,9 +303,35 @@ namespace EFH2
             await dialog.ShowAsync();
         }
 
+		private void HelpContentsClick(object sender, RoutedEventArgs e)
+		{
+            //ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
+        }
+
+		private void UserManualClick(object sender, RoutedEventArgs e)
+		{
+            string pdfPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "EFH-2 Users Manual.pdf");
+
+            Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
+		}
+
+		private async void AboutClick(object sender, RoutedEventArgs e)
+		{
+            AboutControl aboutControl = new AboutControl();
+            ContentDialog aboutDialog = new ContentDialog()
+            {
+                XamlRoot = this.Content.XamlRoot,
+                Title = "About EFH-2 Engineering Field Handbook, Chapter 2",
+                Content = aboutControl,
+                PrimaryButtonText = "OK",
+            };
+
+            await aboutDialog.ShowAsync();
+        }
+
 		#region Printing
 
-		private async void PrintHydrograph(object sender, EventArgs e)
+		private void PrintHydrograph(object sender, EventArgs e)
 		{
             uiElements = new List<UIElement>();
 
@@ -317,27 +343,11 @@ namespace EFH2
             Task _ = StartPrintAsync();
 		}
 
-        private async void PrintClicked(object sender, RoutedEventArgs e)
+        private void PrintClicked(object sender, RoutedEventArgs e)
         {
-            //uiElements = new List<UIElement>();            
+            uiElements = new List<UIElement>();
 
-            PrintableMainViewModel model = new PrintableMainViewModel(MainViewModel);
-            Page1 page1 = new Page1() { DataContext = model };
-
-            //if (RcnDataViewModel.Used)
-            //{
-            //    page1.ChangePageNumber();
-            //    uiElements.Add(page1);
-            //    uiElements.Add(new Page2() { DataContext = model });
-            //}
-            //else uiElements.Add(page1);
-
-            //Task _ = StartPrintAsync();
-
-            var printHelper = new PrintHelper(PrintCanvas);
-            printHelper.AddFrameworkElementToPrint(page1);
-
-            await printHelper.ShowPrintUIAsync("Print");
+            Task _ = StartPrintAsync();
         }
 
         private async Task StartPrintAsync()
@@ -429,6 +439,13 @@ namespace EFH2
         }
 
 		#endregion
+		#endregion
+
+		#region Other
+		private void FocusManagerGotFocus(object sender, FocusManagerGotFocusEventArgs e)
+        {
+            if (e.NewFocusedElement is TextBox textBox) PreviousFocusedTextBox = textBox;
+        }
 
 		private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
@@ -449,31 +466,6 @@ namespace EFH2
             RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
-
-		private void HelpContentsClick(object sender, RoutedEventArgs e)
-		{
-            //ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
-        }
-
-		private void UserManualClick(object sender, RoutedEventArgs e)
-		{
-            string pdfPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "EFH-2 Users Manual.pdf");
-
-            Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
-		}
-
-		private async void AboutClick(object sender, RoutedEventArgs e)
-		{
-            AboutControl aboutControl = new AboutControl();
-            ContentDialog aboutDialog = new ContentDialog()
-            {
-                XamlRoot = this.Content.XamlRoot,
-                Title = "About EFH-2 Engineering Field Handbook, Chapter 2",
-                Content = aboutControl,
-                PrimaryButtonText = "OK",
-            };
-
-            await aboutDialog.ShowAsync();
-        }
+		#endregion
 	}
 }
