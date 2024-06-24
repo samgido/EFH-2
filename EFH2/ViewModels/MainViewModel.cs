@@ -55,6 +55,11 @@ namespace EFH2
 
         private void CreateWinTr20InputFile(object sender, EventArgs e)
         {
+            TryWinTr20();
+        }
+
+        public void TryWinTr20()
+        {
             string fileName = FileOperations.CreateInpFile(this);
 
             // file being null doubles as a message that not all data is ready
@@ -63,11 +68,12 @@ namespace EFH2
                 FileOperations.RunWinTr20(fileName);
 				FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
             }
+            
         }
 
 		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)
 		{
-            FileOperations.SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
+            FileOperations.SearchForDataAfterCountyChanged(this, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
             foreach (StormViewModel storm in RainfallDischargeDataViewModel.Storms) storm.DisplayHydrograph = false;
             RainfallDischargeDataViewModel.Storms[0].DisplayHydrograph = true;
             RainfallDischargeDataViewModel.Storms[3].DisplayHydrograph = true;

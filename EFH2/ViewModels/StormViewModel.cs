@@ -77,5 +77,18 @@ namespace EFH2
             Runoff = model.Runoff;
             DisplayHydrograph = model.DisplayHydrograph;
         }
+
+        public void SetSilent(StormViewModel newModel)
+        {
+            this._dayRain = newModel.DayRain;
+            this._frequency = newModel.Frequency;
+            this._peakFlow = newModel.PeakFlow;
+            this._runoff = newModel.Runoff;
+
+            this.OnPropertyChanged(nameof(DayRain));
+            this.OnPropertyChanged(nameof(Frequency));
+            this.OnPropertyChanged(nameof(PeakFlow));
+            this.OnPropertyChanged(nameof(Runoff));
+        }
     }
 }

@@ -40,14 +40,21 @@ namespace EFH2
 
 		public static void LoadMainViewModel(MainViewModel model)
 		{
-			LoadBasicData(model.BasicDataViewModel);
-			LoadRainfallDischargeData(model.RainfallDischargeDataViewModel);
-			LoadRcnData(model.RcnDataViewModel);
+			try
+			{
+				LoadBasicData(model.BasicDataViewModel);
+				LoadRainfallDischargeData(model.RainfallDischargeDataViewModel);
+				LoadRcnData(model.RcnDataViewModel);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+			}
 		}
 
 		private static void LoadBasicData(BasicDataViewModel model)
 		{
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv"))
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\Rainfall_Data.csv"))
 			{
 				reader.ReadLine();
 				model.stateCountyDictionary.Add("Choose", new List<string>());
@@ -81,7 +88,7 @@ namespace EFH2
 
 		private static void LoadRainfallDischargeData(RainfallDischargeDataViewModel model)
 		{
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\rftype.txt"))
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\rftype.txt"))
 			{
 				ComboBoxItem c = new();
 				c.Content = "";
@@ -110,7 +117,7 @@ namespace EFH2
 				model.SelectedRainfallDistributionTypeIndex = 0;
 			}
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\duh.txt"))
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\duh.txt"))
 			{
 				model.DuhTypes.Clear();
 				string line = reader.ReadLine();
@@ -129,7 +136,7 @@ namespace EFH2
 
 		private static void LoadRcnData(RcnDataViewModel model)
 		{
-			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Cover2.txt"))
+			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\COVER.txt"))
 			{
 				List<RcnCategory> topCategories = new List<RcnCategory>();
 				RcnCategory topCategory = null;
@@ -199,7 +206,7 @@ namespace EFH2
 				}
 			}
 
-			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\EFH2\\SOILS.hg"))
+			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\SOILS.hg"))
 			{
 				while (!reader.EndOfStream)
 				{
@@ -229,12 +236,28 @@ namespace EFH2
 			{
 				if (!IsWinTR20Ready(model)) return null;
 
+				string programX86Path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-				string filePath = Path.Combine(appDataPath, "EFH2\\tr20.inp");
+				//string filePath = Path.Combine(appDataPath, "\\EFH2\\tr20.inp");
+
+				string filePath = appDataPath + "\\EFH2\\tr20.inp";
 
 				using (StreamWriter writer = new StreamWriter(filePath, append: false))
 				{
 					StringBuilder content = new StringBuilder();
+
+					string rainfallDistributionTable = "";
+					string rainfallDistributionType = "";
+
+					string rainfallDistributionTypeFilePath = programX86Path + "\\USDA\\Shared Engineering Data\\EFH2\\RainfallDistributions\\Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl";
+
+					if (File.Exists(rainfallDistributionTypeFilePath))
+					{
+						rainfallDistributionTable = File.ReadAllText(rainfallDistributionTypeFilePath);
+
+						string[] parts = rainfallDistributionTable.Trim().Split();
+						rainfallDistributionType = parts[0];
+					}
 
 					writer.WriteLine(String.Format("WinTR-20: {0,-30}{1,-10}{2,-10}{3,-10}{4}", "Version 3.30", 0, 0, 0.01, 0));
 					writer.WriteLine("Single watershed using lag method for Tc");
@@ -256,29 +279,26 @@ namespace EFH2
 							writer.WriteLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
 								storm.Frequency + "-Yr",
 								storm.DayRain.ToString("0.0"),
-								model.RainfallDischargeDataViewModel.selectedRainfallDistributionType,
+								rainfallDistributionType,
 								2));
 						}
 					}
 					writer.WriteLine("");
 					writer.WriteLine("RAINFALL DISTRIBUTION:");
 
-					string programX86Path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-
-					string rainfallDistributionTypeFilePath = Path.Combine(programX86Path,
-						"USDA\\Shared Engineering Data\\EFH2\\RainfallDistributions\\Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
-
-					if (File.Exists(rainfallDistributionTypeFilePath))
+					if (rainfallDistributionTable != string.Empty)
 					{
-						writer.WriteLine(File.ReadAllText(rainfallDistributionTypeFilePath));
+						writer.WriteLine(rainfallDistributionTable);
 					}
 
 					if (model.RainfallDischargeDataViewModel.SelectedDuhTypeIndex != 0)
 					{
 						writer.WriteLine("DIMENSIONLESS UNIT HYDROGRAPH:");
 
-						string duhTypeFilePath = Path.Combine(programX86Path,
-							"USDA\\Shared Engineering Data\\EFH2\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
+						//string duhTypeFilePath = Path.Combine(programX86Path,
+						//	"USDA\\Data\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
+
+						string duhTypeFilePath = programX86Path + "\\USDA\\Data\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh";
 
 						if (File.Exists(duhTypeFilePath))
 						{
@@ -298,7 +318,7 @@ namespace EFH2
 					writer.WriteLine("GLOBAL OUTPUT:");
 					writer.WriteLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
 
-					RunWinTr20(filePath);
+					//RunWinTr20(filePath);
 
 					return filePath;
 				}
@@ -311,7 +331,7 @@ namespace EFH2
 			return null;
 		}
 
-		public static void RunWinTr20(string filePath)
+		public static void RunWinTr20(string inputFilePath)
 		{
 			try
 			{
@@ -321,7 +341,7 @@ namespace EFH2
 				ProcessStartInfo psi = new ProcessStartInfo()
 				{
 					FileName = executableDirectory + executableName,
-					Arguments = filePath,
+					Arguments = inputFilePath,
 					RedirectStandardOutput = true,
 					CreateNoWindow = true,
 					UseShellExecute = false,
@@ -330,7 +350,7 @@ namespace EFH2
 				using (Process process = new Process() { StartInfo = psi })
 				{
 					process.Start();
-					//while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
+					while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
 				}
@@ -369,7 +389,8 @@ namespace EFH2
 			try
 			{
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-				string filePath = Path.Combine(appDataPath, "EFH2\\tr20.out");
+				//string filePath = Path.Combine(appDataPath, "tr20.out");
+				string filePath = appDataPath + "\\EFH2\\tr20.out";
 
 				foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
@@ -424,7 +445,7 @@ namespace EFH2
 			List<HydrographLineModel> list = new List<HydrographLineModel>();
 
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			string filePath = Path.Combine(appDataPath, "EFH2\\tr20.hyd");
+			string filePath = Path.Combine(appDataPath, "tr20.hyd");
 
 			if (File.Exists(filePath))
 			{
@@ -465,12 +486,14 @@ namespace EFH2
 			return list;
 		}
 
-		public static void SearchForDataAfterCountyChanged(RainfallDischargeDataViewModel model, string state, string county)
+		public static void SearchForDataAfterCountyChanged(MainViewModel model, string state, string county)
 		{
 			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
 			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100 };
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\Rainfall_Data.csv")) // TODO change path
+			RainfallDischargeDataViewModel newModel = new RainfallDischargeDataViewModel();
+
+            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\Rainfall_Data.csv")) // TODO change path
 			{
 				while (!reader.EndOfStream)
 				{
@@ -484,20 +507,23 @@ namespace EFH2
 							string rfType = elements[3];
 							if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
 
-							model.SetRainfallType(rfType);
+							newModel.SetRainfallType(rfType);
 
 							for (int i = 0; i < 7; i++)
 							{
 								double dayRain = double.Parse(elements[4 + i]);
 								if (dayRain != 0)
 								{
-									model.Storms[i].DayRain = dayRain;
-									model.Storms[i].Frequency = automaticStormFrequencies[i];
+									newModel.Storms[i].DayRain = dayRain;
+									newModel.Storms[i].Frequency = automaticStormFrequencies[i];
 								}
 							}
 						}
 					}
 				}
+
+				model.RainfallDischargeDataViewModel.SetSilent(newModel);
+				//model.TryWinTr20();
 			}
 		}
 

@@ -51,6 +51,7 @@ namespace EFH2
         public MainWindow()
         {
             this.InitializeComponent();
+            RegisterForPrinting();
 
             Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
 
@@ -123,6 +124,7 @@ namespace EFH2
             Window newWindow = new Window();
             newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
+            page.PrintHydrograph += PrintHydrograph;
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
             newWindow.Activate();
@@ -155,7 +157,6 @@ namespace EFH2
 		#endregion
 
 		#region Toolbar Button Handlers
-
 		private void NewClicked(object sender, RoutedEventArgs e)
         {
             MainViewModel.Default();
@@ -330,29 +331,31 @@ namespace EFH2
         }
 
 		#region Printing
-
 		private void PrintHydrograph(object sender, EventArgs e)
 		{
-            uiElements = new List<UIElement>();
-
-            uiElements.Add(new Page()
-            {
-                Content = new TextBlock { Text = "Hello vro" },
-            });
+            uiElements = new List<UIElement>
+			{
+				new Page()
+				{
+					Content = new TextBlock { Text = "Hello vro" },
+				}
+			};
 
             Task _ = StartPrintAsync();
-		}
+        }
 
         private void PrintClicked(object sender, RoutedEventArgs e)
         {
             uiElements = new List<UIElement>();
+
+            Page1 page1 = new Page1() { DataContext = new PrintableMainViewModel(MainViewModel) };
+            uiElements.Add(page1);
 
             Task _ = StartPrintAsync();
         }
 
         private async Task StartPrintAsync()
         {
-            RegisterForPrinting();
             if (PrintManager.IsSupported())
             {
                 try
@@ -388,10 +391,10 @@ namespace EFH2
 		private void PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
 		{
             var printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
-            printTask.Completed += Completed;
+            printTask.Completed += PrintTaskCompleted;
         }
 
-		private void Completed(PrintTask sender, PrintTaskCompletedEventArgs args)
+		private void PrintTaskCompleted(PrintTask sender, PrintTaskCompletedEventArgs args)
 		{
             if (args.Completion == PrintTaskCompletion.Failed)
             {
@@ -419,12 +422,13 @@ namespace EFH2
 
 		private void GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
+            _printDocument.SetPreviewPage(e.PageNumber, uiElements[0]);
 		}
 
 		private void Paginate(object sender, PaginateEventArgs e)
 		{
-            //_printDocument.SetPreviewPage(0, null);
-		}
+            _printDocument.SetPreviewPageCount(1, PreviewPageCountType.Final);
+        }
 
         private void PrintTaskSourceRequested(PrintTaskSourceRequestedArgs args)
         {

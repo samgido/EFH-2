@@ -34,9 +34,9 @@ namespace EFH2
         private PrintDocument _printDocument;
         private IPrintDocumentSource _printDocumentSource;
 
-		public event EventHandler? PrintHydrograph;
-
 		public PlotController Controller = new PlotController();
+
+		public event EventHandler PrintHydrograph;
 
 		public ShowHydrographPage()
 		{
@@ -59,19 +59,7 @@ namespace EFH2
 
 		private async void PrintClick(object sender, RoutedEventArgs e)
 		{
-			RegisterPrinting();
-			if (PrintManager.IsSupported())
-			{
-				try
-				{
-					var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-                    await PrintManagerInterop.ShowPrintUIForWindowAsync(hWnd);
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.Message);
-				}
-			}
+			this.PrintHydrograph?.Invoke(this, new EventArgs());
 		}
 
 		private void ExitClick(object sender, RoutedEventArgs e)

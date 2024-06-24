@@ -203,5 +203,22 @@ namespace EFH2
         {
             this.ValueChanged?.Invoke(this, new EventArgs());
         }
+
+        public void SetSilent(RainfallDischargeDataViewModel newModel)
+        {
+            for (int i = 0; i < newModel.Storms.Count; i++)
+            {
+                this.Storms[i].SetSilent(newModel.Storms[i]);
+            }
+
+            this._selectedDuhTypeIndex = newModel.SelectedDuhTypeIndex;
+            //this._selectedRainfallDistributionTypeIndex = newModel.SelectedRainfallDistributionTypeIndex;
+
+            this.OnPropertyChanged(nameof(Storms));
+            this.OnPropertyChanged(nameof(SelectedDuhTypeIndex));
+            this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
+
+            this.SelectedDuhTypeIndex = newModel.SelectedDuhTypeIndex;
+        }
     }
 }
