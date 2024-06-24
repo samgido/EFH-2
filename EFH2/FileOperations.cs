@@ -445,7 +445,9 @@ namespace EFH2
 			List<HydrographLineModel> list = new List<HydrographLineModel>();
 
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			string filePath = Path.Combine(appDataPath, "tr20.hyd");
+			//string filePath = Path.Combine(appDataPath, "tr20.hyd");
+
+			string filePath = appDataPath + "\\EFH2\\tr20.hyd";
 
 			if (File.Exists(filePath))
 			{
@@ -492,6 +494,7 @@ namespace EFH2
 			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100 };
 
 			RainfallDischargeDataViewModel newModel = new RainfallDischargeDataViewModel();
+			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
             using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\Rainfall_Data.csv")) // TODO change path
 			{
@@ -523,7 +526,6 @@ namespace EFH2
 				}
 
 				model.RainfallDischargeDataViewModel.SetSilent(newModel);
-				//model.TryWinTr20();
 			}
 		}
 

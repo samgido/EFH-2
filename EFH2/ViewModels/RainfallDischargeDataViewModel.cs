@@ -204,6 +204,10 @@ namespace EFH2
             this.ValueChanged?.Invoke(this, new EventArgs());
         }
 
+        /// <summary>
+        /// Sets all properties and only triggers the ValueChanged event once, instead of 15 times
+        /// </summary>
+        /// <param name="newModel"></param>
         public void SetSilent(RainfallDischargeDataViewModel newModel)
         {
             for (int i = 0; i < newModel.Storms.Count; i++)
@@ -212,13 +216,13 @@ namespace EFH2
             }
 
             this._selectedDuhTypeIndex = newModel.SelectedDuhTypeIndex;
-            //this._selectedRainfallDistributionTypeIndex = newModel.SelectedRainfallDistributionTypeIndex;
 
             this.OnPropertyChanged(nameof(Storms));
             this.OnPropertyChanged(nameof(SelectedDuhTypeIndex));
             this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
 
-            this.SelectedDuhTypeIndex = newModel.SelectedDuhTypeIndex;
+            // this will trigger ValueChanged
+            this.SelectedRainfallDistributionTypeIndex = newModel.SelectedRainfallDistributionTypeIndex;
         }
     }
 }

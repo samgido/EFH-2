@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Helpers;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Printing;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -133,7 +134,7 @@ namespace EFH2
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
-            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 800 });
+            appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 1100 });
         }
 
 		private void ChangeRcnUnits(object sender, RoutedEventArgs e)
@@ -309,7 +310,7 @@ namespace EFH2
             //ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
         }
 
-		private void UserManualClick(object sender, RoutedEventArgs e)
+        private void UserManualClick(object sender, RoutedEventArgs e)
 		{
             string pdfPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "EFH-2 Users Manual.pdf");
 
@@ -331,17 +332,33 @@ namespace EFH2
         }
 
 		#region Printing
-		private void PrintHydrograph(object sender, EventArgs e)
+		private async void PrintHydrograph(object sender, EventArgs e)
 		{
-            uiElements = new List<UIElement>
-			{
-				new Page()
-				{
-					Content = new TextBlock { Text = "Hello vro" },
-				}
-			};
+            if (sender is ShowHydrographPage page)
+            {
+                //uiElements = new List<UIElement>();
+                //ShowHydrographPage p1 = new ShowHydrographPage() { DataContext = page.DataContext };
+                //uiElements.Add(p1);
+                //Task _ = StartPrintAsync();
 
-            Task _ = StartPrintAsync();
+                var savePicker = new FileSavePicker();
+                savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                savePicker.FileTypeChoices.Add("PDF", new List<string> { ".pdf" });
+
+                var hwnd = WindowNative.GetWindowHandle(this);
+                InitializeWithWindow.Initialize(savePicker, hwnd);
+
+                StorageFile file = await savePicker.PickSaveFileAsync();
+                if (file != null)
+                {
+                    CachedFileManager.DeferUpdates(file);
+                    using (Stream stream = File.Create(file.Path))
+                    {
+                        var pdfExporter = new PdfExporter { Width = 600, Height = 400 };
+                        pdfExporter.Export(page.Plot.Model, stream);
+                    }
+                }
+            }
         }
 
         private void PrintClicked(object sender, RoutedEventArgs e)

@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Printing;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -30,22 +32,17 @@ namespace EFH2
 	/// </summary>
 	public sealed partial class ShowHydrographPage : Page
 	{
-        private PrintManager _printManager;
-        private PrintDocument _printDocument;
-        private IPrintDocumentSource _printDocumentSource;
-
 		public PlotController Controller = new PlotController();
 
 		public event EventHandler PrintHydrograph;
+
+		public OxyPlot.PlotView Plot => this.PlottedHydrograph;
 
 		public ShowHydrographPage()
 		{
 			this.InitializeComponent();
 			PlottedHydrograph.Controller = Controller;
 			Controller.UnbindAll();
-
-			Window m_window = (Application.Current as App)?.m_window;
-
 		}
 
 		private void SaveAsClick(object sender, RoutedEventArgs e)
@@ -123,65 +120,5 @@ namespace EFH2
 				catch (Exception ex) { Debug.WriteLine(ex); }
 			}
 		}
-
-		private void RegisterPrinting()
-		{
-			// register for printing
-			//var window = (Application.Current as App)?.m_window as MainWindow;
-			//var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-
-			_printManager = PrintManager.GetForCurrentView();
-			_printManager.PrintTaskRequested += PrintTaskRequested;
-
-			// Build a PrintDocument and register for callbacks
-			_printDocument = new Microsoft.UI.Xaml.Printing.PrintDocument();
-			_printDocumentSource = _printDocument.DocumentSource;
-			_printDocument.Paginate += Paginate;
-			_printDocument.GetPreviewPage += GetPreviewPage;
-			_printDocument.AddPages += AddPages;
-		}
-
-		private void AddPages(object sender, AddPagesEventArgs e)
-		{
-			Page page = new Page();
-			//page.Content = new PlotView() { DataContext = this.DataContext };
-			page.Content = new TextBlock() { Text = "HEllo" };
-
-			_printDocument.AddPage(page);
-			_printDocument.AddPagesComplete();
-		}
-
-		private void GetPreviewPage(object sender, GetPreviewPageEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void Paginate(object sender, PaginateEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
-		{
-            var printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
-			printTask.Completed += Completed;
-		}
-
-		private void Completed(PrintTask sender, PrintTaskCompletedEventArgs args)
-		{
-			Dispose();
-		}
-
-		private void PrintTaskSourceRequested(PrintTaskSourceRequestedArgs args) => args.SetSource(_printDocumentSource);
-
-        public void Dispose()
-        {
-            Task _ = DispatcherQueue.EnqueueAsync(() =>
-            {
-                _printDocument.Paginate -= Paginate;
-                _printDocument.GetPreviewPage -= GetPreviewPage;
-                _printDocument.AddPages -= AddPages;
-            });
-        }
 	}
 }
