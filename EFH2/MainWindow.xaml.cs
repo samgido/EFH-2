@@ -337,27 +337,8 @@ namespace EFH2
             if (sender is ShowHydrographPage page)
             {
                 uiElements = new List<UIElement>();
-                //ShowHydrographPage p1 = new ShowHydrographPage() { DataContext = page.DataContext, Width = 600 };
                 uiElements.Add(page.Plot);
                 Task _ = StartPrintAsync();
-
-                //var savePicker = new FileSavePicker();
-                //savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-                //savePicker.FileTypeChoices.Add("PDF", new List<string> { ".pdf" });
-
-                //var hwnd = WindowNative.GetWindowHandle(this);
-                //InitializeWithWindow.Initialize(savePicker, hwnd);
-
-                //StorageFile file = await savePicker.PickSaveFileAsync();
-                //if (file != null)
-                //{
-                //    CachedFileManager.DeferUpdates(file);
-                //    using (Stream stream = File.Create(file.Path))
-                //    {
-                //        var pdfExporter = new PdfExporter { Width = 600, Height = 400 };
-                //        pdfExporter.Export(page.Plot.Model, stream);
-                //    }
-                //}
             }
         }
 
@@ -365,8 +346,17 @@ namespace EFH2
         {
             uiElements = new List<UIElement>();
 
-            Page1 page1 = new Page1() { DataContext = new PrintableMainViewModel(MainViewModel) };
-            uiElements.Add(page1);
+			PrintableMainViewModel printableMainViewModel = new PrintableMainViewModel(MainViewModel);
+            Page1 page1 = new Page1() { DataContext = printableMainViewModel };
+			Page2 page2 = new Page2() { DataContext = printableMainViewModel };
+
+            if (RcnDataViewModel.Used)
+            {
+                page1.ChangePageNumber();
+                uiElements.Add(page1);
+                uiElements.Add(page2);
+            }
+            else uiElements.Add(page1);
 
             Task _ = StartPrintAsync();
         }
