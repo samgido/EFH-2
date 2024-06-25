@@ -187,10 +187,10 @@ namespace EFH2
 
         public void Load(BasicDataViewModel model)
         {
-            Client = model.Client;
-            Practice = model.Practice;
-            By = model.By;
-            Date = model.Date;
+            _client = model.Client;
+            _practice = model.Practice;
+            _by = model.By;
+            _date = model.Date;
 
             for (int i = 0; i < States.Count; i++)
             {
@@ -212,11 +212,16 @@ namespace EFH2
                 }
             }
 
-            drainageAreaEntry.Value = model.DrainageArea;
-            runoffCurveNumberEntry.Value = model.RunoffCurveNumber;
-            watershedLengthEntry.Value = model.WatershedLength;
-            watershedSlopeEntry.Value = model.WatershedSlope;
-            timeOfConcentrationEntry.Value = model.TimeOfConcentration;
+            drainageAreaEntry.SetSilent(model.DrainageArea);
+            runoffCurveNumberEntry.SetSilent(model.RunoffCurveNumber);
+            watershedLengthEntry.SetSilent(model.WatershedLength);
+            watershedSlopeEntry.SetSilent(model.WatershedSlope);
+            timeOfConcentrationEntry.SetSilent(model.TimeOfConcentration);
+
+            this.OnPropertyChanged(nameof(Client));
+            this.OnPropertyChanged(nameof(Practice));
+            this.OnPropertyChanged(nameof(By));
+            this.OnPropertyChanged(nameof(Date));
         }
     }
 }

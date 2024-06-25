@@ -126,6 +126,7 @@ namespace EFH2
             newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
             page.PrintHydrograph += PrintHydrograph;
+			page.CloseWindow += async (o, e) => newWindow.Close();
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
             newWindow.Activate();
@@ -176,12 +177,19 @@ namespace EFH2
 
             if (file != null)
             {
-                using (StreamReader reader = new StreamReader(file.Path))
+                try
                 {
-                    reader.BaseStream.Position = 0;
-                    MainViewModel? model = FileOperations.DeserializeData(reader);
-                    if (model != null) MainViewModel.Load(model);
-                    // TODO - show error
+					using (StreamReader reader = new StreamReader(file.Path))
+					{
+						reader.BaseStream.Position = 0;
+						MainViewModel? model = FileOperations.DeserializeData(reader);
+						if (model != null) MainViewModel.Load(model);
+						// TODO - show error
+					}
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
                 }
             }
         }

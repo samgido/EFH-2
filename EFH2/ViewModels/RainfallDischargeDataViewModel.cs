@@ -161,13 +161,16 @@ namespace EFH2
 
             for (int i = 0; i < Storms.Count; i++)
             {
-                Storms[i].Load(model.Storms[i]);
+                Storms[i].SetSilent(model.Storms[i]);
                 Storms[i].ValueChanged += StormPropertyChanged;
             }
         }
 
         public void Default()
         {
+            SelectedRainfallDistributionTypeIndex = 0;
+            SelectedDuhTypeIndex = 0;
+
             selectedRainfallDistributionType = MainViewModel.ChooseMessage;
             selectedDuhType = MainViewModel.ChooseMessage;
 

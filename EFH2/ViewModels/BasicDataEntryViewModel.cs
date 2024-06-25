@@ -72,5 +72,11 @@ namespace EFH2
             Value = double.NaN;
             Status = "";
         }
+
+        public void SetSilent(double value)
+        {
+            _value = value;
+            this.OnPropertyChanged(nameof(Value));
+        }
     }
 }

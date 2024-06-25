@@ -84,7 +84,7 @@ namespace EFH2
         {
             BasicDataViewModel.Load(newData.BasicDataViewModel);
             RcnDataViewModel.LoadDataModel(newData.RcnDataModel);
-            RainfallDischargeDataViewModel.Load(newData.RainfallDischargeDataViewModel);
+            RainfallDischargeDataViewModel.SetSilent(newData.RainfallDischargeDataViewModel);
         }
 
         public void Default()

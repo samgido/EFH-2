@@ -42,6 +42,7 @@ namespace EFH2
 		public PlotController Controller = new PlotController();
 
 		public event EventHandler PrintHydrograph;
+		public event EventHandler CloseWindow;
 
 		public OxyPlot.PlotView Plot => this.PlottedHydrograph;
 
@@ -109,7 +110,7 @@ namespace EFH2
 
 		private void ExitClick(object sender, RoutedEventArgs e)
 		{
-
+			this.CloseWindow?.Invoke(this, new EventArgs());
 		}
 
 		private void CopyClick(object sender, RoutedEventArgs e)
