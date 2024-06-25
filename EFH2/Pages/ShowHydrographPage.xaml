@@ -11,6 +11,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Margin="0,0,0,0" x:Name="MainGrid">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -54,6 +55,6 @@
             <AppBarButton Icon="Copy" Click="CopyClick"/>
         </CommandBar>
 
-        <oxyplot:PlotView x:Name="PlottedHydrograph" Model="{Binding Path=Model}" Grid.Row="3"/>
+        <oxyplot:PlotView x:Name="PlottedHydrograph" Model="{Binding Path=Model}" Grid.Row="3" Background="White"/>
     </Grid>
 </Page>

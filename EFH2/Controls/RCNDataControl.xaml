@@ -18,8 +18,7 @@
         </Style>
     </UserControl.Resources>
 
-    <RelativePanel Background="Black" x:Name="RootPanel" DataContext="{x:Bind Path=ViewModel}" VerticalAlignment="Stretch">
-
+    <RelativePanel x:Name="RootPanel" DataContext="{x:Bind Path=ViewModel}" VerticalAlignment="Stretch">
         <RadioButtons
             x:Name="CoverDescriptionButtons"
             MaxColumns="5"
