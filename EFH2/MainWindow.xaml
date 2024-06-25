@@ -14,6 +14,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <Image x:Name="TitleBarIcon" Source="Assets/EFH2.png" Grid.Column="0" Width="16" Height="16" Margin="10,5,5,0"/>
@@ -90,7 +91,9 @@
 
                 <AppBarSeparator/>
 
-                <AppBarButton Icon="Help" Label="Help" Click="HelpContentsClick"/> 
+                <AppBarButton Icon="Help" Label="Help" Click="HelpContentsClick"/>
+
+                <AppBarButton Icon="Accept" Label="Fill In fields" Click="AppBarButton_Click"/>
             </CommandBar>
 
             <NavigationView PaneDisplayMode="Top" x:Name="Navigation" IsBackButtonVisible="Collapsed"

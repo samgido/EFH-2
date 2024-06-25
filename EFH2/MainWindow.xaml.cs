@@ -478,5 +478,16 @@ namespace EFH2
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
 		#endregion
+
+		private void AppBarButton_Click(object sender, RoutedEventArgs e)
+		{
+            MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = 500;
+            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = 50;
+            MainViewModel.BasicDataViewModel.watershedLengthEntry.Value = 5000;
+            MainViewModel.BasicDataViewModel.watershedSlopeEntry.Value = 5;
+
+            MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
+            MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2; 
+		}
 	}
 }
