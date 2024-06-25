@@ -84,6 +84,16 @@ namespace EFH2
         {
             BasicDataViewModel.Load(newData.BasicDataViewModel);
             RcnDataViewModel.LoadDataModel(newData.RcnDataModel);
+
+            // When data is demarshalled, it reads 9 null storms, then the actual data so remove the null storms here
+            // As to why there's a +4 on the upper bound in the for loop, I have no clue
+            if (newData.RainfallDischargeDataViewModel.Storms.Count > 10)
+            {
+                for (int i = 0; i < MainViewModel.NumberOfStorms + 4; i++)
+                {
+                    newData.RainfallDischargeDataViewModel.Storms.RemoveAt(i);
+                }
+            }
             RainfallDischargeDataViewModel.SetSilent(newData.RainfallDischargeDataViewModel);
         }
 

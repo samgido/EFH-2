@@ -215,7 +215,9 @@ namespace EFH2
         {
             for (int i = 0; i < newModel.Storms.Count; i++)
             {
+                this.Storms[i].ValueChanged -= StormPropertyChanged;
                 this.Storms[i].SetSilent(newModel.Storms[i]);
+                this.Storms[i].ValueChanged += StormPropertyChanged;
             }
 
             this._selectedDuhTypeIndex = newModel.SelectedDuhTypeIndex;

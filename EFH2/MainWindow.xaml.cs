@@ -196,6 +196,11 @@ namespace EFH2
 
         private async void SaveClicked(object sender, RoutedEventArgs e)
         {
+            if (MainViewModel.RcnDataViewModel.AccumulatedArea != MainViewModel.BasicDataViewModel.DrainageArea)
+            { // 
+
+            }
+
             MainViewModel.RcnDataModel = MainViewModel.RcnDataViewModel.ToRcnDataModel();
 
             var savePicker = new FileSavePicker();
