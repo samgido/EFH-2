@@ -9,12 +9,6 @@
     mc:Ignorable="d">
 
     <Grid>
-        <local:Page1 x:Name="Page1Control" Foreground="Black" Visibility="Collapsed"/>
-
-        <local:Page2 x:Name="Page2Control" Foreground="Black" Visibility="Collapsed"/>
-
-        <Grid x:Name="PrintCanvas" Opacity="0"/>
-
         <RelativePanel x:Name="RootPanel" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>

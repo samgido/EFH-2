@@ -29,8 +29,6 @@
     <None Remove="Controls\RcnRowsControl.xaml" />
     <None Remove="Pages\HelpContentsPage.xaml" />
     <None Remove="Pages\HsgPage.xaml" />
-    <None Remove="Pages\Page1Wrapper.xaml" />
-    <None Remove="Pages\Page2Wrapper.xaml" />
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
     <None Remove="Pages\SlopeCalculatorPage.xaml" />
@@ -97,17 +95,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\Page2Wrapper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Controls\Page2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\Page1Wrapper.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

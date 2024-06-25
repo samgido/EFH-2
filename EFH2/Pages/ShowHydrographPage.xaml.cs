@@ -54,7 +54,7 @@ namespace EFH2
 		{
 		}
 
-		private async void PrintClick(object sender, RoutedEventArgs e)
+		private void PrintClick(object sender, RoutedEventArgs e)
 		{
 			this.PrintHydrograph?.Invoke(this, new EventArgs());
 		}
