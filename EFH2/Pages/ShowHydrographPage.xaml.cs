@@ -28,6 +28,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using OxyPlot.Wpf;
 using System.Drawing.Imaging;
+using Svg;
+using System.Windows.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -59,7 +61,7 @@ namespace EFH2
 			{
 				var savePicker = new FileSavePicker();
 				savePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-				savePicker.FileTypeChoices.Add("SVG", new List<string> { ".svg" });
+				savePicker.FileTypeChoices.Add("Bitmap", new List<string> { ".bmp" });
 
 				var hwnd = WindowNative.GetWindowHandle((Application.Current as App)?.m_window as MainWindow);
 				InitializeWithWindow.Initialize(savePicker, hwnd);
@@ -67,28 +69,18 @@ namespace EFH2
 				StorageFile file = await savePicker.PickSaveFileAsync();
 				if (file != null)
 				{
-					//CachedFileManager.DeferUpdates(file);
-
-					//BitmapImage image = GetBitmap();
-					//if (image == null) { throw new InvalidOperationException("Bitmap not initialized"); }
-
-
-					//BitmapEncoder encoder = new PngBitmapEncoder();
-					//encoder.Frames.Add(BitmapFrame.Create(image));
-
-					//using (var fileStream = new FileStream(file.Path, FileMode.Create))
-					//{
-					//	encoder.Save(fileStream);
-					//}
-
 					using (var stream = new MemoryStream())
 					{
-						var exporter = new OxyPlot.SvgExporter { Width = 650, Height = 450 };
-						exporter.Export(Plot.Model, stream);
-						stream.Seek(0, SeekOrigin.Begin);
-						var svgString = new StreamReader(stream).ReadToEnd();
-						File.WriteAllText(file.Path, svgString);
+						//var exporter = new OxyPlot.SvgExporter { Width = 650, Height = 450 };
+						//exporter.Export(Plot.Model, stream);
+						//stream.Seek(0, SeekOrigin.Begin);
+						//var svgString = new StreamReader(stream).ReadToEnd();
+						//File.WriteAllText(file.Path, svgString);
 					}
+
+					Bitmap image = GetBitmap();
+
+					image.Save(file.Path);
 				}
 
 				CachedFileManager.CompleteUpdatesAsync(file);
@@ -115,14 +107,13 @@ namespace EFH2
 
 		private void CopyClick(object sender, RoutedEventArgs e)
 		{
-			using (var stream = new MemoryStream())
-			{
-				OxyPlot.SvgExporter exporter = new OxyPlot.SvgExporter { Width = 650, Height = 450 };
-				exporter.Export(Plot.Model, stream);
-				stream.Seek(0, SeekOrigin.Begin);
-				string svgString = new StreamReader(stream).ReadToEnd();
-				System.Windows.Clipboard.SetText(svgString);
-			}
+			Bitmap image = GetBitmap();
+			var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
+				image.GetHbitmap(),
+				IntPtr.Zero,
+				System.Windows.Int32Rect.Empty,
+				BitmapSizeOptions.FromEmptyOptions());
+			System.Windows.Clipboard.SetImage(bitmapSource);
 		}
 
 		private void ZoomInClick(object sender, RoutedEventArgs e)
@@ -177,76 +168,16 @@ namespace EFH2
 			}
 		}
 
-		private BitmapImage GetBitmap()
+		private Bitmap GetBitmap()
 		{
-			try
-			{
-				// ATTEMPT 1
-				//var stream = new MemoryStream();
-				//var svgExporter = new SvgExporter() { Width = 650, Height = 450 };
-				//svgExporter.Export(Plot.Model, stream);
+			var exporter = new OxyPlot.SvgExporter { Width = 650, Height = 450 };
+			string svgString = exporter.ExportToString(Plot.Model);
 
-				//var converter = new FileSvgReader(new SharpVectors.Renderers.Wpf.WpfDrawingSettings());
-				//var drawing = converter.Read(stream);
+			var mySvg = SvgDocument.FromSvg<SvgDocument>(svgString);
 
-				//var bitmap = new Bitmap(650, 450);
+			Bitmap bitmap = mySvg.Draw();
 
-				//var renderTargetBitmap = new RenderTargetBitmap(650, 450, 96, 96, pixelFormat: PixelFormats.Pbgra32);
-				//var drawingVisual = new DrawingVisual();
-
-				//using (var drawingContext = drawingVisual.RenderOpen())
-				//{
-				//	drawingContext.DrawDrawing(drawing);
-				//}
-
-				//renderTargetBitmap.Render(drawingVisual);
-
-				//using (var memoryStream = new MemoryStream())
-				//{
-				//	var bitmapEncoder = new BmpBitmapEncoder();
-				//	bitmapEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-				//	bitmapEncoder.Save(memoryStream);
-
-				//	memoryStream.Seek(0, SeekOrigin.Begin);
-				//	bitmap = new Bitmap(memoryStream);
-				//}
-				//return bitmap
-
-				// ATTEMPT 2
-				//var pngExporter = new PngExporter { Width = 650, Height = 450 };
-				//BitmapSource bitmapSource = pngExporter.ExportToBitmap(Plot.Model);
-				//Bitmap bitmap = new Bitmap(bitmapSource.PixelWidth, bitmapSource.PixelHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-
-				//BitmapData data = bitmap.LockBits(new Rectangle(System.Drawing.Point.Empty, bitmap.Size), ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-
-				//bitmapSource.CopyPixels(System.Windows.Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
-
-				////bitmap.UnlockBits(data);
-				//return bitmap;
-
-				// ATTEMPT 3
-				//var pngExporter = new PngExporter { Width = 650, Height = 450 };
-				//using (var stream = new MemoryStream())
-				//{
-				//	pngExporter.Export(Plot.Model, stream);
-				//	stream.Seek(0, SeekOrigin.Begin);
-
-				//	var bitmapImage = new BitmapImage();
-				//	bitmapImage.BeginInit();
-				//	bitmapImage.StreamSource = stream;
-				//	bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-				//	bitmapImage.EndInit();
-				//	bitmapImage.Freeze();
-
-				//	return bitmapImage;
-				//}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
-
-			return null;
+			return bitmap;
 		}
 	}
 }
