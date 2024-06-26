@@ -197,10 +197,35 @@ namespace EFH2
 
         private async void SaveClicked(object sender, RoutedEventArgs e)
         {
-            if (MainViewModel.RcnDataViewModel.AccumulatedArea != MainViewModel.BasicDataViewModel.DrainageArea)
-            { // show dialog asking to verify data or keep
-                await OnSaveInconsistentDataDialog.ShowAsync();
+            try
+            {
+                double basicDataArea = MainViewModel.BasicDataViewModel.DrainageArea;
+                double basicDataCurveNumber = MainViewModel.BasicDataViewModel.RunoffCurveNumber;
+
+                double rcnDataArea = MainViewModel.RcnDataViewModel.AccumulatedArea;
+                double rcnDataCurveNumber = MainViewModel.RcnDataViewModel.WeightedCurveNumber;
+
+                if ((double.IsNormal(rcnDataArea) && double.IsNormal(rcnDataCurveNumber)) && !(basicDataArea.Equals(rcnDataArea) && basicDataCurveNumber.Equals(rcnDataCurveNumber))) 
+                { // show dialog asking to verify data or keep
+                    InconsistentDataDialogControl content = new InconsistentDataDialogControl();
+					content.SetValues(MainViewModel.BasicDataViewModel.DrainageArea, MainViewModel.BasicDataViewModel.RunoffCurveNumber,
+						MainViewModel.RcnDataViewModel.AccumulatedArea, MainViewModel.RcnDataViewModel.WeightedCurveNumber);
+
+                    ContentDialog dialog = new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Title = "Inconsistent data",
+                        Content = content,
+                        PrimaryButtonText = "Yes",
+                        SecondaryButtonText = "No",
+                    };
+
+                    ContentDialogResult result = await dialog.ShowAsync();
+
+                    if (result == ContentDialogResult.Secondary) return;
+                }
             }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
             MainViewModel.RcnDataModel = MainViewModel.RcnDataViewModel.ToRcnDataModel();
 
@@ -315,7 +340,6 @@ namespace EFH2
                 CloseButtonText = "Close",
                 XamlRoot = this.Content.XamlRoot,
             };
-
             await dialog.ShowAsync();
         }
 
@@ -491,24 +515,17 @@ namespace EFH2
             RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
-		#endregion
+        #endregion
 
-		private async void AppBarButton_Click(object sender, RoutedEventArgs e)
-		{
-            //MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = 500;
-            //MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = 50;
-            //MainViewModel.BasicDataViewModel.watershedLengthEntry.Value = 5000;
-            //MainViewModel.BasicDataViewModel.watershedSlopeEntry.Value = 5;
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = 500;
+            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = 50;
+            MainViewModel.BasicDataViewModel.watershedLengthEntry.Value = 5000;
+            MainViewModel.BasicDataViewModel.watershedSlopeEntry.Value = 5;
 
-            //MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
-            //MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2; 
-
-            //ContentDialogResult result = await OnSaveInconsistentDataDialog.ShowAsync();
-
-            //if (result == ContentDialogResult.Secondary)
-            //{
-                
-            //}
-		}
-	}
+            MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
+            MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2;
+        }
+    }
 }
