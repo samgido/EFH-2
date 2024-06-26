@@ -18,6 +18,7 @@
   <ItemGroup>
     <None Remove="Controls\AboutControl.xaml" />
     <None Remove="Controls\BasicDataControl.xaml" />
+    <None Remove="Controls\InconsistentDataDialogControl.xaml" />
     <None Remove="Controls\IntroControl.xaml" />
     <None Remove="Controls\Page1.xaml" />
     <None Remove="Controls\Page2.xaml" />
@@ -65,6 +66,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\InconsistentDataDialogControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\WelcomePage.xaml">

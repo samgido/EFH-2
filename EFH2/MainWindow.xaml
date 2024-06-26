@@ -9,6 +9,8 @@
     mc:Ignorable="d">
 
     <Grid>
+        <!--<local:InconsistentDataDialogControl x:Name="OnSaveInconsistentDataDialog" DataContext="{x:Bind Path=MainViewModel}"/>-->
+
         <RelativePanel x:Name="RootPanel" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>

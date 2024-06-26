@@ -27,6 +27,7 @@ using CommunityToolkit.WinUI.Helpers;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Printing;
 using WinRT.Interop;
+using Microsoft.VisualStudio.PlatformUI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -197,8 +198,8 @@ namespace EFH2
         private async void SaveClicked(object sender, RoutedEventArgs e)
         {
             if (MainViewModel.RcnDataViewModel.AccumulatedArea != MainViewModel.BasicDataViewModel.DrainageArea)
-            { // 
-
+            { // show dialog asking to verify data or keep
+                await OnSaveInconsistentDataDialog.ShowAsync();
             }
 
             MainViewModel.RcnDataModel = MainViewModel.RcnDataViewModel.ToRcnDataModel();
@@ -492,15 +493,22 @@ namespace EFH2
         }
 		#endregion
 
-		private void AppBarButton_Click(object sender, RoutedEventArgs e)
+		private async void AppBarButton_Click(object sender, RoutedEventArgs e)
 		{
-            MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = 500;
-            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = 50;
-            MainViewModel.BasicDataViewModel.watershedLengthEntry.Value = 5000;
-            MainViewModel.BasicDataViewModel.watershedSlopeEntry.Value = 5;
+            //MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = 500;
+            //MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = 50;
+            //MainViewModel.BasicDataViewModel.watershedLengthEntry.Value = 5000;
+            //MainViewModel.BasicDataViewModel.watershedSlopeEntry.Value = 5;
 
-            MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
-            MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2; 
+            //MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
+            //MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2; 
+
+            //ContentDialogResult result = await OnSaveInconsistentDataDialog.ShowAsync();
+
+            //if (result == ContentDialogResult.Secondary)
+            //{
+                
+            //}
 		}
 	}
 }
