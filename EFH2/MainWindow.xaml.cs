@@ -28,6 +28,7 @@ using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Printing;
 using WinRT.Interop;
 using Microsoft.VisualStudio.PlatformUI;
+using Windows.Data.Pdf;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -527,7 +528,12 @@ namespace EFH2
             //MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
             //MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2;
 
-            PrintDoc.PrintInfo(MainViewModel);
+            PrintDoc.PrintInfo(MainViewModel, @"C://Users//samue//Downloads//test.pdf");
+
+            PrintHelper printHelper = new PrintHelper(this.PrintCanvas);
+
+            var pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(@"C://Users//samue//Downloads//test.pdf"));
+            
         }
     }
 }

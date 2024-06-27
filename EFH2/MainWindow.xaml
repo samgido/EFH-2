@@ -9,6 +9,7 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Canvas Opacity="0" x:Name="PrintCanvas"/>
         <RelativePanel x:Name="RootPanel" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
