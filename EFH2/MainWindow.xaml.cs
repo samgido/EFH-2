@@ -29,6 +29,11 @@ using Microsoft.UI.Xaml.Printing;
 using WinRT.Interop;
 using Microsoft.VisualStudio.PlatformUI;
 using Windows.Data.Pdf;
+using Microsoft.Web.WebView2.Core;
+using PdfSharp.Pdf.IO;
+using PdfSharp.Drawing;
+using System.Windows.Forms;
+using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -269,7 +274,7 @@ namespace EFH2
                 PreviousFocusedTextBox.Select(index, 0);
             }
             dataPackage.SetText(text);
-            Clipboard.SetContent(dataPackage);
+            Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
         }
 
         private void CopyClicked(object sender, RoutedEventArgs e)
@@ -277,12 +282,12 @@ namespace EFH2
             DataPackage dataPackage = new();
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
             dataPackage.SetText(PreviousFocusedTextBox?.SelectedText);
-            Clipboard.SetContent(dataPackage);
+            Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
         }
 
         private async void PasteClicked(object sender, RoutedEventArgs e)
         {
-            DataPackageView dataPackageView = Clipboard.GetContent();
+            DataPackageView dataPackageView = Windows.ApplicationModel.DataTransfer.Clipboard.GetContent();
 
             if (dataPackageView.Contains(StandardDataFormats.Text) is true)
             {
@@ -528,12 +533,65 @@ namespace EFH2
             //MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
             //MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2;
 
-            PrintDoc.PrintInfo(MainViewModel, @"C://Users//samue//Downloads//test.pdf");
+            try
+            {
+				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+				string filename = appDataPath + "\\EFH2\\temp.pdf";
+				PrintDoc.PrintInfo(MainViewModel, filename);
 
-            PrintHelper printHelper = new PrintHelper(this.PrintCanvas);
+				var pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filename));
 
-            var pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(@"C://Users//samue//Downloads//test.pdf"));
-            
-        }
+                //await WebView.EnsureCoreWebView2Async();
+                //WebView.CoreWebView2.SetVirtualHostNameToFolderMapping("pdfjs", appDataPath + "\\EFH2", CoreWebView2HostResourceAccessKind.Allow);
+                //WebView.Source = new Uri("https://pdfjs/web/viewer.html?file=" + "C:\\Users\\samue\\AppData\\EFH2\\temp.pdf");
+
+                //MainGrid.Children.Add(WebView);
+
+                //WebView.CoreWebView2.NavigationCompleted += (sender, args) =>
+                //{
+                //	if (args.IsSuccess)
+                //	{
+                //		WebView.CoreWebView2.ShowPrintUI(CoreWebView2PrintDialogKind.System);
+                //	}
+                //}; 
+
+                int currentPageIndex;
+                PdfSharp.Pdf.PdfDocument document;
+
+				document = PdfReader.Open(filename, PdfDocumentOpenMode.Import);
+				currentPageIndex = 0;
+
+				System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
+                printDocument.PrintPage += async (sender, args) =>
+                {
+                    if (currentPageIndex < document.PageCount)
+					{
+                        XGraphics gfx = XGraphics.FromPdfPage(document.Pages[currentPageIndex]);
+						XPdfForm form = XPdfForm.FromFile(filename);
+						form.PageNumber = currentPageIndex + 1;
+						gfx.DrawImage(form, 0, 0, args.PageBounds.Width, args.PageBounds.Height);
+
+						currentPageIndex++;
+						args.HasMorePages = currentPageIndex < document.PageCount;
+					}
+					else
+					{
+						args.HasMorePages = false;
+					}
+				};
+
+				PrintDialog printDialog = new PrintDialog();
+				if (printDialog.ShowDialog() == DialogResult.OK)
+				{
+					printDocument.PrinterSettings = printDialog.PrinterSettings;
+					printDocument.Print();
+				}
+
+			}
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+		}
     }
 }
