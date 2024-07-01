@@ -24,13 +24,13 @@ namespace EFH2
                 {
 					this.SetProperty(ref _value, value);
 
-					if (value <= Max && value >= Min)
-					{
-						Status = MainViewModel.UserEnteredMessage;
-						this.ValueChanged?.Invoke(this, new EventArgs());
-					}
-					else if (double.IsNaN(value)) Status = "";
-					else Status = InvalidEntryStatus;
+                    if (value <= Max && value >= Min)
+                    {
+                        InputStatus = InputStatus.UserEnteredValue;
+                        this.ValueChanged?.Invoke(this, new EventArgs());
+                    }
+                    else if (double.IsNaN(value)) InputStatus = InputStatus.None;
+                    else InputStatus = InputStatus.Invalid;
                 }
             }
         }
@@ -47,11 +47,46 @@ namespace EFH2
         [XmlIgnore]
         public string InvalidEntryStatus { get; private set; }
 
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _status = "";
+        private InputStatus _inputStatus = InputStatus.None;
 
-		public BasicDataEntryViewModel()
+        [XmlIgnore]
+        public InputStatus InputStatus
+        {
+            get => _inputStatus;
+            set
+            {
+                _inputStatus = value;
+                this.OnPropertyChanged(nameof(Status));
+            }
+        }
+
+        //[ObservableProperty]
+        //[property: XmlIgnore]
+        //private string _status = "";
+
+        public string Status
+        {
+            get
+            {
+                switch (InputStatus)
+                {
+                    case InputStatus.Invalid:
+                        return InvalidEntryStatus;
+                    case InputStatus.UserEnteredValue:
+                        return MainViewModel.UserEnteredMessage;
+                    case InputStatus.Calculated:
+                        return MainViewModel.CalculatedStatusMessage;
+                    case InputStatus.Cleared:
+                        return MainViewModel.ClearedMessage;
+                    case InputStatus.FromRcnCalculator:
+                        return MainViewModel.FromRcnCalculatorMessage;
+                    default:
+                        return "";
+                }
+            }
+        }
+
+        public BasicDataEntryViewModel()
         {
             Min = 0;
             Max = 0;
@@ -70,7 +105,7 @@ namespace EFH2
         public void Default()
         {
             Value = double.NaN;
-            Status = "";
+            InputStatus = InputStatus.None;
         }
 
         public void SetSilent(double value)

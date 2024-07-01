@@ -127,12 +127,12 @@ namespace EFH2
 			if (double.IsNaN(final))
 			{
 				this.timeOfConcentrationEntry.Value = double.NaN;
-				this.timeOfConcentrationEntry.Status = "";
+                this.timeOfConcentrationEntry.InputStatus = InputStatus.None;
 			}
 			else
 			{
 				this.timeOfConcentrationEntry.Value = Math.Round(final, 2);
-				this.timeOfConcentrationEntry.Status = "Calculated";
+                this.timeOfConcentrationEntry.InputStatus = InputStatus.Calculated;
 			}
         }
 
@@ -178,11 +178,11 @@ namespace EFH2
         {
             Default();
 
-            timeOfConcentrationEntry.Status = MainViewModel.ClearedMessage;
-            watershedSlopeEntry.Status = MainViewModel.ClearedMessage;
-            watershedLengthEntry.Status = MainViewModel.ClearedMessage;
-            runoffCurveNumberEntry.Status = MainViewModel.ClearedMessage;
-            drainageAreaEntry.Status = MainViewModel.ClearedMessage;
+            timeOfConcentrationEntry.InputStatus = InputStatus.Cleared;
+            watershedSlopeEntry.InputStatus = InputStatus.Cleared;
+            watershedLengthEntry.InputStatus = InputStatus.Cleared;
+            runoffCurveNumberEntry.InputStatus = InputStatus.Cleared;
+            drainageAreaEntry.InputStatus = InputStatus.Cleared;
         }
 
         public void Load(BasicDataViewModel model)

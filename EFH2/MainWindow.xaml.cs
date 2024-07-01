@@ -158,8 +158,8 @@ namespace EFH2
             MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
             MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = e.WeightedCurveNumber;
 
-            MainViewModel.BasicDataViewModel.drainageAreaEntry.Status = "From RCN.";
-            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Status = "From RCN.";
+            MainViewModel.BasicDataViewModel.drainageAreaEntry.InputStatus = InputStatus.Calculated;
+            MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.InputStatus = InputStatus.Calculated;
 
             HideControls();
             BasicDataControl.Visibility = Visibility.Visible;

@@ -20,6 +20,12 @@ namespace EFH2
         public const string UserEnteredMessage = "User Entered.";
 
         [XmlIgnore]
+        public const string FromRcnCalculatorMessage = "from RCN Calculator";
+
+        [XmlIgnore]
+        public const string CalculatedStatusMessage = "Calculated.";
+
+        [XmlIgnore]
         public const string ChooseMessage = "Choose...";
 
         [XmlIgnore]
