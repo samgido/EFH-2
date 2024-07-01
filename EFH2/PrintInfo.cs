@@ -11,27 +11,29 @@ using MigraDoc.DocumentObjectModel.Shapes.Charts;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.DocumentObjectModel.Visitors;
 using MigraDoc.Rendering;
+using MigraDoc.Rendering.Extensions;
 using OxyPlot;
 
 namespace EFH2
 {
-	public class PrintDoc
+	public class PrintInfo
 	{
-		public static void PrintInfo(MainViewModel model, string filename)
+		public static void Print(MainViewModel model, string filename)
 		{
-			Document document = CreateDocument(model);
-
-			PdfDocumentRenderer renderer = new PdfDocumentRenderer();
-
-			renderer.Document = document;
-
-			renderer.RenderDocument();
-
 			try
 			{
+				Document document = CreateDocument(model);
+
+				PdfDocumentRenderer renderer = new PdfDocumentRenderer();
+
+				renderer.Document = document;
+
+				renderer.RenderDocument();
+
 				renderer.PdfDocument.Save(filename);
 			}
-			catch (Exception ex) { Debug.WriteLine(ex.Message); }
+			// keep trying till it works, only happens once over
+			catch (Exception ex) { Print(model, filename); }
 		}
 
 		private static Document CreateDocument(MainViewModel model)
@@ -216,7 +218,7 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
-			p.AddText(model.BasicDataViewModel.watershedLengthEntry.Status);
+			//p.AddText(model.BasicDataViewModel.watershedLengthEntry.Status);
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -233,7 +235,7 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
-			p.AddText(model.BasicDataViewModel.watershedSlopeEntry.Status);
+			//p.AddText(model.BasicDataViewModel.watershedSlopeEntry.Status);
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -284,6 +286,13 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
+
+			string duhTypeStatus = model.RainfallDischargeDataViewModel.DuhTypeStatus;
+			if (duhTypeStatus == "<standard>")
+			{
+				duhTypeStatus = "(default 484)";
+			}
+
 			p.AddText(model.RainfallDischargeDataViewModel.DuhTypeStatus);
 			row.Cells[3].Add(p);
 			p = new Paragraph();
@@ -569,7 +578,7 @@ namespace EFH2
 
 		private static string Format(double d)
 		{
-			if (double.IsNormal(d)) return d.ToString();
+			if (double.IsNormal(d)) return Math.Round(d, 2).ToString();
 			else return string.Empty;
 		}
 

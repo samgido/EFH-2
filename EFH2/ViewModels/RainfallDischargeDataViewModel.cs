@@ -221,13 +221,14 @@ namespace EFH2
             }
 
             this._selectedDuhTypeIndex = newModel.SelectedDuhTypeIndex;
+            this._selectedRainfallDistributionTypeIndex = newModel.SelectedRainfallDistributionTypeIndex;
 
             this.OnPropertyChanged(nameof(Storms));
             this.OnPropertyChanged(nameof(SelectedDuhTypeIndex));
             this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
 
             // this will trigger ValueChanged
-            this.SelectedRainfallDistributionTypeIndex = newModel.SelectedRainfallDistributionTypeIndex;
+            this.ValueChanged?.Invoke(this, new EventArgs());
         }
     }
 }

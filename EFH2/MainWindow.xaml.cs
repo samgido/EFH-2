@@ -33,7 +33,10 @@ using Microsoft.Web.WebView2.Core;
 using PdfSharp.Pdf.IO;
 using PdfSharp.Drawing;
 using System.Windows.Forms;
+using MigraDoc.DocumentObjectModel;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
+using Windows.Storage.Streams;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -386,21 +389,47 @@ namespace EFH2
             }
         }
 
-        private void PrintClicked(object sender, RoutedEventArgs e)
+        private async void PrintClicked(object sender, RoutedEventArgs e)
         {
             uiElements = new List<UIElement>();
 
-			PrintableMainViewModel printableMainViewModel = new PrintableMainViewModel(MainViewModel);
-            Page1 page1 = new Page1() { DataContext = printableMainViewModel };
-			Page2 page2 = new Page2() { DataContext = printableMainViewModel };
+            //PrintableMainViewModel printableMainViewModel = new PrintableMainViewModel(MainViewModel);
+            //         Page1 page1 = new Page1() { DataContext = printableMainViewModel };
+            //Page2 page2 = new Page2() { DataContext = printableMainViewModel };
 
-            if (RcnDataViewModel.Used)
-            {
-                page1.ChangePageNumber();
-                uiElements.Add(page1);
-                uiElements.Add(page2);
-            }
-            else uiElements.Add(page1);
+            //         if (RcnDataViewModel.Used)
+            //         {
+            //             page1.ChangePageNumber();
+            //             uiElements.Add(page1);
+            //             uiElements.Add(page2);
+            //         }
+            //         else uiElements.Add(page1);
+
+			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			string filename = appDataPath + "\\EFH2\\temp.pdf";
+			PrintInfo.Print(MainViewModel, filename);
+
+			PdfDocument pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filename));
+
+			for (uint i = 0; i < pdfDocument.PageCount; i++)
+			{
+				PdfPage pdfPage = pdfDocument.GetPage(i);
+
+				InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
+				await pdfPage.RenderToStreamAsync(stream);
+
+				BitmapImage bitmapImage = new BitmapImage();
+				await bitmapImage.SetSourceAsync(stream);
+
+				Image image = new Image()
+				{
+					Source = bitmapImage,
+					Width = pdfPage.Size.Width,
+					Height = pdfPage.Size.Height,
+				};
+
+				uiElements.Add(image);
+			}
 
             Task _ = StartPrintAsync();
         }
@@ -440,9 +469,14 @@ namespace EFH2
         }
 
 		private void PrintTaskRequested(PrintManager sender, PrintTaskRequestedEventArgs args)
-		{
-            var printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
-            printTask.Completed += PrintTaskCompleted;
+        {
+            try
+            {
+
+                PrintTask printTask = args.Request.CreatePrintTask("Print", PrintTaskSourceRequested);
+				printTask.Completed += PrintTaskCompleted;
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
 		private void PrintTaskCompleted(PrintTask sender, PrintTaskCompletedEventArgs args)
@@ -466,31 +500,40 @@ namespace EFH2
 
 		private void AddPages(object sender, AddPagesEventArgs e)
 		{
-            uiElements.ForEach(page => _printDocument.AddPage(page));
+            try
+            {
+				uiElements.ForEach(page => _printDocument.AddPage(page));
 
-            _printDocument.AddPagesComplete();
+				_printDocument.AddPagesComplete();
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
 		private void GetPreviewPage(object sender, GetPreviewPageEventArgs e)
 		{
-            _printDocument.SetPreviewPage(e.PageNumber, uiElements[0]);
+            try
+            {
+				_printDocument.SetPreviewPage(e.PageNumber, uiElements[0]);
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
 		private void Paginate(object sender, PaginateEventArgs e)
 		{
-            _printDocument.SetPreviewPageCount(1, PreviewPageCountType.Final);
+            try
+            {
+                _printDocument.SetPreviewPageCount(1, PreviewPageCountType.Final);
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         private void PrintTaskSourceRequested(PrintTaskSourceRequestedArgs args)
         {
-            args.SetSource(_printDocumentSource);
-        }
-
-        public void Dispose()
-        {
-			_printDocument.Paginate -= Paginate;
-			_printDocument.GetPreviewPage -= GetPreviewPage;
-			_printDocument.AddPages -= AddPages;
+            try
+            {
+				args.SetSource(_printDocumentSource);
+			}
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
 		#endregion
@@ -537,55 +580,55 @@ namespace EFH2
             {
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 				string filename = appDataPath + "\\EFH2\\temp.pdf";
-				PrintDoc.PrintInfo(MainViewModel, filename);
+                PrintInfo.Print(MainViewModel, filename);
 
-				var pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filename));
+				//var pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filename));
 
-                //await WebView.EnsureCoreWebView2Async();
-                //WebView.CoreWebView2.SetVirtualHostNameToFolderMapping("pdfjs", appDataPath + "\\EFH2", CoreWebView2HostResourceAccessKind.Allow);
-                //WebView.Source = new Uri("https://pdfjs/web/viewer.html?file=" + "C:\\Users\\samue\\AppData\\EFH2\\temp.pdf");
+    //            //await WebView.EnsureCoreWebView2Async();
+    //            //WebView.CoreWebView2.SetVirtualHostNameToFolderMapping("pdfjs", appDataPath + "\\EFH2", CoreWebView2HostResourceAccessKind.Allow);
+    //            //WebView.Source = new Uri("https://pdfjs/web/viewer.html?file=" + "C:\\Users\\samue\\AppData\\EFH2\\temp.pdf");
 
-                //MainGrid.Children.Add(WebView);
+    //            //MainGrid.Children.Add(WebView);
 
-                //WebView.CoreWebView2.NavigationCompleted += (sender, args) =>
-                //{
-                //	if (args.IsSuccess)
-                //	{
-                //		WebView.CoreWebView2.ShowPrintUI(CoreWebView2PrintDialogKind.System);
-                //	}
-                //}; 
+    //            //WebView.CoreWebView2.NavigationCompleted += (sender, args) =>
+    //            //{
+    //            //	if (args.IsSuccess)
+    //            //	{
+    //            //		WebView.CoreWebView2.ShowPrintUI(CoreWebView2PrintDialogKind.System);
+    //            //	}
+    //            //}; 
 
-                int currentPageIndex;
-                PdfSharp.Pdf.PdfDocument document;
+    //            int currentPageIndex;
+    //            PdfSharp.Pdf.PdfDocument document;
 
-				document = PdfReader.Open(filename, PdfDocumentOpenMode.Import);
-				currentPageIndex = 0;
+				//document = PdfReader.Open(filename, PdfDocumentOpenMode.Import);
+				//currentPageIndex = 0;
 
-				System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
-                printDocument.PrintPage += async (sender, args) =>
-                {
-                    if (currentPageIndex < document.PageCount)
-					{
-                        XGraphics gfx = XGraphics.FromPdfPage(document.Pages[currentPageIndex]);
-						XPdfForm form = XPdfForm.FromFile(filename);
-						form.PageNumber = currentPageIndex + 1;
-						gfx.DrawImage(form, 0, 0, args.PageBounds.Width, args.PageBounds.Height);
+				//System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
+    //            printDocument.PrintPage += async (sender, args) =>
+    //            {
+    //                if (currentPageIndex < document.PageCount)
+				//	{
+    //                    XGraphics gfx = XGraphics.FromPdfPage(document.Pages[currentPageIndex]);
+				//		XPdfForm form = XPdfForm.FromFile(filename);
+				//		form.PageNumber = currentPageIndex + 1;
+				//		gfx.DrawImage(form, 0, 0, args.PageBounds.Width, args.PageBounds.Height);
 
-						currentPageIndex++;
-						args.HasMorePages = currentPageIndex < document.PageCount;
-					}
-					else
-					{
-						args.HasMorePages = false;
-					}
-				};
+				//		currentPageIndex++;
+				//		args.HasMorePages = currentPageIndex < document.PageCount;
+				//	}
+				//	else
+				//	{
+				//		args.HasMorePages = false;
+				//	}
+				//};
 
-				PrintDialog printDialog = new PrintDialog();
-				if (printDialog.ShowDialog() == DialogResult.OK)
-				{
-					printDocument.PrinterSettings = printDialog.PrinterSettings;
-					printDocument.Print();
-				}
+				//PrintDialog printDialog = new PrintDialog();
+				//if (printDialog.ShowDialog() == DialogResult.OK)
+				//{
+				//	printDocument.PrinterSettings = printDialog.PrinterSettings;
+				//	printDocument.Print();
+				//}
 
 			}
             catch (Exception ex)
