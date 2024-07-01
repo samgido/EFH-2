@@ -87,12 +87,14 @@ namespace EFH2
 			}
 
 			Paragraph footer = new Paragraph();
+			footer.Format.Alignment = ParagraphAlignment.Center;
 			footer.AddText("Page ");
 			footer.AddPageField();
 			footer.AddText(" of ");
 			footer.AddNumPagesField();
 
 			section.Footers.Primary.Add(footer);
+			section.Footers.EvenPage.Add(footer.Clone());
 
 			return document;
 		}

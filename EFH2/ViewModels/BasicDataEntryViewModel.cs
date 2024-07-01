@@ -60,10 +60,6 @@ namespace EFH2
             }
         }
 
-        //[ObservableProperty]
-        //[property: XmlIgnore]
-        //private string _status = "";
-
         public string Status
         {
             get
