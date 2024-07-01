@@ -393,21 +393,24 @@ namespace EFH2
         {
             uiElements = new List<UIElement>();
 
-            //PrintableMainViewModel printableMainViewModel = new PrintableMainViewModel(MainViewModel);
-            //         Page1 page1 = new Page1() { DataContext = printableMainViewModel };
-            //Page2 page2 = new Page2() { DataContext = printableMainViewModel };
-
-            //         if (RcnDataViewModel.Used)
-            //         {
-            //             page1.ChangePageNumber();
-            //             uiElements.Add(page1);
-            //             uiElements.Add(page2);
-            //         }
-            //         else uiElements.Add(page1);
-
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			string filename = appDataPath + "\\EFH2\\temp.pdf";
-			PrintInfo.Print(MainViewModel, filename);
+			bool success = PrintInfo.Print(MainViewModel, filename);
+
+            if (!success)
+            {
+                ContentDialog failureDialog = new ContentDialog()
+				{
+					XamlRoot = this.Content.XamlRoot,
+					Title = "Printing Error",
+					Content = "Failed to print, please try again",
+					PrimaryButtonText = "OK",
+				};
+
+                await failureDialog.ShowAsync();
+
+                return;
+            }
 
 			PdfDocument pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filename));
 

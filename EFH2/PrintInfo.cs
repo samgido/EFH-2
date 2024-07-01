@@ -18,22 +18,45 @@ namespace EFH2
 {
 	public class PrintInfo
 	{
-		public static void Print(MainViewModel model, string filename)
+		public static bool Print(MainViewModel model, string filename)
 		{
+			//try
+			//{
+			//	Document document = CreateDocument(model);
+
+			//	PdfDocumentRenderer renderer = new PdfDocumentRenderer();
+
+			//	renderer.Document = document;
+
+			//	renderer.RenderDocument();
+
+			//	renderer.PdfDocument.Save(filename);
+			//}
+			//// keep trying till it works, only happens once over
+			//catch (Exception ex) { Print(model, filename); }
+
 			try
 			{
-				Document document = CreateDocument(model);
+				for (int i = 0; i < 3; i++)
+				{
+					Document document = CreateDocument(model);
 
-				PdfDocumentRenderer renderer = new PdfDocumentRenderer();
+					PdfDocumentRenderer renderer = new PdfDocumentRenderer();
 
-				renderer.Document = document;
+					renderer.Document = document;
 
-				renderer.RenderDocument();
+					renderer.RenderDocument();
 
-				renderer.PdfDocument.Save(filename);
+					renderer.PdfDocument.Save(filename);
+
+					renderer.PdfDocument.Dispose();
+				}
 			}
-			// keep trying till it works, only happens once over
-			catch (Exception ex) { Print(model, filename); }
+			catch
+			{
+				return false;
+			}
+			return true;
 		}
 
 		private static Document CreateDocument(MainViewModel model)
@@ -62,6 +85,14 @@ namespace EFH2
 				CreateBasicDataInfoTable(model, section);
 				CreateRcnTable(model, section);
 			}
+
+			Paragraph footer = new Paragraph();
+			footer.AddText("Page ");
+			footer.AddPageField();
+			footer.AddText(" of ");
+			footer.AddNumPagesField();
+
+			section.Footers.Primary.Add(footer);
 
 			return document;
 		}
@@ -287,7 +318,13 @@ namespace EFH2
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
 
-			p.AddText(model.RainfallDischargeDataViewModel.DuhTypeStatus);
+			string duhTypeStatus = "(default 484)";
+			if (model.RainfallDischargeDataViewModel.DuhTypeInputStatus == InputStatus.UserSelected)
+			{
+				duhTypeStatus = "(user selected)";
+			}
+
+			p.AddText(duhTypeStatus);
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -590,6 +627,8 @@ namespace EFH2
 					return string.Empty;
 				case InputStatus.FromRcnCalculator:
 					return "(provided from RCN Calculator";
+				case InputStatus.Calculated:
+					return "(calculated value)";
 				default:
 					return "(user entered value)";
 			}
