@@ -184,7 +184,7 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
-			p.AddText(model.BasicDataViewModel.drainageAreaEntry.Status);
+			p.AddText(GetStatus(model.BasicDataViewModel.drainageAreaEntry.InputStatus));
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -201,7 +201,7 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
-			p.AddText(model.BasicDataViewModel.runoffCurveNumberEntry.Status);
+			p.AddText(GetStatus(model.BasicDataViewModel.runoffCurveNumberEntry.InputStatus));
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -252,7 +252,7 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
-			p.AddText(model.BasicDataViewModel.timeOfConcentrationEntry.Status);
+			p.AddText(GetStatus(model.BasicDataViewModel.timeOfConcentrationEntry.InputStatus));
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -269,7 +269,7 @@ namespace EFH2
 			p.Format.Alignment = ParagraphAlignment.Left;
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
-			p.AddText(model.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus);
+			//p.AddText(model.RainfallDischargeDataViewModel.RainfallDistributionTypeStatus);
 			row.Cells[3].Add(p);
 			p = new Paragraph();
 
@@ -287,12 +287,6 @@ namespace EFH2
 			row.Cells[2].Add(p);
 			p = GetCenteredParagraph();
 
-			string duhTypeStatus = model.RainfallDischargeDataViewModel.DuhTypeStatus;
-			if (duhTypeStatus == "<standard>")
-			{
-				duhTypeStatus = "(default 484)";
-			}
-
 			p.AddText(model.RainfallDischargeDataViewModel.DuhTypeStatus);
 			row.Cells[3].Add(p);
 			p = new Paragraph();
@@ -306,7 +300,7 @@ namespace EFH2
 			table.Style = "Table";
 			table.Borders.Color = Color.Parse("black");
 
-			Column column = table.AddColumn("3cm");
+			Column column = table.AddColumn("4cm");
 			column.Format.Alignment = ParagraphAlignment.Center;
 
 			for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
@@ -586,6 +580,19 @@ namespace EFH2
 		{
 			if (double.IsNormal(d)) return d.ToString();
 			else return "-";
+		}
+
+		private static string GetStatus(InputStatus status)
+		{
+			switch (status)
+			{
+				case InputStatus.None:
+					return string.Empty;
+				case InputStatus.FromRcnCalculator:
+					return "(provided from RCN Calculator";
+				default:
+					return "(user entered value)";
+			}
 		}
 
 		private static Paragraph GetCenteredParagraph() => new Paragraph() { Format = { Alignment = ParagraphAlignment.Center } };	

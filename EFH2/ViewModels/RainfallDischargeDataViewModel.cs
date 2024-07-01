@@ -42,13 +42,70 @@ namespace EFH2
         [property: XmlIgnore]
         private ObservableCollection<ComboBoxItem> _duhTypes = new();
 
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _rainfallDistributionTypeStatus = "";
+        [XmlIgnore]
+        private InputStatus _rainfallDistributionTypeInputStatus = InputStatus.None;
 
-        [ObservableProperty]
-        [property: XmlIgnore]
-        private string _duhTypeStatus = "";
+        [XmlIgnore]
+        public InputStatus RainfallDistributionTypeInputStatus
+		{
+			get => this._rainfallDistributionTypeInputStatus;
+			set
+			{
+                this._rainfallDistributionTypeInputStatus = value;
+				this.OnPropertyChanged(nameof(RainfallDistributionTypeStatus));
+			}
+		}
+
+        [XmlIgnore]
+        private InputStatus _duhTypeInputStatus = InputStatus.None;
+
+        [XmlIgnore]
+        public InputStatus DuhTypeInputStatus
+		{
+			get => this._duhTypeInputStatus;
+			set
+			{
+                this._duhTypeInputStatus = value;
+				this.OnPropertyChanged(nameof(DuhTypeStatus));
+			}
+		}
+
+        //[ObservableProperty]
+        //[property: XmlIgnore]
+        //private string _rainfallDistributionTypeStatus = "";
+
+        //[ObservableProperty]
+        //[property: XmlIgnore]
+        //private string _duhTypeStatus = "";
+
+        public string RainfallDistributionTypeStatus
+        {
+            get
+            {
+                switch (_rainfallDistributionTypeInputStatus)
+                {
+                    case InputStatus.UserSelected:
+                        return "user selected";
+                    default:
+						return "";
+                }
+            }
+        }
+
+        public string DuhTypeStatus
+        {
+            get
+            {
+                switch (_duhTypeInputStatus)
+                {
+                    case InputStatus.UserSelected:
+                        return "user selected";
+                    default:
+						return "";
+                }
+            }
+        }
+
 
         [XmlIgnore]
         public static int DayRainMax => 26;
@@ -61,8 +118,8 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
                 this.selectedRainfallDistributionType = RainfallDistributionTypes[value].Content as string;
-                if (value != 0) this.RainfallDistributionTypeStatus = "User Selected.";
-                else this.RainfallDistributionTypeStatus = "";
+                if (value != 0) this.RainfallDistributionTypeInputStatus = InputStatus.UserSelected;
+                else this.RainfallDistributionTypeInputStatus = InputStatus.None;
 
                 this.ValueChanged?.Invoke(this, new EventArgs());
             }
@@ -76,8 +133,8 @@ namespace EFH2
             {
                 this.SetProperty(ref this._selectedDuhTypeIndex, value);
                 this.selectedDuhType = DuhTypes[value].Content as string;
-                if (value != 0) this.DuhTypeStatus = "User Selected.";
-                else this.DuhTypeStatus = "";
+                if (value != 0) this.DuhTypeInputStatus = InputStatus.UserSelected;
+                else this.DuhTypeInputStatus = InputStatus.None;
 
                 this.ValueChanged?.Invoke(this, new EventArgs());
             }
@@ -90,7 +147,7 @@ namespace EFH2
                 if ((RainfallDistributionTypes[i].Content as string) == type)
                 {
                     SelectedRainfallDistributionTypeIndex = i;
-                    RainfallDistributionTypeStatus = "";
+                    this.RainfallDistributionTypeInputStatus = InputStatus.None;
                 }
             }
         }
@@ -183,8 +240,8 @@ namespace EFH2
         public void Clear()
         {
             Default();
-            DuhTypeStatus = MainViewModel.ClearedMessage;
-            RainfallDistributionTypeStatus = MainViewModel.ClearedMessage;
+            this.DuhTypeInputStatus = InputStatus.Cleared;
+            this.RainfallDistributionTypeInputStatus = InputStatus.Cleared;
         }
 
         public RainfallDischargeDataViewModel()
