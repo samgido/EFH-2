@@ -52,7 +52,7 @@ namespace EFH2
 		{
 			try
 			{
-				string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "Rainfall_data.csv");
+				string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
 				using (StreamReader reader = new StreamReader(rainfallDataPath))
 				{
 					reader.ReadLine();
@@ -94,7 +94,7 @@ namespace EFH2
 		{
 			try
 			{
-				string rftypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "rftype.txt");
+				string rftypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "rftype.txt");
 				using (StreamReader reader = new StreamReader(rftypeDataPath))
 				{
 					ComboBoxItem c = new();
@@ -124,7 +124,7 @@ namespace EFH2
 					model.SelectedRainfallDistributionTypeIndex = 0;
 				}
 
-				string duhtypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "duh.txt");
+				string duhtypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "duh.txt");
 				using (StreamReader reader = new StreamReader(duhtypeDataPath))
 				{
 					model.DuhTypes.Clear();
@@ -149,8 +149,8 @@ namespace EFH2
 		{
 			try
 			{
-				string coverPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "COVER.txt");
-				using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\COVER.txt"))
+				string coverPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "COVER.txt");
+				using (StreamReader reader = new StreamReader(coverPath))
 				{
 					List<RcnCategory> topCategories = new List<RcnCategory>();
 					RcnCategory topCategory = null;
@@ -220,8 +220,8 @@ namespace EFH2
 					}
 				}
 
-				string soilsPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "SOILS.hg");
-				using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\SOILS.hg"))
+				string soilsPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "SOILS.hg");
+				using (StreamReader reader = new StreamReader(soilsPath))
 				{
 					while (!reader.EndOfStream)
 					{
@@ -317,7 +317,6 @@ namespace EFH2
 						//	"USDA\\Data\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 
 						string duhTypeFilePath = Path.Combine(programFilesDirectory, companyName, "Shared Engineering Data", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
-
 						if (File.Exists(duhTypeFilePath))
 						{
 							using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
@@ -457,8 +456,7 @@ namespace EFH2
 
 			List<HydrographLineModel> list = new List<HydrographLineModel>();
 
-			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			string filePath = Path.Combine(appDataPath, "EFH2", "tr20.hyd");
+			string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.hyd");
 
 			if (File.Exists(filePath))
 			{
@@ -507,7 +505,7 @@ namespace EFH2
 			RainfallDischargeDataViewModel newModel = new RainfallDischargeDataViewModel();
 			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
-			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "Rainfall_data.csv");
+			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
             using (StreamReader reader = new StreamReader(rainfallDataPath)) // TODO change path
 			{
 				while (!reader.EndOfStream)
@@ -517,7 +515,7 @@ namespace EFH2
 
 					if (elements.Length == 11 && elements[1].Trim('"') == state) 
 					{
-						if (elements[2].Trim('"') == county) // performance is significantly better with this nested
+						if (elements[2].Trim('"') == county)
 						{
 							string rfType = elements[3];
 							if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;

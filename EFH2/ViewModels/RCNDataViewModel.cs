@@ -11,7 +11,7 @@ namespace EFH2
         public static bool Used = false;
 
         [ObservableProperty]
-        private List<RcnCategory> _rcnCategories;
+        private List<RcnCategory> _rcnCategories = new();
 
         [ObservableProperty]
         private ObservableCollection<HsgEntryViewModel> _hsgEntries = new();
