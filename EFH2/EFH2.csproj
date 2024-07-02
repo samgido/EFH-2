@@ -52,11 +52,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.9.37000" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230913002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
-    <PackageReference Include="PDFsharp" Version="6.1.0" />
     <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.0" />
-    <PackageReference Include="SharpVectors" Version="1.8.4" />
     <PackageReference Include="Svg" Version="3.4.7" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>

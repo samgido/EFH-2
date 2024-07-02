@@ -1,15 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Xml.Serialization;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class StormViewModel : ObservableObject, ICreateInputFile, INotifyPropertyChanged
+	public partial class StormViewModel : ObservableObject, ICreateInputFile, INotifyPropertyChanged
     {
         public event EventHandler<EventArgs>? ValueChanged;
 

@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public partial class RcnCategory : ObservableObject
+	public partial class RcnCategory : ObservableObject
     {
         [ObservableProperty]
         private string _label = "";

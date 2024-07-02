@@ -2,7 +2,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace EFH2
 {
-    public sealed partial class InconsistentDataDialogControl : UserControl
+	public sealed partial class InconsistentDataDialogControl : UserControl
     {
         public InconsistentDataDialogControl()
         {

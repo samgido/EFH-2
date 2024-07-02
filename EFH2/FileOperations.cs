@@ -1,29 +1,25 @@
-﻿using System;
-using System.Diagnostics;
-using System.Security.AccessControl;
-using System.Security.Principal;
+﻿using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using Windows.Storage.Pickers;
-using Windows.Storage;
 using System.Xml.Serialization;
-using System.IO;
-using Microsoft.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
-using CommunityToolkit.WinUI.Helpers;
-using Windows.Graphics.Printing;
-using Microsoft.UI.Xaml;
-using Windows.UI.Popups;
-using System.Windows;
 
 namespace EFH2
 {
-    public static class FileOperations
+	public static class FileOperations
     {
+		private static string programDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+		private static string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+		private static string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+
+		private static string companyName = "USDA-dev";
+
         public static void SerializeData(MainViewModel model, TextWriter writer)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
@@ -54,180 +50,202 @@ namespace EFH2
 
 		private static void LoadBasicData(BasicDataViewModel model)
 		{
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\Rainfall_Data.csv"))
+			try
 			{
-				reader.ReadLine();
-				model.stateCountyDictionary.Add("Choose", new List<string>());
-
-				while (!reader.EndOfStream)
+				string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "Rainfall_data.csv");
+				using (StreamReader reader = new StreamReader(rainfallDataPath))
 				{
-					string line = reader.ReadLine();
+					reader.ReadLine();
+					model.stateCountyDictionary.Add("Choose", new List<string>());
 
-					string[] elements = line.Split(',');
+					while (!reader.EndOfStream)
+					{
+						string line = reader.ReadLine();
 
-					string state = elements[1];
-					string county = elements[2].Trim('"');
+						string[] elements = line.Split(',');
 
-					if (!model.stateCountyDictionary.ContainsKey(state))
-					{ // found new state 
+						string state = elements[1];
+						string county = elements[2].Trim('"');
 
-						model.stateCountyDictionary.Add(state, new());
-						model.stateCountyDictionary[state].Add("Choose");
+						if (!model.stateCountyDictionary.ContainsKey(state))
+						{ // found new state 
+
+							model.stateCountyDictionary.Add(state, new());
+							model.stateCountyDictionary[state].Add("Choose");
+						}
+
+						model.stateCountyDictionary[state].Add(county);
 					}
 
-					model.stateCountyDictionary[state].Add(county);
-				}
+					foreach (string state in model.stateCountyDictionary.Keys)
+					{
+						model.States.Add(new ComboBoxItem() { Content = state });
+					}
 
-				foreach (string state in model.stateCountyDictionary.Keys)
-				{
-					model.States.Add(new ComboBoxItem() { Content = state });
 				}
-
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
 			}
 		}
 
 		private static void LoadRainfallDischargeData(RainfallDischargeDataViewModel model)
 		{
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\rftype.txt"))
+			try
 			{
-				ComboBoxItem c = new();
-				c.Content = "";
-				model.RainfallDistributionTypes.Clear();
-				model.RainfallDistributionTypes.Add(c);
-
-				string line = reader.ReadLine();
-
-				while (!reader.EndOfStream)
-				{
-					string[] lineParts = line.Split(',');
-					string type = lineParts[0];
-
-					c = new();
-					c.Content = type.Trim('"');
-
-					model.RainfallDistributionTypes.Add(c);
-
-					if (lineParts.Length == 2)
-					{
-						model.rfTypeToFileName.Add(type, lineParts[1].Trim('"'));
-					}
-
-					line = reader.ReadLine();
-				}
-				model.SelectedRainfallDistributionTypeIndex = 0;
-			}
-
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\duh.txt"))
-			{
-				model.DuhTypes.Clear();
-				string line = reader.ReadLine();
-
-				while (!reader.EndOfStream)
+				string rftypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "rftype.txt");
+				using (StreamReader reader = new StreamReader(rftypeDataPath))
 				{
 					ComboBoxItem c = new();
-					c.Content = line;
+					c.Content = "";
+					model.RainfallDistributionTypes.Clear();
+					model.RainfallDistributionTypes.Add(c);
 
-					model.DuhTypes.Add(c);
-					line = reader.ReadLine();
+					string line = reader.ReadLine();
+
+					while (!reader.EndOfStream)
+					{
+						string[] lineParts = line.Split(',');
+						string type = lineParts[0];
+
+						c = new();
+						c.Content = type.Trim('"');
+
+						model.RainfallDistributionTypes.Add(c);
+
+						if (lineParts.Length == 2)
+						{
+							model.rfTypeToFileName.Add(type, lineParts[1].Trim('"'));
+						}
+
+						line = reader.ReadLine();
+					}
+					model.SelectedRainfallDistributionTypeIndex = 0;
 				}
-				model.SelectedDuhTypeIndex = 0;
+
+				string duhtypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "duh.txt");
+				using (StreamReader reader = new StreamReader(duhtypeDataPath))
+				{
+					model.DuhTypes.Clear();
+					string line = reader.ReadLine();
+
+					while (!reader.EndOfStream)
+					{
+						ComboBoxItem c = new();
+						c.Content = line;
+
+						model.DuhTypes.Add(c);
+						line = reader.ReadLine();
+					}
+					model.SelectedDuhTypeIndex = 0;
+				}
+
 			}
+			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
 		private static void LoadRcnData(RcnDataViewModel model)
 		{
-			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\COVER.txt"))
+			try
 			{
-				List<RcnCategory> topCategories = new List<RcnCategory>();
-				RcnCategory topCategory = null;
-				List<RcnRow> currentRowList = null;
-
-				while (!reader.EndOfStream)
+				string coverPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "COVER.txt");
+				using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\COVER.txt"))
 				{
-					string line = reader.ReadLine();
-					string[] elements = line.Split('\t');
+					List<RcnCategory> topCategories = new List<RcnCategory>();
+					RcnCategory topCategory = null;
+					List<RcnRow> currentRowList = null;
 
-					if (elements[0].Contains('*')) // New 
+					while (!reader.EndOfStream)
 					{
-						if (topCategory != null) topCategories.Add(topCategory);
-						topCategory = new RcnCategory();
-						topCategory.Label = elements[1].Trim('"');
-						currentRowList = topCategory.Rows;
-					}
-					else if (elements[1] != string.Empty)
-					{
-						RcnCategory newSubCategory = new RcnCategory()
+						string line = reader.ReadLine();
+						string[] elements = line.Split('\t');
+
+						if (elements[0].Contains('*')) // New 
 						{
-							Label = elements[1].Trim('"'),
-							Extra = elements[3]
-						};
-						currentRowList = newSubCategory.Rows;
-						topCategory.RcnSubcategories.Add(newSubCategory);
-					}
-					else if (elements[5] != string.Empty)
-					{
-						RcnRow newRow = new RcnRow();
-						newRow.Text = elements[2];
-
-						//int.TryParse(elements[5], out int weight1);
-						//newRow.Entries[0].Weight = weight1;
-
-						if (elements[5] == "**") newRow.Entries[0].Weight = -1;
-						else
-						{
-							int.TryParse(elements[5], out int weight1);
-							newRow.Entries[0].Weight = weight1;
+							if (topCategory != null) topCategories.Add(topCategory);
+							topCategory = new RcnCategory();
+							topCategory.Label = elements[1].Trim('"');
+							currentRowList = topCategory.Rows;
 						}
-
-						int.TryParse(elements[7], out int weight2);
-						newRow.Entries[1].Weight = weight2;
-
-						int.TryParse(elements[9], out int weight3);
-						newRow.Entries[2].Weight = weight3;
-
-						int.TryParse(elements[11], out int weight4);
-						newRow.Entries[3].Weight = weight4;
-
-						currentRowList.Add(newRow);
-					}
-				}
-				topCategories.Add(topCategory);
-				model.RcnCategories = topCategories;
-
-				foreach (RcnCategory category in model.RcnCategories)
-				{
-					foreach (RcnRow row in category.AllRows)
-					{
-                        foreach (var entry in row.Entries)
-                        {
-							entry.PropertyChanged += model.EntryChanged; 
-                        }
-                    }
-				}
-			}
-
-			using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\SOILS.hg"))
-			{
-				while (!reader.EndOfStream)
-				{
-					string line = reader.ReadLine();
-
-					string[] lineParts = line.Split("\t");
-
-					if (lineParts.Length == 3)
-					{
-						model.HsgEntries.Add(new HsgEntryViewModel()
+						else if (elements[1] != string.Empty)
 						{
-							Row = new ObservableCollection<string>
+							RcnCategory newSubCategory = new RcnCategory()
 							{
-								lineParts[0],
-								lineParts[1],
-								lineParts[2]
+								Label = elements[1].Trim('"'),
+								Extra = elements[3]
+							};
+							currentRowList = newSubCategory.Rows;
+							topCategory.RcnSubcategories.Add(newSubCategory);
+						}
+						else if (elements[5] != string.Empty)
+						{
+							RcnRow newRow = new RcnRow();
+							newRow.Text = elements[2];
+
+							//int.TryParse(elements[5], out int weight1);
+							//newRow.Entries[0].Weight = weight1;
+
+							if (elements[5] == "**") newRow.Entries[0].Weight = -1;
+							else
+							{
+								int.TryParse(elements[5], out int weight1);
+								newRow.Entries[0].Weight = weight1;
 							}
-						});
+
+							int.TryParse(elements[7], out int weight2);
+							newRow.Entries[1].Weight = weight2;
+
+							int.TryParse(elements[9], out int weight3);
+							newRow.Entries[2].Weight = weight3;
+
+							int.TryParse(elements[11], out int weight4);
+							newRow.Entries[3].Weight = weight4;
+
+							currentRowList.Add(newRow);
+						}
+					}
+					topCategories.Add(topCategory);
+					model.RcnCategories = topCategories;
+
+					foreach (RcnCategory category in model.RcnCategories)
+					{
+						foreach (RcnRow row in category.AllRows)
+						{
+							foreach (var entry in row.Entries)
+							{
+								entry.PropertyChanged += model.EntryChanged; 
+							}
+						}
 					}
 				}
+
+				string soilsPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "SOILS.hg");
+				using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Shared Engineering Data\\SOILS.hg"))
+				{
+					while (!reader.EndOfStream)
+					{
+						string line = reader.ReadLine();
+
+						string[] lineParts = line.Split("\t");
+
+						if (lineParts.Length == 3)
+						{
+							model.HsgEntries.Add(new HsgEntryViewModel()
+							{
+								Row = new ObservableCollection<string>
+								{
+									lineParts[0],
+									lineParts[1],
+									lineParts[2]
+								}
+							});
+						}
+					}
+				}
+
 			}
+			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
         public static string? CreateInpFile(MainViewModel model)
@@ -240,16 +258,16 @@ namespace EFH2
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 				//string filePath = Path.Combine(appDataPath, "\\EFH2\\tr20.inp");
 
-				string filePath = appDataPath + "\\EFH2\\tr20.inp";
+				string inputFilePath = appDataPath + "\\EFH2\\tr20.inp";
 
-				using (StreamWriter writer = new StreamWriter(filePath, append: false))
+				using (StreamWriter writer = new StreamWriter(inputFilePath, append: false))
 				{
 					StringBuilder content = new StringBuilder();
 
 					string rainfallDistributionTable = "";
 					string rainfallDistributionType = "";
 
-					string rainfallDistributionTypeFilePath = programX86Path + "\\USDA\\Shared Engineering Data\\EFH2\\RainfallDistributions\\Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl";
+					string rainfallDistributionTypeFilePath = Path.Combine(programFilesDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions", "Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
 
 					if (File.Exists(rainfallDistributionTypeFilePath))
 					{
@@ -298,7 +316,7 @@ namespace EFH2
 						//string duhTypeFilePath = Path.Combine(programX86Path,
 						//	"USDA\\Data\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 
-						string duhTypeFilePath = programX86Path + "\\USDA\\Data\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh";
+						string duhTypeFilePath = Path.Combine(programFilesDirectory, companyName, "Shared Engineering Data", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 
 						if (File.Exists(duhTypeFilePath))
 						{
@@ -318,9 +336,7 @@ namespace EFH2
 					writer.WriteLine("GLOBAL OUTPUT:");
 					writer.WriteLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
 
-					//RunWinTr20(filePath);
-
-					return filePath;
+					return inputFilePath;
 				}
 			}
 			catch (Exception ex)
@@ -335,12 +351,11 @@ namespace EFH2
 		{
 			try
 			{
-				string executableDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "\\USDA\\EFH2\\";
-				string executableName = "WinTR20_V32.exe";
+				string executablePath = Path.Combine(programFilesDirectory, companyName, "EFH2", "WinTR20_V32.exe");
 
 				ProcessStartInfo psi = new ProcessStartInfo()
 				{
-					FileName = executableDirectory + executableName,
+					FileName = executablePath,
 					Arguments = inputFilePath,
 					RedirectStandardOutput = true,
 					CreateNoWindow = true,
@@ -388,9 +403,7 @@ namespace EFH2
 		{
 			try
 			{
-				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-				//string filePath = Path.Combine(appDataPath, "tr20.out");
-				string filePath = appDataPath + "\\EFH2\\tr20.out";
+				string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.out");
 
 				foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
@@ -445,9 +458,7 @@ namespace EFH2
 			List<HydrographLineModel> list = new List<HydrographLineModel>();
 
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			//string filePath = Path.Combine(appDataPath, "tr20.hyd");
-
-			string filePath = appDataPath + "\\EFH2\\tr20.hyd";
+			string filePath = Path.Combine(appDataPath, "EFH2", "tr20.hyd");
 
 			if (File.Exists(filePath))
 			{
@@ -496,7 +507,8 @@ namespace EFH2
 			RainfallDischargeDataViewModel newModel = new RainfallDischargeDataViewModel();
 			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
-            using (StreamReader reader = new StreamReader("C:\\ProgramData\\USDA-dev\\Data\\Rainfall_Data.csv")) // TODO change path
+			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "Rainfall_data.csv");
+            using (StreamReader reader = new StreamReader(rainfallDataPath)) // TODO change path
 			{
 				while (!reader.EndOfStream)
 				{

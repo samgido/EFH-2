@@ -8,15 +8,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="0347f656-b3ed-4179-8fb5-61ba25c20eba"
-    Publisher="CN=samue"
+    Name="EFH2"
+    Publisher="CN=USDA-dev"
     Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="0347f656-b3ed-4179-8fb5-61ba25c20eba" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>EFH2</DisplayName>
-    <PublisherDisplayName>samue</PublisherDisplayName>
+    <PublisherDisplayName>USDA-dev</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -41,6 +39,8 @@
         Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

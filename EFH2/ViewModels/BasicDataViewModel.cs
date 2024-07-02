@@ -1,14 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
-using System.IO;
 using System.Xml.Serialization;
 
 namespace EFH2

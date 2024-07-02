@@ -1,19 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.VisualStudio.PlatformUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public partial class RcnDataViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+	public partial class RcnDataViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         public static bool Used = false;
 
@@ -48,9 +41,6 @@ namespace EFH2
                 {
 					if (!(double.IsNaN(category.AccumulatedArea))) total += category.AccumulatedWeightedArea;
                 }
-
-                //if (AccumulatedArea.Equals(double.NaN) || AccumulatedArea.Equals(0)) return double.NaN;
-                //else return total / AccumulatedArea;
 
                 if (AccumulatedArea > 0) return Math.Round(total / AccumulatedArea);
                 else return 0;

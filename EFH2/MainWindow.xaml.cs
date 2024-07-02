@@ -1,52 +1,34 @@
 // Author: Samuel Gido
 
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage.Pickers;
-using Windows.Storage;
-using Windows.ApplicationModel.DataTransfer;
-using OxyPlot;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
-using System.Diagnostics;
-using Windows.Graphics.Printing;
-using System.Threading.Tasks;
-using CommunityToolkit.WinUI.Helpers;
-using CommunityToolkit.WinUI;
-using Microsoft.UI.Xaml.Printing;
-using WinRT.Interop;
-using Microsoft.VisualStudio.PlatformUI;
-using Windows.Data.Pdf;
-using Microsoft.Web.WebView2.Core;
-using PdfSharp.Pdf.IO;
-using PdfSharp.Drawing;
-using System.Windows.Forms;
-using MigraDoc.DocumentObjectModel;
-using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
-using Windows.Storage.Streams;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Printing;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Data.Pdf;
+using Windows.Graphics.Printing;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
+using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace EFH2
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainWindow : Window
+	/// <summary>
+	/// An empty window that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class MainWindow : Window
     {
         public PrintManager _printManager;
         public PrintDocument _printDocument;

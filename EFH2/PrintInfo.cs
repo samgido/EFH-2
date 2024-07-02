@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MigraDoc;
 using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Shapes;
-using MigraDoc.DocumentObjectModel.Shapes.Charts;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.DocumentObjectModel.Visitors;
 using MigraDoc.Rendering;
-using MigraDoc.Rendering.Extensions;
-using OxyPlot;
 
 namespace EFH2
 {
@@ -20,21 +10,6 @@ namespace EFH2
 	{
 		public static bool Print(MainViewModel model, string filename)
 		{
-			//try
-			//{
-			//	Document document = CreateDocument(model);
-
-			//	PdfDocumentRenderer renderer = new PdfDocumentRenderer();
-
-			//	renderer.Document = document;
-
-			//	renderer.RenderDocument();
-
-			//	renderer.PdfDocument.Save(filename);
-			//}
-			//// keep trying till it works, only happens once over
-			//catch (Exception ex) { Print(model, filename); }
-
 			try
 			{
 				for (int i = 0; i < 3; i++)

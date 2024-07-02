@@ -1,13 +1,8 @@
-﻿using System;
-using System.Xml.Serialization;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Xml.Serialization;
 
 namespace EFH2
 {
-    public class RcnEntryModel
+	public class RcnEntryModel
     {
         [XmlElement("Weight")]
         public int Weight { get; set; } = 0;

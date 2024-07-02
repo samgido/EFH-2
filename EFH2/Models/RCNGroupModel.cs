@@ -1,13 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFH2
 {
-    public class RcnGroupModel
+	public class RcnGroupModel
     {
         [XmlElement("Entries")]
         public List<RcnEntryModel> Entries = new List<RcnEntryModel>();
