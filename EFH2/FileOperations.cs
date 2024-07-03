@@ -166,6 +166,8 @@ namespace EFH2
 							if (topCategory != null) topCategories.Add(topCategory);
 							topCategory = new RcnCategory();
 							topCategory.Label = elements[1].Trim('"');
+							topCategory.Extra = elements[3].Trim();
+							
 							currentRowList = topCategory.Rows;
 						}
 						else if (elements[1] != string.Empty)
@@ -182,6 +184,8 @@ namespace EFH2
 						{
 							RcnRow newRow = new RcnRow();
 							newRow.Text = elements[2];
+
+							if (elements[3] != string.Empty) newRow.Quality = elements[3];
 
 							//int.TryParse(elements[5], out int weight1);
 							//newRow.Entries[0].Weight = weight1;

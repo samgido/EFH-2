@@ -105,7 +105,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="{Binding Path=Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="11"/>
+                        <TextBlock Text="{Binding Path=Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="11" FontWeight="SemiBold" FontSize="15"/>
+                        <TextBlock Text="{Binding Path=Extra}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="2"/>
 
                         <ListView ItemsSource="{Binding Path=Rows}" SelectionMode="None" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled">
                             <ListView.ItemTemplate>

@@ -8,6 +8,9 @@ namespace EFH2
         private string _text = "";
 
         [ObservableProperty]
+        private string _quality = "";
+
+        [ObservableProperty]
         private WeightAreaPair[] _entries = { new WeightAreaPair(), new WeightAreaPair(), new WeightAreaPair(), new WeightAreaPair() };
 
         public double AccumulatedArea

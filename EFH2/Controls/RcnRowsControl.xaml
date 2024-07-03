@@ -45,6 +45,8 @@
 
         <TextBlock Text="{Binding Path=Text}" Grid.Column="1" HorizontalAlignment="Right"/>
 
+        <TextBlock Text="{Binding Path=Quality}" Grid.Column="2" HorizontalAlignment="Center"/>
+
         <TextBlock Text="{Binding Path=Entries[0].Weight, Converter={StaticResource RcnConverter}}" Grid.Column="4"/>
         <TextBlock Text="{Binding Path=Entries[1].Weight}" Grid.Column="6"/>
         <TextBlock Text="{Binding Path=Entries[2].Weight}" Grid.Column="8"/>
