@@ -329,26 +329,31 @@ namespace EFH2
             await dialog.ShowAsync();
         }
 
-		private void HelpContentsClick(object sender, RoutedEventArgs e)
-		{
-            System.Windows.Forms.Help.ShowHelp(null, Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "Help", "EFH2.chm"));
+		private async void HelpContentsClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string helpFilePath = Path.Combine(FileOperations.programFilesDirectory, FileOperations.companyName, "EFH2", "EFH2.chm");
+
+                Process.Start(new ProcessStartInfo(helpFilePath) { UseShellExecute = true });
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         private void UserManualClick(object sender, RoutedEventArgs e)
 		{
-            string pdfPath = Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets", "EFH-2 Users Manual.pdf");
+            string pdfPath = Path.Combine(FileOperations.programFilesDirectory, FileOperations.companyName, "EFH2", "EFH-2 Users Manual.pdf");
 
             Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
 		}
 
 		private async void AboutClick(object sender, RoutedEventArgs e)
 		{
-            AboutControl aboutControl = new AboutControl();
             ContentDialog aboutDialog = new ContentDialog()
             {
                 XamlRoot = this.Content.XamlRoot,
                 Title = "About EFH-2 Engineering Field Handbook, Chapter 2",
-                Content = aboutControl,
+                Content = new AboutControl(),
                 PrimaryButtonText = "OK",
             };
 

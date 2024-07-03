@@ -12,13 +12,13 @@ namespace EFH2
 {
 	public static class FileOperations
     {
-		private static string programDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+		public static string programDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
-		private static string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		public static string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-		private static string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+		public static string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
 
-		private static string companyName = "USDA-dev";
+		public static string companyName = "USDA-dev";
 
         public static void SerializeData(MainViewModel model, TextWriter writer)
         {
