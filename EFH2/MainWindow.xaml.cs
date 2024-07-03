@@ -113,7 +113,7 @@ namespace EFH2
             newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
             page.PrintHydrograph += PrintHydrograph;
-			page.CloseWindow += async (o, e) => newWindow.Close();
+			page.CloseWindow += (o, e) => newWindow.Close();
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
             newWindow.Activate();
