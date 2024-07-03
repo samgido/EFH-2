@@ -46,10 +46,22 @@ namespace EFH2
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            MainViewModel mainViewModel = new MainViewModel();
+            FileOperations.LoadMainViewModel(mainViewModel);
+
+            m_model = mainViewModel;
+
+            m_window = new MainWindow()
+            {
+                Title = "EFH-2 Estimating Runoff Volume and Peak Discharge",
+                ExtendsContentIntoTitleBar = true,
+            };
+
             m_window.Activate();
         }
 
         internal Window m_window;
+
+        internal MainViewModel m_model;
     }
 }

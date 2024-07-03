@@ -46,14 +46,9 @@ namespace EFH2
             this.InitializeComponent();
             RegisterForPrinting();
 
-            Title = "EFH-2 Estimating Runoff Volume and Peak Discharge";
-
-            ExtendsContentIntoTitleBar = true;
-
-            MainViewModel = new MainViewModel();
-            FileOperations.LoadMainViewModel(MainViewModel);
-
             Navigation.SelectedItem = IntroNavButton;
+
+            this.MainViewModel = (App.Current as App)?.m_model;
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
