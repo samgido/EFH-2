@@ -219,6 +219,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_88D77193AB7A447996FD3EE62A63746C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8A437CB4C2A44AE9BEEA31494FDF0200"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1220,6 +1226,26 @@
             "TargetName" = "8:Type PR_VI_1.tbl"
             "Tag" = "8:"
             "Folder" = "8:_468D927A719E451B9F18F23CC1F550F9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_88D77193AB7A447996FD3EE62A63746C"
+            {
+            "SourcePath" = "8:C:\\Program Files (x86)\\USDA\\EFH2\\EFH2.chm"
+            "TargetName" = "8:EFH2.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_621EC5A5A66E42399BF1D8C91DCEDD8A"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2673,7 +2699,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C8AA3C67CCA64A4E9F79EC98E7020061"
             {
-            "SourcePath" = "8:..\\EFH2\\obj\\x86\\Debug\\net6.0-windows10.0.19041.0\\apphost.exe"
+            "SourcePath" = "8:..\\EFH2\\obj\\x86\\Release\\net6.0-windows10.0.19041.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_621EC5A5A66E42399BF1D8C91DCEDD8A"

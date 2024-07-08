@@ -73,7 +73,7 @@
             <TextBlock Grid.Column="9" Grid.ColumnSpan="2">D</TextBlock>
         </Grid>
 
-        <ListView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="CategoriesItemsView" 
+        <ListView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="RcnCategoriesListView" 
                   RelativePanel.Below="ItemsViewLabels" RelativePanel.Above="ConversionSettings"
                   RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
             <ListView.ItemTemplate>

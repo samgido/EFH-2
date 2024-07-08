@@ -92,8 +92,6 @@
                 <AppBarSeparator/>
 
                 <AppBarButton Icon="Help" Label="Help" Click="HelpContentsClick"/>
-
-                <AppBarButton Icon="Accept" Label="Fill In fields" Click="AppBarButton_Click"/>
             </CommandBar>
 
             <NavigationView PaneDisplayMode="Top" x:Name="Navigation" IsBackButtonVisible="Collapsed"

@@ -25,39 +25,12 @@ namespace EFH2
         public RcnDataControl()
         {
             this.InitializeComponent();
+
+            RcnCategoriesListView.ScrollIntoView(ViewModel?.RcnCategories[5]);
+            CultivatedAgRadioButton.IsChecked = true;
         }
 
-        private void CreateCategoryItemsView()
-        {
-            ItemsView primaryItemsView = new ItemsView();
-
-            Grid grid = new Grid();
-            grid.ColumnDefinitions.Add(CreateColumn(8));
-            grid.ColumnDefinitions.Add(CreateColumn(8));
-            grid.ColumnDefinitions.Add(CreateColumn(4));
-            grid.ColumnDefinitions.Add(CreateColumn(3));
-            grid.ColumnDefinitions.Add(CreateColumn(1));
-            grid.ColumnDefinitions.Add(CreateColumn(3));
-            grid.ColumnDefinitions.Add(CreateColumn(1));
-            grid.ColumnDefinitions.Add(CreateColumn(3));
-            grid.ColumnDefinitions.Add(CreateColumn(1));
-            grid.ColumnDefinitions.Add(CreateColumn(3));
-            grid.ColumnDefinitions.Add(CreateColumn(1));
-
-            TextBlock label = new TextBlock();
-            Grid.SetColumn(label, 0);
-            Grid.SetColumnSpan(label, 11);
-
-
-            grid.Children.Add(label);
-        }
-
-        private ColumnDefinition CreateColumn(int weight)
-        {
-            return new ColumnDefinition() { Width = new GridLength(weight , GridUnitType.Star) };
-        }
-        
-        public async void CreatePopup(MainViewModel model)
+        public async void CreateUnitChangePopup(MainViewModel model)
         {
             RcnDataConversionPage page = new RcnDataConversionPage();
 
@@ -103,10 +76,10 @@ namespace EFH2
 			else if (sender as RadioButton == OtherAgRadioButton) { index = 7; }
 			else if (sender as RadioButton == AridRangelandRadioButton) { index = 8; }
 
-            if (index < CategoriesItemsView.Items.Count && DataContext is RcnDataViewModel model)
+            if (index < RcnCategoriesListView.Items.Count && DataContext is RcnDataViewModel model)
             {
                 var targetItem = model.RcnCategories[index];
-                CategoriesItemsView.ScrollIntoView(targetItem);
+                RcnCategoriesListView.ScrollIntoView(targetItem);
             }
         }
     }

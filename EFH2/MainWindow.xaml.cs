@@ -127,7 +127,7 @@ namespace EFH2
 
 		private void ChangeRcnUnits(object sender, RoutedEventArgs e)
         {
-            RcnDataControl.CreatePopup(MainViewModel);
+            RcnDataControl.CreateUnitChangePopup(MainViewModel);
         }
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
@@ -550,76 +550,5 @@ namespace EFH2
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
         #endregion
-
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            //MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = 500;
-            //MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = 50;
-            //MainViewModel.BasicDataViewModel.watershedLengthEntry.Value = 5000;
-            //MainViewModel.BasicDataViewModel.watershedSlopeEntry.Value = 5;
-
-            //MainViewModel.BasicDataViewModel.SelectedStateIndex = 2;
-            //MainViewModel.BasicDataViewModel.SelectedCountyIndex = 2;
-
-            try
-            {
-				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-				string filename = appDataPath + "\\EFH2\\temp.pdf";
-                PrintInfo.Print(MainViewModel, filename);
-
-				//var pdfDocument = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filename));
-
-    //            //await WebView.EnsureCoreWebView2Async();
-    //            //WebView.CoreWebView2.SetVirtualHostNameToFolderMapping("pdfjs", appDataPath + "\\EFH2", CoreWebView2HostResourceAccessKind.Allow);
-    //            //WebView.Source = new Uri("https://pdfjs/web/viewer.html?file=" + "C:\\Users\\samue\\AppData\\EFH2\\temp.pdf");
-
-    //            //MainGrid.Children.Add(WebView);
-
-    //            //WebView.CoreWebView2.NavigationCompleted += (sender, args) =>
-    //            //{
-    //            //	if (args.IsSuccess)
-    //            //	{
-    //            //		WebView.CoreWebView2.ShowPrintUI(CoreWebView2PrintDialogKind.System);
-    //            //	}
-    //            //}; 
-
-    //            int currentPageIndex;
-    //            PdfSharp.Pdf.PdfDocument document;
-
-				//document = PdfReader.Open(filename, PdfDocumentOpenMode.Import);
-				//currentPageIndex = 0;
-
-				//System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
-    //            printDocument.PrintPage += async (sender, args) =>
-    //            {
-    //                if (currentPageIndex < document.PageCount)
-				//	{
-    //                    XGraphics gfx = XGraphics.FromPdfPage(document.Pages[currentPageIndex]);
-				//		XPdfForm form = XPdfForm.FromFile(filename);
-				//		form.PageNumber = currentPageIndex + 1;
-				//		gfx.DrawImage(form, 0, 0, args.PageBounds.Width, args.PageBounds.Height);
-
-				//		currentPageIndex++;
-				//		args.HasMorePages = currentPageIndex < document.PageCount;
-				//	}
-				//	else
-				//	{
-				//		args.HasMorePages = false;
-				//	}
-				//};
-
-				//PrintDialog printDialog = new PrintDialog();
-				//if (printDialog.ShowDialog() == DialogResult.OK)
-				//{
-				//	printDocument.PrinterSettings = printDialog.PrinterSettings;
-				//	printDocument.Print();
-				//}
-
-			}
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-		}
     }
 }

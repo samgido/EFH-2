@@ -11,6 +11,9 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
 	  <XamlCodeGenerationControlFlags>DoNotGenerateOtherProviders</XamlCodeGenerationControlFlags>
+	  <WindowsPackageType>None</WindowsPackageType>
+	  <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+	  <TrimMode>partial</TrimMode>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\EFH2.ico" />
@@ -28,7 +31,6 @@
     <None Remove="Controls\RcnCategoryControl.xaml" />
     <None Remove="Controls\RCNDataControl.xaml" />
     <None Remove="Controls\RcnRowsControl.xaml" />
-    <None Remove="Pages\HelpContentsPage.xaml" />
     <None Remove="Pages\HsgPage.xaml" />
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
@@ -77,11 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\AboutControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\HelpContentsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
