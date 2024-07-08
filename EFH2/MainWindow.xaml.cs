@@ -46,6 +46,8 @@ namespace EFH2
             this.InitializeComponent();
             RegisterForPrinting();
 
+            this.AppWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+
             Navigation.SelectedItem = IntroNavButton;
 
             this.MainViewModel = (App.Current as App)?.m_model;
