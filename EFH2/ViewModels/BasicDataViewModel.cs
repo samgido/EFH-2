@@ -101,7 +101,7 @@ namespace EFH2
                 if (value == -1) return;
                 this.selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
 
-                this.CountyChanged?.Invoke(this, new EventArgs());
+                this.CountyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -133,7 +133,7 @@ namespace EFH2
 		private void EntryChanged(object sender, EventArgs e)
 		{
             this.CalculateTimeOfConcentration();
-            this.ValueChanged?.Invoke(this, new EventArgs());
+            this.ValueChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void SetCounties(List<string> list)

@@ -80,12 +80,12 @@ namespace EFH2
 
 		private void PrintClick(object sender, RoutedEventArgs e)
 		{
-			this.PrintHydrograph?.Invoke(this, new EventArgs());
+			this.PrintHydrograph?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void ExitClick(object sender, RoutedEventArgs e)
 		{
-			this.CloseWindow?.Invoke(this, new EventArgs());
+			this.CloseWindow?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void CopyClick(object sender, RoutedEventArgs e)

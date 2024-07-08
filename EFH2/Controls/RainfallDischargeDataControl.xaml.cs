@@ -29,7 +29,7 @@ namespace EFH2
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            this.CreateHydrograph?.Invoke(this, new EventArgs());
+            this.CreateHydrograph?.Invoke(this, EventArgs.Empty);
         }
     }
 }

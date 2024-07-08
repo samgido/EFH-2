@@ -118,7 +118,7 @@ namespace EFH2
                 if (value != 0) this.RainfallDistributionTypeInputStatus = InputStatus.UserSelected;
                 else this.RainfallDistributionTypeInputStatus = InputStatus.None;
 
-                this.ValueChanged?.Invoke(this, new EventArgs());
+                this.ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -133,7 +133,7 @@ namespace EFH2
                 if (value != 0) this.DuhTypeInputStatus = InputStatus.UserSelected;
                 else this.DuhTypeInputStatus = InputStatus.None;
 
-                this.ValueChanged?.Invoke(this, new EventArgs());
+                this.ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -258,7 +258,7 @@ namespace EFH2
 
         public void StormPropertyChanged(object? sender, EventArgs e)
         {
-            this.ValueChanged?.Invoke(this, new EventArgs());
+            this.ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace EFH2
             this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
 
             // this will trigger ValueChanged
-            this.ValueChanged?.Invoke(this, new EventArgs());
+            this.ValueChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

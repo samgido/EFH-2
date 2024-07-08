@@ -40,7 +40,7 @@ namespace EFH2
             set
             {
                 this.SetProperty(ref this._dayRain, value);
-				this.ValueChanged?.Invoke(this, new EventArgs());
+				this.ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -51,7 +51,7 @@ namespace EFH2
             set
             {
 				this.SetProperty(ref this._frequency, value);
-				this.ValueChanged?.Invoke(this, new EventArgs());
+				this.ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

@@ -27,7 +27,7 @@ namespace EFH2
                     if (value <= Max && value >= Min)
                     {
                         InputStatus = InputStatus.UserEnteredValue;
-                        this.ValueChanged?.Invoke(this, new EventArgs());
+                        this.ValueChanged?.Invoke(this, EventArgs.Empty);
                     }
                     else if (double.IsNaN(value)) InputStatus = InputStatus.None;
                     else InputStatus = InputStatus.Invalid;
