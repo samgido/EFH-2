@@ -25,7 +25,7 @@
         <Border BorderThickness="0,1,0,0" BorderBrush="White" Margin="0,5,0,5"/>
         <Image Source="ms-appx:///Assets/nrcs-logo-and-title2.png" Height="100"/>
         <TextBlock FontWeight="Bold" Margin="0,5,0,5">Disclaimer</TextBlock>
-        <TextBlock>
+        <TextBlock HorizontalAlignment="Center" Margin="20,0,20,0" TextAlignment="Center">
             Although EFH-2 has been tested by its developers, NO warranty, expressed or implied, is made as to the accuracy and functioning of the program 
             and related program material nor shall the fact of distribution constitute any such warranty, and NO responsibility is assumed by the developers in connection therewith.
         </TextBlock>

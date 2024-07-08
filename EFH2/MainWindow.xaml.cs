@@ -70,15 +70,15 @@ namespace EFH2
             IntroControl.Visibility = Visibility.Visible;
 
             var root = this.Content as FrameworkElement;
-			if (root != null)
-			{
-				root.Loaded += async (s, e) => await ShowWelcomePageAsync();
-			}
+            if (root != null)
+            {
+				root.Loaded += (s, e) => ShowWelcomePageAsync();
+            }
         }
 
 		#region Event Handlers
 
-		private async Task ShowWelcomePageAsync()
+		private async void ShowWelcomePageAsync()
         {
             WelcomePage welcomePage = new WelcomePage();
             ContentDialog welcomeDialog = new ContentDialog()
@@ -89,7 +89,13 @@ namespace EFH2
                 PrimaryButtonText = "Continue",
             };
 
-            await welcomeDialog.ShowAsync();
+            welcomeDialog.IsPrimaryButtonEnabled = false;
+
+            welcomeDialog.ShowAsync();
+
+			await Task.Delay(3000);
+
+            welcomeDialog.IsPrimaryButtonEnabled = true;
         }
 
 		private void CreateHydrograph(object sender, EventArgs e)
