@@ -26,8 +26,8 @@ namespace EFH2
         {
             this.InitializeComponent();
 
-            RcnCategoriesListView.ScrollIntoView(ViewModel?.RcnCategories[5]);
             CultivatedAgRadioButton.IsChecked = true;
+            RcnCategoriesListView.ScrollIntoView(ViewModel?.RcnCategories[5]);
         }
 
         public async void CreateUnitChangePopup(MainViewModel model)

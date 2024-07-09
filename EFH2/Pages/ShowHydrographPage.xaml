@@ -21,7 +21,7 @@
 
         <Grid x:Name="PrintContainer" Opacity="0"/>
 
-        <Image Source="ms-appx:///Assets/NRCSLogo32x32.png" Grid.Row="0" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,7,0,0"/>
+        <Image Source="ms-appx:///Assets/Logos/NRCSLogo32x32.png" Grid.Row="0" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,7,0,0"/>
         <TextBlock Margin="27,5,0,0" Grid.Row="0">Input / Output Plots</TextBlock>
 
         <MenuBar Grid.Row="1">
