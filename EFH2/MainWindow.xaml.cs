@@ -18,6 +18,7 @@ using Windows.Graphics.Printing;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using WinRT.Interop;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -150,6 +151,23 @@ namespace EFH2
             BasicDataControl.Visibility = Visibility.Visible;
             Navigation.SelectedItem = BasicDataNavButton;
         }
+
+		private async void ExportHydrographClick(object sender, RoutedEventArgs e)
+		{
+            var filePicker = new FileSavePicker();
+            filePicker.FileTypeChoices.Add("CSV", new List<string> { ".csv" });
+            filePicker.SuggestedFileName = "hydrograph.csv";
+         
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            InitializeWithWindow.Initialize(filePicker, hWnd);
+
+            var file = await filePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+				FileOperations.ExportHydrograph(MainViewModel, file.Path); 
+            }
+		}
 
 		#endregion
 
@@ -557,6 +575,6 @@ namespace EFH2
             RainfallDischargeDataControl.Visibility = Visibility.Collapsed;
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
-        #endregion
-    }
+		#endregion
+	}
 }

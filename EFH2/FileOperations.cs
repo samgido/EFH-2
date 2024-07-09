@@ -462,43 +462,97 @@ namespace EFH2
 
 			string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.hyd");
 
-			if (File.Exists(filePath))
+			if (!File.Exists(filePath)) return null;
+			
+			using (StreamReader reader = new StreamReader(filePath))
 			{
-				using (StreamReader reader = new StreamReader(filePath))
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine();
+					List<string> splitLine = SplitLine(line);
+
+					if (splitLine.Count == 7 && splitLine[0] == "Area" && plottedFrequencies.Contains(int.Parse(splitLine[2].Replace("-Yr", ""))))
+					{
+						int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
+						double startTime = double.Parse(splitLine[3]);
+						double increment = double.Parse(splitLine[4]);
+
+						List<double> values = new List<double>();
+
+						line = reader.ReadLine(); 
+						splitLine = SplitLine(line);
+						while (splitLine.Count == 5)
+						{
+							foreach (string val in splitLine)
+							{
+								values.Add(double.Parse(val));
+							}
+
+							line = reader.ReadLine(); 
+							splitLine = SplitLine(line);
+						}
+
+						list.Add(new HydrographLineModel(frequency, startTime, increment, values));
+					}
+				}
+			}
+			
+
+			return list;
+		}
+
+		public static void ExportHydrograph(MainViewModel model, string outputFileName)
+		{
+			//Dictionary<int, List<(double, double)>> hydrographData = new Dictionary<int, List<(double, double)>>();
+
+			string hydrographFilePath = Path.Combine(appDataDirectory, "EFH2", "tr20.hyd");
+
+			StringBuilder content = new StringBuilder();
+
+			if (!File.Exists(hydrographFilePath)) return;
+
+			using (StreamWriter writer = new StreamWriter(outputFileName))
+			{
+				using (StreamReader reader = new StreamReader(hydrographFilePath))
 				{
 					while (!reader.EndOfStream)
 					{
-						string line = reader.ReadLine();
-						List<string> splitLine = SplitLine(line);
+						List<string> splitLine = SplitLine(reader.ReadLine());
 
-						if (splitLine.Count == 7 && splitLine[0] == "Area" && plottedFrequencies.Contains(int.Parse(splitLine[2].Replace("-Yr", ""))))
+						if (splitLine.Count == 7 && splitLine[0] == "Area")
 						{
 							int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
 							double startTime = double.Parse(splitLine[3]);
 							double increment = double.Parse(splitLine[4]);
 
-							List<double> values = new List<double>();
+							int i = 0;
 
-							line = reader.ReadLine(); 
-							splitLine = SplitLine(line);
+							//hydrographData[frequency] = new List<(double, double)>();
+
+							//content.AppendLine(frequency + "-Yr Hydrograph");
+							//content.AppendLine("Time (hr), Discharge (cfs)");
+
+							writer.WriteLine(frequency + "-Yr Hydrograph");
+							writer.WriteLine("Time (hr), Discharge (cfs)");
+
+							splitLine = SplitLine(reader.ReadLine());
 							while (splitLine.Count == 5)
 							{
 								foreach (string val in splitLine)
 								{
-									values.Add(double.Parse(val));
+									//content.AppendLine(startTime + i * increment + ", " + val);
+									writer.WriteLine(startTime + i * increment + ", " + val);
+
+									i++;
 								}
-
-								line = reader.ReadLine(); 
-								splitLine = SplitLine(line);
 							}
-
-							list.Add(new HydrographLineModel(frequency, startTime, increment, values));
 						}
+
 					}
 				}
 			}
 
-			return list;
+			return;
 		}
 
 		public static void SearchForDataAfterCountyChanged(MainViewModel model, string state, string county)
