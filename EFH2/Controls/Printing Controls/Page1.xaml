@@ -205,7 +205,7 @@
 
                             <TextBlock Text="{Binding Path=BaseStorm.Number}" Grid.Row="0"/>
                             <TextBlock Text="{Binding Path=BaseStorm.Frequency, Converter={StaticResource DoubleFormatter}}" Grid.Row="1"/>
-                            <TextBlock Text="{Binding Path=BaseStorm.DayRain, Converter={StaticResource DoubleFormatter}}" Grid.Row="2"/>
+                            <TextBlock Text="{Binding Path=BaseStorm.Precipitation, Converter={StaticResource DoubleFormatter}}" Grid.Row="2"/>
                             <TextBlock Text="{Binding Path=BaseStorm.Runoff, Converter={StaticResource DoubleFormatter}}" Grid.Row="3"/>
                             <TextBlock Text="{Binding Path=RunoffInAcreFeet, Converter={StaticResource DoubleFormatter}}" Grid.Row="4"/>
                             <TextBlock Text="{Binding Path=BaseStorm.PeakFlow, Converter={StaticResource DoubleFormatter}}" Grid.Row="5"/>

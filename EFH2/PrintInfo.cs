@@ -353,7 +353,7 @@ namespace EFH2
 
 			for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
 			{
-				row.Cells[i + 1].AddParagraph(Format(model.RainfallDischargeDataViewModel.Storms[i].DayRain));
+				row.Cells[i + 1].AddParagraph(Format(model.RainfallDischargeDataViewModel.Storms[i].Precipitation));
 			}
 
 			// First runoff row 

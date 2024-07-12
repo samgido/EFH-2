@@ -10,7 +10,7 @@ namespace EFH2
         public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlIgnore]
-        private double _dayRain = double.NaN;
+        private double _precipitation = double.NaN;
 
         [XmlIgnore]
         private double _frequency = double.NaN;
@@ -34,12 +34,12 @@ namespace EFH2
         public bool _displayHydrograph = false;
 
         [XmlElement("24-hr Rain")]
-        public double DayRain
+        public double Precipitation
         {
-            get => _dayRain;
+            get => _precipitation;
             set
             {
-                this.SetProperty(ref this._dayRain, value);
+                this.SetProperty(ref this._precipitation, value);
 				this.ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -58,7 +58,7 @@ namespace EFH2
         public void Default()
         {
             Frequency = double.NaN;
-            DayRain = 0;
+            Precipitation = 0;
             PeakFlow = double.NaN;
             Runoff = double.NaN;
 
@@ -67,7 +67,7 @@ namespace EFH2
 
         public void Load(StormViewModel model)
         {
-            DayRain = model.DayRain;
+            Precipitation = model.Precipitation;
             Frequency = model.Frequency;
             PeakFlow = model.PeakFlow;
             Runoff = model.Runoff;
@@ -76,12 +76,12 @@ namespace EFH2
 
         public void SetSilent(StormViewModel newModel)
         {
-            this._dayRain = newModel.DayRain;
+            this._precipitation = newModel.Precipitation;
             this._frequency = newModel.Frequency;
             this._peakFlow = newModel.PeakFlow;
             this._runoff = newModel.Runoff;
 
-            this.OnPropertyChanged(nameof(DayRain));
+            this.OnPropertyChanged(nameof(Precipitation));
             this.OnPropertyChanged(nameof(Frequency));
             this.OnPropertyChanged(nameof(PeakFlow));
             this.OnPropertyChanged(nameof(Runoff));

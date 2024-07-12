@@ -296,11 +296,11 @@ namespace EFH2
 					writer.WriteLine("STORM ANALYSIS:");
 					foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 					{
-						if (!double.IsNaN(storm.Frequency) && !double.IsNaN(storm.DayRain))
+						if (!double.IsNaN(storm.Frequency) && !double.IsNaN(storm.Precipitation))
 						{
 							writer.WriteLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
 								storm.Frequency + "-Yr",
-								storm.DayRain.ToString("0.0"),
+								storm.Precipitation.ToString("0.0"),
 								rainfallDistributionType,
 								2));
 						}
@@ -435,7 +435,7 @@ namespace EFH2
 
 								foreach (StormViewModel storm in storms)
 								{
-									if (storm.Frequency == year && !double.IsNaN(storm.DayRain))
+									if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
 									{// found the match, put the runoff and peakflow values into this storm
 										storm.PeakFlow = peakFlow;
 										storm.Runoff = runoff;
@@ -468,8 +468,7 @@ namespace EFH2
 			{
 				while (!reader.EndOfStream)
 				{
-					string line = reader.ReadLine();
-					List<string> splitLine = SplitLine(line);
+					List<string> splitLine = SplitLine(reader.ReadLine());
 
 					if (splitLine.Count == 7 && splitLine[0] == "Area" && plottedFrequencies.Contains(int.Parse(splitLine[2].Replace("-Yr", ""))))
 					{
@@ -479,8 +478,7 @@ namespace EFH2
 
 						List<double> values = new List<double>();
 
-						line = reader.ReadLine(); 
-						splitLine = SplitLine(line);
+						splitLine = SplitLine(reader.ReadLine());
 						while (splitLine.Count == 5)
 						{
 							foreach (string val in splitLine)
@@ -488,8 +486,7 @@ namespace EFH2
 								values.Add(double.Parse(val));
 							}
 
-							line = reader.ReadLine(); 
-							splitLine = SplitLine(line);
+							splitLine = SplitLine(reader.ReadLine());
 						}
 
 						list.Add(new HydrographLineModel(frequency, startTime, increment, values));
@@ -513,13 +510,20 @@ namespace EFH2
 
 			using (StreamWriter writer = new StreamWriter(outputFileName))
 			{
+				writer.WriteLine("Hydrograph Frequency, Precipitation (in), Peak Flow (cfs), Runoff (in)");
+
+				foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+				{
+					writer.WriteLine(storm.Frequency + "-Yr, " + storm.Precipitation.ToString("#.##") + ", " + storm.PeakFlow.ToString("#.##") + ", " + storm.Runoff.ToString("#.##"));
+				}
+
 				using (StreamReader reader = new StreamReader(hydrographFilePath))
 				{
 					while (!reader.EndOfStream)
 					{
 						List<string> splitLine = SplitLine(reader.ReadLine());
 
-						if (splitLine.Count == 7 && splitLine[0] == "Area")
+						if (splitLine.Count == 7 && splitLine[0] == "OUTLET")
 						{
 							int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
 							double startTime = double.Parse(splitLine[3]);
@@ -532,7 +536,7 @@ namespace EFH2
 							//content.AppendLine(frequency + "-Yr Hydrograph");
 							//content.AppendLine("Time (hr), Discharge (cfs)");
 
-							writer.WriteLine(frequency + "-Yr Hydrograph");
+							writer.WriteLine("\n" + frequency + "-Yr Hydrograph");
 							writer.WriteLine("Time (hr), Discharge (cfs)");
 
 							splitLine = SplitLine(reader.ReadLine());
@@ -541,10 +545,13 @@ namespace EFH2
 								foreach (string val in splitLine)
 								{
 									//content.AppendLine(startTime + i * increment + ", " + val);
-									writer.WriteLine(startTime + i * increment + ", " + val);
+									double time = startTime + i * increment;
+									writer.WriteLine(time.ToString("0.#####") + ", " + double.Parse(val).ToString("0.##"));
 
 									i++;
 								}
+
+								splitLine = SplitLine(reader.ReadLine());
 							}
 						}
 
@@ -558,43 +565,48 @@ namespace EFH2
 		public static void SearchForDataAfterCountyChanged(MainViewModel model, string state, string county)
 		{
 			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
-			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100 };
+			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100, 200, 500, 1000 };
 
 			RainfallDischargeDataViewModel newModel = new RainfallDischargeDataViewModel();
 			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
 			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
-            using (StreamReader reader = new StreamReader(rainfallDataPath)) // TODO change path
+			try
 			{
-				while (!reader.EndOfStream)
+
+				using (StreamReader reader = new StreamReader(rainfallDataPath)) // TODO change path
 				{
-					string line = reader.ReadLine();
-					string[] elements = line.Split(',');
-
-					if (elements.Length == 11 && elements[1].Trim('"') == state) 
+					while (!reader.EndOfStream)
 					{
-						if (elements[2].Trim('"') == county)
+						string line = reader.ReadLine();
+						string[] elements = line.Split(',');
+
+						if (elements.Length == 14 && elements[1].Trim('"') == state) 
 						{
-							string rfType = elements[3];
-							if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
-
-							newModel.SetRainfallType(rfType);
-
-							for (int i = 0; i < 7; i++)
+							if (elements[2].Trim('"') == county)
 							{
-								double dayRain = double.Parse(elements[4 + i]);
-								if (dayRain != 0)
+								string rfType = elements[3];
+								if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
+
+								newModel.SetRainfallType(rfType);
+
+								for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
 								{
-									newModel.Storms[i].DayRain = dayRain;
-									newModel.Storms[i].Frequency = automaticStormFrequencies[i];
+									double precipitation = double.Parse(elements[4 + i]);
+									if (precipitation != 0)
+									{
+										newModel.Storms[i].Frequency = automaticStormFrequencies[i];
+										newModel.Storms[i].Precipitation = precipitation;
+									}
 								}
 							}
 						}
 					}
-				}
 
-				model.RainfallDischargeDataViewModel.SetSilent(newModel);
+					model.RainfallDischargeDataViewModel.SetSilent(newModel);
+				}
 			}
+			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
 		private static List<string> SplitLine(string line)

@@ -14,7 +14,7 @@ namespace EFH2
     public class MainViewModel
     {
         [XmlIgnore]
-        public const int NumberOfStorms = 9;
+        public const int NumberOfStorms = 10;
 
         [XmlIgnore]
         public const string UserEnteredMessage = "User Entered.";

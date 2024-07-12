@@ -105,7 +105,7 @@ namespace EFH2
 
 
         [XmlIgnore]
-        public static int DayRainMax => 26;
+        public static int PrecipitationMax => 26;
 
         [XmlIgnore]
         public int SelectedRainfallDistributionTypeIndex
