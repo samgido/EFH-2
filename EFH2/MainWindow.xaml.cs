@@ -53,6 +53,8 @@ namespace EFH2
 
             this.MainViewModel = (App.Current as App)?.m_model;
 
+            this.MainViewModel.WinTr20Ran += (s, e) => ExportHydrographsButton.IsEnabled = true;
+
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
             BasicDataControl.SetDataContext();
 

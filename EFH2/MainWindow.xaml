@@ -32,7 +32,7 @@
                     <MenuFlyoutItem Text="Recalculate" AccessKey="R"/>
                     <MenuFlyoutItem Text="Save" AccessKey="S" Click="SaveClicked"/>
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Export Hydrograph(s)" AccessKey="E" Click="ExportHydrographClick"/>
+                    <MenuFlyoutItem x:Name="ExportHydrographsButton" Text="Export Hydrograph(s)" AccessKey="E" Click="ExportHydrographClick" IsEnabled="False"/>
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem Text="Exit" AccessKey="X" Click="ExitClicked"/>
                 </MenuBarItem>

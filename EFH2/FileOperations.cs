@@ -508,58 +508,56 @@ namespace EFH2
 
 			if (!File.Exists(hydrographFilePath)) return;
 
-			using (StreamWriter writer = new StreamWriter(outputFileName))
+			StreamWriter writer = new StreamWriter(outputFileName);
+			StreamReader reader = new StreamReader(hydrographFilePath);
+
+			writer.WriteLine("Hydrograph Frequency, Precipitation (in), Peak Flow (cfs), Runoff (in)");
+			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
 			{
-				writer.WriteLine("Hydrograph Frequency, Precipitation (in), Peak Flow (cfs), Runoff (in)");
+				writer.WriteLine(storm.Frequency + "-Yr, " + storm.Precipitation.ToString("0.##") + ", " + storm.PeakFlow.ToString("0.##") + ", " + storm.Runoff.ToString("0.##"));
+			}
 
-				foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+			List<string> splitLine = SplitLine(reader.ReadLine());
+			while (!reader.EndOfStream)
+			{
+				if (splitLine.Count == 7 && splitLine[0] == "OUTLET")
 				{
-					writer.WriteLine(storm.Frequency + "-Yr, " + storm.Precipitation.ToString("#.##") + ", " + storm.PeakFlow.ToString("#.##") + ", " + storm.Runoff.ToString("#.##"));
-				}
+					int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
+					double startTime = double.Parse(splitLine[3]);
+					double increment = double.Parse(splitLine[4]);
 
-				using (StreamReader reader = new StreamReader(hydrographFilePath))
-				{
-					while (!reader.EndOfStream)
+					int i = 0;
+
+					//hydrographData[frequency] = new List<(double, double)>();
+
+					//content.AppendLine(frequency + "-Yr Hydrograph");
+					//content.AppendLine("Time (hr), Discharge (cfs)");
+
+					writer.WriteLine("\n" + frequency + "-Yr Hydrograph");
+					writer.WriteLine("Time (hr), Discharge (cfs)");
+
+					splitLine = SplitLine(reader.ReadLine());
+					while (splitLine.Count != 7)
 					{
-						List<string> splitLine = SplitLine(reader.ReadLine());
-
-						if (splitLine.Count == 7 && splitLine[0] == "OUTLET")
+						foreach (string val in splitLine)
 						{
-							int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
-							double startTime = double.Parse(splitLine[3]);
-							double increment = double.Parse(splitLine[4]);
+							//content.AppendLine(startTime + i * increment + ", " + val);
+							double time = startTime + i * increment;
+							writer.WriteLine(time.ToString("0.#####") + ", " + double.Parse(val).ToString("0.##"));
 
-							int i = 0;
-
-							//hydrographData[frequency] = new List<(double, double)>();
-
-							//content.AppendLine(frequency + "-Yr Hydrograph");
-							//content.AppendLine("Time (hr), Discharge (cfs)");
-
-							writer.WriteLine("\n" + frequency + "-Yr Hydrograph");
-							writer.WriteLine("Time (hr), Discharge (cfs)");
-
-							splitLine = SplitLine(reader.ReadLine());
-							while (splitLine.Count == 5)
-							{
-								foreach (string val in splitLine)
-								{
-									//content.AppendLine(startTime + i * increment + ", " + val);
-									double time = startTime + i * increment;
-									writer.WriteLine(time.ToString("0.#####") + ", " + double.Parse(val).ToString("0.##"));
-
-									i++;
-								}
-
-								splitLine = SplitLine(reader.ReadLine());
-							}
+							i++;
 						}
-
+						splitLine = SplitLine(reader.ReadLine());
 					}
+				}
+				else
+				{
+					splitLine = SplitLine(reader.ReadLine());
 				}
 			}
 
-			return;
+			writer.Close();
+			reader.Close();
 		}
 
 		public static void SearchForDataAfterCountyChanged(MainViewModel model, string state, string county)
@@ -611,6 +609,7 @@ namespace EFH2
 
 		private static List<string> SplitLine(string line)
 		{
+			if (line == null) return new List<string>();
 			return line.Split().Where(elem => !string.IsNullOrEmpty(elem)).ToList();
 		}
 	}

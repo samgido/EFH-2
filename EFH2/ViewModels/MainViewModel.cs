@@ -13,6 +13,8 @@ namespace EFH2
     [XmlRoot("MainViewModel")]
     public class MainViewModel
     {
+        public event EventHandler WinTr20Ran;
+
         [XmlIgnore]
         public const int NumberOfStorms = 10;
 
@@ -73,8 +75,9 @@ namespace EFH2
             {
                 FileOperations.RunWinTr20(fileName);
 				FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
+
+                this.WinTr20Ran?.Invoke(this, EventArgs.Empty);
             }
-            
         }
 
 		private void BasicDataViewModel_CountyChanged(object sender, EventArgs e)
