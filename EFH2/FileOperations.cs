@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,24 +54,21 @@ namespace EFH2
 			try
 			{
 				string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
-				using (StreamReader reader = new StreamReader(rainfallDataPath))
+				using (TextFieldParser parser = new TextFieldParser(rainfallDataPath))
 				{
-					reader.ReadLine();
-					model.stateCountyDictionary.Add("Choose", new List<string>());
+					parser.TextFieldType = FieldType.Delimited;
+					parser.SetDelimiters(",");
 
-					while (!reader.EndOfStream)
+					while (!parser.EndOfData)
 					{
-						string line = reader.ReadLine();
+						string[] fields = parser.ReadFields();
 
-						string[] elements = line.Split(',');
-
-						string state = elements[1];
-						string county = elements[2].Trim('"');
+						string state = fields[1];
+						string county = fields[2].Trim('"');
 
 						if (!model.stateCountyDictionary.ContainsKey(state))
-						{ // found new state 
-
-							model.stateCountyDictionary.Add(state, new());
+						{ // found new state
+							model.stateCountyDictionary.Add(state, new List<string>());
 							model.stateCountyDictionary[state].Add("Choose");
 						}
 
@@ -81,7 +79,6 @@ namespace EFH2
 					{
 						model.States.Add(new ComboBoxItem() { Content = state });
 					}
-
 				}
 			}
 			catch (Exception ex)
@@ -565,42 +562,37 @@ namespace EFH2
 			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
 			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
-			try
+			using (TextFieldParser parser = new TextFieldParser(rainfallDataPath) { Delimiters = new string[] { "," }, TextFieldType = FieldType.Delimited })
 			{
-
-				using (StreamReader reader = new StreamReader(rainfallDataPath)) // TODO change path
+				while (!parser.EndOfData)
 				{
-					while (!reader.EndOfStream)
+					string[] elements = parser.ReadFields();
+
+					if (elements.Length == 14 && elements[1].Trim('"') == state) 
 					{
-						string line = reader.ReadLine();
-						string[] elements = line.Split(',');
-
-						if (elements.Length == 14 && elements[1].Trim('"') == state) 
+						if (elements[2].Trim('"') == county)
 						{
-							if (elements[2].Trim('"') == county)
+							string rfType = elements[3];
+							if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
+
+							newModel.SetRainfallType(rfType);
+
+							for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
 							{
-								string rfType = elements[3];
-								if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
-
-								newModel.SetRainfallType(rfType);
-
-								for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
+								double precipitation = double.Parse(elements[4 + i]);
+								if (precipitation != 0)
 								{
-									double precipitation = double.Parse(elements[4 + i]);
-									if (precipitation != 0)
-									{
-										newModel.Storms[i].Frequency = automaticStormFrequencies[i];
-										newModel.Storms[i].Precipitation = precipitation;
-									}
+									newModel.Storms[i].Frequency = automaticStormFrequencies[i];
+									newModel.Storms[i].Precipitation = precipitation;
 								}
 							}
 						}
 					}
-
-					model.RainfallDischargeDataViewModel.SetSilent(newModel);
 				}
+
+
+				model.RainfallDischargeDataViewModel.SetSilent(newModel);
 			}
-			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
 		private static List<string> SplitLine(string line)
