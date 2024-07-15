@@ -517,9 +517,10 @@ namespace EFH2
 				writer.WriteLine(storm.Frequency + "-Yr, " + storm.Precipitation.ToString("0.##") + ", " + storm.PeakFlow.ToString("0.##") + ", " + storm.Runoff.ToString("0.##"));
 			}
 
-			List<string> splitLine = SplitLine(reader.ReadLine());
 			while (!reader.EndOfStream)
 			{
+				List<string> splitLine = SplitLine(reader.ReadLine());
+
 				if (splitLine.Count == 7 && splitLine[0] == "OUTLET")
 				{
 					int frequency = int.Parse(splitLine[2].Replace("-Yr", ""));
@@ -528,31 +529,26 @@ namespace EFH2
 
 					int i = 0;
 
-					//hydrographData[frequency] = new List<(double, double)>();
-
-					//content.AppendLine(frequency + "-Yr Hydrograph");
-					//content.AppendLine("Time (hr), Discharge (cfs)");
-
 					writer.WriteLine("\n" + frequency + "-Yr Hydrograph");
 					writer.WriteLine("Time (hr), Discharge (cfs)");
 
-					splitLine = SplitLine(reader.ReadLine());
-					while (splitLine.Count != 7)
-					{
-						foreach (string val in splitLine)
+					while (true) {
+						splitLine = SplitLine(reader.ReadLine());
+
+						if (i == 0 && splitLine.Count == 1 && splitLine[0] == "0.0") break;
+
+						foreach (string valueString in splitLine)
 						{
-							//content.AppendLine(startTime + i * increment + ", " + val);
+							double value = double.Parse(valueString);
 							double time = startTime + i * increment;
-							writer.WriteLine(time.ToString("0.#####") + ", " + double.Parse(val).ToString("0.##"));
+
+							writer.WriteLine(time.ToString("0.#####") + ", " + value.ToString("0.##"));
 
 							i++;
 						}
-						splitLine = SplitLine(reader.ReadLine());
+
+						if (splitLine.Last() == "0.0") break;
 					}
-				}
-				else
-				{
-					splitLine = SplitLine(reader.ReadLine());
 				}
 			}
 
