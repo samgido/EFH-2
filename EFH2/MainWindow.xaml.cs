@@ -81,6 +81,8 @@ namespace EFH2
 
 		#region Event Handlers
 
+		private void RecalculateClick(object sender, RoutedEventArgs e) => this.MainViewModel.BasicDataViewModel.CalculateTimeOfConcentration();
+
 		private async void ShowWelcomePageAsync()
         {
             WelcomePage welcomePage = new WelcomePage();
@@ -578,5 +580,6 @@ namespace EFH2
             RcnDataControl.Visibility = Visibility.Collapsed;
         }
 		#endregion
+
 	}
 }
