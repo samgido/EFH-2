@@ -26,10 +26,15 @@ namespace EFH2
         public RcnDataConversionPage()
         {
             this.InitializeComponent();
+
+            UseNoConversionButton.IsChecked = true;
         }
+
+        private bool _acresSelected = true;
 
         public void SetDirection(bool acresSelected)
         {
+            this._acresSelected = acresSelected;
             if (DataContext is MainViewModel model)
             {
                 UseWorksheetButton.Content = "Determine percentage from worksheet total area of " + model.RcnDataViewModel.AccumulatedArea;
@@ -69,17 +74,21 @@ namespace EFH2
         {
             if (DataContext is MainViewModel model)
             {
-                //if (UseNoConversionButton.IsChecked.GetValueOrDefault()) { } do nothing
+                if (UseBasicDataButton.IsChecked.GetValueOrDefault()) 
+                {
+                    model.RcnDataViewModel.ConvertToAcresFromPercentage(model.BasicDataViewModel.DrainageArea);
+                    return;
+                }
 
-                if (UseWorksheetButton.IsChecked.GetValueOrDefault())
+                if (_acresSelected)
+                {
+                    model.RcnDataViewModel.ConvertToAcresFromPercentage(model.RcnDataViewModel.AccumulatedArea);
+                }
+                else
                 {
                     model.RcnDataViewModel.ConvertToPercentageFromAcres(model.RcnDataViewModel.AccumulatedArea);
                 }
-                else if (UseBasicDataButton.IsChecked.GetValueOrDefault()) 
-                {
-                    model.RcnDataViewModel.ConvertToAcresFromPercentage(model.BasicDataViewModel.DrainageArea);
-                }
             }
         }
-    }
+	}
 }

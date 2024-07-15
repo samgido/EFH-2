@@ -81,7 +81,11 @@ namespace EFH2
 
 		#region Event Handlers
 
-		private void RecalculateClick(object sender, RoutedEventArgs e) => this.MainViewModel.BasicDataViewModel.CalculateTimeOfConcentration();
+		private void RecalculateClick(object sender, RoutedEventArgs e)
+        {
+			MainViewModel.BasicDataViewModel.CalculateTimeOfConcentration();
+            MainViewModel.TryWinTr20();
+        }
 
 		private async void ShowWelcomePageAsync()
         {
@@ -134,12 +138,16 @@ namespace EFH2
             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
             var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+           
+            appWindow.TitleBar.ButtonForegroundColor = Colors.Black;
 
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 1000 });
         }
 
 		private void ChangeRcnUnits(object sender, RoutedEventArgs e)
         {
+            if (MainViewModel.RcnDataViewModel.AccumulatedArea.Equals(0)) return;
+
             RcnDataControl.CreateUnitChangePopup(MainViewModel);
         }
 
@@ -179,6 +187,7 @@ namespace EFH2
 		private void NewClicked(object sender, RoutedEventArgs e)
         {
             MainViewModel.Default();
+            this.RcnDataControl.Default();
         }
 
         private async void OpenClicked(object sender, RoutedEventArgs e)

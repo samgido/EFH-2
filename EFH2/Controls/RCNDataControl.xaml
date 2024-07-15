@@ -36,8 +36,8 @@
               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="true">
             <Grid.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="BorderBrush" Value="White"/>
-                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0,1,0,1"/>
                 </Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -59,12 +59,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Grid.ColumnSpan="3"/>
-
+            <Border Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1"/>
             <Border Grid.Column="3" Grid.ColumnSpan="2"/>
-            <Border Grid.Column="5" Grid.ColumnSpan="2"/>
+            <Border Grid.Column="5" Grid.ColumnSpan="2" BorderThickness="1"/>
             <Border Grid.Column="7" Grid.ColumnSpan="2"/>
-            <Border Grid.Column="9" Grid.ColumnSpan="2"/>
+            <Border Grid.Column="9" Grid.ColumnSpan="2" BorderThickness="1"/>
 
             <TextBlock Grid.Column="0" Grid.ColumnSpan="3">COVER DESCRIPTION</TextBlock>
             <TextBlock Grid.Column="3" Grid.ColumnSpan="2">A</TextBlock>

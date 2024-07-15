@@ -53,6 +53,8 @@ namespace EFH2
 
         private void ClearButtonClick(object sender, RoutedEventArgs e)
         {
+            this.ViewModel.Default();
+            Default();
         }
 
         private void AcceptButtonClick(object sender, RoutedEventArgs e)
@@ -81,6 +83,12 @@ namespace EFH2
                 var targetItem = model.RcnCategories[index];
                 RcnCategoriesListView.ScrollIntoView(targetItem);
             }
+        }
+
+        public void Default()
+        {
+            AcresButton.IsChecked = true;
+            PercentageButton.IsChecked = false;
         }
     }
 }
