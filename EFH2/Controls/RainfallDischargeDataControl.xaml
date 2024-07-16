@@ -124,7 +124,7 @@
         </ListView>
 
         <Button HorizontalAlignment="Center" Name="PlotHydrograph" Click="ButtonClick" Height="50" Width="120" Margin="0,10,0,10"
-                RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
+                RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" IsEnabled="False">
             <Button.Content>
                 <TextBlock TextWrapping="WrapWholeWords">Plot Selected Hydrograph(s)</TextBlock>
             </Button.Content>

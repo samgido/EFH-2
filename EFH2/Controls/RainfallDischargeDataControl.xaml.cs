@@ -22,6 +22,8 @@ namespace EFH2
     {
 		public event EventHandler? CreateHydrograph;
 
+        public Button PlotSelectedHydrographsButton => this.PlotHydrograph;
+
         public RainfallDischargeDataControl()
         {
             this.InitializeComponent();
