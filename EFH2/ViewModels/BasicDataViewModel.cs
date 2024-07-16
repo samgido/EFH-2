@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace EFH2
 {
@@ -98,7 +99,6 @@ namespace EFH2
             set
             {
                 this.SetProperty(ref this._selectedCountyIndex, value);
-                if (value == -1) return;
                 this.selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
 
                 this.CountyChanged?.Invoke(this, EventArgs.Empty);
@@ -153,13 +153,21 @@ namespace EFH2
 
         public void Default()
         {
-            Client = "";
-            selectedState = MainViewModel.ChooseMessage;
-            selectedCounty = "";
-            SelectedStateIndex = 0;
-            Practice = "";
-            Date = DateTime.Now;
-            By = "";
+            try
+            {
+                Client = "";
+
+                this._selectedStateIndex = 0;
+
+                Counties.Clear();
+                this.OnPropertyChanged(nameof(SelectedCountyIndex));
+                this.OnPropertyChanged(nameof(SelectedStateIndex));
+
+				Practice = "";
+				Date = DateTime.Now;
+				By = "";
+            }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
             drainageAreaEntry.Default();
             runoffCurveNumberEntry.Default();

@@ -17,9 +17,6 @@
 	  <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\EFH2.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Controls\AboutControl.xaml" />
     <None Remove="Controls\BasicDataControl.xaml" />
     <None Remove="Controls\InconsistentDataDialogControl.xaml" />
@@ -73,6 +70,12 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Square150x150Logo.scale-100.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\InconsistentDataDialogControl.xaml">
