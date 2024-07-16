@@ -497,8 +497,6 @@ namespace EFH2
 
 		public static void ExportHydrograph(MainViewModel model, string outputFileName)
 		{
-			//Dictionary<int, List<(double, double)>> hydrographData = new Dictionary<int, List<(double, double)>>();
-
 			string hydrographFilePath = Path.Combine(appDataDirectory, "EFH2", "tr20.hyd");
 
 			StringBuilder content = new StringBuilder();
@@ -562,36 +560,42 @@ namespace EFH2
 			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
 			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
-			using (TextFieldParser parser = new TextFieldParser(rainfallDataPath) { Delimiters = new string[] { "," }, TextFieldType = FieldType.Delimited })
+			TextFieldParser parser = new TextFieldParser(rainfallDataPath) { Delimiters = new string[] { "," }, TextFieldType = FieldType.Delimited };
+		
+			while (!parser.EndOfData)
 			{
-				while (!parser.EndOfData)
+				string[] elements = parser.ReadFields();
+
+				if (elements.Length == 14 && elements[1].Trim('"') == state && elements[2].Trim('"') != county) 
+					ReadRainfallDataRowIntoModel(elements, newModel);	
+			}
+
+			model.RainfallDischargeDataViewModel.SetSilent(newModel);
+
+			parser.Close();
+		}
+
+		private static void ReadRainfallDataRowIntoModel(string[] elements, RainfallDischargeDataViewModel model)
+		{
+			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
+			double[] automaticStormFrequencies = new double[] { 1, 2, 5, 10, 25, 50, 100, 200, 500, 1000 };
+
+			string rfType = elements[3];
+			if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
+
+			model.SetRainfallType(rfType);
+
+			for (int j = 0; j < MainViewModel.NumberOfStorms; j++)
+			{
+				int i = j + 4;
+				if (elements[i] == string.Empty) continue;
+
+				double precipitation = double.Parse(elements[i]); 
+				if (precipitation != 0)
 				{
-					string[] elements = parser.ReadFields();
-
-					if (elements.Length == 14 && elements[1].Trim('"') == state) 
-					{
-						if (elements[2].Trim('"') == county)
-						{
-							string rfType = elements[3];
-							if (typesThatNeedFormatting.Contains(rfType)) rfType = "Type " + rfType;
-
-							newModel.SetRainfallType(rfType);
-
-							for (int i = 0; i < MainViewModel.NumberOfStorms; i++)
-							{
-								double precipitation = double.Parse(elements[4 + i]);
-								if (precipitation != 0)
-								{
-									newModel.Storms[i].Frequency = automaticStormFrequencies[i];
-									newModel.Storms[i].Precipitation = precipitation;
-								}
-							}
-						}
-					}
+					model.Storms[j].Frequency = automaticStormFrequencies[j];
+					model.Storms[j].Precipitation = precipitation;
 				}
-
-
-				model.RainfallDischargeDataViewModel.SetSilent(newModel);
 			}
 		}
 
