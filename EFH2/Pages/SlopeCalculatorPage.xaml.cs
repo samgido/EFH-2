@@ -11,6 +11,8 @@ namespace EFH2
 	/// </summary>
 	public sealed partial class SlopeCalculatorPage : Page
     {
+        public event EventHandler Close;
+
         public SlopeCalculatorPage()
         {
             this.InitializeComponent();
@@ -43,5 +45,7 @@ namespace EFH2
                 }
             }
         }
-    }
+
+        private void CloseClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) => this.Close?.Invoke(this, EventArgs.Empty);
+	}
 }

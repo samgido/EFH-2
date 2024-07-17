@@ -9,126 +9,54 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <RelativePanel
-        Padding="0,30,0,0"
-        HorizontalAlignment="Center"
-        x:Name="RootPanel"
-        >
+    <Page.Resources>
+        <!--<local:DoubleFormatter x:Key="DoubleFormatter"/>-->
+        <local:DoubleToEmptyStringConverter x:Key="DoubleFormatter"/>
+    </Page.Resources>
 
-        <TextBlock
-            x:Name="InfoText"
-            Text="Step 1 - Measure the lengths of all the contours within the watershed boundary and sum their total."
-            TextWrapping="Wrap"
-            HorizontalAlignment="Center"
-            HorizontalTextAlignment="Center"
-            Padding="10,0,10,0"
-            />
+    <RelativePanel Padding="0,30,0,0" x:Name="RootPanel" HorizontalAlignment="Center" >
 
-        <TextBlock
-            x:Name="ContourLengthLabel"
-            Text="Length of contours"
-            RelativePanel.Below="InfoText"
-            RelativePanel.LeftOf="ContourLengthBox"
-            RelativePanel.AlignVerticalCenterWith="ContourLengthBox"
-            Padding="20,20,0,0"
-            />
+        <TextBlock x:Name="InfoText" Padding="10,0,10,0"
+            TextWrapping="Wrap" HorizontalAlignment="Center" HorizontalTextAlignment="Center">
+            Step 1 - Measure the lengths of all the contours within the watershed boundary and sum their total.
+        </TextBlock>
 
-        <TextBlock
-            x:Name="ContourIntervalLabel"
-            Text="Countour Interval"
-            RelativePanel.Below="ContourLengthLabel"
-            RelativePanel.LeftOf="ContourIntervalBox"
-            RelativePanel.AlignVerticalCenterWith="ContourIntervalBox"
-            Padding="20,20,0,0"
-            />
+        <TextBlock x:Name="ContourLengthLabel" Text="Length of contours" Padding="20,20,0,0"
+            RelativePanel.Below="InfoText" RelativePanel.LeftOf="ContourLengthBox" RelativePanel.AlignVerticalCenterWith="ContourLengthBox" />
 
-        <TextBlock
-            x:Name="DrainageAreaLabel"
-            Text="Drainage Area"
-            RelativePanel.Below="ContourIntervalLabel"
-            RelativePanel.LeftOf="DrainageAreaBox"
-            RelativePanel.AlignVerticalCenterWith="DrainageAreaBox"
-            Padding="20,20,0,0"
-            />
+        <TextBlock x:Name="ContourIntervalLabel" Text="Countour Interval" Padding="20,20,0,0"
+            RelativePanel.Below="ContourLengthLabel" RelativePanel.LeftOf="ContourIntervalBox" RelativePanel.AlignVerticalCenterWith="ContourIntervalBox" />
 
-        <TextBlock
-            x:Name="AverageSlopeLabel"
-            Text="Average Slope"
-            RelativePanel.Below="DrainageAreaLabel"
-            RelativePanel.LeftOf="AverageSlopeBox"
-            RelativePanel.AlignVerticalCenterWith="AverageSlopeBox"
-            Padding="20,20,0,0"
-            />
+        <TextBlock x:Name="DrainageAreaLabel" Text="Drainage Area" Padding="20,20,0,0"
+            RelativePanel.Below="ContourIntervalLabel" RelativePanel.LeftOf="DrainageAreaBox" RelativePanel.AlignVerticalCenterWith="DrainageAreaBox" />
 
-        <NumberBox
-            x:Name="ContourLengthBox"
-            RelativePanel.Below="InfoText"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Margin="0,20,0,0"
-            ValueChanged="NumberBoxesChanged"
-            />
+        <TextBlock x:Name="AverageSlopeLabel" Text="Average Slope" Padding="20,20,0,0"
+            RelativePanel.Below="DrainageAreaLabel" RelativePanel.LeftOf="AverageSlopeBox" RelativePanel.AlignVerticalCenterWith="AverageSlopeBox" />
 
-        <NumberBox
-            x:Name="ContourIntervalBox"
-            RelativePanel.Below="ContourLengthBox"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Margin="0,20,0,0"
-            ValueChanged="NumberBoxesChanged"
-            />
+        <NumberBox x:Name="ContourLengthBox" Margin="0,20,0,0" ValueChanged="NumberBoxesChanged"
+            RelativePanel.Below="InfoText" RelativePanel.AlignHorizontalCenterWithPanel="True" />
 
-        <NumberBox
-            x:Name="DrainageAreaBox"
-            RelativePanel.Below="ContourIntervalBox"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Margin="0,20,0,0"
-            Value="{Binding Path=Value, Mode=TwoWay}"
-            ValueChanged="NumberBoxesChanged"
-            />
+        <NumberBox x:Name="ContourIntervalBox" Margin="0,20,0,0" ValueChanged="NumberBoxesChanged"
+            RelativePanel.Below="ContourLengthBox" RelativePanel.AlignHorizontalCenterWithPanel="True" />
 
-        <TextBox
-            x:Name="AverageSlopeBox"
-            RelativePanel.Below="DrainageAreaBox"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Margin="0,20,0,0"
-            Text="{Binding Path=Value, Mode=TwoWay}"
-            IsReadOnly="True"/>
+        <NumberBox x:Name="DrainageAreaBox" Margin="0,20,0,0" Value="{Binding Path=Value, Mode=TwoWay}" ValueChanged="NumberBoxesChanged"
+            RelativePanel.Below="ContourIntervalBox" RelativePanel.AlignHorizontalCenterWithPanel="True" />
 
-        <TextBlock
-            x:Name="ContourLengthUnitLabel"
-            RelativePanel.RightOf="ContourLengthBox"
-            RelativePanel.AlignVerticalCenterWith="ContourLengthBox"
-            Text="feet"
-            Margin="20,20,0,0" />
+        <TextBox x:Name="AverageSlopeBox" Margin="0,20,0,0" Text="{Binding Path=Value, Mode=TwoWay, Converter={StaticResource DoubleFormatter}}" IsReadOnly="True"
+            RelativePanel.Below="DrainageAreaBox" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
 
-        <TextBlock
-            x:Name="ContourIntervalUnitLabel"
-            RelativePanel.RightOf="ContourIntervalBox"
-            RelativePanel.AlignVerticalCenterWith="ContourIntervalBox"
-            Text="feet"
-            Margin="20,20,0,0"/>
+        <TextBlock x:Name="ContourLengthUnitLabel" Text="feet" Margin="20,20,0,0" 
+            RelativePanel.RightOf="ContourLengthBox" RelativePanel.AlignVerticalCenterWith="ContourLengthBox" />
 
-        <TextBlock
-            x:Name="DrainageAreaUnitLabel"
-            RelativePanel.RightOf="DrainageAreaBox"
-            RelativePanel.AlignVerticalCenterWith="DrainageAreaBox"
-            Text="acres"
-            Margin="20,20,0,0"
-            />
+        <TextBlock x:Name="ContourIntervalUnitLabel" Text="feet" Margin="20,20,0,0"
+            RelativePanel.RightOf="ContourIntervalBox" RelativePanel.AlignVerticalCenterWith="ContourIntervalBox" />
 
-        <TextBlock
-            x:Name="AverageSlopeUnitLabel"
-            RelativePanel.RightOf="AverageSlopeBox"
-            RelativePanel.AlignVerticalCenterWith="AverageSlopeBox"
-            RelativePanel.Below="DrainageAreaUnitLabel"
-            Text="percent"
-            Margin="20,20,0,0"
-            />
+        <TextBlock x:Name="DrainageAreaUnitLabel" Text="acres" Margin="20,20,0,0"
+            RelativePanel.RightOf="DrainageAreaBox" RelativePanel.AlignVerticalCenterWith="DrainageAreaBox" />
 
-        <Button
-            RelativePanel.Below="AverageSlopeBox"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Content="Close"
-            Margin="0,15,0,0"
-            />
+        <TextBlock x:Name="AverageSlopeUnitLabel" Text="percent" Margin="20,20,0,0"
+            RelativePanel.RightOf="AverageSlopeBox" RelativePanel.AlignVerticalCenterWith="AverageSlopeBox" RelativePanel.Below="DrainageAreaUnitLabel" />
+
+        <Button Content="Close" Margin="0,15,0,0" Click="CloseClick" RelativePanel.Below="AverageSlopeBox" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
     </RelativePanel>
 </Page>

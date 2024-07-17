@@ -345,6 +345,7 @@ namespace EFH2
         {
             Window newWindow = new Window();
             SlopeCalculatorPage page = new SlopeCalculatorPage() { DataContext = MainViewModel.BasicDataViewModel };
+            page.Close += (o, e) => newWindow.Close();
             page.SetDataContext();
             newWindow.Content = page;
             newWindow.Title = "Average Slope Calculator";
