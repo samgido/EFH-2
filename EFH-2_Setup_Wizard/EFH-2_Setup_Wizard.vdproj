@@ -417,6 +417,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E7B64748E92E4F6290B605BFDB3BA5FE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F8355A58774D4A7E9F106208C49DDD77"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -470,6 +476,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -1854,6 +1868,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E7B64748E92E4F6290B605BFDB3BA5FE"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\Downloads\\EFH2.ico"
+            "TargetName" = "8:EFH2.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F8355A58774D4A7E9F106208C49DDD77"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program data\\RainfallDistributions\\Type CA-1.tbl"
@@ -2056,7 +2090,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFH-2"
         "ProductCode" = "8:{DCCC93F3-B7A4-4A48-9DA9-AE241F8D70C1}"
-        "PackageCode" = "8:{BE5FE18E-924F-42B4-B2BD-5790E7BA5AFE}"
+        "PackageCode" = "8:{94791464-F1B7-429C-BA27-685F81D5ABB9}"
         "UpgradeCode" = "8:{7F07579E-1AD5-48F2-A702-63523994BEB2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2187,7 +2221,7 @@
             "Target" = "8:_6B8EE31F342D4DE1B192E5083C970529"
             "Folder" = "8:_6F0193B630994E24B117BCC4FE1EE3E8"
             "WorkingFolder" = "8:_933946DAB842432BADBB79543FA08B68"
-            "Icon" = "8:"
+            "Icon" = "8:_E7B64748E92E4F6290B605BFDB3BA5FE"
             "Feature" = "8:"
             }
         }

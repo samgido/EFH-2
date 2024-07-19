@@ -58,7 +58,7 @@ namespace EFH2
         public void Default()
         {
             Frequency = double.NaN;
-            Precipitation = 0;
+            Precipitation = double.NaN;
             PeakFlow = double.NaN;
             Runoff = double.NaN;
 
