@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFH2", "EFH2\EFH2.csproj", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EFH-2_Setup_Wizard", "EFH-2_Setup_Wizard\EFH-2_Setup_Wizard.vdproj", "{0304FFD4-9B36-4252-80EA-8A68FD8D4803}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{52CE02BA-A794-466A-AA74-C5CEE3C1F761}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -54,6 +56,15 @@ Global
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x64.ActiveCfg = Release
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x86.ActiveCfg = Release
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x86.Build.0 = Release
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.Debug|ARM64.ActiveCfg = Debug
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.Debug|x64.ActiveCfg = Debug
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.Debug|x86.ActiveCfg = Debug
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.k|ARM64.ActiveCfg = Debug
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.k|x64.ActiveCfg = Debug
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.k|x86.ActiveCfg = Debug
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.Release|ARM64.ActiveCfg = Release
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.Release|x64.ActiveCfg = Release
+		{52CE02BA-A794-466A-AA74-C5CEE3C1F761}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

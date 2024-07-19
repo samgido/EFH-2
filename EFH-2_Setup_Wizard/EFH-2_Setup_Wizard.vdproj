@@ -2181,7 +2181,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFH-2"
         "ProductCode" = "8:{DCCC93F3-B7A4-4A48-9DA9-AE241F8D70C1}"
-        "PackageCode" = "8:{78C6CF3E-C7B4-4756-A4B5-670E9227A1E3}"
+        "PackageCode" = "8:{12D94B1E-DB0C-4E45-9195-62DBDA93FE2C}"
         "UpgradeCode" = "8:{7F07579E-1AD5-48F2-A702-63523994BEB2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2738,6 +2738,7 @@
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{A4BA0F71-ED8E-419D-B2FC-B353CFAFBB7C}"
             "ShowKeyOutput" = "11:TRUE"
+            "PublishProfilePath" = "8:Properties\\PublishProfiles\\win10-x86.pubxml"
                 "ExcludeFilters"
                 {
                 }
