@@ -13,7 +13,7 @@ namespace EFH2
         public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlElement("RainfallDistributionType")]
-        public string selectedRainfallDistributionType = "";
+        public string selectedRainfallDistributionType => RainfallDistributionTypes[this._selectedRainfallDistributionTypeIndex].Content as string;
 
         [XmlElement("DimensionlessUnitHydrographType")]
         public string selectedDuhType = "";
@@ -114,7 +114,6 @@ namespace EFH2
             set
             {
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
-                this.selectedRainfallDistributionType = RainfallDistributionTypes[value].Content as string;
                 if (value != 0) this.RainfallDistributionTypeInputStatus = InputStatus.UserSelected;
                 else this.RainfallDistributionTypeInputStatus = InputStatus.None;
 
@@ -225,7 +224,7 @@ namespace EFH2
             SelectedRainfallDistributionTypeIndex = 0;
             SelectedDuhTypeIndex = 0;
 
-            selectedRainfallDistributionType = MainViewModel.ChooseMessage;
+            //selectedRainfallDistributionType = MainViewModel.ChooseMessage;
             selectedDuhType = MainViewModel.ChooseMessage;
 
             foreach (StormViewModel storm in Storms)
