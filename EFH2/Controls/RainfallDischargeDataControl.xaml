@@ -58,39 +58,37 @@
 
             <ListView.HeaderTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid ColumnSpacing="10" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock x:Name="FrequencyLabel" Text="Frequency (yrs)"
-                                   Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"/>
+                                   Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"/>
 
                         <TextBlock x:Name="PrecipitationLabel" Text="24-HR Rain (in)"
-                                   Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
+                                   Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"/>
 
                         <TextBlock x:Name="PeakFlowLabel" Text="Peak Flow (cfs)"
-                                   Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center"/>
+                                   Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
 
                         <TextBlock x:Name="RunoffLabel" Text="Runoff (in)" 
-                                   Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center"/>
+                                   Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center"/>
 
                         <TextBlock x:Name="SelectHydrographLabel" Text="Select Hydrograph" MaxWidth="100"
-                                   TextWrapping="Wrap"  Grid.Column="6" TextAlignment="Center" VerticalAlignment="Center"/>
+                                   TextWrapping="Wrap"  Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </ListView.HeaderTemplate>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="40,5,40,0" ColumnSpacing="10" HorizontalAlignment="Center">
+                    <Grid Margin="0,5,0,0" ColumnSpacing="10" HorizontalAlignment="Center">
                         <Grid.Resources>
                             <Style TargetType="NumberBox">
                                 <Setter Property="MaxWidth" Value="100"/>
@@ -98,26 +96,24 @@
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Center"
                                    TextAlignment="Right" Margin="0,0,10,10"/>
 
-                        <NumberBox Grid.Column="2" Value="{Binding Path=Frequency, Mode=TwoWay}"/>
-                        <NumberBox Grid.Column="3" Value="{Binding Path=Precipitation, Mode=TwoWay}" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                        <NumberBox Grid.Column="1" Value="{Binding Path=Frequency, Mode=TwoWay}"/>
+                        <NumberBox Grid.Column="2" Value="{Binding Path=Precipitation, Mode=TwoWay}" NumberFormatter="{StaticResource DoubleFormatter}"/>
 
-                        <NumberBox Grid.Column="4" Value="{Binding Path=PeakFlow, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
-                        <NumberBox Grid.Column="5" Value="{Binding Path=Runoff, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                        <NumberBox Grid.Column="3" Value="{Binding Path=PeakFlow, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
+                        <NumberBox Grid.Column="4" Value="{Binding Path=Runoff, Mode=OneWay}" IsEnabled="False" NumberFormatter="{StaticResource DoubleFormatter}"/>
 
-                        <ToggleSwitch Grid.Column="6" IsOn="{Binding Path=DisplayHydrograph, Mode=TwoWay}" HorizontalAlignment="Center" MinWidth="0" Margin="20,0,0,0"/>
+                        <ToggleSwitch Grid.Column="5" IsOn="{Binding Path=DisplayHydrograph, Mode=TwoWay}" HorizontalAlignment="Center" MinWidth="0" Margin="20,0,0,0"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
