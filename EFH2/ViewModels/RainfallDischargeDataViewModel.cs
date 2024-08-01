@@ -13,25 +13,10 @@ namespace EFH2
         public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlElement("RainfallDistributionType")]
-        public string selectedRainfallDistributionType
-        {
-            get
-            {
-                if (RainfallDistributionTypes.Count < this._selectedRainfallDistributionTypeIndex) return "Choose";
-                return RainfallDistributionTypes[this._selectedRainfallDistributionTypeIndex].Content as string;
-            }
-        }
-
+        public string selectedRainfallDistributionType = "";
 
         [XmlElement("DimensionlessUnitHydrographType")]
-        public string selectedDuhType
-        {
-            get
-            {
-                if (DuhTypes.Count < this._selectedDuhTypeIndex) return "";
-                return DuhTypes[this._selectedDuhTypeIndex].Content as string;
-            }
-        }
+        public string selectedDuhType = "";
 
         [XmlIgnore]
         private int _selectedRainfallDistributionTypeIndex = 0;
@@ -129,6 +114,7 @@ namespace EFH2
             set
             {
                 this.SetProperty(ref this._selectedRainfallDistributionTypeIndex, value);
+                this.selectedRainfallDistributionType = RainfallDistributionTypes[value].Content as string;
                 if (value != 0) this.RainfallDistributionTypeInputStatus = InputStatus.UserSelected;
                 else this.RainfallDistributionTypeInputStatus = InputStatus.None;
 
@@ -143,6 +129,7 @@ namespace EFH2
             set
             {
                 this.SetProperty(ref this._selectedDuhTypeIndex, value);
+                this.selectedDuhType = DuhTypes[value].Content as string;
                 if (value != 0) this.DuhTypeInputStatus = InputStatus.UserSelected;
                 else this.DuhTypeInputStatus = InputStatus.None;
 
@@ -238,8 +225,8 @@ namespace EFH2
             SelectedRainfallDistributionTypeIndex = 0;
             SelectedDuhTypeIndex = 0;
 
-            //selectedRainfallDistributionType = MainViewModel.ChooseMessage;
-            //selectedDuhType = MainViewModel.ChooseMessage;
+            selectedRainfallDistributionType = MainViewModel.ChooseMessage;
+            selectedDuhType = MainViewModel.ChooseMessage;
 
             foreach (StormViewModel storm in Storms)
             {

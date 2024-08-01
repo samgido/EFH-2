@@ -268,7 +268,7 @@ namespace EFH2
 					string rainfallDistributionTable = "";
 					string rainfallDistributionType = "";
 
-					string rainfallDistributionTypeFilePath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions", "Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
+					string rainfallDistributionTypeFilePath = Path.Combine(programFilesDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions", "Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
 
 					if (File.Exists(rainfallDistributionTypeFilePath))
 					{
@@ -351,7 +351,7 @@ namespace EFH2
 		{
 			try
 			{
-				string executablePath = Path.Combine(programFilesDirectory, companyName, "EFH-2", "WinTR20_V32.exe");
+				string executablePath = Path.Combine(programFilesDirectory, companyName, "EFH2", "WinTR20_V32.exe");
 
 				ProcessStartInfo psi = new ProcessStartInfo()
 				{
