@@ -18,6 +18,9 @@
 	  <PackageIcon>EFH2.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Programs\WinTR20_V32.exe" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Controls\AboutControl.xaml" />
     <None Remove="Controls\BasicDataControl.xaml" />
     <None Remove="Controls\InconsistentDataDialogControl.xaml" />
@@ -40,6 +43,9 @@
 	<ItemGroup>
 		<None Update="Assets\Logos\*">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>		
+		</None>
+		<None Update="Assets\Programs\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>	
 		</None>
 	</ItemGroup>
 

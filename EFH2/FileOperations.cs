@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.AppLifecycle;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using WinRT;
 
 namespace EFH2
 {
@@ -351,21 +353,24 @@ namespace EFH2
 		{
 			try
 			{
-				string executablePath = Path.Combine(programFilesDirectory, companyName, "EFH2", "WinTR20_V32.exe");
+				string executablePath = Path.Combine(programFilesDirectory, companyName, "EFH-2", "WinTR20_V32.exe");
+
+				Uri testUri = new Uri("ms-appx:///Assets/Programs/WinTR20_V32.exe");
+				//string testPath = testUri.AbsolutePath;
+				string testPath = @"Assets/Programs/WinTR20_V32.exe";
 
 				ProcessStartInfo psi = new ProcessStartInfo()
 				{
 					FileName = executablePath,
 					Arguments = inputFilePath,
-					RedirectStandardOutput = true,
-					CreateNoWindow = true,
+					CreateNoWindow = false,
 					UseShellExecute = false,
 				};
 
 				using (Process process = new Process() { StartInfo = psi })
 				{
 					process.Start();
-					while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
+					//while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
 				}
