@@ -13,7 +13,6 @@ namespace EFH2
         public event EventHandler<EventArgs>? ValueChanged;
 
         [XmlElement("RainfallDistributionType")]
-        //public string selectedRainfallDistributionType = "";
         public string selectedRainfallDistributionType
         {
             get
@@ -24,7 +23,6 @@ namespace EFH2
         }
 
         [XmlElement("DimensionlessUnitHydrographType")]
-        //public string selectedDuhType = "";
         public string selectedDuhType
         {
             get

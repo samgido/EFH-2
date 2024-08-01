@@ -69,6 +69,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_25A19778465B4479B9A9603F99667BD3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2A13AC5170E74565BE798C4FC56C62F7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -99,12 +105,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4091AEE67000449DA095D415904F22B7"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_486FE2BC5B7F41B9AA8C690E2737CD37"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -129,12 +129,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_572EC79FBF4741528CB33505B0BF21ED"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_5783347CDB314482A4B2D5B965B13C5A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -154,6 +148,12 @@
         "Entry"
         {
         "MsmKey" = "8:_5CCC2028E121457C932B494D7DC122FC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5FDD0F8867F6474A85929AD101EB829C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -261,6 +261,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8696E79BD8EB489E996354BF9E441747"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8BFE49CCEE78433DAF84FB117125512E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -321,19 +327,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AE3F496967C6423B99160CB9D422CBFC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_B6CB07A2BD3F484693A78BA57E649A1C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BAB5344D4B7F4A6A95F0CD766416CE83"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -388,6 +382,12 @@
         "Entry"
         {
         "MsmKey" = "8:_D22BBDCDEA5742F68D53F08E685D0451"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D6E426AF35C44A499561BCF6E4435BE8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -759,6 +759,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_25A19778465B4479B9A9603F99667BD3"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program files\\WinTR20_V32.exe"
+            "TargetName" = "8:WinTR20_V32.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2A13AC5170E74565BE798C4FC56C62F7"
             {
             "SourcePath" = "8:Files\\RainfallDistributions\\Type SW_1.tbl"
@@ -845,26 +865,6 @@
             "TargetName" = "8:Type TX_C.tbl"
             "Tag" = "8:"
             "Folder" = "8:_63B2AD2678DF4CAFB0C197EDCF8C4FF6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4091AEE67000449DA095D415904F22B7"
-            {
-            "SourcePath" = "8:D:\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program files\\WinTR20_V32.exe"
-            "TargetName" = "8:WinTR20_V32.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1379,6 +1379,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8696E79BD8EB489E996354BF9E441747"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program files\\EFH-2 Users Manual.pdf"
+            "TargetName" = "8:EFH-2 Users Manual.pdf"
+            "Tag" = "8:"
+            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8BFE49CCEE78433DAF84FB117125512E"
             {
             "SourcePath" = "8:Files\\RainfallDistributions\\Type MSE1.tbl"
@@ -1579,52 +1599,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AE3F496967C6423B99160CB9D422CBFC"
-            {
-            "SourcePath" = "8:D:\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program files\\EFH2.chm"
-            "TargetName" = "8:EFH2.chm"
-            "Tag" = "8:"
-            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B6CB07A2BD3F484693A78BA57E649A1C"
             {
             "SourcePath" = "8:Files\\DimensionlessUnitHydrographs\\PRF_500.duh"
             "TargetName" = "8:PRF_500.duh"
             "Tag" = "8:"
             "Folder" = "8:_0C7D90A567A3434AB363FC9540B80265"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BAB5344D4B7F4A6A95F0CD766416CE83"
-            {
-            "SourcePath" = "8:D:\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program files\\EFH-2 Users Manual.pdf"
-            "TargetName" = "8:EFH-2 Users Manual.pdf"
-            "Tag" = "8:"
-            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1805,6 +1785,26 @@
             "TargetName" = "8:PRF_550.duh"
             "Tag" = "8:"
             "Folder" = "8:_0C7D90A567A3434AB363FC9540B80265"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D6E426AF35C44A499561BCF6E4435BE8"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\OneDrive - Kansas State University\\Documents\\EFH-2 project\\program files\\EFH2.chm"
+            "TargetName" = "8:EFH2.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2181,11 +2181,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFH-2"
         "ProductCode" = "8:{DCCC93F3-B7A4-4A48-9DA9-AE241F8D70C1}"
-        "PackageCode" = "8:{12D94B1E-DB0C-4E45-9195-62DBDA93FE2C}"
+        "PackageCode" = "8:{916B236C-BFFB-4AD8-AF25-8C2E7CDCF6BF}"
         "UpgradeCode" = "8:{7F07579E-1AD5-48F2-A702-63523994BEB2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
@@ -2301,7 +2301,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_61E25F0FCB6A481295203414BE9436AA"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9F509D3904D647DA866EE61384F381F4"
             {
             "Name" = "8:EFH-2-dev"
             "Arguments" = "8:"
@@ -2309,7 +2309,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_572EC79FBF4741528CB33505B0BF21ED"
+            "Target" = "8:_5FDD0F8867F6474A85929AD101EB829C"
             "Folder" = "8:_6F0193B630994E24B117BCC4FE1EE3E8"
             "WorkingFolder" = "8:_933946DAB842432BADBB79543FA08B68"
             "Icon" = "8:"
@@ -2714,9 +2714,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_572EC79FBF4741528CB33505B0BF21ED"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5FDD0F8867F6474A85929AD101EB829C"
             {
-            "SourcePath" = "8:..\\EFH2\\obj\\x86\\Release\\net6.0-windows10.0.19041.0\\win10-x86\\apphost.exe"
+            "SourcePath" = "8:..\\EFH2\\obj\\x86\\Release\\net6.0-windows10.0.19041.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
@@ -2734,11 +2734,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|x86"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{A4BA0F71-ED8E-419D-B2FC-B353CFAFBB7C}"
             "ShowKeyOutput" = "11:TRUE"
-            "PublishProfilePath" = "8:Properties\\PublishProfiles\\win10-x86.pubxml"
                 "ExcludeFilters"
                 {
                 }
