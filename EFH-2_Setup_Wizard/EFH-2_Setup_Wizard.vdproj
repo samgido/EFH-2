@@ -153,12 +153,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5FDD0F8867F6474A85929AD101EB829C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_691D703E43864E77B802228FC19F909B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -400,6 +394,12 @@
         "Entry"
         {
         "MsmKey" = "8:_DD3970003E454DFD98FCFD8DE75BC854"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DECB68F85B6F48E7AE470608BFD6E9AD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2181,7 +2181,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFH-2"
         "ProductCode" = "8:{DCCC93F3-B7A4-4A48-9DA9-AE241F8D70C1}"
-        "PackageCode" = "8:{916B236C-BFFB-4AD8-AF25-8C2E7CDCF6BF}"
+        "PackageCode" = "8:{1075EF01-41A0-4815-A1FF-7319F9F551F4}"
         "UpgradeCode" = "8:{7F07579E-1AD5-48F2-A702-63523994BEB2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2301,7 +2301,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9F509D3904D647DA866EE61384F381F4"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_04ED4E4C08BF4ABCA4E01568DA500AB0"
             {
             "Name" = "8:EFH-2-dev"
             "Arguments" = "8:"
@@ -2309,7 +2309,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_5FDD0F8867F6474A85929AD101EB829C"
+            "Target" = "8:_DECB68F85B6F48E7AE470608BFD6E9AD"
             "Folder" = "8:_6F0193B630994E24B117BCC4FE1EE3E8"
             "WorkingFolder" = "8:_933946DAB842432BADBB79543FA08B68"
             "Icon" = "8:"
@@ -2714,7 +2714,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5FDD0F8867F6474A85929AD101EB829C"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_DECB68F85B6F48E7AE470608BFD6E9AD"
             {
             "SourcePath" = "8:..\\EFH2\\obj\\x86\\Release\\net6.0-windows10.0.19041.0\\apphost.exe"
             "TargetName" = "8:"
@@ -2734,7 +2734,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
+            "OutputConfiguration" = "8:Release|x86"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{A4BA0F71-ED8E-419D-B2FC-B353CFAFBB7C}"
             "ShowKeyOutput" = "11:TRUE"

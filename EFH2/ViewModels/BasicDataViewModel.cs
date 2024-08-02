@@ -120,12 +120,14 @@ namespace EFH2
 
 			if (double.IsNaN(final))
 			{
-				this.timeOfConcentrationEntry.Value = double.NaN;
+                this.timeOfConcentrationEntry.Value = double.NaN;
+				//this.timeOfConcentrationEntry.SetSilent(double.NaN);
                 this.timeOfConcentrationEntry.InputStatus = InputStatus.None;
 			}
 			else
 			{
-				this.timeOfConcentrationEntry.Value = Math.Round(final, 2);
+                this.timeOfConcentrationEntry.Value = Math.Round(final, 2);
+                //this.timeOfConcentrationEntry.SetSilent(Math.Round(final, 2));
                 this.timeOfConcentrationEntry.InputStatus = InputStatus.Calculated;
 			}
         }

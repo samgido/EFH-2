@@ -74,7 +74,7 @@ namespace EFH2
             if (fileName != null)
             {
                 FileOperations.RunWinTr20(fileName);
-				FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
+                FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
 
                 this.WinTr20Ran?.Invoke(this, EventArgs.Empty);
             }

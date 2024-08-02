@@ -259,7 +259,6 @@ namespace EFH2
 
 				string programX86Path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-				//string filePath = Path.Combine(appDataPath, "\\EFH2\\tr20.inp");
 
 				string inputFilePath = appDataPath + "\\EFH2\\tr20.inp";
 
@@ -316,9 +315,6 @@ namespace EFH2
 					{
 						writer.WriteLine("DIMENSIONLESS UNIT HYDROGRAPH:");
 
-						//string duhTypeFilePath = Path.Combine(programX86Path,
-						//	"USDA\\Data\\DimensionlessUnitHydrographs\\" + model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
-
 						string duhTypeFilePath = Path.Combine(programFilesDirectory, companyName, "Shared Engineering Data", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 						if (File.Exists(duhTypeFilePath))
 						{
@@ -338,8 +334,8 @@ namespace EFH2
 					writer.WriteLine("GLOBAL OUTPUT:");
 					writer.WriteLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
 
-					return inputFilePath;
 				}
+				return inputFilePath;
 			}
 			catch (Exception ex)
 			{
@@ -363,7 +359,7 @@ namespace EFH2
 				{
 					FileName = executablePath,
 					Arguments = inputFilePath,
-					CreateNoWindow = false,
+					CreateNoWindow = true,
 					UseShellExecute = false,
 				};
 
@@ -373,6 +369,7 @@ namespace EFH2
 					//while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
+					process.Dispose();
 				}
 			}
 			catch (Exception ex)
@@ -406,52 +403,44 @@ namespace EFH2
 		/// <param name="model"></param>
 		public static void ParseWinTR20Output(IEnumerable<StormViewModel> storms)
 		{
-			try
+			string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.out");
+
+			foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
+
+			if (!File.Exists(filePath)) return;
+
+			StreamReader reader = new StreamReader(filePath, new FileStreamOptions() { Access = FileAccess.Read });
+			while (!reader.EndOfStream)
 			{
-				string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.out");
+				string line = reader.ReadLine();
+				string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
 
-				foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
+				if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+				{ // Now at the line "___STORM_##-YR____"
+					string yrLabel = splitLine[1].Replace("-Yr", "");
+					int year = int.Parse(yrLabel);
 
-				if (File.Exists(filePath))
-				{
-					using (StreamReader reader = new StreamReader(filePath))
+					splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+					while (splitLine.Length != 6 || splitLine[0] != "Area")
+					{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+						splitLine = SplitLine(reader.ReadLine()).ToArray();
+					}
+
+					double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+					double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+
+					foreach (StormViewModel storm in storms)
 					{
-						while (!reader.EndOfStream)
-						{
-							string line = reader.ReadLine();
-							string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-
-							if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
-							{ // Now at the line "___STORM_##-YR____"
-								string yrLabel = splitLine[1].Replace("-Yr", "");
-								int year = int.Parse(yrLabel);
-
-								splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-								while (splitLine.Length != 6 || splitLine[0] != "Area")
-								{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-									splitLine = SplitLine(reader.ReadLine()).ToArray();
-								}
-
-								double runoff = Math.Round(double.Parse(splitLine[2]), 2);
-								double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
-
-								foreach (StormViewModel storm in storms)
-								{
-									if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
-									{// found the match, put the runoff and peakflow values into this storm
-										storm.PeakFlow = peakFlow;
-										storm.Runoff = runoff;
-									}
-								}
-							}
+						if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
+						{// found the match, put the runoff and peakflow values into this storm
+							storm.PeakFlow = peakFlow;
+							storm.Runoff = runoff;
 						}
 					}
 				}
 			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
+
+			reader.Close();
 		}
 
 		public static List<HydrographLineModel> GetHydrographData(IEnumerable<StormViewModel> storms)
@@ -571,7 +560,7 @@ namespace EFH2
 			{
 				string[] elements = parser.ReadFields();
 
-				if (elements.Length == 14 && elements[1].Trim('"') == state && elements[2].Trim('"') != county) 
+				if (elements.Length == 14 && elements[1].Trim('"') == state && elements[2].Trim('"') == county) 
 					ReadRainfallDataRowIntoModel(elements, newModel);	
 			}
 

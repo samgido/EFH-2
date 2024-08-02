@@ -30,7 +30,7 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="$targetentrypoint$">
+      EntryPoint="windows.partialTrustApplication">
       <uap:VisualElements
         DisplayName="EFH2"
         Description="EFH2"
