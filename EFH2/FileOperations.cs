@@ -409,38 +409,38 @@ namespace EFH2
 
 			if (!File.Exists(filePath)) return;
 
-			StreamReader reader = new StreamReader(filePath, new FileStreamOptions() { Access = FileAccess.Read });
-			while (!reader.EndOfStream)
+			using (StreamReader reader = new StreamReader(filePath))
 			{
-				string line = reader.ReadLine();
-				string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine();
+					string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
 
-				if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
-				{ // Now at the line "___STORM_##-YR____"
-					string yrLabel = splitLine[1].Replace("-Yr", "");
-					int year = int.Parse(yrLabel);
+					if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+					{ // Now at the line "___STORM_##-YR____"
+						string yrLabel = splitLine[1].Replace("-Yr", "");
+						int year = int.Parse(yrLabel);
 
-					splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-					while (splitLine.Length != 6 || splitLine[0] != "Area")
-					{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-						splitLine = SplitLine(reader.ReadLine()).ToArray();
-					}
+						splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+						while (splitLine.Length != 6 || splitLine[0] != "Area")
+						{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+							splitLine = SplitLine(reader.ReadLine()).ToArray();
+						}
 
-					double runoff = Math.Round(double.Parse(splitLine[2]), 2);
-					double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+						double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+						double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
 
-					foreach (StormViewModel storm in storms)
-					{
-						if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
-						{// found the match, put the runoff and peakflow values into this storm
-							storm.PeakFlow = peakFlow;
-							storm.Runoff = runoff;
+						foreach (StormViewModel storm in storms)
+						{
+							if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
+							{ // found the match, put the runoff and peakflow values into this storm
+								storm.PeakFlow = peakFlow;
+								storm.Runoff = runoff;
+							}
 						}
 					}
 				}
 			}
-
-			reader.Close();
 		}
 
 		public static List<HydrographLineModel> GetHydrographData(IEnumerable<StormViewModel> storms)
