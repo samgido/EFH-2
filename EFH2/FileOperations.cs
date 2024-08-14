@@ -131,12 +131,15 @@ namespace EFH2
 
 					while (!reader.EndOfStream)
 					{
+						if (line.Trim() == "") break;
+
 						ComboBoxItem c = new();
 						c.Content = line;
 
 						model.DuhTypes.Add(c);
 						line = reader.ReadLine();
 					}
+
 					model.SelectedDuhTypeIndex = 0;
 				}
 
@@ -315,7 +318,7 @@ namespace EFH2
 					{
 						writer.WriteLine("DIMENSIONLESS UNIT HYDROGRAPH:");
 
-						string duhTypeFilePath = Path.Combine(programFilesDirectory, companyName, "Shared Engineering Data", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
+						string duhTypeFilePath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 						if (File.Exists(duhTypeFilePath))
 						{
 							using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
@@ -361,6 +364,7 @@ namespace EFH2
 					Arguments = inputFilePath,
 					CreateNoWindow = true,
 					UseShellExecute = false,
+					//RedirectStandardOutput = true,
 				};
 
 				using (Process process = new Process() { StartInfo = psi })
@@ -369,13 +373,9 @@ namespace EFH2
 					//while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
-					process.Dispose();
 				}
 			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
+			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
 		/// <summary>
