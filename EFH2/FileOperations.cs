@@ -19,7 +19,7 @@ namespace EFH2
 
 		public static string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-		public static string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+		public static string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
 		public static string companyName = "USDA-dev";
 

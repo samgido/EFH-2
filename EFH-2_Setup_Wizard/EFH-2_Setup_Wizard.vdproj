@@ -399,7 +399,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DECB68F85B6F48E7AE470608BFD6E9AD"
+        "MsmKey" = "8:_E1F5B55E102B466CAB1431BB08B7E385"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -533,10 +533,10 @@
                     "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
                     "ProductCode" = "8:.NETFramework,Version=v4.7.2"
                     }
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.6.0.x86"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.6.0.x64"
                     {
-                    "Name" = "8:.NET Desktop Runtime 6.0.26 (x86)"
-                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.6.0.x86"
+                    "Name" = "8:.NET Desktop Runtime 6.0.32 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.6.0.x64"
                     }
                 }
             }
@@ -2120,7 +2120,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_933946DAB842432BADBB79543FA08B68"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -2181,7 +2181,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFH-2"
         "ProductCode" = "8:{DCCC93F3-B7A4-4A48-9DA9-AE241F8D70C1}"
-        "PackageCode" = "8:{1075EF01-41A0-4815-A1FF-7319F9F551F4}"
+        "PackageCode" = "8:{48A83C53-C4D0-4B87-B866-40EEBD36221A}"
         "UpgradeCode" = "8:{7F07579E-1AD5-48F2-A702-63523994BEB2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2202,7 +2202,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -2301,7 +2301,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_04ED4E4C08BF4ABCA4E01568DA500AB0"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_18E236312CC94DD2A4B5EC4EE25A840C"
             {
             "Name" = "8:EFH-2-dev"
             "Arguments" = "8:"
@@ -2309,10 +2309,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_DECB68F85B6F48E7AE470608BFD6E9AD"
+            "Target" = "8:_E1F5B55E102B466CAB1431BB08B7E385"
             "Folder" = "8:_6F0193B630994E24B117BCC4FE1EE3E8"
             "WorkingFolder" = "8:_933946DAB842432BADBB79543FA08B68"
-            "Icon" = "8:"
+            "Icon" = "8:_96B36B377D7A47E5AACB06D58B3240DB"
             "Feature" = "8:"
             }
         }
@@ -2714,9 +2714,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_DECB68F85B6F48E7AE470608BFD6E9AD"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E1F5B55E102B466CAB1431BB08B7E385"
             {
-            "SourcePath" = "8:..\\EFH2\\obj\\x86\\Release\\net6.0-windows10.0.19041.0\\apphost.exe"
+            "SourcePath" = "8:..\\EFH2\\obj\\x64\\Release\\net6.0-windows10.0.19041.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_933946DAB842432BADBB79543FA08B68"
@@ -2734,7 +2734,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|x86"
+            "OutputConfiguration" = "8:Release|x64"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{A4BA0F71-ED8E-419D-B2FC-B353CFAFBB7C}"
             "ShowKeyOutput" = "11:TRUE"
