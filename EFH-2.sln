@@ -52,8 +52,8 @@ Global
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.k|x86.Build.0 = Release
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|ARM64.ActiveCfg = Release
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x64.ActiveCfg = Release
+		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x64.Build.0 = Release
 		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x86.ActiveCfg = Release
-		{0304FFD4-9B36-4252-80EA-8A68FD8D4803}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

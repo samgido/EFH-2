@@ -16,6 +16,8 @@
 	  <Configurations>Debug;Release</Configurations>
 	  <ApplicationIcon>Assets\EFH2.ico</ApplicationIcon>
 	  <PackageIcon>EFH2.png</PackageIcon>
+	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+	  <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Programs\WinTR20_V32.exe" />
@@ -50,11 +52,11 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.1" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="H.OxyPlot.WinUI" Version="0.9.30" />
-    <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.10.40170" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240607001" />
+    <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.11.40262" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
     <PackageReference Include="Svg" Version="3.4.7" />
