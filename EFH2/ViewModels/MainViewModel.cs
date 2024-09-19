@@ -104,6 +104,8 @@ namespace EFH2
                 }
             }
             RainfallDischargeDataViewModel.SetSilent(newData.RainfallDischargeDataViewModel);
+
+            TryWinTr20();
         }
 
         public void Default()

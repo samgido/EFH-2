@@ -232,6 +232,9 @@ namespace EFH2
                 Storms[i].SetSilent(model.Storms[i]);
                 Storms[i].ValueChanged += StormPropertyChanged;
             }
+
+            this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
+            this.OnPropertyChanged(nameof(SelectedDuhTypeIndex));
         }
 
         public void Default()
@@ -295,7 +298,6 @@ namespace EFH2
             this.OnPropertyChanged(nameof(SelectedDuhTypeIndex));
             this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
 
-            // this will trigger ValueChanged
             this.ValueChanged?.Invoke(this, EventArgs.Empty);
         }
     }

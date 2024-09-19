@@ -260,6 +260,8 @@ namespace EFH2
 			{
 				if (!IsWinTR20Ready(model)) return null;
 
+				Console.WriteLine("Wintr20 ran");
+
 				string programX86Path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -364,16 +366,18 @@ namespace EFH2
 					Arguments = inputFilePath,
 					CreateNoWindow = true,
 					UseShellExecute = false,
-					//RedirectStandardOutput = true,
+					RedirectStandardOutput = true,
 				};
 
 				using (Process process = new Process() { StartInfo = psi })
 				{
 					process.Start();
-					//while (!process.StandardOutput.EndOfStream) Debug.WriteLine(process.StandardOutput.ReadLine());
+					while (!process.StandardOutput.EndOfStream) Console.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
 				}
+
+				Console.WriteLine("Process finished");
 			}
 			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}

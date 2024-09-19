@@ -273,7 +273,7 @@ namespace EFH2
                 CachedFileManager.DeferUpdates(file);
                 TextWriter writer = new StreamWriter(file.Path);
                 FileOperations.SerializeData(MainViewModel, writer);
-                await CachedFileManager.CompleteUpdatesAsync(file);
+                //await CachedFileManager.CompleteUpdatesAsync(file);
             }
         }
 

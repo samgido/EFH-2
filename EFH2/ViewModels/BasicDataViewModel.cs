@@ -98,6 +98,7 @@ namespace EFH2
             get => _selectedCountyIndex;
             set
             {
+                if (value == -1) return;
                 this.SetProperty(ref this._selectedCountyIndex, value);
                 this.selectedCounty = Counties[_selectedCountyIndex].Content.ToString();
 
