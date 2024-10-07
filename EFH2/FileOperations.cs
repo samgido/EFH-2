@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using WinRT;
+using EFH2.Models;
 
 namespace EFH2
 {
@@ -25,15 +26,15 @@ namespace EFH2
 
         public static void SerializeData(MainViewModel model, TextWriter writer)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
-            serializer.Serialize(writer, model);
+            XmlSerializer serializer = new XmlSerializer(typeof(SerializedDataModel));
+            serializer.Serialize(writer, model.CreateSerializableModel());
         }
 
-        public static MainViewModel? DeserializeData(StreamReader reader)
+        public static SerializedDataModel? DeserializeData(StreamReader reader)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(MainViewModel));
+            XmlSerializer serializer = new XmlSerializer(typeof(SerializedDataModel));
 
-			if (serializer.Deserialize(reader) is MainViewModel model) return model;
+			if (serializer.Deserialize(reader) is SerializedDataModel model) return model;
 			else return null;
         }
 

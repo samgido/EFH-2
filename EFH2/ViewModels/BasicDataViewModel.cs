@@ -14,72 +14,50 @@ namespace EFH2
 
         public event EventHandler? CountyChanged;
 
-        [XmlElement("Drainage Area")]
         public BasicDataEntryViewModel drainageAreaEntry = new BasicDataEntryViewModel(1, 2000, "Drainage Area", "Drainage area must be in the range 1 to 2000 acres!");
-        [XmlElement("Runoff Curve Number")]
         public BasicDataEntryViewModel runoffCurveNumberEntry = new BasicDataEntryViewModel(40, 98, "Runoff Curve Number", "Curve number must be in the range 40 to 98!");
-        [XmlElement("Watershed Length")]
         public BasicDataEntryViewModel watershedLengthEntry = new BasicDataEntryViewModel(200, 26000, "Watershed Length", "Watershed length must be in the range 200 to 26000 feet!");
-        [XmlElement("Watershed Slope")]
         public BasicDataEntryViewModel watershedSlopeEntry = new BasicDataEntryViewModel(.5, 64, "Watershed Slope", "Watershed slope must be the range 0.5 and 64 percent!");
-        [XmlElement("Time Of Concentration")]
         public BasicDataEntryViewModel timeOfConcentrationEntry = new BasicDataEntryViewModel(.1, 10, "Time Of Concentration", "Time of concentration cannot be greater than 10.0 hours and cannot be less than 0.1 hours!");
 
-        [XmlIgnore]
         public double DrainageArea => drainageAreaEntry.Value;
 
-        [XmlIgnore]
         public double RunoffCurveNumber => runoffCurveNumberEntry.Value;
 
-        [XmlIgnore]
         public double WatershedLength => watershedLengthEntry.Value;
 
-        [XmlIgnore]
         public double WatershedSlope => watershedSlopeEntry.Value;
 
-        [XmlIgnore]
         public double TimeOfConcentration => timeOfConcentrationEntry.Value;
 
-        [XmlIgnore]
         public Dictionary<string, List<string>> stateCountyDictionary = new Dictionary<string, List<string>>();
 
         [ObservableProperty]
-        [XmlElement("Client")]
         private string _client = "";
 
         [ObservableProperty]
-        [XmlElement("Practice")]
         private string _practice = "";
 
         [ObservableProperty]
-        [XmlElement("By")]
         private string _by = "";
 
         [ObservableProperty]
-        [XmlElement("Date")]
         private Nullable<DateTimeOffset> _date = null;
 
-        [property: XmlIgnore]
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _states = new();
 
-        [property: XmlIgnore]
         [ObservableProperty]
         private ObservableCollection<ComboBoxItem> _counties = new();
 
-        [XmlElement("Selected State")]
         public string selectedState = "";
 
-        [XmlElement("Selected County")]
         public string selectedCounty = "";
 
-        [XmlIgnore]
         private int _selectedStateIndex = 0;
 
-        [XmlIgnore]
         private int _selectedCountyIndex = 0;
 
-        [XmlIgnore]
         public int SelectedStateIndex
         {
             get => _selectedStateIndex;
@@ -92,7 +70,6 @@ namespace EFH2
             }
         }
 
-        [XmlIgnore]
         public int SelectedCountyIndex
         {
             get => _selectedCountyIndex;

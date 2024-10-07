@@ -70,7 +70,7 @@ namespace EFH2
             this.UnitsChanged?.Invoke(this, e);
         }
 
-		private void RadioButton_Checked(object sender, RoutedEventArgs e)
+		private void NavigationRadioButtonChecked(object sender, RoutedEventArgs e)
         {
             int index = 0;
 			if (sender as RadioButton == DevUrbanAreaRadioButton) { index = 5; }

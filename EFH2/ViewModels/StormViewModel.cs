@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
-using System.Xml.Serialization;
+using EFH2.Models;
 
 namespace EFH2
 {
@@ -9,31 +9,23 @@ namespace EFH2
     {
         public event EventHandler<EventArgs>? ValueChanged;
 
-        [XmlIgnore]
         private double _precipitation = double.NaN;
 
-        [XmlIgnore]
         private double _frequency = double.NaN;
 
-        [XmlElement("Name")]
         public string Name => "Storm #" + Number;
 
-        [XmlIgnore]
         public int Number { get; init; }
 
         [ObservableProperty]
-        [XmlElement("Peak Flow")]
         private double _peakFlow = double.NaN;
 
         [ObservableProperty]
-        [XmlElement("Runoff")]
         private double _runoff = double.NaN;
 
         [ObservableProperty]
-        [XmlElement("Display Hydrograph")]
         public bool _displayHydrograph = false;
 
-        [XmlElement("24-hr Rain")]
         public double Precipitation
         {
             get => _precipitation;
@@ -44,7 +36,6 @@ namespace EFH2
             }
         }
 
-        [XmlElement("Frequency")]
         public double Frequency
         {
             get => _frequency;
@@ -74,7 +65,7 @@ namespace EFH2
             DisplayHydrograph = model.DisplayHydrograph;
         }
 
-        public void SetSilent(StormViewModel newModel)
+        public void SetSilent(SerializedStormModel newModel)
         {
             this._precipitation = newModel.Precipitation;
             this._frequency = newModel.Frequency;
@@ -86,5 +77,20 @@ namespace EFH2
             this.OnPropertyChanged(nameof(PeakFlow));
             this.OnPropertyChanged(nameof(Runoff));
         }
+
+        public void SetSilent(StormViewModel newModel)
+		{
+			this._precipitation = newModel.Precipitation;
+			this._frequency = newModel.Frequency;
+			this._peakFlow = newModel.PeakFlow;
+			this._runoff = newModel.Runoff;
+			this._displayHydrograph = newModel.DisplayHydrograph;
+
+			this.OnPropertyChanged(nameof(Precipitation));
+			this.OnPropertyChanged(nameof(Frequency));
+			this.OnPropertyChanged(nameof(PeakFlow));
+			this.OnPropertyChanged(nameof(Runoff));
+			this.OnPropertyChanged(nameof(DisplayHydrograph));
+		}
     }
 }

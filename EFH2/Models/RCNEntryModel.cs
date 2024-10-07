@@ -2,22 +2,12 @@
 
 namespace EFH2
 {
-	public class RcnEntryModel
+    public class RcnEntryModel
     {
         [XmlElement("Weight")]
-        public int Weight { get; set; } = 0;
+        public int Weight { get; set; }
 
         [XmlElement("Area")]
-        public double Area = double.NaN;
-
-        [XmlIgnore]
-        public double WeightedArea
-        {
-            get
-            {
-                if (!(double.IsNaN(Area))) return Area * Weight;
-                else return double.NaN;
-            }
-        }
+        public double Area { get; set; }
     }
 }

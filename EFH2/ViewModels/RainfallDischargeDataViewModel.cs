@@ -12,7 +12,6 @@ namespace EFH2
     {
         public event EventHandler<EventArgs>? ValueChanged;
 
-        [XmlElement("RainfallDistributionType")]
         public string selectedRainfallDistributionType
         {
             get
@@ -22,7 +21,6 @@ namespace EFH2
             }
         }
 
-        [XmlElement("DimensionlessUnitHydrographType")]
         public string selectedDuhType
         {
             get
@@ -32,31 +30,23 @@ namespace EFH2
 			}
         }
 
-        [XmlIgnore]
         private int _selectedRainfallDistributionTypeIndex = 0;
 
-        [XmlIgnore]
         private int _selectedDuhTypeIndex = 0;
 
-        [XmlIgnore]
         public Dictionary<string, string> rfTypeToFileName = new Dictionary<string, string>();
 
         [ObservableProperty]
-        [XmlElement("Storms")]
         private ObservableCollection<StormViewModel> _storms = new();
 
         [ObservableProperty]
-        [property: XmlIgnore]
         private ObservableCollection<ComboBoxItem> _rainfallDistributionTypes = new();
 
         [ObservableProperty]
-        [property: XmlIgnore]
         private ObservableCollection<ComboBoxItem> _duhTypes = new();
 
-        [XmlIgnore]
         private InputStatus _rainfallDistributionTypeInputStatus = InputStatus.None;
 
-        [XmlIgnore]
         public InputStatus RainfallDistributionTypeInputStatus
 		{
 			get => this._rainfallDistributionTypeInputStatus;
@@ -67,10 +57,8 @@ namespace EFH2
 			}
 		}
 
-        [XmlIgnore]
         private InputStatus _duhTypeInputStatus = InputStatus.None;
 
-        [XmlIgnore]
         public InputStatus DuhTypeInputStatus
 		{
 			get => this._duhTypeInputStatus;
@@ -229,8 +217,8 @@ namespace EFH2
 
             for (int i = 0; i < Storms.Count; i++)
             {
-                Storms[i].SetSilent(model.Storms[i]);
-                Storms[i].ValueChanged += StormPropertyChanged;
+                //Storms[i].SetSilent(model.Storms[i]);
+                //Storms[i].ValueChanged += StormPropertyChanged;
             }
 
             this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));

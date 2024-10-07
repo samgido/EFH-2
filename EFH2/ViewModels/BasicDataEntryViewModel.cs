@@ -12,9 +12,7 @@ namespace EFH2
     {
 		public event EventHandler<EventArgs> ValueChanged;
 
-        [XmlIgnore]
         private double _value = double.NaN;
-        [XmlElement("Value")] 
         public double Value
         {
             get => _value;
@@ -35,21 +33,16 @@ namespace EFH2
             }
         }
 
-        [XmlIgnore]
         public double Min;
 
-        [XmlIgnore]
         public double Max;
 
-        [XmlIgnore]
         public string Name { get; private set; }
 
-        [XmlIgnore]
         public string InvalidEntryStatus { get; private set; }
 
         private InputStatus _inputStatus = InputStatus.None;
 
-        [XmlIgnore]
         public InputStatus InputStatus
         {
             get => _inputStatus;

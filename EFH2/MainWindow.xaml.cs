@@ -20,6 +20,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using WinRT.Interop;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
+using EFH2.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -212,7 +213,7 @@ namespace EFH2
 					using (StreamReader reader = new StreamReader(file.Path))
 					{
 						reader.BaseStream.Position = 0;
-						MainViewModel? model = FileOperations.DeserializeData(reader);
+						SerializedDataModel? model = FileOperations.DeserializeData(reader);
 						if (model != null) MainViewModel.Load(model);
 						// TODO - show error
 					}
@@ -256,10 +257,9 @@ namespace EFH2
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
-            MainViewModel.RcnDataModel = MainViewModel.RcnDataViewModel.ToRcnDataModel();
 
             var savePicker = new FileSavePicker();
-			savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
             savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
             savePicker.SuggestedFileName = "WIP";
 
@@ -273,14 +273,11 @@ namespace EFH2
                 CachedFileManager.DeferUpdates(file);
                 TextWriter writer = new StreamWriter(file.Path);
                 FileOperations.SerializeData(MainViewModel, writer);
-                //await CachedFileManager.CompleteUpdatesAsync(file);
+                writer.Close();
             }
         }
 
-        private void ExitClicked(object sender, RoutedEventArgs e)
-        {
-            App.Current.Exit();
-        }
+        private void ExitClicked(object sender, RoutedEventArgs e) => App.Current.Exit();
 
         private void CutClicked(object sender, RoutedEventArgs e)
         {

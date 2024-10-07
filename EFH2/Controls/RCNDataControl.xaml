@@ -25,11 +25,11 @@
             Margin="60,0,0,0"
             RelativePanel.AlignTopWithPanel="True">
 
-            <RadioButton x:Name="UrbanAreaRadioButton" Content="Urban Area" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="DevUrbanAreaRadioButton" Content="Developing Urban" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="CultivatedAgRadioButton" Content="Cultivated Agriculture" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="OtherAgRadioButton" Content="Other Agriculture" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="AridRangelandRadioButton" Content="Arid Rangeland" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="UrbanAreaRadioButton" Content="Urban Area" Checked="NavigationRadioButtonChecked"/>
+            <RadioButton x:Name="DevUrbanAreaRadioButton" Content="Developing Urban" Checked="NavigationRadioButtonChecked"/>
+            <RadioButton x:Name="CultivatedAgRadioButton" Content="Cultivated Agriculture" Checked="NavigationRadioButtonChecked"/>
+            <RadioButton x:Name="OtherAgRadioButton" Content="Other Agriculture" Checked="NavigationRadioButtonChecked"/>
+            <RadioButton x:Name="AridRangelandRadioButton" Content="Arid Rangeland" Checked="NavigationRadioButtonChecked"/>
         </RadioButtons>
 
         <Grid x:Name="ItemsViewLabels" RelativePanel.Below="CoverDescriptionButtons" 
@@ -136,9 +136,9 @@
             <RadioButtons
                 Margin="60,0,0,0"
                 x:Name="RCNDataConversionButtons">
-                <RadioButton x:Name="AcresButton" IsChecked="True" Click="UnitsButtonsClicked"
+                <RadioButton x:Name="AcresButton" IsChecked="{x:Bind Path=ViewModel.AcresSelected}" Click="UnitsButtonsClicked"
                              GroupName="RadioButtons">Acres</RadioButton>
-                <RadioButton x:Name="PercentageButton" Click="UnitsButtonsClicked"
+                <RadioButton x:Name="PercentageButton" IsChecked="{x:Bind Path=ViewModel.PercentSelected}" Click="UnitsButtonsClicked" 
                              GroupName="RadioButtons">Percentage</RadioButton>
             </RadioButtons>
 
