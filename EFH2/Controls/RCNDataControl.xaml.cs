@@ -67,6 +67,8 @@ namespace EFH2
 
         private void UnitsButtonsClicked(object sender, RoutedEventArgs e)
         {
+            if (ViewModel != null) ViewModel.AcresSelected = AcresButton.IsChecked.GetValueOrDefault();
+
             this.UnitsChanged?.Invoke(this, e);
         }
 
@@ -89,6 +91,25 @@ namespace EFH2
         {
             AcresButton.IsChecked = true;
             PercentageButton.IsChecked = false;
+        }
+
+        // Gross :(
+        public void SetUnits(object sender, EventArgs e)
+        {
+            if (sender is MainViewModel model)
+            {
+                if (model.RcnDataViewModel.AcresSelected && !AcresButton.IsChecked.GetValueOrDefault())
+                {
+					if (AcresButton.IsChecked.GetValueOrDefault())
+					{
+						PercentageButton.IsChecked = true;
+					}
+					else if (PercentageButton.IsChecked.GetValueOrDefault())
+					{
+						AcresButton.IsChecked = true;
+					}
+                }
+            }
         }
     }
 }

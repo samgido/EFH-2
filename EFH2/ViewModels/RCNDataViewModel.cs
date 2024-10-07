@@ -14,9 +14,6 @@ namespace EFH2
         private bool _acresSelected = true;
 
         [ObservableProperty]
-        private bool _percentSelected = false;
-
-        [ObservableProperty]
         private List<RcnCategory> _rcnCategories = new();
 
         [ObservableProperty]
@@ -143,7 +140,6 @@ namespace EFH2
             }
 
             this.AcresSelected = false;
-            this.PercentSelected = true;
         }
 
         public void ConvertToAcresFromPercentage(double accumulatedArea)

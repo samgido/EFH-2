@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using EFH2.Models;
+using Windows.Storage.Pickers;
 
 namespace EFH2
 {
@@ -17,6 +18,8 @@ namespace EFH2
         public static bool WinTr20Ready = true;
 
         public event EventHandler WinTr20Ran;
+
+        public event EventHandler ChangeRcnUnits;
 
         public const int NumberOfStorms = 10;
 
@@ -31,6 +34,8 @@ namespace EFH2
         public const string ClearedMessage = "Cleared.";
 
         private const string _importedStatusMessage = "Imported from file";
+
+        public const PickerLocationId defaultFileLocation = PickerLocationId.DocumentsLibrary;
 
         public BasicDataViewModel BasicDataViewModel { get; set; }
 
@@ -140,7 +145,8 @@ namespace EFH2
 
             if (!newData.AcresSelected)
             {
-                RcnDataViewModel.ConvertToPercentageFromAcres(RcnDataViewModel.AccumulatedArea);
+                this.RcnDataViewModel.AcresSelected = false;
+                this.ChangeRcnUnits?.Invoke(this, EventArgs.Empty);
             }
 
             TryWinTr20();

@@ -41,6 +41,8 @@ namespace EFH2
 		public MainViewModel MainViewModel { get; set; }
 
 		private TextBox _previousFocusedTextBox;
+
+
         public TextBox? PreviousFocusedTextBox { get => _previousFocusedTextBox; set => _previousFocusedTextBox = value; }
 
         public MainWindow()
@@ -69,6 +71,8 @@ namespace EFH2
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.UnitsChanged += ChangeRcnUnits;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
+
+            MainViewModel.ChangeRcnUnits += RcnDataControl.SetUnits;
 
             FocusManager.GotFocus += FocusManagerGotFocus;
 
@@ -204,6 +208,7 @@ namespace EFH2
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
 
             openPicker.FileTypeFilter.Add(".xml");
+            openPicker.SuggestedStartLocation = MainViewModel.defaultFileLocation;
             var file = await openPicker.PickSingleFileAsync();
 
             if (file != null)
@@ -257,11 +262,10 @@ namespace EFH2
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
-
             var savePicker = new FileSavePicker();
-			savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+			savePicker.SuggestedStartLocation = MainViewModel.defaultFileLocation;
             savePicker.FileTypeChoices.Add("XML", new List<string> { ".xml" });
-            savePicker.SuggestedFileName = "WIP";
+            savePicker.SuggestedFileName = DateTime.Now.ToString();
 
             var window = this;
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);

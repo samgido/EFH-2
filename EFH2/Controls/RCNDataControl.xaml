@@ -136,9 +136,9 @@
             <RadioButtons
                 Margin="60,0,0,0"
                 x:Name="RCNDataConversionButtons">
-                <RadioButton x:Name="AcresButton" IsChecked="{x:Bind Path=ViewModel.AcresSelected}" Click="UnitsButtonsClicked"
+                <RadioButton x:Name="AcresButton" IsChecked="True" Click="UnitsButtonsClicked"
                              GroupName="RadioButtons">Acres</RadioButton>
-                <RadioButton x:Name="PercentageButton" IsChecked="{x:Bind Path=ViewModel.PercentSelected}" Click="UnitsButtonsClicked" 
+                <RadioButton x:Name="PercentageButton" Click="UnitsButtonsClicked" 
                              GroupName="RadioButtons">Percentage</RadioButton>
             </RadioButtons>
 
