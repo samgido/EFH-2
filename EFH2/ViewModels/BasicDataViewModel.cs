@@ -166,44 +166,5 @@ namespace EFH2
             runoffCurveNumberEntry.InputStatus = InputStatus.Cleared;
             drainageAreaEntry.InputStatus = InputStatus.Cleared;
         }
-
-        public void Load(BasicDataViewModel model)
-        {
-            _client = model.Client;
-            _practice = model.Practice;
-            _by = model.By;
-            _date = model.Date;
-
-            for (int i = 0; i < States.Count; i++)
-            {
-                string content = States[i].Content as string;
-                if (content == model.selectedState)
-                {
-                    SelectedStateIndex = i;
-                    break;
-                }
-            }
-
-            for (int i = 0; i < Counties.Count; i++)
-            {
-                string content = Counties[i].Content as string;
-                if (content == model.selectedCounty)
-                {
-                    SelectedCountyIndex = i;
-                    break;
-                }
-            }
-
-            drainageAreaEntry.SetSilent(model.DrainageArea);
-            runoffCurveNumberEntry.SetSilent(model.RunoffCurveNumber);
-            watershedLengthEntry.SetSilent(model.WatershedLength);
-            watershedSlopeEntry.SetSilent(model.WatershedSlope);
-            timeOfConcentrationEntry.SetSilent(model.TimeOfConcentration);
-
-            this.OnPropertyChanged(nameof(Client));
-            this.OnPropertyChanged(nameof(Practice));
-            this.OnPropertyChanged(nameof(By));
-            this.OnPropertyChanged(nameof(Date));
-        }
     }
 }

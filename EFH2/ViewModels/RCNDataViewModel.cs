@@ -95,29 +95,6 @@ namespace EFH2
             return model;
         }
 
-        public void LoadDataModel(RcnDataModel data)
-        {
-            int i = 0;
-            if (data == null) return;
-
-            foreach (RcnCategory category in RcnCategories)
-            {
-                foreach (RcnRow row in category.AllRows)
-                {
-					if (data.GroupA.Entries.Count > i)
-					{
-						row.Entries[0].Area = data.GroupA.Entries[i].Area;
-						row.Entries[1].Area = data.GroupB.Entries[i].Area;
-						row.Entries[2].Area = data.GroupC.Entries[i].Area;
-						row.Entries[3].Area = data.GroupD.Entries[i].Area;
-						i++;
-					}
-                }
-            }
-
-            this.OnPropertyChanged(nameof(RcnCategories));
-        }
-
         public void Default()
         {
             foreach (RcnCategory category in RcnCategories) category.Default();

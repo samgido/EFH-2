@@ -56,15 +56,6 @@ namespace EFH2
             DisplayHydrograph = false;
         }
 
-        public void Load(StormViewModel model)
-        {
-            Precipitation = model.Precipitation;
-            Frequency = model.Frequency;
-            PeakFlow = model.PeakFlow;
-            Runoff = model.Runoff;
-            DisplayHydrograph = model.DisplayHydrograph;
-        }
-
         public void SetSilent(SerializedStormModel newModel)
         {
             this._precipitation = newModel.Precipitation;

@@ -270,8 +270,6 @@ namespace EFH2
 
 				using (StreamWriter writer = new StreamWriter(inputFilePath, append: false))
 				{
-					StringBuilder content = new StringBuilder();
-
 					string rainfallDistributionTable = "";
 					string rainfallDistributionType = "";
 
@@ -340,7 +338,9 @@ namespace EFH2
 					writer.WriteLine("GLOBAL OUTPUT:");
 					writer.WriteLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
 
+					Console.WriteLine("Writing to .inp finished");
 				}
+
 				return inputFilePath;
 			}
 			catch (Exception ex)
@@ -367,13 +367,13 @@ namespace EFH2
 					Arguments = inputFilePath,
 					CreateNoWindow = true,
 					UseShellExecute = false,
-					RedirectStandardOutput = true,
+					RedirectStandardOutput = false,
 				};
 
 				using (Process process = new Process() { StartInfo = psi })
 				{
 					process.Start();
-					while (!process.StandardOutput.EndOfStream) Console.WriteLine(process.StandardOutput.ReadLine());
+					//while (!process.StandardOutput.EndOfStream) Console.WriteLine(process.StandardOutput.ReadLine());
 
 					process.WaitForExit();
 				}

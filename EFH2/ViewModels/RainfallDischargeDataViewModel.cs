@@ -190,41 +190,6 @@ namespace EFH2
             SelectedDuhTypeIndex = 0;
         }
 
-        public void Load(RainfallDischargeDataViewModel model)
-        {
-            SelectedRainfallDistributionTypeIndex = model.SelectedRainfallDistributionTypeIndex;
-            SelectedDuhTypeIndex = model.SelectedDuhTypeIndex;
-
-            for (int i = 0; i < RainfallDistributionTypes.Count; i++)
-            {
-                string content = RainfallDistributionTypes[i].Content as string;
-                if (content == model.selectedRainfallDistributionType)
-                {
-                    SelectedRainfallDistributionTypeIndex = i;
-                    break;
-                }
-            }
-
-            for (int i = 0; i < DuhTypes.Count; i++)
-            {
-                string content = DuhTypes[i].Content as string;
-                if (content == model.selectedDuhType)
-                {
-                    SelectedDuhTypeIndex = i;
-                    break;
-                }
-            }
-
-            for (int i = 0; i < Storms.Count; i++)
-            {
-                //Storms[i].SetSilent(model.Storms[i]);
-                //Storms[i].ValueChanged += StormPropertyChanged;
-            }
-
-            this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
-            this.OnPropertyChanged(nameof(SelectedDuhTypeIndex));
-        }
-
         public void Default()
         {
             SelectedRainfallDistributionTypeIndex = 0;

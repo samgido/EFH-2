@@ -72,7 +72,7 @@ namespace EFH2
             RcnDataControl.UnitsChanged += ChangeRcnUnits;
             RcnDataControl.AcceptRcnValues += AcceptRcnValues;
 
-            MainViewModel.ChangeRcnUnits += RcnDataControl.SetUnits;
+            MainViewModel.SyncRcnUnits += RcnDataControl.SetUnits;
 
             FocusManager.GotFocus += FocusManagerGotFocus;
 

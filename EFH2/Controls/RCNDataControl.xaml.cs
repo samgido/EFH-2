@@ -93,23 +93,31 @@ namespace EFH2
             PercentageButton.IsChecked = false;
         }
 
-        // Gross :(
         public void SetUnits(object sender, EventArgs e)
         {
             if (sender is MainViewModel model)
             {
-                if (model.RcnDataViewModel.AcresSelected && !AcresButton.IsChecked.GetValueOrDefault())
+                if (model.RcnDataViewModel.AcresSelected && !AcresButton.IsChecked.GetValueOrDefault()) // Model says acres selected, actual disagrees
                 {
-					if (AcresButton.IsChecked.GetValueOrDefault())
-					{
-						PercentageButton.IsChecked = true;
-					}
-					else if (PercentageButton.IsChecked.GetValueOrDefault())
-					{
-						AcresButton.IsChecked = true;
-					}
+                    ToggleUnits();            
+                }
+                else if (!model.RcnDataViewModel.AcresSelected && AcresButton.IsChecked.GetValueOrDefault()) // Model says percent selected, actual disagrees
+                {
+                    ToggleUnits();
                 }
             }
+        }
+
+        private void ToggleUnits()
+        {
+			if (AcresButton.IsChecked.GetValueOrDefault())
+			{
+				PercentageButton.IsChecked = true;
+			}
+			else if (PercentageButton.IsChecked.GetValueOrDefault())
+			{
+				AcresButton.IsChecked = true;
+			}
         }
     }
 }

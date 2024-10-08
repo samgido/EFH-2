@@ -19,7 +19,7 @@ namespace EFH2
 
         public event EventHandler WinTr20Ran;
 
-        public event EventHandler ChangeRcnUnits;
+        public event EventHandler SyncRcnUnits;
 
         public const int NumberOfStorms = 10;
 
@@ -143,11 +143,8 @@ namespace EFH2
 				}
 			}
 
-            if (!newData.AcresSelected)
-            {
-                this.RcnDataViewModel.AcresSelected = false;
-                this.ChangeRcnUnits?.Invoke(this, EventArgs.Empty);
-            }
+			this.RcnDataViewModel.AcresSelected = newData.AcresSelected;
+			this.SyncRcnUnits?.Invoke(this, EventArgs.Empty);
 
             TryWinTr20();
         }
