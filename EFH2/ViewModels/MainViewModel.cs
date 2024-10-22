@@ -63,17 +63,29 @@ namespace EFH2
             TryWinTr20();
         }
 
-        public void TryWinTr20()
+        public async void TryWinTr20()
         {
-            string fileName = FileOperations.CreateInpFile(this);
+            //bool ready = await FileOperations.CreateInpFileAsync(this);
 
-            // file being null doubles as a message that not all data is ready
-            if (fileName != null && MainViewModel.WinTr20Ready)
+            //// file being null doubles as a message that not all data is ready
+            //if (ready && MainViewModel.WinTr20Ready)
+            //{
+            //    FileOperations.RunWinTr20Async();
+            //    FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
+
+            //    this.WinTr20Ran?.Invoke(this, EventArgs.Empty);
+            //}
+
+            
+			string inputContents = FileOperations.CreateInputFileContents(this);
+			FileOperations.WriteToInputFile(inputContents);
+
+            if (inputContents != null && MainViewModel.WinTr20Ready)
             {
-                FileOperations.RunWinTr20(fileName);
-                FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
+				FileOperations.RunWinTr20Async();
 
-                this.WinTr20Ran?.Invoke(this, EventArgs.Empty);
+				string outputContents = FileOperations.ReadOutputFile();
+                FileOperations.ParseOutput(outputContents, RainfallDischargeDataViewModel.Storms);
             }
         }
 

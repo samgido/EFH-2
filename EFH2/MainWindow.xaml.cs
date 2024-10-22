@@ -378,7 +378,7 @@ namespace EFH2
         {
             try
             {
-                string helpFilePath = Path.Combine(FileOperations.programFilesDirectory, FileOperations.companyName, "EFH2", "EFH2.chm");
+                string helpFilePath = Path.Combine(FileOperations.ProgramFilesDirectory, FileOperations.companyName, "EFH2", "EFH2.chm");
 
                 Process.Start(new ProcessStartInfo(helpFilePath) { UseShellExecute = true });
             }
@@ -387,7 +387,7 @@ namespace EFH2
 
         private void UserManualClick(object sender, RoutedEventArgs e)
 		{
-            string pdfPath = Path.Combine(FileOperations.programFilesDirectory, FileOperations.companyName, "EFH2", "EFH-2 Users Manual.pdf");
+            string pdfPath = Path.Combine(FileOperations.ProgramFilesDirectory, FileOperations.companyName, "EFH2", "EFH-2 Users Manual.pdf");
 
             Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
 		}

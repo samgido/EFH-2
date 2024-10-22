@@ -18,6 +18,7 @@
 	  <PackageIcon>EFH2.png</PackageIcon>
 	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
 	  <OutputType>Exe</OutputType>
+	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Programs\WinTR20_V32.exe" />
