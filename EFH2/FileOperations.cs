@@ -109,6 +109,8 @@ namespace EFH2
 
 					while (!reader.EndOfStream)
 					{
+						if (line == "") break;
+
 						string[] lineParts = line.Split(',');
 						string type = lineParts[0];
 
@@ -747,6 +749,122 @@ namespace EFH2
 			//parser.Close();
 		}
 
+		public static SerializedDataModel? DeserializeOldFormat(string contents, 
+			GetSelectedIndexDelegate getStateIndex, GetSelectedIndexDelegate getCountyIndex, GetSelectedIndexDelegate getRainfallDistributionIndex, GetSelectedIndexDelegate getDuhIndex, GetEmptyRcnDataModel getRcnDataModel)
+		{
+			try
+			{
+				string[] lines = contents.Split("\r\n");
+
+				SerializedDataModel model = new SerializedDataModel();
+
+				if (lines.Count() >= 16)
+				{
+					for (int i = 0; i < 16; i++)
+					{
+						lines[i] = lines[i].Trim('"');
+					}
+					string dateFormatString = "MM/dd/yyyy";
+
+					model.By = lines[1];
+					model.Date = DateTime.ParseExact(lines[2].Trim('"'), dateFormatString, System.Globalization.CultureInfo.InvariantCulture);
+					model.Client = lines[3];
+
+					int? selectedStateIndex = getStateIndex(lines[5]);
+					if (selectedStateIndex.HasValue) model.SelectedStateIndex = (uint)selectedStateIndex.Value;
+
+					int? selectedCountyIndex = getStateIndex(lines[4]);
+					if (selectedCountyIndex.HasValue) model.SelectedCountyIndex = (uint)selectedCountyIndex.Value;
+
+					string[] rainfallDischargeSelections = lines[15].Split(", ");
+					int? selectedRainfallDistributionTypeIndex = getRainfallDistributionIndex(rainfallDischargeSelections[0]);
+					if (selectedRainfallDistributionTypeIndex.HasValue) model.SelectedRainfallDistributionTypeIndex = (uint)selectedRainfallDistributionTypeIndex.Value;
+
+					if (rainfallDischargeSelections.Length == 2)
+					{
+						int? selectedDuhTypeIndex = getDuhIndex(rainfallDischargeSelections[1]);
+						if (selectedDuhTypeIndex.HasValue) model.SelectedDuhTypeIndex = (uint)selectedDuhTypeIndex.Value;
+					} // Else it should go to '<standard>'
+				}
+
+				//Search for '', '', '', "Acres" / "Percent", ''
+				for (int i = 0; i < lines.Count(); i++)
+					{
+						string[] lineParts = lines[i].Split(',');
+
+						if (lineParts.Length == 5 && (lineParts[3] == "Acres" || lineParts[3] == "Percent"))
+						{
+							if (lineParts[3] == "Acres") model.AcresSelected = true;
+							else model.AcresSelected = false;
+						}
+					}
+
+				RcnDataModel rcnModel = getRcnDataModel();
+
+				model.GroupA = rcnModel.GroupA;
+				model.GroupB = rcnModel.GroupB;
+				model.GroupC = rcnModel.GroupC;
+				model.GroupD = rcnModel.GroupD;
+
+				for (int i = 0; i < lines.Count(); i++)
+				{
+					string[] lineParts = lines[i].Split(',');
+
+					if (lineParts.Length == 4 && lineParts[3].Contains('"') && !lineParts[0].Contains('"'))
+					{
+						double pageNumber, positionCode;
+						if (!double.TryParse(lineParts[1], out positionCode) || !double.TryParse(lineParts[0], out pageNumber)) continue;
+
+						int weight;
+						double area;
+
+						if (!int.TryParse(lineParts[2], out weight) || !double.TryParse(lineParts[3].Trim('"'), out area)) continue;
+
+						// TODO make method in serailized data model to accept row, column, weight, area and set in RCN
+						model.SetRcnValueFromOldFormat(positionCode, pageNumber, weight, area);
+					}
+				}
+
+				List<SerializedStormModel> reversedStorms = new List<SerializedStormModel>();
+				for (int i = lines.Length - 1; i >= 0; i--)
+				{
+					string[] lineParts = lines[i].Split(',');
+
+					if (lineParts.Length != 4) continue;
+					if (!lineParts[0].Contains('"')) break;
+
+					SerializedStormModel storm = new SerializedStormModel();
+
+					int frequency = 0;
+					if (int.TryParse(lineParts[0].Trim('"'), out frequency)) storm.Frequency = frequency;
+
+					int precipitation = 0;
+					if (int.TryParse(lineParts[1].Trim('"'), out precipitation)) storm.Precipitation = precipitation;
+
+					int peakFlow = 0;
+					if (int.TryParse(lineParts[2].Trim('"'), out peakFlow)) storm.PeakFlow = peakFlow;
+
+					int runoff = 0;
+					if (int.TryParse(lineParts[3].Trim('"'), out runoff)) storm.Runoff = runoff;
+
+					reversedStorms.Add(storm);
+				}
+
+				model.Storms = new List<SerializedStormModel>();
+				for (int i = reversedStorms.Count - 1; i >= 0; i--)
+				{
+					model.Storms.Add(reversedStorms[i]);
+				}
+
+				return model;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				return null;
+			}
+		}
+
 		private static void ReadRainfallDataRowIntoModel(string[] elements, RainfallDischargeDataViewModel model)
 		{
 			string[] typesThatNeedFormatting = new string[] { "I", "II", "IA", "III", "N Pac" };
@@ -777,4 +895,8 @@ namespace EFH2
 			return line.Split().Where(elem => !string.IsNullOrEmpty(elem)).ToList();
 		}
 	}
+
+	public delegate int? GetSelectedIndexDelegate(string type);
+
+	public delegate RcnDataModel GetEmptyRcnDataModel();
 }

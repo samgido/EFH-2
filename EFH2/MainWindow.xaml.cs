@@ -21,6 +21,7 @@ using Windows.Storage.Streams;
 using WinRT.Interop;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 using EFH2.Models;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -208,24 +209,46 @@ namespace EFH2
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
 
             openPicker.FileTypeFilter.Add(".xml");
+            openPicker.FileTypeFilter.Add(".efm");
             openPicker.SuggestedStartLocation = MainViewModel.defaultFileLocation;
             var file = await openPicker.PickSingleFileAsync();
 
-            if (file != null)
+            if (file != null && file.Path.Split('.').Length >= 2)
             {
                 try
                 {
-					using (StreamReader reader = new StreamReader(file.Path))
-					{
-						reader.BaseStream.Position = 0;
-						SerializedDataModel? model = FileOperations.DeserializeData(reader);
-						if (model != null) MainViewModel.Load(model);
-						// TODO - show error
-					}
+                    string extension = file.Path.Split('.').Last();
+
+                    if (!File.Exists(file.Path)) { Console.WriteLine("File not found"); return; }
+                    SerializedDataModel? model = null;
+                    if (extension == "xml")
+                    {
+                        StreamReader reader = new StreamReader(file.Path);
+                        model = FileOperations.DeserializeData(reader);
+
+                        reader.Close();
+                    }
+                    else if (extension == "efm")
+                    {
+                        string contents = File.ReadAllText(file.Path);
+                        model = FileOperations.DeserializeOldFormat(contents, 
+                            MainViewModel.BasicDataViewModel.GetStateIndexByName, 
+                            MainViewModel.BasicDataViewModel.GetCountyIndexByName, 
+                            MainViewModel.RainfallDischargeDataViewModel.GetRainfallDistributionTypeIndexByName, 
+                            MainViewModel.RainfallDischargeDataViewModel.GetDuhTypeIndexByName, 
+                            MainViewModel.RcnDataViewModel.GetEmptyRcnDataModel);
+                    }
+
+                    if (model != null)
+                    {
+                        MainViewModel.Load(model);
+                        Console.WriteLine("Model serialied\n");
+                    }
+                    else Console.WriteLine("Model not serialized\n");
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
