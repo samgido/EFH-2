@@ -10,21 +10,18 @@ namespace EFH2.Models
 	{
 		#region Basic Data
 		public string Client { get; set; }
-
 		public string Practice { get; set; }
-
 		public string By { get; set; }
-
 		public Nullable<DateTimeOffset> Date { get; set; }
 
 		public uint SelectedStateIndex { get; set; }
 		public uint SelectedCountyIndex { get; set; }
 
-		public double DrainageArea { get; set; }
-		public double RunoffCurveNumber { get; set; }
-		public double WatershedLength { get; set; }
-		public double WatershedSlope { get; set; }
-		public double TimeOfConcentration { get; set; }
+		public double DrainageArea { get; set; } = double.NaN;
+		public double RunoffCurveNumber { get; set; } = double.NaN;
+		public double WatershedLength { get; set; } = double.NaN;
+		public double WatershedSlope { get; set; } = double.NaN;
+		public double TimeOfConcentration { get; set; } = double.NaN;
 		#endregion
 
 		#region Rainfall/Discharge Data
@@ -78,6 +75,9 @@ namespace EFH2.Models
 						group = GroupA;
 						break;
 				}
+
+				if (row == 19) row++;
+				if (row == 66) row++;
 
 				if (group.Entries[row - 1].Weight != weight)
 					return;

@@ -776,6 +776,18 @@ namespace EFH2
 					int? selectedCountyIndex = getStateIndex(lines[4]);
 					if (selectedCountyIndex.HasValue) model.SelectedCountyIndex = (uint)selectedCountyIndex.Value;
 
+					double drainageArea = double.NaN;
+					double runoffCurveNumber = double.NaN;
+					double watershedLength = double.NaN;
+					double watershedSlope = double.NaN;
+					double timeOfConcentration = double.NaN;
+
+					if (double.TryParse(lines[7], out drainageArea)) model.DrainageArea = drainageArea;
+					if (double.TryParse(lines[8], out runoffCurveNumber)) model.RunoffCurveNumber = runoffCurveNumber;
+					if (double.TryParse(lines[9], out watershedLength)) model.WatershedLength = watershedLength;
+					if (double.TryParse(lines[10], out watershedSlope)) model.WatershedSlope = watershedSlope;
+					if (double.TryParse(lines[11], out timeOfConcentration)) model.TimeOfConcentration = timeOfConcentration;
+
 					string[] rainfallDischargeSelections = lines[15].Split(", ");
 					int? selectedRainfallDistributionTypeIndex = getRainfallDistributionIndex(rainfallDischargeSelections[0]);
 					if (selectedRainfallDistributionTypeIndex.HasValue) model.SelectedRainfallDistributionTypeIndex = (uint)selectedRainfallDistributionTypeIndex.Value;
