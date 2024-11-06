@@ -163,7 +163,11 @@ namespace EFH2
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
         {
-            MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
+
+            if (e.AcresSelected)
+            {
+				MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
+            }
             MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = e.WeightedCurveNumber;
 
             MainViewModel.BasicDataViewModel.drainageAreaEntry.InputStatus = InputStatus.Calculated;
