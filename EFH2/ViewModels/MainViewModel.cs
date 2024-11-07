@@ -17,7 +17,7 @@ namespace EFH2
     {
         public static bool WinTr20Ready = true;
 
-        public event EventHandler WinTr20Ran;
+        public event EventHandler<DisplayHydrographsReadyEventArgs> DisplayHydrographReady;
 
         public event EventHandler SyncRcnUnits;
 
@@ -61,23 +61,24 @@ namespace EFH2
         private void CreateWinTr20InputFile(object sender, EventArgs e)
         {
             TryWinTr20();
-        }
+
+            bool ready = false;
+            foreach (StormViewModel storm in RainfallDischargeDataViewModel.Storms)
+			{
+                if (double.IsNaN(storm.Precipitation) || double.IsNaN(storm.Frequency) || double.IsNaN(storm.PeakFlow) || double.IsNaN(storm.Runoff)) continue;
+                else
+                {
+                    ready = true;
+					break;
+                }
+			}
+
+            this.DisplayHydrographReady?.Invoke(this, new DisplayHydrographsReadyEventArgs(ready));
+		}
 
         public async void TryWinTr20()
         {
-            //bool ready = await FileOperations.CreateInpFileAsync(this);
-
-            //// file being null doubles as a message that not all data is ready
-            //if (ready && MainViewModel.WinTr20Ready)
-            //{
-            //    FileOperations.RunWinTr20Async();
-            //    FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
-
-            //    this.WinTr20Ran?.Invoke(this, EventArgs.Empty);
-            //}
-
-            
-			string inputContents = FileOperations.CreateInputFileContents(this);
+            string inputContents = FileOperations.CreateInputFileContents(this);
 			FileOperations.WriteToInputFile(inputContents);
 
             if (inputContents != null && MainViewModel.WinTr20Ready)

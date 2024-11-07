@@ -57,10 +57,10 @@ namespace EFH2
 
             this.MainViewModel = (App.Current as App)?.m_model;
 
-            this.MainViewModel.WinTr20Ran += (s, e) =>
+            this.MainViewModel.DisplayHydrographReady += (s, e) =>
             {
-                ExportHydrographsButton.IsEnabled = true;
-                RainfallDischargeDataControl.PlotSelectedHydrographsButton.IsEnabled = true;
+                ExportHydrographsButton.IsEnabled = e.IsReady;
+                RainfallDischargeDataControl.PlotSelectedHydrographsButton.IsEnabled = e.IsReady;
             };
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
