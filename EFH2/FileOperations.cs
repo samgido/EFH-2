@@ -339,7 +339,7 @@ namespace EFH2
 
 				await File.WriteAllTextAsync(InputFilePath, input.ToString());
 
-				Console.WriteLine("Writing to .inp finished");
+				Debug.WriteLine("Writing to .inp finished");
 				return true;
 			}
 			catch (Exception ex)
@@ -440,34 +440,38 @@ namespace EFH2
 
 			if (!File.Exists(winTr20Path))
 			{
-				Console.WriteLine("WinTr20 not found at: " + winTr20Path);
+				Debug.WriteLine("WinTr20 not found at: " + winTr20Path);
 				return;
 			}
-			else { Console.WriteLine("Found WinTr20 executable file"); }
+			else { Debug.WriteLine("Found WinTr20 executable file"); }
 
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			//string inputFilePath = Path.Combine(appDataPath, "EFH2", "tr20.inp");
 
 			if (!File.Exists(InputFilePath))
 			{
-				Console.WriteLine("Input file not found at: " + InputFilePath);
+				Debug.WriteLine("Input file not found at: " + InputFilePath);
 				return;
 			}
-			else { Console.WriteLine("Found input file"); }
+			else 
+			{ 
+				Debug.WriteLine("Found input file"); 
+			}
 
 			startInfo.FileName = winTr20Path;
 			startInfo.Arguments = InputFilePath;
+			startInfo.CreateNoWindow = true;
 
 			process.StartInfo = startInfo;
 
 			if (process.Start())
 			{
-				Console.WriteLine("Process started");
+				Debug.WriteLine("Process started");
 			}
 
 			process.WaitForExit();
 
-			Console.WriteLine("Process finished");
+			Debug.WriteLine("Process finished");
 		}
 
 		/// <summary>
@@ -582,7 +586,7 @@ namespace EFH2
 		// TODO - should be in rainfall discharge model, SRP
 		public static void ParseOutput(string output, IEnumerable<StormViewModel> storms)
 		{
-			Console.WriteLine("Parsing started");
+			Debug.WriteLine("Parsing started");
 
 			foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
@@ -619,7 +623,7 @@ namespace EFH2
 				}
 			}
 
-			Console.WriteLine("Finished parsing");
+			Debug.WriteLine("Finished parsing");
 		}
 
 		public static List<HydrographLineModel> GetHydrographData(IEnumerable<StormViewModel> storms)
@@ -872,7 +876,7 @@ namespace EFH2
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				Debug.WriteLine(ex.Message);
 				return null;
 			}
 		}

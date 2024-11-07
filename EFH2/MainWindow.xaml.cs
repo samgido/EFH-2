@@ -223,7 +223,7 @@ namespace EFH2
                 {
                     string extension = file.Path.Split('.').Last();
 
-                    if (!File.Exists(file.Path)) { Console.WriteLine("File not found"); return; }
+                    if (!File.Exists(file.Path)) { Debug.WriteLine("File not found"); return; }
                     SerializedDataModel? model = null;
                     if (extension == "xml")
                     {
@@ -246,13 +246,13 @@ namespace EFH2
                     if (model != null)
                     {
                         MainViewModel.Load(model);
-                        Console.WriteLine("Model serialied\n");
+                        Debug.WriteLine("Model serialied\n");
                     }
-                    else Console.WriteLine("Model not serialized\n");
+                    else Debug.WriteLine("Model not serialized\n");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Message);
                 }
             }
         }
