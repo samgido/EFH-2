@@ -321,6 +321,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B3AF5913253F4BA891156601DD81A0C6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B6CB07A2BD3F484693A78BA57E649A1C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -394,12 +400,6 @@
         "Entry"
         {
         "MsmKey" = "8:_DD3970003E454DFD98FCFD8DE75BC854"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E1F5B55E102B466CAB1431BB08B7E385"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -521,7 +521,7 @@
         "InstallerBootstrapper" = "3:2"
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
-            "Enabled" = "11:FALSE"
+            "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
@@ -535,7 +535,7 @@
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.6.0.x64"
                     {
-                    "Name" = "8:.NET Desktop Runtime 6.0.32 (x64)"
+                    "Name" = "8:.NET Desktop Runtime 6.0.35 (x64)"
                     "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.6.0.x64"
                     }
                 }
@@ -2085,28 +2085,6 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_3453E13FC40D4CB4BA628C2B408595F8"
-            {
-            "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:ProgramMenuFolder"
-                "Folders"
-                {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_6F0193B630994E24B117BCC4FE1EE3E8"
-                    {
-                    "Name" = "8:Engineering Applications"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_60F80ABB3C2746BCA294186DE7F3F0DF"
-                        "Folders"
-                        {
-                        }
-                    }
-                }
-            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_786DE839EF4E4245BFA54EE21E33D239"
             {
             "Name" = "8:#1916"
@@ -2116,6 +2094,39 @@
             "Property" = "8:DesktopFolder"
                 "Folders"
                 {
+                }
+            }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_7E73A1817C73462DA99C296AC8A5C61D"
+            {
+            "Name" = "8:#1919"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:ProgramMenuFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_5C21E650230446FAA71177186922E1B8"
+                    {
+                    "Name" = "8:Engineering Applications"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_CAFCBD37EC244D6AA3700B52493FDDB3"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_DB5C622C7F9A466ABC4D006D33B02621"
+                            {
+                            "Name" = "8:EFH-2-dev"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_133A890350704AC88CCFEDF805236EAF"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_933946DAB842432BADBB79543FA08B68"
@@ -2181,7 +2192,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EFH-2"
         "ProductCode" = "8:{DCCC93F3-B7A4-4A48-9DA9-AE241F8D70C1}"
-        "PackageCode" = "8:{4A41EE25-64F7-4A10-BFEE-B2D2F7735E5C}"
+        "PackageCode" = "8:{E87EE66A-8814-436E-9AC5-D5CC1C5C46E0}"
         "UpgradeCode" = "8:{7F07579E-1AD5-48F2-A702-63523994BEB2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2301,7 +2312,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_18E236312CC94DD2A4B5EC4EE25A840C"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D50AE71BCDFF4D6D82560D8B102314A0"
             {
             "Name" = "8:EFH-2-dev"
             "Arguments" = "8:"
@@ -2309,10 +2320,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_E1F5B55E102B466CAB1431BB08B7E385"
-            "Folder" = "8:_6F0193B630994E24B117BCC4FE1EE3E8"
+            "Target" = "8:_B3AF5913253F4BA891156601DD81A0C6"
+            "Folder" = "8:_DB5C622C7F9A466ABC4D006D33B02621"
             "WorkingFolder" = "8:_933946DAB842432BADBB79543FA08B68"
-            "Icon" = "8:_96B36B377D7A47E5AACB06D58B3240DB"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
@@ -2714,7 +2725,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E1F5B55E102B466CAB1431BB08B7E385"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B3AF5913253F4BA891156601DD81A0C6"
             {
             "SourcePath" = "8:..\\EFH2\\obj\\x64\\Release\\net6.0-windows10.0.19041.0\\apphost.exe"
             "TargetName" = "8:"
@@ -2734,7 +2745,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|x64"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{A4BA0F71-ED8E-419D-B2FC-B353CFAFBB7C}"
             "ShowKeyOutput" = "11:TRUE"
