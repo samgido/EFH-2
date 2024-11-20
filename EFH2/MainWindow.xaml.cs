@@ -1,5 +1,4 @@
 // Author: Samuel Gido
-
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -42,8 +41,6 @@ namespace EFH2
 		public MainViewModel MainViewModel { get; set; }
 
 		private TextBox _previousFocusedTextBox;
-
-
         public TextBox? PreviousFocusedTextBox { get => _previousFocusedTextBox; set => _previousFocusedTextBox = value; }
 
         public MainWindow()
@@ -403,13 +400,7 @@ namespace EFH2
 
 		private async void HelpContentsClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string helpFilePath = Path.Combine(FileOperations.ProgramFilesDirectory, FileOperations.companyName, "EFH2", "EFH2.chm");
 
-                Process.Start(new ProcessStartInfo(helpFilePath) { UseShellExecute = true });
-            }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         private void UserManualClick(object sender, RoutedEventArgs e)
