@@ -1,0 +1,12 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package Name="EFH2" Manufacturer="USDA-dev" Version="1.0.0.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+	  <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER">
+	  </ui:WixUI>
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="maincomp" />
+    </Feature>
+  </Package>
+</Wix>

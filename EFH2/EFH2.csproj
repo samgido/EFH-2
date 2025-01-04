@@ -10,8 +10,10 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
 	  <XamlCodeGenerationControlFlags>DoNotGenerateOtherProviders</XamlCodeGenerationControlFlags>
+
 	  <WindowsPackageType>None</WindowsPackageType>
 	  <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+
 	  <TrimMode>partial</TrimMode>
 	  <Configurations>Debug;Release</Configurations>
 	  <ApplicationIcon>Assets\EFH2.ico</ApplicationIcon>
@@ -50,6 +52,14 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>	
 		</None>
 	</ItemGroup>
+
+	<Target Name="RemoveFoldersWithMuiFiles" AfterTargets="Build">
+		<ItemGroup>
+			<RemovingFiles Include="$(OutDir)*\*.mui" Exclude="$(OutDir)en-us\*.mui" />
+			<RemovingFolders Include="@(RemovingFiles->'%(RootDir)%(Directory)')" />
+		</ItemGroup>
+		<RemoveDir Directories="@(RemovingFolders)" />
+	</Target>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.1" />

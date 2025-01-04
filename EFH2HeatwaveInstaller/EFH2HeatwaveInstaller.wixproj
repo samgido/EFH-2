@@ -1,0 +1,15 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.2">
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EFH2\EFH2.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <HarvestDirectory Include="$(SolutionDir)EFH2\bin\$(Platform)\$(Configuration)\net6.0-windows10.0.19041.0\win10-x64">
+      <ComponentGroupName>maincomp</ComponentGroupName>
+      <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+    </HarvestDirectory>
+  </ItemGroup>
+</Project>
