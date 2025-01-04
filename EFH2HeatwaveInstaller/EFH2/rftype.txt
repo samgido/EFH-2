@@ -1,0 +1,70 @@
+"1_ND", "Type 1_ND.tbl"
+"2_ND", "Type 2_ND.tbl"
+"3_ND", "Type 3_ND.tbl"
+"4_ND", "Type 4_ND.tbl"
+"AM SAMOA", "Type Am_Samoa.tbl"
+"CA-1", "Type CA-1.tbl"
+"CA-2", "Type CA-2.tbl"
+"CA-3", "Type CA-3.tbl"
+"CA-4", "Type CA-4.tbl"
+"CA-5", "Type CA-5.tbl"
+"CA-6", "Type CA-6.tbl"
+"HI-1", "Type HI-1.tbl"
+"HI-2", "Type HI-2.tbl"
+"HI-3", "Type HI-3.tbl"
+"HI-4", "Type HI-4.tbl"
+"HI-5", "Type HI-5.tbl"
+"HI-6", "Type HI-6.tbl"
+"MSE1", "Type MSE1.tbl"
+"MSE2", "Type MSE2.tbl"
+"MSE3", "Type MSE3.tbl"
+"MSE4", "Type MSE4.tbl"
+"MSE5", "Type MSE5.tbl"
+"MSE6", "Type MSE6.tbl"
+"N10_A", "Type N10_A.tbl"
+"N10_B", "Type N10_B.tbl"
+"N10_C", "Type N10_C.tbl"
+"N10_D", "Type N10_D.tbl"
+"NOAA_A", "Type NOAA_A.tbl"
+"NOAA_B", "Type NOAA_B.tbl"
+"NOAA_C", "Type NOAA_C.tbl"
+"NOAA_D", "Type NOAA_D.tbl"
+"NV-N", "Type NV_N.tbl"
+"NV-S", "Type NV_S.tbl"
+"NV-W", "Type NV_W.tbl"
+"PR_VI_1", "Type PR_VI_1.tbl"
+"PR_VI_2", "Type PR_VI_2.tbl"
+"PR_VI_3", "Type PR_VI_3.tbl"
+"PR_VI_4", "Type PR_VI_4.tbl"
+"SW_1", "Type SW_1.tbl"
+"SW_2", "Type SW_2.tbl"
+"SW_3", "Type SW_3.tbl"
+"SW_4", "Type SW_4.tbl"
+"SW_5", "Type SW_5.tbl"
+"TX_A", "Type TX_A.tbl"
+"TX_B", "Type TX_B.tbl"
+"TX_C", "Type TX_C.tbl"
+"TX_D", "Type TX_D.tbl"
+"Type I", "Type I.tbl"
+"Type IA", "Type IA.tbl"
+"Type II", "Type II.tbl"
+"Type III", "Type III.tbl"
+"Type N PAC", "Type North_Pac.tbl"
+
+
+/* DO NOT REMOVE THE BLANK LINE ABOVE THIS LINE */
+
+This file contains a list of rainfall types that may be selected by the user. 
+The corresponding .tbl files should exist in the common application data folder:
+
+C:\ProgramData\USDA\Shared Engineering Data\EFH2\RainfallDistributions\
+
+Many distributions are built into the WinTR-20 simulation engine and do not
+need a separate file. For additonal distributions, they should be added as
+a pair consisting of the label to be displayed followed by the filename
+associated in the RainfallDistributions folder.
+
+Users can add or remove rainfall distribution files as needed. 
+The list above should be edited to reflect the change.
+
+Note that a blank line is used to delimit the end of the list above.

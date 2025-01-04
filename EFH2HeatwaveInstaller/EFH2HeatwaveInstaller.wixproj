@@ -1,4 +1,9 @@
 ﻿<Project Sdk="WixToolset.Sdk/5.0.2">
+	<PropertyGroup>
+        <EnableProjectHarvesting>true</EnableProjectHarvesting>		
+        <HarvestProjectsSupressUniqueIds>true</HarvestProjectsSupressUniqueIds>
+	</PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
     <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
@@ -6,10 +11,19 @@
   <ItemGroup>
     <ProjectReference Include="..\EFH2\EFH2.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <HarvestDirectory Include="$(SolutionDir)EFH2\bin\$(Platform)\$(Configuration)\net6.0-windows10.0.19041.0\win10-x64">
+    <HarvestDirectory Include="$(SolutionDir)EFH2\bin\$(Platform)\$(Configuration)\net6.0-windows10.0.19041.0\win10-x64\**">
+      <SuppressRootDirectory>true</SuppressRootDirectory>
       <ComponentGroupName>maincomp</ComponentGroupName>
       <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+    </HarvestDirectory>
+  </ItemGroup>
+
+  <ItemGroup>
+    <HarvestDirectory Include="EFH2">
+      <ComponentGroupName>programdatacomp</ComponentGroupName>
+		<DirectoryRefId>ProgramDataFolder</DirectoryRefId>
     </HarvestDirectory>
   </ItemGroup>
 </Project>

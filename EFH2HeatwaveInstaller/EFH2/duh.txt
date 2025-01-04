@@ -1,0 +1,31 @@
+<standard>
+delmarva
+PRF_100
+PRF_150
+PRF_200
+PRF_250
+PRF_300
+PRF_325
+PRF_350
+PRF_400
+PRF_450
+PRF_500
+PRF_550
+PRF_600
+
+/* DO NOT REMOVE THE BLANK LINE ABOVE THIS LINE */
+
+This file contains a list of dimensionless unit hydrographs that may be
+selected by the user. The corresponding .duh files should exist in the
+common application data folder:
+
+C:\ProgramData\USDA\Shared Engineering Data\EFH2\DimensionlessUnitHydrographs\
+
+The default is to use the standard distribution when left blank or <standard>
+is selected. All others correspond to their respective .duh file; e.g.,
+delmarva is stored in delmarva.duh, etc.
+
+Users can add or remove dimensionless user hydrograph files as needed. 
+The list above should be edited to reflect the change.
+
+Note that a blank line is used to delimit the end of the list above.

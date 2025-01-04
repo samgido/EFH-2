@@ -355,11 +355,8 @@ namespace EFH2
 		{
 			try
 			{
-				string executablePath = Path.Combine(programFilesDirectory, companyName, "EFH-2", "WinTR20_V32.exe");
-
-				Uri testUri = new Uri("ms-appx:///Assets/Programs/WinTR20_V32.exe");
-				//string testPath = testUri.AbsolutePath;
-				string testPath = @"Assets/Programs/WinTR20_V32.exe";
+				string executablePath = Path.Combine(AppContext.BaseDirectory, "Assets", "Programs", "WinTR20_V32.exe");
+				Console.WriteLine(executablePath);
 
 				ProcessStartInfo psi = new ProcessStartInfo()
 				{
