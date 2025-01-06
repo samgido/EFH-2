@@ -15,5 +15,22 @@
 	  <Feature Id="ProgramData" AllowAbsent="no" Description="Data used by EFH-2">
 		  <ComponentGroupRef Id="programdatacomp"/>
 	  </Feature>
+
+	  <Feature Id="Shortcut">
+		  <Component Id="ShortcutComponent" Guid="EFF3A4CF-F09A-4D8F-A33A-0506ACDB76B6">
+			  <Shortcut Id="ApplicationStartMenuShortcut"
+						Directory="EngineeringApplicationsFolder"
+						Advertise="no"
+						Name="EFH-2-dev"
+						Description="EFH-2 application"
+						Target="[INSTALLFOLDER]EFH2.exe"
+						WorkingDirectory="INSTALLFOLDER">
+			  </Shortcut>
+
+			  <RemoveFolder On="uninstall" Id="EngineeringApplicationsFolder" Directory="EngineeringApplicationsFolder"/>
+
+			  <RegistryValue Root="HKCU" Key="Software\USDA-dev\EFH-2-dev" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+		  </Component>
+	  </Feature>
   </Package>
 </Wix>
