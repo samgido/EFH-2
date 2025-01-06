@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <HarvestDirectory Include="$(SolutionDir)EFH2\bin\$(Platform)\$(Configuration)\net6.0-windows10.0.19041.0\win10-x64\**">
+    <HarvestDirectory Include="..\EFH2\bin\$(Platform)\$(Configuration)\win10-x64\">
       <SuppressRootDirectory>true</SuppressRootDirectory>
       <ComponentGroupName>maincomp</ComponentGroupName>
       <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
