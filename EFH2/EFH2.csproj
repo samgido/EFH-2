@@ -20,7 +20,6 @@
 	  <ApplicationIcon>Assets\EFH2.ico</ApplicationIcon>
 	  <PackageIcon>EFH2.png</PackageIcon>
 	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
-	  <OutputType>WinExe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Programs\WinTR20_V32.exe" />
@@ -38,6 +37,7 @@
     <None Remove="Controls\RcnCategoryControl.xaml" />
     <None Remove="Controls\RCNDataControl.xaml" />
     <None Remove="Controls\RcnRowsControl.xaml" />
+    <None Remove="HelpContents.xaml" />
     <None Remove="Pages\HsgPage.xaml" />
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
@@ -67,6 +67,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="H.OxyPlot.WinUI" Version="0.9.30" />
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.11.40262" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
@@ -87,6 +88,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Page Update="HelpContents.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\InconsistentDataDialogControl.xaml">

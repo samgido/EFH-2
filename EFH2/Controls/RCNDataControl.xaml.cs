@@ -61,7 +61,7 @@ namespace EFH2
         {
             if (DataContext is RcnDataViewModel model)
             {
-                this.AcceptRcnValues?.Invoke(this, new AcceptRcnValuesEventArgs(model.AccumulatedArea, model.WeightedCurveNumber));
+                this.AcceptRcnValues?.Invoke(this, new AcceptRcnValuesEventArgs(model.AccumulatedArea, model.WeightedCurveNumber, AcresButton.IsChecked.GetValueOrDefault()));
             }
         }
 

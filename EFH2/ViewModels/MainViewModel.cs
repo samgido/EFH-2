@@ -17,7 +17,7 @@ namespace EFH2
     {
         public static bool WinTr20Ready = true;
 
-        public event EventHandler WinTr20Ran;
+        public event EventHandler<DisplayHydrographsReadyEventArgs> DisplayHydrographReady;
 
         public event EventHandler SyncRcnUnits;
 
@@ -61,19 +61,32 @@ namespace EFH2
         private void CreateWinTr20InputFile(object sender, EventArgs e)
         {
             TryWinTr20();
-        }
 
-        public void TryWinTr20()
+            bool ready = false;
+            foreach (StormViewModel storm in RainfallDischargeDataViewModel.Storms)
+			{
+                if (double.IsNaN(storm.Precipitation) || double.IsNaN(storm.Frequency) || double.IsNaN(storm.PeakFlow) || double.IsNaN(storm.Runoff)) continue;
+                else
+                {
+                    ready = true;
+					break;
+                }
+			}
+
+            this.DisplayHydrographReady?.Invoke(this, new DisplayHydrographsReadyEventArgs(ready));
+		}
+
+        public async void TryWinTr20()
         {
-            string fileName = FileOperations.CreateInpFile(this);
+            string inputContents = FileOperations.CreateInputFileContents(this);
+			FileOperations.WriteToInputFile(inputContents);
 
-            // file being null doubles as a message that not all data is ready
-            if (fileName != null && MainViewModel.WinTr20Ready)
+            if (inputContents != null && MainViewModel.WinTr20Ready)
             {
-                FileOperations.RunWinTr20(fileName);
-                FileOperations.ParseWinTR20Output(RainfallDischargeDataViewModel.Storms);
+				FileOperations.RunWinTr20Async();
 
-                this.WinTr20Ran?.Invoke(this, EventArgs.Empty);
+				string outputContents = FileOperations.ReadOutputFile();
+                FileOperations.ParseOutput(outputContents, RainfallDischargeDataViewModel.Storms);
             }
         }
 
@@ -81,27 +94,10 @@ namespace EFH2
 		{
             FileOperations.SearchForDataAfterCountyChanged(this, BasicDataViewModel.selectedState, BasicDataViewModel.selectedCounty);
             foreach (StormViewModel storm in RainfallDischargeDataViewModel.Storms) storm.DisplayHydrograph = false;
-            RainfallDischargeDataViewModel.Storms[0].DisplayHydrograph = true;
-            RainfallDischargeDataViewModel.Storms[3].DisplayHydrograph = true;
-            RainfallDischargeDataViewModel.Storms[5].DisplayHydrograph = true;
         }
 
 		public void Load(SerializedDataModel newData)
         {
-            //BasicDataViewModel.Load(newData.BasicDataViewModel);
-            //RcnDataViewModel.LoadDataModel(newData.RcnDataModel);
-
-            //// When data is demarshalled, it reads 9 null storms, then the actual data so remove the null storms here
-            //// As to why there's a +4 on the upper bound in the for loop, I have no clue
-            //if (newData.RainfallDischargeDataViewModel.Storms.Count > 10)
-            //{
-            //    for (int i = 0; i < MainViewModel.NumberOfStorms + 4; i++)
-            //    {
-            //        newData.RainfallDischargeDataViewModel.Storms.RemoveAt(i);
-            //    }
-            //}
-            //RainfallDischargeDataViewModel.SetSilent(newData.RainfallDischargeDataViewModel);
-
             BasicDataViewModel.Client = newData.Client;
             BasicDataViewModel.Practice = newData.Practice;
             BasicDataViewModel.By = newData.By;

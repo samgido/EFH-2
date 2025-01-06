@@ -195,9 +195,6 @@ namespace EFH2
             SelectedRainfallDistributionTypeIndex = 0;
             SelectedDuhTypeIndex = 0;
 
-            //selectedRainfallDistributionType = MainViewModel.ChooseMessage;
-            //selectedDuhType = MainViewModel.ChooseMessage;
-
             foreach (StormViewModel storm in Storms)
             {
                 storm.Default();
@@ -252,6 +249,38 @@ namespace EFH2
             this.OnPropertyChanged(nameof(SelectedRainfallDistributionTypeIndex));
 
             this.ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public int? GetRainfallDistributionTypeIndexByName(string type)
+        {
+            for (int i = 0; i < _rainfallDistributionTypes.Count; i++)
+            {
+                ComboBoxItem item = _rainfallDistributionTypes[i];
+				string title = item.Content as string;
+
+                if (title == type)
+				{
+                    return i;
+				}
+			}
+
+            return null;
+        }
+
+        public int? GetDuhTypeIndexByName(string type)
+        {
+            for (int i = 0; i < _duhTypes.Count; i++)
+            {
+                ComboBoxItem item = _duhTypes[i];
+				string title = item.Content as string;
+
+                if (title == type)
+				{
+                    return i;
+				}
+			}
+
+            return null;
         }
     }
 }

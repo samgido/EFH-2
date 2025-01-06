@@ -1,5 +1,4 @@
 // Author: Samuel Gido
-
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -21,6 +20,7 @@ using Windows.Storage.Streams;
 using WinRT.Interop;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 using EFH2.Models;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -41,8 +41,6 @@ namespace EFH2
 		public MainViewModel MainViewModel { get; set; }
 
 		private TextBox _previousFocusedTextBox;
-
-
         public TextBox? PreviousFocusedTextBox { get => _previousFocusedTextBox; set => _previousFocusedTextBox = value; }
 
         public MainWindow()
@@ -56,10 +54,10 @@ namespace EFH2
 
             this.MainViewModel = (App.Current as App)?.m_model;
 
-            this.MainViewModel.WinTr20Ran += (s, e) =>
+            this.MainViewModel.DisplayHydrographReady += (s, e) =>
             {
-                ExportHydrographsButton.IsEnabled = true;
-                RainfallDischargeDataControl.PlotSelectedHydrographsButton.IsEnabled = true;
+                ExportHydrographsButton.IsEnabled = e.IsReady;
+                RainfallDischargeDataControl.PlotSelectedHydrographsButton.IsEnabled = e.IsReady;
             };
 
             BasicDataControl.DataContext = MainViewModel.BasicDataViewModel;
@@ -162,7 +160,11 @@ namespace EFH2
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
         {
-            MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
+
+            if (e.AcresSelected)
+            {
+				MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
+            }
             MainViewModel.BasicDataViewModel.runoffCurveNumberEntry.Value = e.WeightedCurveNumber;
 
             MainViewModel.BasicDataViewModel.drainageAreaEntry.InputStatus = InputStatus.Calculated;
@@ -208,20 +210,42 @@ namespace EFH2
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
 
             openPicker.FileTypeFilter.Add(".xml");
+            openPicker.FileTypeFilter.Add(".efm");
             openPicker.SuggestedStartLocation = MainViewModel.defaultFileLocation;
             var file = await openPicker.PickSingleFileAsync();
 
-            if (file != null)
+            if (file != null && file.Path.Split('.').Length >= 2)
             {
                 try
                 {
-					using (StreamReader reader = new StreamReader(file.Path))
-					{
-						reader.BaseStream.Position = 0;
-						SerializedDataModel? model = FileOperations.DeserializeData(reader);
-						if (model != null) MainViewModel.Load(model);
-						// TODO - show error
-					}
+                    string extension = file.Path.Split('.').Last();
+
+                    if (!File.Exists(file.Path)) { Debug.WriteLine("File not found"); return; }
+                    SerializedDataModel? model = null;
+                    if (extension == "xml")
+                    {
+                        StreamReader reader = new StreamReader(file.Path);
+                        model = FileOperations.DeserializeData(reader);
+
+                        reader.Close();
+                    }
+                    else if (extension == "efm")
+                    {
+                        string contents = File.ReadAllText(file.Path);
+                        model = FileOperations.DeserializeOldFormat(contents, 
+                            MainViewModel.BasicDataViewModel.GetStateIndexByName, 
+                            MainViewModel.BasicDataViewModel.GetCountyIndexByName, 
+                            MainViewModel.RainfallDischargeDataViewModel.GetRainfallDistributionTypeIndexByName, 
+                            MainViewModel.RainfallDischargeDataViewModel.GetDuhTypeIndexByName, 
+                            MainViewModel.RcnDataViewModel.GetEmptyRcnDataModel);
+                    }
+
+                    if (model != null)
+                    {
+                        MainViewModel.Load(model);
+                        Debug.WriteLine("Model serialied\n");
+                    }
+                    else Debug.WriteLine("Model not serialized\n");
                 }
                 catch (Exception ex)
                 {
@@ -376,18 +400,12 @@ namespace EFH2
 
 		private async void HelpContentsClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string helpFilePath = Path.Combine(FileOperations.programFilesDirectory, FileOperations.companyName, "EFH2", "EFH2.chm");
 
-                Process.Start(new ProcessStartInfo(helpFilePath) { UseShellExecute = true });
-            }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 
         private void UserManualClick(object sender, RoutedEventArgs e)
 		{
-            string pdfPath = Path.Combine(FileOperations.programFilesDirectory, FileOperations.companyName, "EFH2", "EFH-2 Users Manual.pdf");
+            string pdfPath = Path.Combine(FileOperations.ProgramFilesDirectory, FileOperations.companyName, "EFH2", "EFH-2 Users Manual.pdf");
 
             Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
 		}

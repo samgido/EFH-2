@@ -62,6 +62,7 @@ namespace EFH2
                 }
                 else
                 {
+                    UseWorksheetButton.IsChecked = true;
                     Title.Text = "Convert Acres to Percent";
                     Prompt.Text = "How would you like to convert the values in the worksheet from acres to percent?";
 

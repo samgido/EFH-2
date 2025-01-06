@@ -58,7 +58,7 @@ namespace EFH2
             Used = true;
         }
 
-        public RcnDataModel ToRcnDataModel()
+        public RcnDataModel GetEmptyRcnDataModel()
         {
             RcnDataModel model = new RcnDataModel();
 
@@ -68,25 +68,25 @@ namespace EFH2
                 {
 					model.GroupA.Entries.Add(new RcnEntryModel()
 					{
-						Area = row.Entries[0].Area,
+						Area = double.NaN,
 						Weight = row.Entries[0].Weight,
 					});
 
 					model.GroupB.Entries.Add(new RcnEntryModel()
 					{
-						Area = row.Entries[1].Area,
+						Area = double.NaN,
 						Weight = row.Entries[1].Weight,
 					});
 
 					model.GroupC.Entries.Add(new RcnEntryModel()
 					{
-						Area = row.Entries[2].Area,
+						Area = double.NaN,
 						Weight = row.Entries[2].Weight,
 					});
 
 					model.GroupD.Entries.Add(new RcnEntryModel()
 					{
-						Area = row.Entries[3].Area,
+						Area = double.NaN,
 						Weight = row.Entries[3].Weight,
 					});
                 }

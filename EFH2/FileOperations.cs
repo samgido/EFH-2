@@ -11,16 +11,19 @@ using System.Text;
 using System.Xml.Serialization;
 using WinRT;
 using EFH2.Models;
+using System.Threading.Tasks;
 
 namespace EFH2
 {
 	public static class FileOperations
     {
-		public static string programDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+		private static string ProgramDataDirectory => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+		private static string AppDataDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		public static string ProgramFilesDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
-		public static string appDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
-		public static string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+		private static string WinTr20Path => Path.Combine(ProgramFilesDirectory, "USDA-dev", "EFH-2", "WinTR20_V32.exe");
+		private static string InputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.inp");
+		private static string OutputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.out");
 
 		public static string companyName = "USDA-dev";
 
@@ -56,7 +59,7 @@ namespace EFH2
 		{
 			try
 			{
-				string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
+				string rainfallDataPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
 				using (TextFieldParser parser = new TextFieldParser(rainfallDataPath))
 				{
 					parser.TextFieldType = FieldType.Delimited;
@@ -94,7 +97,7 @@ namespace EFH2
 		{
 			try
 			{
-				string rftypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "rftype.txt");
+				string rftypeDataPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "rftype.txt");
 				using (StreamReader reader = new StreamReader(rftypeDataPath))
 				{
 					ComboBoxItem c = new();
@@ -106,6 +109,8 @@ namespace EFH2
 
 					while (!reader.EndOfStream)
 					{
+						if (line == "") break;
+
 						string[] lineParts = line.Split(',');
 						string type = lineParts[0];
 
@@ -124,7 +129,7 @@ namespace EFH2
 					model.SelectedRainfallDistributionTypeIndex = 0;
 				}
 
-				string duhtypeDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "duh.txt");
+				string duhtypeDataPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "duh.txt");
 				using (StreamReader reader = new StreamReader(duhtypeDataPath))
 				{
 					model.DuhTypes.Clear();
@@ -152,7 +157,7 @@ namespace EFH2
 		{
 			try
 			{
-				string coverPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "COVER.txt");
+				string coverPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "COVER.txt");
 				using (StreamReader reader = new StreamReader(coverPath))
 				{
 					List<RcnCategory> topCategories = new List<RcnCategory>();
@@ -227,7 +232,7 @@ namespace EFH2
 					}
 				}
 
-				string soilsPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "SOILS.hg");
+				string soilsPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "SOILS.hg");
 				using (StreamReader reader = new StreamReader(soilsPath))
 				{
 					while (!reader.EndOfStream)
@@ -255,129 +260,218 @@ namespace EFH2
 			catch (Exception ex) { Debug.WriteLine(ex.Message); }
 		}
 
-        public static string? CreateInpFile(MainViewModel model)
+        public static async Task<bool> CreateInpFileAsync(MainViewModel model)
 		{
 			try
 			{
-				if (!IsWinTR20Ready(model)) return null;
+				if (!IsWinTR20Ready(model)) return false;
 
-				Console.WriteLine("Wintr20 ran");
+				StringBuilder input = new StringBuilder();
+				string rainfallDistributionTable = "";
+				string rainfallDistributionType = "";
 
-				string programX86Path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+				string rainfallDistributionTypeFilePath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions", "Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
 
-				string inputFilePath = appDataPath + "\\EFH2\\tr20.inp";
-
-				using (StreamWriter writer = new StreamWriter(inputFilePath, append: false))
+				if (File.Exists(rainfallDistributionTypeFilePath))
 				{
-					string rainfallDistributionTable = "";
-					string rainfallDistributionType = "";
+					rainfallDistributionTable = File.ReadAllText(rainfallDistributionTypeFilePath);
 
-					string rainfallDistributionTypeFilePath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions", "Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
-
-					if (File.Exists(rainfallDistributionTypeFilePath))
-					{
-						rainfallDistributionTable = File.ReadAllText(rainfallDistributionTypeFilePath);
-
-						string[] parts = rainfallDistributionTable.Trim().Split();
-						rainfallDistributionType = parts[0];
-					}
-
-					writer.WriteLine(String.Format("WinTR-20: {0,-30}{1,-10}{2,-10}{3,-10}{4}", "Version 3.30", 0, 0, 0.01, 0));
-					writer.WriteLine("Single watershed using lag method for Tc");
-					writer.WriteLine("");
-					writer.WriteLine("SUB-AREA:");
-					writer.WriteLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}{4,-10}", "Area", "Outlet",
-						(model.BasicDataViewModel.DrainageArea / 640).ToString("0.00000"),
-						(model.BasicDataViewModel.RunoffCurveNumber + "."),
-						model.BasicDataViewModel.TimeOfConcentration.ToString("0.00")));
-
-					writer.WriteLine("");
-					writer.WriteLine("");
-					writer.WriteLine("");
-					writer.WriteLine("STORM ANALYSIS:");
-					foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
-					{
-						if (!double.IsNaN(storm.Frequency) && !double.IsNaN(storm.Precipitation))
-						{
-							writer.WriteLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
-								storm.Frequency + "-Yr",
-								storm.Precipitation.ToString("0.0"),
-								rainfallDistributionType,
-								2));
-						}
-					}
-					writer.WriteLine("");
-					writer.WriteLine("RAINFALL DISTRIBUTION:");
-
-					if (rainfallDistributionTable != string.Empty)
-					{
-						writer.WriteLine(rainfallDistributionTable);
-					}
-
-					if (model.RainfallDischargeDataViewModel.SelectedDuhTypeIndex != 0)
-					{
-						writer.WriteLine("DIMENSIONLESS UNIT HYDROGRAPH:");
-
-						string duhTypeFilePath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
-						if (File.Exists(duhTypeFilePath))
-						{
-							using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
-							{
-								reader.ReadLine();
-
-								writer.Write(reader.ReadToEnd());
-							}
-						}
-					}
-					else
-					{
-						for (int i = 0; i < 11; i++) writer.WriteLine();
-					}
-
-					writer.WriteLine("GLOBAL OUTPUT:");
-					writer.WriteLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
-
-					Console.WriteLine("Writing to .inp finished");
+					string[] parts = rainfallDistributionTable.Trim().Split();
+					rainfallDistributionType = parts[0];
 				}
 
-				return inputFilePath;
+				input.AppendLine(String.Format("WinTR-20: {0,-30}{1,-10}{2,-10}{3,-10}{4}", "Version 3.30", 0, 0, 0.01, 0));
+				input.AppendLine("Single watershed using lag method for Tc");
+				input.AppendLine("");
+				input.AppendLine("SUB-AREA:");
+				input.AppendLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}{4,-10}", "Area", "Outlet",
+					(model.BasicDataViewModel.DrainageArea / 640).ToString("0.00000"),
+					(model.BasicDataViewModel.RunoffCurveNumber + "."),
+					model.BasicDataViewModel.TimeOfConcentration.ToString("0.00")));
+
+				input.AppendLine("");
+				input.AppendLine("");
+				input.AppendLine("");
+				input.AppendLine("STORM ANALYSIS:");
+				foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+				{
+					if (!double.IsNaN(storm.Frequency) && !double.IsNaN(storm.Precipitation))
+					{
+						input.AppendLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
+							storm.Frequency + "-Yr",
+							storm.Precipitation.ToString("0.0"),
+							rainfallDistributionType,
+							2));
+					}
+				}
+				input.AppendLine("");
+				input.AppendLine("RAINFALL DISTRIBUTION:");
+
+				if (rainfallDistributionTable != string.Empty)
+				{
+					input.AppendLine(rainfallDistributionTable);
+				}
+
+				if (model.RainfallDischargeDataViewModel.SelectedDuhTypeIndex != 0)
+				{
+					input.AppendLine("DIMENSIONLESS UNIT HYDROGRAPH:");
+
+					string duhTypeFilePath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
+					if (File.Exists(duhTypeFilePath))
+					{
+						//using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
+						//{
+						//	reader.ReadLine();
+
+						//	input.Append(reader.ReadToEnd());
+						//}
+
+						input.Append(File.ReadAllText(duhTypeFilePath));
+					}
+				}
+				else
+				{
+					for (int i = 0; i < 11; i++) input.AppendLine();
+				}
+
+				input.AppendLine("GLOBAL OUTPUT:");
+				input.AppendLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
+
+				await File.WriteAllTextAsync(InputFilePath, input.ToString());
+
+				Debug.WriteLine("Writing to .inp finished");
+				return true;
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
 			}
 
-			return null;
+			return false;
 		}
 
-		public static void RunWinTr20(string inputFilePath)
+		// Creates the string
+		// TODO - this should be in the main view model, SRP
+		public static string CreateInputFileContents(MainViewModel model)
 		{
-			try
+			if (!IsWinTR20Ready(model)) return null;
+
+			StringBuilder input = new StringBuilder();
+			string rainfallDistributionTable = "";
+			string rainfallDistributionType = "";
+
+			string rainfallDistributionTypeFilePath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions", "Type " + model.RainfallDischargeDataViewModel.selectedRainfallDistributionType + ".tbl");
+
+			if (File.Exists(rainfallDistributionTypeFilePath))
 			{
-				string executablePath = Path.Combine(AppContext.BaseDirectory, "Assets", "Programs", "WinTR20_V32.exe");
-				Console.WriteLine(executablePath);
+				rainfallDistributionTable = File.ReadAllText(rainfallDistributionTypeFilePath);
 
-				ProcessStartInfo psi = new ProcessStartInfo()
-				{
-					FileName = executablePath,
-					Arguments = inputFilePath,
-					CreateNoWindow = true,
-					UseShellExecute = false,
-					RedirectStandardOutput = false,
-				};
-
-				using (Process process = new Process() { StartInfo = psi })
-				{
-					process.Start();
-					//while (!process.StandardOutput.EndOfStream) Console.WriteLine(process.StandardOutput.ReadLine());
-
-					process.WaitForExit();
-				}
-
-				Console.WriteLine("Process finished");
+				string[] parts = rainfallDistributionTable.Trim().Split();
+				rainfallDistributionType = parts[0];
 			}
-			catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+			input.AppendLine(String.Format("WinTR-20: {0,-30}{1,-10}{2,-10}{3,-10}{4}", "Version 3.30", 0, 0, 0.01, 0));
+			input.AppendLine("Single watershed using lag method for Tc");
+			input.AppendLine("");
+			input.AppendLine("SUB-AREA:");
+			input.AppendLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}{4,-10}", "Area", "Outlet",
+				(model.BasicDataViewModel.DrainageArea / 640).ToString("0.00000"),
+				(model.BasicDataViewModel.RunoffCurveNumber + "."),
+				model.BasicDataViewModel.TimeOfConcentration.ToString("0.00")));
+
+			input.AppendLine("");
+			input.AppendLine("");
+			input.AppendLine("");
+			input.AppendLine("STORM ANALYSIS:");
+			foreach (StormViewModel storm in model.RainfallDischargeDataViewModel.Storms)
+			{
+				if (!double.IsNaN(storm.Frequency) && !double.IsNaN(storm.Precipitation))
+				{
+					input.AppendLine(String.Format("          {0,-30}{1,-10}{2,-10}{3}",
+						storm.Frequency + "-Yr",
+						storm.Precipitation.ToString("0.000"),
+						rainfallDistributionType,
+						2));
+				}
+			}
+			input.AppendLine("");
+			input.AppendLine("RAINFALL DISTRIBUTION:");
+
+			if (rainfallDistributionTable != string.Empty)
+			{
+				input.AppendLine(rainfallDistributionTable);
+			}
+
+			if (model.RainfallDischargeDataViewModel.SelectedDuhTypeIndex != 0)
+			{
+				input.AppendLine("DIMENSIONLESS UNIT HYDROGRAPH:");
+
+				string duhTypeFilePath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
+				if (File.Exists(duhTypeFilePath))
+				{
+					//using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
+					//{
+					//	reader.ReadLine();
+
+					//	input.Append(reader.ReadToEnd());
+					//}
+
+					input.Append(File.ReadAllText(duhTypeFilePath));
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 11; i++) input.AppendLine();
+			}
+
+			input.AppendLine("GLOBAL OUTPUT:");
+			input.AppendLine(String.Format("          {0,-10}{1,-20}{2,-10}{3,-10}", 2, 0.01, "YY  Y", "NN  N"));
+
+			return input.ToString();
+		}
+
+		public static async void RunWinTr20Async()
+		{
+			Process process = new Process();
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+
+			string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+			string winTr20Path = Path.Combine(programFilesPath, "USDA-dev", "EFH-2", "WinTR20_V32.exe");
+
+			if (!File.Exists(winTr20Path))
+			{
+				Debug.WriteLine("WinTr20 not found at: " + winTr20Path);
+				return;
+			}
+			else { Debug.WriteLine("Found WinTr20 executable file"); }
+
+			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			//string inputFilePath = Path.Combine(appDataPath, "EFH2", "tr20.inp");
+
+			if (!File.Exists(InputFilePath))
+			{
+				Debug.WriteLine("Input file not found at: " + InputFilePath);
+				return;
+			}
+			else 
+			{ 
+				Debug.WriteLine("Found input file"); 
+			}
+
+			startInfo.FileName = winTr20Path;
+			startInfo.Arguments = InputFilePath;
+			startInfo.CreateNoWindow = true;
+
+			process.StartInfo = startInfo;
+
+			if (process.Start())
+			{
+				Debug.WriteLine("Process started");
+			}
+
+			process.WaitForExit();
+
+			Debug.WriteLine("Process finished");
 		}
 
 		/// <summary>
@@ -403,46 +497,133 @@ namespace EFH2
 		/// Reads the peak-flow and runoff values from the tr20.out file and inserts them into the view model
 		/// </summary>
 		/// <param name="model"></param>
-		public static void ParseWinTR20Output(IEnumerable<StormViewModel> storms)
+		public static async void ParseWinTR20Output(IEnumerable<StormViewModel> storms)
 		{
-			string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.out");
+			foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
+
+			if (!File.Exists(OutputFilePath)) return;
+
+			string output = await File.ReadAllTextAsync(OutputFilePath);
+
+			//using (StreamReader reader = new StreamReader(OutputFilePath))
+			//{
+			//	while (!reader.EndOfStream)
+			//	{
+			//		string line = reader.ReadLine();
+			//		string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+
+			//		if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+			//		{ // Now at the line "___STORM_##-YR____"
+			//			string yrLabel = splitLine[1].Replace("-Yr", "");
+			//			int year = int.Parse(yrLabel);
+
+			//			splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+			//			while (splitLine.Length != 6 || splitLine[0] != "Area")
+			//			{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+			//				splitLine = SplitLine(reader.ReadLine()).ToArray();
+			//			}
+
+			//			double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+			//			double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+
+			//			foreach (StormViewModel storm in storms)
+			//			{
+			//				if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
+			//				{ // found the match, put the runoff and peakflow values into this storm
+			//					storm.PeakFlow = peakFlow;
+			//					storm.Runoff = runoff;
+			//				}
+			//			}
+			//		}
+			//	}
+			//}
+
+			foreach (string line in output.Split("\n"))
+			{
+				string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+
+				if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+				{ // Now at the line "___STORM_##-YR____"
+					string yrLabel = splitLine[1].Replace("-Yr", "");
+					int year = int.Parse(yrLabel);
+
+					splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+					while (splitLine.Length != 6 || splitLine[0] != "Area")
+					{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+						splitLine = SplitLine(line).ToArray();
+					}
+
+					double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+					double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+
+					foreach (StormViewModel storm in storms)
+					{
+						if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
+						{ // found the match, put the runoff and peakflow values into this storm
+							storm.PeakFlow = peakFlow;
+							storm.Runoff = runoff;
+						}
+					}
+				
+				}
+			}
+		}
+
+		public static void WriteToInputFile(string contents)
+		{
+			File.WriteAllText(InputFilePath, contents);
+		}
+
+		public static string ReadOutputFile()
+		{
+			if (File.Exists(OutputFilePath))
+			{
+				return File.ReadAllText(OutputFilePath);
+			}
+			else return null;
+		}
+
+		// TODO - should be in rainfall discharge model, SRP
+		public static void ParseOutput(string output, IEnumerable<StormViewModel> storms)
+		{
+			Debug.WriteLine("Parsing started");
 
 			foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
-			if (!File.Exists(filePath)) return;
-
-			using (StreamReader reader = new StreamReader(filePath))
+			string[] lines = output.Split("\n");
+			//foreach (string line in output.Split("\n"))
+			for (int i = 0; i < lines.Count(); i++)				
 			{
-				while (!reader.EndOfStream)
-				{
-					string line = reader.ReadLine();
-					string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+				string line = lines[i];
+				string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
 
-					if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
-					{ // Now at the line "___STORM_##-YR____"
-						string yrLabel = splitLine[1].Replace("-Yr", "");
-						int year = int.Parse(yrLabel);
+				if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+				{ // Now at the line "___STORM_##-YR____"
+					string yrLabel = splitLine[1].Replace("-Yr", "");
+					int year = int.Parse(yrLabel);
 
-						splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-						while (splitLine.Length != 6 || splitLine[0] != "Area")
-						{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-							splitLine = SplitLine(reader.ReadLine()).ToArray();
-						}
+					splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+					while (splitLine.Length != 6 || splitLine[0] != "Area")
+					{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+						line = lines[i++];
+						splitLine = SplitLine(line).ToArray();
+					}
 
-						double runoff = Math.Round(double.Parse(splitLine[2]), 2);
-						double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+					double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+					double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
 
-						foreach (StormViewModel storm in storms)
-						{
-							if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
-							{ // found the match, put the runoff and peakflow values into this storm
-								storm.PeakFlow = peakFlow;
-								storm.Runoff = runoff;
-							}
+					foreach (StormViewModel storm in storms)
+					{
+						if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
+						{ // found the match, put the runoff and peakflow values into this storm
+							storm.PeakFlow = peakFlow;
+							storm.Runoff = runoff;
 						}
 					}
 				}
 			}
+
+			Debug.WriteLine("Finished parsing");
 		}
 
 		public static List<HydrographLineModel> GetHydrographData(IEnumerable<StormViewModel> storms)
@@ -453,7 +634,7 @@ namespace EFH2
 
 			List<HydrographLineModel> list = new List<HydrographLineModel>();
 
-			string filePath = Path.Combine(appDataDirectory, "EFH2", "tr20.hyd");
+			string filePath = Path.Combine(AppDataDirectory, "EFH2", "tr20.hyd");
 
 			if (!File.Exists(filePath)) return null;
 			
@@ -493,7 +674,7 @@ namespace EFH2
 
 		public static void ExportHydrograph(MainViewModel model, string outputFileName)
 		{
-			string hydrographFilePath = Path.Combine(appDataDirectory, "EFH2", "tr20.hyd");
+			string hydrographFilePath = Path.Combine(AppDataDirectory, "EFH2", "tr20.hyd");
 
 			StringBuilder content = new StringBuilder();
 
@@ -555,20 +736,149 @@ namespace EFH2
 			RainfallDischargeDataViewModel newModel = new RainfallDischargeDataViewModel();
 			newModel.RainfallDistributionTypes = model.RainfallDischargeDataViewModel.RainfallDistributionTypes;
 
-			string rainfallDataPath = Path.Combine(programDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
-			TextFieldParser parser = new TextFieldParser(rainfallDataPath) { Delimiters = new string[] { "," }, TextFieldType = FieldType.Delimited };
-		
-			while (!parser.EndOfData)
+			string rainfallDataPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "Rainfall_data.csv");
+			//TextFieldParser parser = new TextFieldParser(rainfallDataPath) { Delimiters = new string[] { "," }, TextFieldType = FieldType.Delimited };
+			using (TextFieldParser parser = new TextFieldParser(rainfallDataPath) { Delimiters = new string[] { "," }, TextFieldType = FieldType.Delimited })
 			{
-				string[] elements = parser.ReadFields();
+				while (!parser.EndOfData)
+				{
+					string[] elements = parser.ReadFields();
 
-				if (elements.Length == 14 && elements[1].Trim('"') == state && elements[2].Trim('"') == county) 
-					ReadRainfallDataRowIntoModel(elements, newModel);	
+					if (elements.Length == 14 && elements[1].Trim('"') == state && elements[2].Trim('"') == county)
+						ReadRainfallDataRowIntoModel(elements, newModel);
+				}
+
+				model.RainfallDischargeDataViewModel.SetSilent(newModel);
 			}
+			//parser.Close();
+		}
 
-			model.RainfallDischargeDataViewModel.SetSilent(newModel);
+		public static SerializedDataModel? DeserializeOldFormat(string contents, 
+			GetSelectedIndexDelegate getStateIndex, GetSelectedIndexDelegate getCountyIndex, GetSelectedIndexDelegate getRainfallDistributionIndex, GetSelectedIndexDelegate getDuhIndex, GetEmptyRcnDataModel getRcnDataModel)
+		{
+			try
+			{
+				string[] lines = contents.Split("\r\n");
 
-			parser.Close();
+				SerializedDataModel model = new SerializedDataModel();
+
+				if (lines.Count() >= 16)
+				{
+					for (int i = 0; i < 16; i++)
+					{
+						lines[i] = lines[i].Trim('"');
+					}
+					string dateFormatString = "MM/dd/yyyy";
+
+					model.By = lines[1];
+					model.Date = DateTime.ParseExact(lines[2].Trim('"'), dateFormatString, System.Globalization.CultureInfo.InvariantCulture);
+					model.Client = lines[3];
+
+					int? selectedStateIndex = getStateIndex(lines[5]);
+					if (selectedStateIndex.HasValue) model.SelectedStateIndex = (uint)selectedStateIndex.Value;
+
+					int? selectedCountyIndex = getStateIndex(lines[4]);
+					if (selectedCountyIndex.HasValue) model.SelectedCountyIndex = (uint)selectedCountyIndex.Value;
+
+					double drainageArea = double.NaN;
+					double runoffCurveNumber = double.NaN;
+					double watershedLength = double.NaN;
+					double watershedSlope = double.NaN;
+					double timeOfConcentration = double.NaN;
+
+					if (double.TryParse(lines[7], out drainageArea)) model.DrainageArea = drainageArea;
+					if (double.TryParse(lines[8], out runoffCurveNumber)) model.RunoffCurveNumber = runoffCurveNumber;
+					if (double.TryParse(lines[9], out watershedLength)) model.WatershedLength = watershedLength;
+					if (double.TryParse(lines[10], out watershedSlope)) model.WatershedSlope = watershedSlope;
+					if (double.TryParse(lines[11], out timeOfConcentration)) model.TimeOfConcentration = timeOfConcentration;
+
+					string[] rainfallDischargeSelections = lines[15].Split(", ");
+					int? selectedRainfallDistributionTypeIndex = getRainfallDistributionIndex(rainfallDischargeSelections[0]);
+					if (selectedRainfallDistributionTypeIndex.HasValue) model.SelectedRainfallDistributionTypeIndex = (uint)selectedRainfallDistributionTypeIndex.Value;
+
+					if (rainfallDischargeSelections.Length == 2)
+					{
+						int? selectedDuhTypeIndex = getDuhIndex(rainfallDischargeSelections[1]);
+						if (selectedDuhTypeIndex.HasValue) model.SelectedDuhTypeIndex = (uint)selectedDuhTypeIndex.Value;
+					} // Else it should go to '<standard>'
+				}
+
+				//Search for '', '', '', "Acres" / "Percent", ''
+				for (int i = 0; i < lines.Count(); i++)
+					{
+						string[] lineParts = lines[i].Split(',');
+
+						if (lineParts.Length == 5 && (lineParts[3] == "Acres" || lineParts[3] == "Percent"))
+						{
+							if (lineParts[3] == "Acres") model.AcresSelected = true;
+							else model.AcresSelected = false;
+						}
+					}
+
+				RcnDataModel rcnModel = getRcnDataModel();
+
+				model.GroupA = rcnModel.GroupA;
+				model.GroupB = rcnModel.GroupB;
+				model.GroupC = rcnModel.GroupC;
+				model.GroupD = rcnModel.GroupD;
+
+				for (int i = 0; i < lines.Count(); i++)
+				{
+					string[] lineParts = lines[i].Split(',');
+
+					if (lineParts.Length == 4 && lineParts[3].Contains('"') && !lineParts[0].Contains('"'))
+					{
+						double pageNumber, positionCode;
+						if (!double.TryParse(lineParts[1], out positionCode) || !double.TryParse(lineParts[0], out pageNumber)) continue;
+
+						int weight;
+						double area;
+
+						if (!int.TryParse(lineParts[2], out weight) || !double.TryParse(lineParts[3].Trim('"'), out area)) continue;
+
+						// TODO make method in serailized data model to accept row, column, weight, area and set in RCN
+						model.SetRcnValueFromOldFormat(positionCode, pageNumber, weight, area);
+					}
+				}
+
+				List<SerializedStormModel> reversedStorms = new List<SerializedStormModel>();
+				for (int i = lines.Length - 1; i >= 0; i--)
+				{
+					string[] lineParts = lines[i].Split(',');
+
+					if (lineParts.Length != 4) continue;
+					if (!lineParts[0].Contains('"')) break;
+
+					SerializedStormModel storm = new SerializedStormModel();
+
+					int frequency = 0;
+					if (int.TryParse(lineParts[0].Trim('"'), out frequency)) storm.Frequency = frequency;
+
+					int precipitation = 0;
+					if (int.TryParse(lineParts[1].Trim('"'), out precipitation)) storm.Precipitation = precipitation;
+
+					int peakFlow = 0;
+					if (int.TryParse(lineParts[2].Trim('"'), out peakFlow)) storm.PeakFlow = peakFlow;
+
+					int runoff = 0;
+					if (int.TryParse(lineParts[3].Trim('"'), out runoff)) storm.Runoff = runoff;
+
+					reversedStorms.Add(storm);
+				}
+
+				model.Storms = new List<SerializedStormModel>();
+				for (int i = reversedStorms.Count - 1; i >= 0; i--)
+				{
+					model.Storms.Add(reversedStorms[i]);
+				}
+
+				return model;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+				return null;
+			}
 		}
 
 		private static void ReadRainfallDataRowIntoModel(string[] elements, RainfallDischargeDataViewModel model)
@@ -601,4 +911,8 @@ namespace EFH2
 			return line.Split().Where(elem => !string.IsNullOrEmpty(elem)).ToList();
 		}
 	}
+
+	public delegate int? GetSelectedIndexDelegate(string type);
+
+	public delegate RcnDataModel GetEmptyRcnDataModel();
 }

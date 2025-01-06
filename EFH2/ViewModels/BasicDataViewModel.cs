@@ -85,8 +85,8 @@ namespace EFH2
 
         public BasicDataViewModel()
         {
-			drainageAreaEntry.ValueChanged += EntryChanged;
-			runoffCurveNumberEntry.ValueChanged += EntryChanged;
+            drainageAreaEntry.ValueChanged += EntryChanged;
+            runoffCurveNumberEntry.ValueChanged += EntryChanged;
             watershedLengthEntry.ValueChanged += EntryChanged;
             watershedSlopeEntry.ValueChanged += EntryChanged;
             timeOfConcentrationEntry.ValueChanged += EntryChanged;
@@ -94,29 +94,29 @@ namespace EFH2
 
         public void CalculateTimeOfConcentration()
         {
-			double final = (Math.Pow(this.WatershedLength, 0.8) * Math.Pow(((1000 / this.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(this.WatershedSlope, 0.5));
+            double final = (Math.Pow(this.WatershedLength, 0.8) * Math.Pow(((1000 / this.RunoffCurveNumber) - 10) + 1, 0.7)) / (1140 * Math.Pow(this.WatershedSlope, 0.5));
 
-			if (double.IsNaN(final))
-			{
-                this.timeOfConcentrationEntry.Value = double.NaN;
-				//this.timeOfConcentrationEntry.SetSilent(double.NaN);
+            if (double.IsNaN(final))
+            {
+                //this.timeOfConcentrationEntry.Value = double.NaN;
+                this.timeOfConcentrationEntry.SetSilent(double.NaN);
                 this.timeOfConcentrationEntry.InputStatus = InputStatus.None;
-			}
-			else
-			{
-                this.timeOfConcentrationEntry.Value = Math.Round(final, 2);
-                //this.timeOfConcentrationEntry.SetSilent(Math.Round(final, 2));
+            }
+            else
+            {
+                //this.timeOfConcentrationEntry.Value = Math.Round(final, 2);
+                this.timeOfConcentrationEntry.SetSilent(Math.Round(final, 2));
                 this.timeOfConcentrationEntry.InputStatus = InputStatus.Calculated;
-			}
+            }
         }
 
-		private void EntryChanged(object sender, EventArgs e)
-		{
+        private void EntryChanged(object sender, EventArgs e)
+        {
             this.CalculateTimeOfConcentration();
             this.ValueChanged?.Invoke(this, EventArgs.Empty);
-		}
+        }
 
-		private void SetCounties(List<string> list)
+        private void SetCounties(List<string> list)
         {
             Counties.Clear();
 
@@ -143,9 +143,9 @@ namespace EFH2
                 this.OnPropertyChanged(nameof(SelectedCountyIndex));
                 this.OnPropertyChanged(nameof(SelectedStateIndex));
 
-				Practice = "";
-				Date = DateTime.Now;
-				By = "";
+                Practice = "";
+                Date = DateTime.Now;
+                By = "";
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
@@ -166,5 +166,25 @@ namespace EFH2
             runoffCurveNumberEntry.InputStatus = InputStatus.Cleared;
             drainageAreaEntry.InputStatus = InputStatus.Cleared;
         }
+
+        public int? GetCountyIndexByName(string county)
+        {
+            for (int i = 0; i < Counties.Count; i++)
+            {
+                if (Counties[i].Content.ToString() == county) return i;
+            }
+
+            return null;
+        }
+
+        public int? GetStateIndexByName(string name)
+        {
+            for (int i = 0; i < States.Count; i++)
+			{
+				if (States[i].Content.ToString() == name) return i;
+			}
+
+            return null;
+		}
     }
 }
