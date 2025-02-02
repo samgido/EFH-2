@@ -12,7 +12,9 @@
 	  </StandardDirectory>
 
 	  <StandardDirectory Id="ProgramMenuFolder">
-		  <Directory Id="EngineeringApplicationsFolder" Name="Engineering Applications" />
+		  <Directory Id="EngineeringApplicationsFolder" Name="Engineering Applications">
+			  <Directory Id="ApplicationProgramFolder" Name="EFH-2"/>
+		  </Directory>
 	  </StandardDirectory>
   </Fragment>
 </Wix>

@@ -9,6 +9,8 @@
     mc:Ignorable="d">
 
     <Grid x:Name="MainGrid">
+        <TextBlock Name="wintr20WarningTextBlock" Opacity="0">WINTR EXECUTABLE FOUND</TextBlock>
+        
         <RelativePanel x:Name="RootPanel" Visibility="Visible" VerticalAlignment="Stretch">
             <Grid x:Name="TitleBar" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>

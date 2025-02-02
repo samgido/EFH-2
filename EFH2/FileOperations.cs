@@ -12,6 +12,10 @@ using System.Xml.Serialization;
 using WinRT;
 using EFH2.Models;
 using System.Threading.Tasks;
+using Microsoft.ServiceHub.Resources;
+using Microsoft;
+using PdfSharp.Snippets;
+using Windows.System;
 
 namespace EFH2
 {
@@ -21,11 +25,35 @@ namespace EFH2
 		private static string AppDataDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string ProgramFilesDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
-		private static string WinTr20Path => Path.Combine(ProgramFilesDirectory, "USDA-dev", "EFH-2", "WinTR20_V32.exe");
+		public static string HelpFileDirectory => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "Assets", "HelpFiles").Replace(@"file:\", "");
+
+		private static string WinTr20Path => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "WinTR20_V32.exe").Replace(@"file:\", "");		
 		private static string InputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.inp");
 		private static string OutputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.out");
 
 		public static string companyName = "USDA-dev";
+
+		public static bool WinTr20Found => File.Exists(WinTr20Path);
+
+		/// <summary>
+		/// Ensures all required folders and files are present
+		/// </summary>
+		public static bool InitEfh2Structure()
+		{
+			string inputDir = Directory.GetParent(InputFilePath).FullName;
+
+			if (!Directory.Exists(inputDir))
+			{
+				Directory.CreateDirectory(inputDir);
+			}
+
+			if (!File.Exists(InputFilePath))
+			{
+				File.Create(InputFilePath).Close();
+			}
+
+			return true;
+		}
 
         public static void SerializeData(MainViewModel model, TextWriter writer)
         {
@@ -409,13 +437,6 @@ namespace EFH2
 				string duhTypeFilePath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 				if (File.Exists(duhTypeFilePath))
 				{
-					//using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
-					//{
-					//	reader.ReadLine();
-
-					//	input.Append(reader.ReadToEnd());
-					//}
-
 					input.Append(File.ReadAllText(duhTypeFilePath));
 				}
 			}
@@ -436,17 +457,14 @@ namespace EFH2
 			ProcessStartInfo startInfo = new ProcessStartInfo();
 
 			string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-			string winTr20Path = Path.Combine(programFilesPath, "USDA-dev", "EFH-2", "WinTR20_V32.exe");
 
-			if (!File.Exists(winTr20Path))
+			if (!File.Exists(WinTr20Path))
 			{
-				Debug.WriteLine("WinTr20 not found at: " + winTr20Path);
+				Debug.WriteLine("WinTr20 not found at: " + WinTr20Path);
 				return;
 			}
 			else { Debug.WriteLine("Found WinTr20 executable file"); }
-
 			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			//string inputFilePath = Path.Combine(appDataPath, "EFH2", "tr20.inp");
 
 			if (!File.Exists(InputFilePath))
 			{
@@ -455,13 +473,14 @@ namespace EFH2
 			}
 			else 
 			{ 
-				Debug.WriteLine("Found input file"); 
+				Debug.WriteLine("Found input file");
 			}
 
-			startInfo.FileName = winTr20Path;
+			startInfo.FileName = WinTr20Path;
 			startInfo.Arguments = InputFilePath;
 			startInfo.CreateNoWindow = true;
 
+			Debug.WriteLine(startInfo.ToString());
 			process.StartInfo = startInfo;
 
 			if (process.Start())
@@ -470,6 +489,8 @@ namespace EFH2
 			}
 
 			process.WaitForExit();
+
+			process.Kill();
 
 			Debug.WriteLine("Process finished");
 		}
@@ -505,39 +526,6 @@ namespace EFH2
 
 			string output = await File.ReadAllTextAsync(OutputFilePath);
 
-			//using (StreamReader reader = new StreamReader(OutputFilePath))
-			//{
-			//	while (!reader.EndOfStream)
-			//	{
-			//		string line = reader.ReadLine();
-			//		string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-
-			//		if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
-			//		{ // Now at the line "___STORM_##-YR____"
-			//			string yrLabel = splitLine[1].Replace("-Yr", "");
-			//			int year = int.Parse(yrLabel);
-
-			//			splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-			//			while (splitLine.Length != 6 || splitLine[0] != "Area")
-			//			{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-			//				splitLine = SplitLine(reader.ReadLine()).ToArray();
-			//			}
-
-			//			double runoff = Math.Round(double.Parse(splitLine[2]), 2);
-			//			double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
-
-			//			foreach (StormViewModel storm in storms)
-			//			{
-			//				if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
-			//				{ // found the match, put the runoff and peakflow values into this storm
-			//					storm.PeakFlow = peakFlow;
-			//					storm.Runoff = runoff;
-			//				}
-			//			}
-			//		}
-			//	}
-			//}
-
 			foreach (string line in output.Split("\n"))
 			{
 				string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
@@ -571,6 +559,8 @@ namespace EFH2
 
 		public static void WriteToInputFile(string contents)
 		{
+			if (!File.Exists(InputFilePath)) File.Create(InputFilePath);
+
 			File.WriteAllText(InputFilePath, contents);
 		}
 
@@ -909,6 +899,11 @@ namespace EFH2
 		{
 			if (line == null) return new List<string>();
 			return line.Split().Where(elem => !string.IsNullOrEmpty(elem)).ToList();
+		}
+
+		public static bool IsWinTr20ExecutableFound()
+		{
+			return File.Exists(WinTr20Path);
 		}
 	}
 

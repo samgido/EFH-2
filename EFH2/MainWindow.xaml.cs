@@ -36,7 +36,7 @@ namespace EFH2
         public PrintDocument _printDocument;
         public IPrintDocumentSource _printDocumentSource;
 
-        private List<UIElement> uiElements;
+		private List<UIElement> uiElements;
 
 		public MainViewModel MainViewModel { get; set; }
 
@@ -84,7 +84,7 @@ namespace EFH2
             {
 				root.Loaded += (s, e) => ShowWelcomePageAsync();
             }
-        }
+		}
 
 		#region Event Handlers
 
@@ -400,8 +400,11 @@ namespace EFH2
 
 		private async void HelpContentsClick(object sender, RoutedEventArgs e)
         {
-
-        }
+            HelpControl helpControl = new HelpControl();
+            Window newWindow = new Window();
+            newWindow.Content = helpControl;
+            newWindow.Activate();
+		}
 
         private void UserManualClick(object sender, RoutedEventArgs e)
 		{
