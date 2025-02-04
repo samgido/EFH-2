@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.EventLog;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -27,27 +29,55 @@ namespace EFH2
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-          public App()
-		  {
-			  this.InitializeComponent();
+        private static readonly string logFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EFH2", "EFH2.log");
 
-			  // Temporary solution for issue 8810
-			  this.AddOtherProvider(new Microsoft.UI.Xaml.XamlTypeInfo.XamlControlsXamlMetaDataProvider());
-			  this.AddOtherProvider(new CommunityToolkit.WinUI.UI.Controls.CommunityToolkit_WinUI_UI_Controls_DataGrid_XamlTypeInfo.XamlMetaDataProvider());
+		/// <summary>
+		/// Initializes the singleton application object.  This is the first line of authored code
+		/// executed, and as such is the logical equivalent of main() or WinMain().
+		/// </summary>
+		public App()
+        {
+            this.InitializeComponent();
+
+
+            string logFileDirectory = logFilePath.Replace("EFH2.log", "");
+            if (!Directory.Exists(logFileDirectory))
+            {
+                Directory.CreateDirectory(logFileDirectory);
+			}
+
+            // Temporary solution for issue 8810
+            this.AddOtherProvider(new Microsoft.UI.Xaml.XamlTypeInfo.XamlControlsXamlMetaDataProvider());
+            this.AddOtherProvider(new CommunityToolkit.WinUI.UI.Controls.CommunityToolkit_WinUI_UI_Controls_DataGrid_XamlTypeInfo.XamlMetaDataProvider());
             //this.AddOtherProvider(new CommunityToolkit.WinUI.Controls.SettingsControlsRns.CommunityToolkit_WinUI_Controls_SettingsControls_XamlTypeInfo.XamlMetaDataProvider());
 
             FileOperations.InitEfh2Structure();
+
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
+
+		private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+		{
+            LogException("Non-UI Thread Exception", e.ExceptionObject as Exception);
 		}
 
-		/// <summary>
-		/// Invoked when the application is launched.
-		/// </summary>
-		/// <param name="args">Details about the launch request and process.</param>
-		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        public static void LogException(string src, Exception? ex)
+        {
+			string logMessage = $"[{DateTime.Now}] {src}: {ex?.Message}\nStack Trace: \n{ex?.StackTrace}\n";
+            File.AppendAllText(logFilePath, logMessage);
+        }
+
+        public static void LogMessage(string message)
+        {
+            string logMessage = $"[{DateTime.Now}] {message}\n";
+            File.AppendAllText(logFilePath, logMessage);
+		}
+
+        /// <summary>
+        /// Invoked when the application is launched.
+        /// </summary>
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             MainViewModel mainViewModel = new MainViewModel();
             FileOperations.LoadMainViewModel(mainViewModel);

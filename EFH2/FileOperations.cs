@@ -25,6 +25,7 @@ namespace EFH2
 		private static string AppDataDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string ProgramFilesDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
+		public static string MainExecutableDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Replace(@"file:\", "");
 		public static string HelpFileDirectory => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "Assets", "HelpFiles").Replace(@"file:\", "");
 
 		private static string WinTr20Path => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "WinTR20_V32.exe").Replace(@"file:\", "");		
@@ -45,11 +46,13 @@ namespace EFH2
 			if (!Directory.Exists(inputDir))
 			{
 				Directory.CreateDirectory(inputDir);
+				App.LogMessage($"Created directory: {inputDir}");
 			}
 
 			if (!File.Exists(InputFilePath))
 			{
 				File.Create(InputFilePath).Close();
+				App.LogMessage($"Created blank input file at: {InputFilePath}");
 			}
 
 			return true;
@@ -80,6 +83,7 @@ namespace EFH2
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
+				App.LogException("Loading main view model", ex);
 			}
 		}
 
@@ -118,6 +122,7 @@ namespace EFH2
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
+				App.LogException("Load Basic Data", ex);
 			}
 		}
 
@@ -178,7 +183,11 @@ namespace EFH2
 				}
 
 			}
-			catch (Exception ex) { Debug.WriteLine(ex.Message); }
+			catch (Exception ex) 
+			{ 
+				Debug.WriteLine(ex.Message); 
+				App.LogException("Load Rainfall Discharge Data", ex);
+			}
 		}
 
 		private static void LoadRcnData(RcnDataViewModel model)
@@ -223,9 +232,6 @@ namespace EFH2
 
 							if (elements[3] != string.Empty) newRow.Quality = elements[3];
 
-							//int.TryParse(elements[5], out int weight1);
-							//newRow.Entries[0].Weight = weight1;
-
 							if (elements[5] == "**") newRow.Entries[0].Weight = -1;
 							else
 							{
@@ -261,31 +267,44 @@ namespace EFH2
 				}
 
 				string soilsPath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "SOILS.hg");
-				using (StreamReader reader = new StreamReader(soilsPath))
+				if (!File.Exists(soilsPath))
 				{
-					while (!reader.EndOfStream)
+					App.LogException("Load RCN data", new Exception($"SOILS.hg not found at {soilsPath}"));
+
+					return;
+				}
+				else
+				{
+					using (StreamReader reader = new StreamReader(soilsPath))
 					{
-						string line = reader.ReadLine();
-
-						string[] lineParts = line.Split("\t");
-
-						if (lineParts.Length == 3)
+						while (!reader.EndOfStream)
 						{
-							model.HsgEntries.Add(new HsgEntryViewModel()
+							string line = reader.ReadLine();
+
+							string[] lineParts = line.Split("\t");
+
+							if (lineParts.Length == 3)
 							{
-								Row = new ObservableCollection<string>
+								model.HsgEntries.Add(new HsgEntryViewModel()
 								{
-									lineParts[0],
-									lineParts[1],
-									lineParts[2]
-								}
-							});
+									Row = new ObservableCollection<string>
+									{
+										lineParts[0],
+										lineParts[1],
+										lineParts[2]
+									}
+								});
+							}
 						}
 					}
 				}
 
 			}
-			catch (Exception ex) { Debug.WriteLine(ex.Message); }
+			catch (Exception ex) 
+			{ 
+				Debug.WriteLine(ex.Message);
+				App.LogException("Load RCN data", ex);
+			}
 		}
 
         public static async Task<bool> CreateInpFileAsync(MainViewModel model)
@@ -347,13 +366,6 @@ namespace EFH2
 					string duhTypeFilePath = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs", model.RainfallDischargeDataViewModel.selectedDuhType + ".duh");
 					if (File.Exists(duhTypeFilePath))
 					{
-						//using (StreamReader reader = new StreamReader(duhTypeFilePath, Encoding.UTF8))
-						//{
-						//	reader.ReadLine();
-
-						//	input.Append(reader.ReadToEnd());
-						//}
-
 						input.Append(File.ReadAllText(duhTypeFilePath));
 					}
 				}
@@ -373,13 +385,12 @@ namespace EFH2
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
+				App.LogException("Creating input file", ex);
 			}
 
 			return false;
 		}
 
-		// Creates the string
-		// TODO - this should be in the main view model, SRP
 		public static string CreateInputFileContents(MainViewModel model)
 		{
 			if (!IsWinTR20Ready(model)) return null;
@@ -453,46 +464,63 @@ namespace EFH2
 
 		public static async void RunWinTr20Async()
 		{
-			Process process = new Process();
-			ProcessStartInfo startInfo = new ProcessStartInfo();
-
-			string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-
-			if (!File.Exists(WinTr20Path))
+			try
 			{
-				Debug.WriteLine("WinTr20 not found at: " + WinTr20Path);
-				return;
-			}
-			else { Debug.WriteLine("Found WinTr20 executable file"); }
-			string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+				Process process = new Process();
+				ProcessStartInfo startInfo = new ProcessStartInfo();
 
-			if (!File.Exists(InputFilePath))
+				string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
+				if (!File.Exists(WinTr20Path))
+				{
+					Debug.WriteLine("WinTr20 not found at: " + WinTr20Path);
+					App.LogMessage("WinTr20 not found at: " + WinTr20Path);
+					return;
+				}
+				else
+				{
+					Debug.WriteLine("Found WinTr20 executable file");
+					App.LogMessage("Found WinTr20 executable file");
+				}
+
+				string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+				if (!File.Exists(InputFilePath))
+				{
+					Debug.WriteLine("Input file not found at: " + InputFilePath);
+					App.LogMessage("Input file not found at: " + InputFilePath);
+					return;
+				}
+				else
+				{
+					Debug.WriteLine("Found input file");
+					App.LogMessage("Found input file");
+				}
+
+				startInfo.FileName = WinTr20Path;
+				startInfo.Arguments = InputFilePath;
+				startInfo.CreateNoWindow = true;
+
+				process.StartInfo = startInfo;
+
+				if (process.Start())
+				{
+					Debug.WriteLine("Process started");
+					App.LogMessage(startInfo.ToString());
+				}
+
+				process.WaitForExit();
+
+				process.Kill();
+
+				Debug.WriteLine("Process finished");
+				App.LogMessage("Process finished");
+			}
+			catch (Exception ex)
 			{
-				Debug.WriteLine("Input file not found at: " + InputFilePath);
-				return;
+				App.LogException("Running WinTR20", ex);
+				Debug.WriteLine("Running WinTr20 failed, check log file");
 			}
-			else 
-			{ 
-				Debug.WriteLine("Found input file");
-			}
-
-			startInfo.FileName = WinTr20Path;
-			startInfo.Arguments = InputFilePath;
-			startInfo.CreateNoWindow = true;
-
-			Debug.WriteLine(startInfo.ToString());
-			process.StartInfo = startInfo;
-
-			if (process.Start())
-			{
-				Debug.WriteLine("Process started");
-			}
-
-			process.WaitForExit();
-
-			process.Kill();
-
-			Debug.WriteLine("Process finished");
 		}
 
 		/// <summary>
@@ -522,7 +550,11 @@ namespace EFH2
 		{
 			foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
-			if (!File.Exists(OutputFilePath)) return;
+			if (!File.Exists(OutputFilePath))
+			{
+				App.LogMessage("Couldn't find output file at: " + OutputFilePath);
+				return;
+			}
 
 			string output = await File.ReadAllTextAsync(OutputFilePath);
 
@@ -570,50 +602,60 @@ namespace EFH2
 			{
 				return File.ReadAllText(OutputFilePath);
 			}
-			else return null;
+			else
+			{
+				App.LogException("Reading output file", new Exception($"Output file not found at {OutputFilePath}"));
+				return null;
+			}
 		}
 
-		// TODO - should be in rainfall discharge model, SRP
 		public static void ParseOutput(string output, IEnumerable<StormViewModel> storms)
 		{
-			Debug.WriteLine("Parsing started");
-
-			foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
-
-			string[] lines = output.Split("\n");
-			//foreach (string line in output.Split("\n"))
-			for (int i = 0; i < lines.Count(); i++)				
+			try
 			{
-				string line = lines[i];
-				string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+				Debug.WriteLine("Parsing started");
 
-				if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
-				{ // Now at the line "___STORM_##-YR____"
-					string yrLabel = splitLine[1].Replace("-Yr", "");
-					int year = int.Parse(yrLabel);
+				foreach (StormViewModel storm in storms) storm.PeakFlow = storm.Runoff = double.NaN;
 
-					splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
-					while (splitLine.Length != 6 || splitLine[0] != "Area")
-					{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
-						line = lines[i++];
-						splitLine = SplitLine(line).ToArray();
-					}
+				string[] lines = output.Split("\n");
+				//foreach (string line in output.Split("\n"))
+				for (int i = 0; i < lines.Count(); i++)
+				{
+					string line = lines[i];
+					string[] splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
 
-					double runoff = Math.Round(double.Parse(splitLine[2]), 2);
-					double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+					if (splitLine.Length == 2 && splitLine[1].Contains("-Yr"))
+					{ // Now at the line "___STORM_##-YR____"
+						string yrLabel = splitLine[1].Replace("-Yr", "");
+						int year = int.Parse(yrLabel);
 
-					foreach (StormViewModel storm in storms)
-					{
-						if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
-						{ // found the match, put the runoff and peakflow values into this storm
-							storm.PeakFlow = peakFlow;
-							storm.Runoff = runoff;
+						splitLine = line.Split().Where(str => !string.IsNullOrEmpty(str)).ToArray();
+						while (splitLine.Length != 6 || splitLine[0] != "Area")
+						{ // At the line with the data, runoff should be the 3rd element and peak flow should be the 5th
+							line = lines[i++];
+							splitLine = SplitLine(line).ToArray();
+						}
+
+						double runoff = Math.Round(double.Parse(splitLine[2]), 2);
+						double peakFlow = Math.Round(double.Parse(splitLine[4]), 2);
+
+						foreach (StormViewModel storm in storms)
+						{
+							if (storm.Frequency == year && !double.IsNaN(storm.Precipitation))
+							{ // found the match, put the runoff and peakflow values into this storm
+								storm.PeakFlow = peakFlow;
+								storm.Runoff = runoff;
+							}
 						}
 					}
 				}
-			}
 
-			Debug.WriteLine("Finished parsing");
+				Debug.WriteLine("Finished parsing");
+			}
+			catch (Exception ex)
+			{
+				App.LogException("Parsing output", ex);
+			}
 		}
 
 		public static List<HydrographLineModel> GetHydrographData(IEnumerable<StormViewModel> storms)
