@@ -25,38 +25,101 @@ namespace EFH2
 	{
 		// These files in the initial markdown file need to be replaced with their full path
 		private List<string> replacedFiles = new List<string>() { };
+		private List<string> unqualifiedImageNames = new List<string>();
 
 		private Dictionary<string, string> realToDisplayFileNames = new Dictionary<string, string>();
 
 		public HelpControl()
 		{
+			// Qualify image paths
+			foreach (FileInfo f in new DirectoryInfo(FileOperations.HelpFileDirectory).GetFiles())
+			{
+				if (f.Extension == ".png")
+				{
+					unqualifiedImageNames.Add(f.Name);
+				}
+			}
+
+			QualifyImagePaths(FileOperations.HelpFileDirectory);
+
 			Debug.WriteLine("HelpControl created");
 
 			// Could have iterated through all files and read their headers into this dictionary, oh well
-			realToDisplayFileNames.Add("what-is-efh2.md", "What is EFH2");
-			realToDisplayFileNames.Add("system-requirements.md", "System Requirements");
-			realToDisplayFileNames.Add("basic-data-files.md", "Basic Data Files");
-			realToDisplayFileNames.Add("curve-number-drainage-area-fields.md", "Curve Number/Drainage Area Fields");
-			realToDisplayFileNames.Add("entry-help.md", "Entry Help");
-			realToDisplayFileNames.Add("general.md", "General");
-			realToDisplayFileNames.Add("rcn-screen.md", "RCN Screen");
-			realToDisplayFileNames.Add("state-county.md", "State/County");
-			realToDisplayFileNames.Add("time-of-concentration.md", "Time Of Concentration");
-			realToDisplayFileNames.Add("edit.md", "Edit");
-			realToDisplayFileNames.Add("file.md", "File");
-			realToDisplayFileNames.Add("help.md", "Help");
-			realToDisplayFileNames.Add("toolbar.md", "Toolbar");
-			realToDisplayFileNames.Add("tools.md", "Tools");
-			realToDisplayFileNames.Add("view.md", "View");
-			realToDisplayFileNames.Add("program-window.md", "Program Window");
-			realToDisplayFileNames.Add("rainfall-discharge-data.md", "Rainfall Discharge Data");
-			realToDisplayFileNames.Add("glossary.md", "Glossary");
+			// Introduction folder
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, "Introduction", "what-is-efh2.md"), "What is EFH2");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, "Introduction", "system-requirements.md"), "System Requirements");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, "Introduction", "basic-data-files.md"), "Basic Data Files");
+
+			// Data Entry folder
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"Data Entry", "curve-number-drainage-area-fields.md"), "Curve Number/Drainage Area Fields");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"Data Entry", "entry-help.md"), "Entry Help");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"Data Entry", "general.md"), "General");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"Data Entry", "rcn-screen.md"), "RCN Screen");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"Data Entry", "state-county.md"), "State/County");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"Data Entry", "time-of-concentration.md"), "Time Of Concentration");
+
+			// User Interface\Menu folder
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "Menu", "edit.md"), "Edit");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "Menu", "file.md"), "File");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "Menu", "help.md"), "Help");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "Menu", "toolbar.md"), "Toolbar");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "Menu", "tools.md"), "Tools");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "Menu", "view.md"), "View");
+
+			// User Interface folder
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "program-window.md"), "Program Window");
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, @"User Interface", "rainfall-discharge-data.md"), "Rainfall Discharge Data");
+
+			// Root help directory
+			realToDisplayFileNames.Add(Path.Combine(FileOperations.HelpFileDirectory, "glossary.md"), "Glossary");
 
 			this.InitializeComponent();
 
 			Task<bool> success = LoadMarkdownAsync(Path.Combine(FileOperations.HelpFileDirectory, @"Introduction\what-is-efh2.md"));
 
-			LoadFilesFromFolder(Path.Combine(FileOperations.HelpFileDirectory));
+			LoadFilesFromFolder(FileOperations.HelpFileDirectory);
+
+			ExpandAll(HelpFilesTreeView.RootNodes[0]);
+		}
+
+		private void QualifyImagePaths(string path)
+		{
+			DirectoryInfo dirInfo = new DirectoryInfo(path);
+
+			foreach (FileInfo file in dirInfo.GetFiles())
+			{
+				if (file.Extension != ".md") { continue; }
+
+				using (StreamReader sr = new StreamReader(file.FullName))
+				{
+					string content = sr.ReadToEnd();
+					foreach (string image in unqualifiedImageNames)
+					{
+						if (content.Contains(image))
+						{
+							content = content.Replace(image, Path.Combine(FileOperations.HelpFileDirectory, image));
+						}
+					}
+
+					sr.Close();
+					File.WriteAllText(file.FullName, content);
+				}
+			}
+
+			foreach (DirectoryInfo dir in dirInfo.GetDirectories())
+			{
+				QualifyImagePaths(dir.FullName);
+			}
+		}
+
+		private void ExpandAll(TreeViewNode node)
+		{
+			node.IsExpanded = true;
+
+			foreach (TreeViewNode child in node.Children)
+			{
+				ExpandAll(child);
+			}
 		}
 
 		private void LoadFilesFromFolder(string path)
@@ -83,7 +146,7 @@ namespace EFH2
 
 			foreach (FileInfo file in dirInfo.GetFiles("*.md"))
 			{
-				TreeViewNode node = new TreeViewNode() { Content = realToDisplayFileNames[file.Name] };
+				TreeViewNode node = new TreeViewNode() { Content = realToDisplayFileNames[file.FullName] };
 				rootNode.Children.Add(node);
 			}
 		}
@@ -122,17 +185,16 @@ namespace EFH2
 
 		private void MainTextBlock_LinkClicked(object sender, CommunityToolkit.WinUI.UI.Controls.LinkClickedEventArgs e)
 		{
-			Task<bool> success = LoadMarkdownAsync(Path.Combine(FileOperations.HelpFileDirectory, e.Link));
+			Task<bool> success = LoadMarkdownAsync(Path.Combine(FileOperations.HelpFileDirectory, e.Link.Replace("%20", " ")));
 		}
 
 		private void HelpFilesTreeView_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
 		{
-
 			if (args.AddedItems[0] is TreeViewNode node)
 			{
 				List<string> keys = realToDisplayFileNames.Where(kvp => kvp.Value == node.Content.ToString()).Select(kvp => kvp.Key).ToList();
 
-				if (keys.Any()) // Found the key
+				if (keys.Any()) // Found a key
 				{
 					Task<bool> success = LoadMarkdownAsync(Path.Combine(FileOperations.HelpFileDirectory, keys[0]));
 				}

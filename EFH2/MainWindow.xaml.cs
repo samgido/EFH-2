@@ -404,6 +404,23 @@ namespace EFH2
             Window newWindow = new Window();
             newWindow.Content = helpControl;
             newWindow.Activate();
+
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+            var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+
+            // Match title bar style with main window
+            appWindow.TitleBar.BackgroundColor = Colors.White;
+            appWindow.TitleBar.ForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonBackgroundColor = Colors.White;
+			appWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonHoverBackgroundColor = Colors.LightGray;
+			appWindow.TitleBar.ButtonHoverForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonPressedBackgroundColor = Colors.DarkGray;
+			appWindow.TitleBar.ButtonPressedForegroundColor = Colors.Black;
+
+
+			appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 600, Width = 900 });
 		}
 
         private void UserManualClick(object sender, RoutedEventArgs e)

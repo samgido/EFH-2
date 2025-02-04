@@ -11,11 +11,11 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="380"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView x:Name="HelpFilesTreeView" Grid.Column="0" SelectionChanged="HelpFilesTreeView_SelectionChanged" SelectionMode="Single">
+        <TreeView x:Name="HelpFilesTreeView" Grid.Column="0" SelectionChanged="HelpFilesTreeView_SelectionChanged" SelectionMode="Single" Padding="10,0,0,0" Background="Transparent">
             <TreeView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}"/>
@@ -23,7 +23,7 @@
             </TreeView.ItemTemplate> 
         </TreeView>     
 
-        <Frame Grid.Column="1">
+        <Frame Grid.Column="1" Background="Transparent">
             <ScrollViewer>
                 <community:MarkdownTextBlock x:Name="MainTextBlock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LinkClicked="MainTextBlock_LinkClicked"/>
             </ScrollViewer>

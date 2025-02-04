@@ -57,7 +57,7 @@
                 </MenuBarItem>
 
                 <MenuBarItem Title="Help" AccessKey="H">
-                    <MenuFlyoutItem Text="Help Contents (chm)" AccessKey="H" Click="HelpContentsClick"/>
+                    <MenuFlyoutItem Text="Help Contents (md)" AccessKey="H" Click="HelpContentsClick"/>
                     <MenuFlyoutItem Text="User Manual (pdf)" AccessKey="P" Click="UserManualClick"/>
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem Text="About" AccessKey="A" Click="AboutClick"/>

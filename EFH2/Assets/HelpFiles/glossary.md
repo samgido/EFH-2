@@ -2,12 +2,6 @@
 
 Data entry field definitions, sorted by the following screens:
 
-[Basic data](Glossary.htm#Basic_data)
-
-[Rainfall/Discharge data](Glossary.htm#Rainfall)
-
-[Average Slope Calculator](Glossary.htm#Slope)
-
 #### **Basic data**
 
 |**Field**|**Definition**|
@@ -29,8 +23,9 @@ Data entry field definitions, sorted by the following screens:
 |**Field**|**Definition**|
 |---|---|
 |**Rainfall Distribution**|Rainfall distributions used by SCS/NRCS are generally 24 hours in duration using NOAA Atlas 14, NOAA Atlas 2 and TP-40 data.|
-|**Dimensionless Unit Hydrograph**|The standard SCS dimensionless unit hydrograph can be transformed into discharge versus time hydrograph (UH) for any watershed, given drainage area, time of concentration, and peak rate factor.  The standard dimensionless unit hydrograph is 484 <standard>.|
-|**Frequency**<br><br>**Peak Flow**|Recurrence interval in years for the storms.<br><br>Maximum discharge in cubic feet per second for the runoff resulting from the defined storm.|
+|**Dimensionless Unit Hydrograph**|The standard SCS dimensionless unit hydrograph can be transformed into discharge versus time hydrograph (UH) for any watershed, given drainage area, time of concentration, and peak rate factor. The standard dimensionless unit hydrograph is 484 <standard>.|
+|**Frequency**|Recurrence interval in years for the storms.|
+|**Peak Flow**|Maximum discharge in cubic feet per second for the runoff resulting from the defined storm.|
 |**Runoff**|The volume of the excess precipitation, in inches on the watershed, not absorbed by the soil nor held on the vegetation.|
 |**Select Hydrograph**|The single or multiple hydrographs can be plots to view.|
 

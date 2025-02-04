@@ -23,7 +23,6 @@
 	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\HelpFiles\main.md" />
     <Content Remove="Assets\Programs\WinTR20_V32.exe" />
   </ItemGroup>
   <ItemGroup>
