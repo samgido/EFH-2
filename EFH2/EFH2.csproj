@@ -189,12 +189,11 @@
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
 
-    <!--
-        Removes unecessary files; from https://stackoverflow.com/a/75031150/21429345
-	-->
-	<Target Name="RemoveExcessFolders" AfterTargets="Build">
+	<Target Name="RemoveExcessLanguageFiles" AfterTargets="Publish">
+		<Message Importance="high" Text="Removing excess language files"/>
+
 		<ItemGroup>
-			<RemovingFiles Include="$(OutDir)*\*.mui" Exclude="$(OutDir)en-us\*.mui;$(OutDir)es-ES\*.mui" />
+			<RemovingFiles Include="$(PublishDir)*\*.mui" Exclude="$(PublishDir)en-us\*.mui;$(PublishDir)es-ES\*.mui" />
 			<RemovingFolders Include="@(RemovingFiles->'%(RootDir)%(Directory)')" />
 		</ItemGroup>
 
