@@ -6,7 +6,6 @@
 	  </ui:WixUI>
 
 	  <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
-	  <Media Id="2" Cabinet="cab2.cab" EmbedCab="yes"/>
 
     <Feature Id="Main" AllowAbsent="no" Description="The main components of the application, including WinTr20">
       <ComponentGroupRef Id="maincomp"/>

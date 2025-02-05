@@ -1,9 +1,8 @@
 ﻿<Project Sdk="WixToolset.Sdk/5.0.2">
-	<PropertyGroup>
-        <EnableProjectHarvesting>true</EnableProjectHarvesting>
-        <HarvestProjectsSupressUniqueIds>true</HarvestProjectsSupressUniqueIds>
-	</PropertyGroup>
-
+  <PropertyGroup>
+	  <DefineConstants>ProgramDataDir=EFH2ProgramData;DeployDir=Deploy</DefineConstants>
+	  <!--<DefineConstants>DeployDir=Deploy</DefineConstants>-->
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
     <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
@@ -11,19 +10,20 @@
   <ItemGroup>
     <ProjectReference Include="..\EFH2\EFH2.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <HarvestDirectory Include="..\EFH-2Publish\Deploy\">
+    <HarvestDirectory Include="Deploy">
 		<SuppressRootDirectory>true</SuppressRootDirectory>
-		<ComponentGroupName>maincomp</ComponentGroupName>
 		<DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+		<ComponentGroupName>maincomp</ComponentGroupName>
+		<PreprocessorVariable>DeployDir</PreprocessorVariable>
     </HarvestDirectory>
   </ItemGroup>
-
   <ItemGroup>
-    <HarvestDirectory Include="EFH2">
+    <HarvestDirectory Include="EFH2ProgramData">
+		<SuppressRootDirectory>true</SuppressRootDirectory>
+        <DirectoryRefId>ProgramDataFolder</DirectoryRefId>
         <ComponentGroupName>programdatacomp</ComponentGroupName>
-	    <DirectoryRefId>ProgramDataFolder</DirectoryRefId>
+		<PreprocessorVariable>ProgramDataDir</PreprocessorVariable>
     </HarvestDirectory>
   </ItemGroup>
 </Project>
