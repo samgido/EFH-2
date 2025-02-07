@@ -55,7 +55,53 @@ namespace EFH2
 				App.LogMessage($"Created blank input file at: {InputFilePath}");
 			}
 
+			LogFileExistance("WinTR20_V32.exe", Directory.GetParent(WinTr20Path).FullName);
+			LogFileExistance("Rainfall_data.csv", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
+			LogFileExistance("rftype.txt", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
+			LogFileExistance("duh.txt", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
+			LogFileExistance("COVER.txt", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
+			LogFileExistance("SOILS.hg", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
+
+			string rainfallDistributionsDirectory = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions");
+			if (Directory.Exists(rainfallDistributionsDirectory))
+			{
+				App.LogMessage("RainfallDistributions directory found at " + rainfallDistributionsDirectory);
+
+				// Not going to check for all files, just to see if there are the correct amount of files
+				int directoryItemsCount = Directory.GetFiles(rainfallDistributionsDirectory).Length;
+				int expected = 52;
+
+				App.LogMessage("RainfallDistributions has " + directoryItemsCount + " files, expected " + expected);
+			}
+			else
+			{
+				App.LogMessage("RainfallDistributions directory not found at " + rainfallDistributionsDirectory);
+			}
+
+			string duhDirectory = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs");
+			if (Directory.Exists(duhDirectory))
+			{
+				App.LogMessage("DimensionlessUnitHydrographs directory found at " + duhDirectory);
+
+				// Not going to check for all files, just to see if there are the correct amount of files
+				int directoryItemsCount = Directory.GetFiles(duhDirectory).Length;
+				int expected = 13;
+
+				App.LogMessage("DimensionlessUnitHydrographs has " + directoryItemsCount + " files, expected " + expected);
+			}
+			else
+			{
+				App.LogMessage("DimensionlessUnitHydrographs directory not found at " + duhDirectory);
+			}
+
 			return true;
+		}
+
+		private static void LogFileExistance(string filename, string fileDirectory)
+		{
+			string filePath = Path.Combine(fileDirectory, filename);
+			bool fileExists = File.Exists(filePath);
+			App.LogMessage(filename + " " + (fileExists ? "found" : "not found") + " at " + filePath);
 		}
 
         public static void SerializeData(MainViewModel model, TextWriter writer)
