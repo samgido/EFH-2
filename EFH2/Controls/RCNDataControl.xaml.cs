@@ -75,19 +75,34 @@ namespace EFH2
 		private void NavigationRadioButtonChecked(object sender, RoutedEventArgs e)
         {
             int index = 0;
-			if (sender as RadioButton == DevUrbanAreaRadioButton) { index = 5; }
-			else if (sender as RadioButton == CultivatedAgRadioButton) { index = 5; }
-			else if (sender as RadioButton == OtherAgRadioButton) { index = 7; }
-			else if (sender as RadioButton == AridRangelandRadioButton) { index = 8; }
+            if (sender as RadioButton == DevUrbanAreaRadioButton) { index = 5; }
+            else if (sender as RadioButton == CultivatedAgRadioButton) { index = 6; }
+            else if (sender as RadioButton == OtherAgRadioButton) { index = 7; }
+            else if (sender as RadioButton == AridRangelandRadioButton) { index = 8; }
 
             if (index < RcnCategoriesListView.Items.Count && DataContext is RcnDataViewModel model)
             {
-                var targetItem = model.RcnCategories[index];
-                RcnCategoriesListView.ScrollIntoView(targetItem);
+                RcnCategory targetItem = model.RcnCategories[index];
+                if (targetItem != null)
+                {
+                    RcnCategoriesListView.ScrollIntoView(targetItem, ScrollIntoViewAlignment.Leading);
+                }
             }
         }
 
-        public void Default()
+        private void NavigateToCategory(int index)
+		{
+			if (index < RcnCategoriesListView.Items.Count && DataContext is RcnDataViewModel model)
+			{
+				RcnCategory targetItem = model.RcnCategories[index];
+				if (targetItem != null)
+				{
+					RcnCategoriesListView.ScrollIntoView(targetItem, ScrollIntoViewAlignment.Leading);
+				}
+			}
+		}
+
+		public void Default()
         {
             AcresButton.IsChecked = true;
             PercentageButton.IsChecked = false;

@@ -1,6 +1,8 @@
 using Microsoft.UI.Xaml;
+//using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 using OxyPlot;
 using Svg;
 using System;
@@ -8,11 +10,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Interop;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using Windows.Graphics.Imaging;
+
+//using System.Windows.Media.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
+using Image = Microsoft.UI.Xaml.Controls.Image;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,7 +33,8 @@ namespace EFH2
 	{
 		public PlotController Controller = new PlotController();
 
-		public event EventHandler PrintHydrograph;
+		public event EventHandler PrintHydrographPdf;
+		public event EventHandler PrintHydrographPng;
 		public event EventHandler CloseWindow;
 
 		public OxyPlot.PlotView Plot => this.PlottedHydrograph;
@@ -45,42 +53,79 @@ namespace EFH2
 				var savePicker = new FileSavePicker();
 				savePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
 				savePicker.FileTypeChoices.Add("Bitmap", new List<string> { ".bmp" });
+				savePicker.FileTypeChoices.Add("PNG", new List<string> { ".png" });
 
 				var hwnd = WindowNative.GetWindowHandle((Application.Current as App)?.m_window as MainWindow);
 				InitializeWithWindow.Initialize(savePicker, hwnd);
 
 				StorageFile file = await savePicker.PickSaveFileAsync();
-				if (file != null)
+				if (file == null)
 				{
-					using (var stream = new MemoryStream())
-					{
-						//var exporter = new OxyPlot.SvgExporter { Width = 650, Height = 450 };
-						//exporter.Export(Plot.Model, stream);
-						//stream.Seek(0, SeekOrigin.Begin);
-						//var svgString = new StreamReader(stream).ReadToEnd();
-						//File.WriteAllText(file.Path, svgString);
-					}
-
-					Bitmap image = GetBitmap();
-
-					image.Save(file.Path);
+					App.LogException("Save hydrograph image file save picker error", new Exception("File not selected"));
+					return; // TODO handle dis
 				}
 
-				CachedFileManager.CompleteUpdatesAsync(file);
+				if (file.FileType == ".bmp")
+				{
+					Bitmap bmp = GetPlotBitmap();
+					bmp.Save(file.Path);
+
+					App.LogMessage("Save hydrograph as BMP at: " + file.Path);
+				}
+				else if (file.FileType == ".png")
+				{
+					RenderTargetBitmap renderBmp = new RenderTargetBitmap();
+					await renderBmp.RenderAsync(Plot);
+
+					var pixelBuffer = await renderBmp.GetPixelsAsync();
+
+					using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+					{
+						Windows.Graphics.Imaging.BitmapEncoder bmpEncoder = await Windows.Graphics.Imaging.BitmapEncoder.CreateAsync(Windows.Graphics.Imaging.BitmapEncoder.PngEncoderId, fileStream);
+						bmpEncoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)renderBmp.PixelWidth, (uint)renderBmp.PixelHeight, 96, 96, pixelBuffer.ToArray());
+						await bmpEncoder.FlushAsync();
+					}
+
+					App.LogMessage("Save hydrograph as PNG at: " + file.Path);
+				}
+				else { App.LogException("Save hydrograph image file save picker error", new Exception("File type not supported")); }
+
+				await CachedFileManager.CompleteUpdatesAsync(file);
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
+				App.LogException("Saving Hydrograph image", ex);
 			}
 		}
 
-		private void PrintPreviewClick(object sender, RoutedEventArgs e)
+		private async void PrintPreviewClick(object sender, RoutedEventArgs e)
 		{
+            Window newWindow = new Window();
+
+			// Add snapshot of plot to window
+			Page page = new Page();
+			RenderTargetBitmap plotBmp = new RenderTargetBitmap();
+			await plotBmp.RenderAsync(Plot);
+			Image plotImage = new Image();
+			plotImage.Source = plotBmp;
+
+			page.Content = plotImage;
+
+			newWindow.Content = page;
+            newWindow.Title = "Print Preview";
+            newWindow.Activate();
+
+			IntPtr hWnd = WindowNative.GetWindowHandle(newWindow);
+			var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+			var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+			appWindow.TitleBar.ForegroundColor = Microsoft.UI.Colors.Black;
 		}
 
-		private void PrintClick(object sender, RoutedEventArgs e)
+		private void PrintPdfClick(object sender, RoutedEventArgs e)
 		{
-			this.PrintHydrograph?.Invoke(this, EventArgs.Empty);
+			this.PrintHydrographPdf?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void ExitClick(object sender, RoutedEventArgs e)
@@ -90,12 +135,12 @@ namespace EFH2
 
 		private void CopyClick(object sender, RoutedEventArgs e)
 		{
-			Bitmap image = GetBitmap();
+			Bitmap image = GetPlotBitmap();
 			var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
 				image.GetHbitmap(),
 				IntPtr.Zero,
 				System.Windows.Int32Rect.Empty,
-				BitmapSizeOptions.FromEmptyOptions());
+				System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
 			System.Windows.Clipboard.SetImage(bitmapSource);
 		}
 
@@ -151,7 +196,7 @@ namespace EFH2
 			}
 		}
 
-		private Bitmap GetBitmap()
+		private Bitmap GetPlotBitmap()
 		{
 			var exporter = new OxyPlot.SvgExporter { Width = 650, Height = 450 };
 			string svgString = exporter.ExportToString(Plot.Model);

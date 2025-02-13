@@ -121,7 +121,6 @@ namespace EFH2
                 MainViewModel.BasicDataViewModel.selectedCounty,
                 MainViewModel.BasicDataViewModel.selectedState);
 
-
             // check if any are selected to be plotted
             bool plotGraph = false;
             foreach (StormViewModel storm in MainViewModel.RainfallDischargeDataViewModel.Storms)
@@ -137,7 +136,7 @@ namespace EFH2
             Window newWindow = new Window();
             newWindow.ExtendsContentIntoTitleBar = true;
             ShowHydrographPage page = new ShowHydrographPage() { DataContext = model };
-            page.PrintHydrograph += PrintHydrograph;
+            page.PrintHydrographPdf += PrintHydrographPdf;
 			page.CloseWindow += (o, e) => newWindow.Close();
             newWindow.Content = page;
             newWindow.Title = "Input / Output Plots";
@@ -161,7 +160,6 @@ namespace EFH2
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
         {
-
             if (e.AcresSelected)
             {
 				MainViewModel.BasicDataViewModel.drainageAreaEntry.Value = e.AccumulatedArea;
@@ -445,14 +443,14 @@ namespace EFH2
         }
 
 		#region Printing
-		private async void PrintHydrograph(object sender, EventArgs e)
+		private async void PrintHydrographPdf(object sender, EventArgs e)
 		{
             if (sender is ShowHydrographPage page)
             {
                 uiElements = new List<UIElement>();
                 uiElements.Add(page.Plot);
                 Task _ = StartPrintAsync();
-            }
+			}
         }
 
         private async void PrintClicked(object sender, RoutedEventArgs e)

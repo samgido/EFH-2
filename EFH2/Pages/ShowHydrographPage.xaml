@@ -28,7 +28,7 @@
             <MenuBarItem Title="File">
                 <MenuFlyoutItem Text="Save As" Click="SaveAsClick"/>
                 <MenuFlyoutItem Text="Print Preview" Click="PrintPreviewClick"/>
-                <MenuFlyoutItem Text="Print" Click="PrintClick"/>
+                <MenuFlyoutItem Text="Print (pdf)" Click="PrintPdfClick"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Exit" Click="ExitClick"/>
             </MenuBarItem>
@@ -51,7 +51,7 @@
 
             <AppBarButton Icon="Save" Click="SaveAsClick"/>
             <AppBarButton Icon="Preview" Click="PrintPreviewClick"/>
-            <AppBarButton Icon="Print" Click="PrintClick"/>
+            <AppBarButton Icon="Print" Click="PrintPdfClick"/>
             <AppBarButton Icon="Copy" Click="CopyClick"/>
         </CommandBar>
 
