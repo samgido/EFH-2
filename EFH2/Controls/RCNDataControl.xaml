@@ -74,7 +74,8 @@
 
         <ListView ItemsSource="{Binding Path=RcnCategories}" SelectionMode="None" x:Name="RcnCategoriesListView" 
                   RelativePanel.Below="ItemsViewLabels" RelativePanel.Above="ConversionSettings"
-                  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+                  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" 
+                  ShowsScrollingPlaceholders="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -110,7 +111,7 @@
                         <ListView ItemsSource="{Binding Path=Rows}" SelectionMode="None" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <local:RcnRowsControl DataContext="{Binding RelativeSource={RelativeSource}}"/>
+                                    <local:RcnRowsControl DataContext="{Binding RelativeSource={RelativeSource}}" Height="30"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
