@@ -1,9 +1,18 @@
 ﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui" xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal">
-  <Package Name="EFH-2" Manufacturer="USDA-dev" Version="1.0.0.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
+  <Package Name="EFH-2" Manufacturer="USDA" Version="1.0.0.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 
-	  <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER">
+	  <!--<ui:WixUI Id="WixUI_Minimal" InstallDirectory="INSTALLFOLDER">
+	  </ui:WixUI>-->
+
+	  <ui:WixUI Id="WixUI_InstallDir_NoLicense" InstallDirectory="INSTALLFOLDER">
 	  </ui:WixUI>
+
+	  <Property Id="OLDVERSIONFOUND">
+		  <DirectorySearch Id="PreviousInstallDir" Path="C:\Program Files (x86)\USDA\EFH2" Depth="0"/>
+	  </Property>
+
+	  <Launch Condition="NOT OLDVERSIONFOUND" Message="Old version of EFH-2 still installed on this system. Please uninstall it and re-run this installer."/>
 
 	  <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
 
@@ -20,7 +29,7 @@
 			  <Shortcut Id="ApplicationStartMenuShortcut"
 						Directory="ApplicationProgramFolder"
 						Advertise="no"
-						Name="EFH-2-dev"
+						Name="EFH-2"
 						Description="EFH-2 application"
 						Target="[INSTALLFOLDER]EFH2.exe"
 						WorkingDirectory="INSTALLFOLDER">
@@ -29,7 +38,7 @@
 			  <RemoveFolder On="uninstall" Id="ApplicationProgramFolder" Directory="ApplicationProgramFolder"/>
 			  <RemoveFolder On="uninstall" Id="EngineeringApplicationsFolder" Directory="EngineeringApplicationsFolder"/>
 
-			  <RegistryValue Root="HKCU" Key="Software\USDA-dev\EFH-2-dev" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			  <RegistryValue Root="HKCU" Key="Software\USDA\EFH-2" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
 		  </Component>
 	  </Feature>
   </Package>

@@ -1,29 +1,26 @@
 ﻿<Project Sdk="WixToolset.Sdk/5.0.2">
   <PropertyGroup>
-	  <DefineConstants>ProgramDataDir=EFH2ProgramData;DeployDir=Deploy</DefineConstants>
-	  <!--<DefineConstants>DeployDir=Deploy</DefineConstants>-->
+    <DefineConstants>ProgramDataDir=EFH2ProgramData;DeployDir=Deploy</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
     <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EFH2\EFH2.csproj" />
+	  <!--<Compile Include="CustomUI.wxs"/>-->
   </ItemGroup>
   <ItemGroup>
     <HarvestDirectory Include="Deploy">
-		<SuppressRootDirectory>true</SuppressRootDirectory>
-		<DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
-		<ComponentGroupName>maincomp</ComponentGroupName>
-		<PreprocessorVariable>DeployDir</PreprocessorVariable>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+      <ComponentGroupName>maincomp</ComponentGroupName>
+      <PreprocessorVariable>DeployDir</PreprocessorVariable>
     </HarvestDirectory>
   </ItemGroup>
   <ItemGroup>
     <HarvestDirectory Include="EFH2ProgramData">
-		<SuppressRootDirectory>true</SuppressRootDirectory>
-        <DirectoryRefId>ProgramDataFolder</DirectoryRefId>
-        <ComponentGroupName>programdatacomp</ComponentGroupName>
-		<PreprocessorVariable>ProgramDataDir</PreprocessorVariable>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <DirectoryRefId>ProgramDataFolder</DirectoryRefId>
+      <ComponentGroupName>programdatacomp</ComponentGroupName>
+      <PreprocessorVariable>ProgramDataDir</PreprocessorVariable>
     </HarvestDirectory>
   </ItemGroup>
 </Project>

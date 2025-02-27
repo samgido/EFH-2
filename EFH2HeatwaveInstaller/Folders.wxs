@@ -5,7 +5,7 @@
     </StandardDirectory>
 
 	  <StandardDirectory Id="CommonAppDataFolder">
-		  <Directory Id="USDAFolder" Name="USDA-dev">
+		  <Directory Id="USDAFolder" Name="USDA">
 			  <Directory Id="SharedEngineeringDataFolder" Name="Shared Engineering Data">
 				  <Directory Id="ProgramDataFolder" Name="EFH2">
 				  </Directory>
