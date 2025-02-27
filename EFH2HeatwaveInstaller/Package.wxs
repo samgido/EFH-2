@@ -2,9 +2,6 @@
   <Package Name="EFH-2" Manufacturer="USDA" Version="1.0.0.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 
-	  <!--<ui:WixUI Id="WixUI_Minimal" InstallDirectory="INSTALLFOLDER">
-	  </ui:WixUI>-->
-
 	  <ui:WixUI Id="WixUI_InstallDir_NoLicense" InstallDirectory="INSTALLFOLDER">
 	  </ui:WixUI>
 

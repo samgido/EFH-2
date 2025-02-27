@@ -3,15 +3,12 @@
 <!--
 First-time install dialog sequence:
  - WixUI_WelcomeDlg
- - WixUI_LicenseAgreementDlg
- - WixUI_InstallDirDlg
  - WixUI_VerifyReadyDlg
  - WixUI_DiskCostDlg
 
 Maintenance dialog sequence:
  - WixUI_MaintenanceWelcomeDlg
  - WixUI_MaintenanceTypeDlg
- - WixUI_InstallDirDlg
  - WixUI_VerifyReadyDlg
 
 Patch dialog sequence:
@@ -24,10 +21,6 @@ Patch dialog sequence:
 	<?foreach WIXUIARCH in X86;X64;A64 ?>
 	<Fragment>
 		<UI Id="WixUI_InstallDir_NoLicense_$(WIXUIARCH)">
-			<!--<Publish Dialog="BrowseDlg" Control="OK" Event="CheckTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1" />-->
-
-			<!--<Publish Dialog="InstallDirDlg" Control="Next" Event="CheckTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1" />
-			<Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4" />-->
 		</UI>
 
 		<UIRef Id="WixUI_InstallDir_NoLicense" />
@@ -37,12 +30,6 @@ Patch dialog sequence:
 	<?foreach WIXUIARCH in X86;X64;A64 ?>
 	<Fragment>
 		<UI Id="WixUI_InstallDir_NoLicense_ExtendedPathValidation_$(WIXUIARCH)">
-			<!--<Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath_$(WIXUIARCH)" Order="1" />
-			<Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="2" Condition="WIXUI_INSTALLDIR_VALID&lt;&gt;&quot;1&quot;" />-->
-
-			<!--<Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath_$(WIXUIARCH)" Order="1" />
-			<Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="2" Condition="WIXUI_INSTALLDIR_VALID&lt;&gt;&quot;1&quot;" />
-			<Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4" Condition="WIXUI_INSTALLDIR_VALID=&quot;1&quot;" />-->
 		</UI>
 
 		<UIRef Id="WixUI_InstallDir_NoLicense" />
@@ -70,20 +57,7 @@ Patch dialog sequence:
 
 			<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999" />
 
-			<!--<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Condition="NOT Installed" />
-			<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Condition="Installed AND PATCH" />-->
 			<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg"/>
-
-			<!--<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" />
-			<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Condition="LicenseAccepted = &quot;1&quot;" />-->
-
-			<!--<Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" />-->
-			<!--<Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="3" />-->
-			<!--<Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1" />-->
-			<!--<Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="VerifyReadyDlg" Order="2" />-->
-
-			<!--<Publish Dialog="BrowseDlg" Control="OK" Event="SetTargetPath" Value="[_BrowseProperty]" Order="3" />
-			<Publish Dialog="BrowseDlg" Control="OK" Event="EndDialog" Value="Return" Order="4" />-->
 
 			<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="1" Condition="NOT Installed" />
 			<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2" Condition="Installed AND NOT PATCH" />
@@ -102,4 +76,3 @@ Patch dialog sequence:
 	</Fragment>
 </Wix>
 
-<!-- CHANGES MADE: 'InstallDir_' => 'InstallDir_NoLicense ; Removed-->

@@ -5,7 +5,6 @@
   <ItemGroup>
     <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
     <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
-	  <!--<Compile Include="CustomUI.wxs"/>-->
   </ItemGroup>
   <ItemGroup>
     <HarvestDirectory Include="Deploy">

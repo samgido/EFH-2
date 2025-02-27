@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,7 +30,9 @@ namespace EFH2
     /// </summary>
     public partial class App : Application
     {
-        private static readonly string logFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EFH2", "EFH2.log");
+        private static readonly string logFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "EFH2");
+
+        private static string currentSessionLogFileName;
 
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
@@ -39,11 +42,19 @@ namespace EFH2
         {
             this.InitializeComponent();
 
+            currentSessionLogFileName = DateTime.Now.ToString("yyyy-MM-ddTHH mm ss") + ".log";
 
-            string logFileDirectory = logFilePath.Replace("EFH2.log", "");
-            if (!Directory.Exists(logFileDirectory))
+            Debug.WriteLine(System.IO.Path.Combine(logFileDirectory, currentSessionLogFileName));
+
+			if (!Directory.Exists(logFileDirectory))
             {
                 Directory.CreateDirectory(logFileDirectory);
+			}
+
+            foreach (string file in Directory.GetFiles(logFileDirectory))
+			{
+                if ((File.GetLastWriteTime(file) - DateTime.Now).TotalDays > 30)
+					File.Delete(file);
 			}
 
             // Temporary solution for issue 8810
@@ -64,13 +75,13 @@ namespace EFH2
         public static void LogException(string src, Exception? ex)
         {
 			string logMessage = $"[{DateTime.Now}] {src}: {ex?.Message}\nStack Trace: \n{ex?.StackTrace}\n";
-            File.AppendAllText(logFilePath, logMessage);
+            File.AppendAllText(System.IO.Path.Combine(logFileDirectory, currentSessionLogFileName), logMessage);
         }
 
         public static void LogMessage(string message)
         {
             string logMessage = $"[{DateTime.Now}] {message}\n";
-            File.AppendAllText(logFilePath, logMessage);
+            File.AppendAllText(System.IO.Path.Combine(logFileDirectory, currentSessionLogFileName), logMessage);
 		}
 
         /// <summary>
