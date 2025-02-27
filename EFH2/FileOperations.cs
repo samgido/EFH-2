@@ -32,7 +32,7 @@ namespace EFH2
 		private static string InputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.inp");
 		private static string OutputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.out");
 
-		public static string companyName = "USDA-dev";
+		public static string companyName = "USDA";
 
 		public static bool WinTr20Found => File.Exists(WinTr20Path);
 

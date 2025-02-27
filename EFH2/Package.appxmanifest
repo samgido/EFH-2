@@ -9,12 +9,12 @@
 
   <Identity
     Name="EFH2"
-    Publisher="CN=USDA-dev"
+    Publisher="CN=USDA"
     Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>EFH2</DisplayName>
-    <PublisherDisplayName>USDA-dev</PublisherDisplayName>
+    <PublisherDisplayName>USDA</PublisherDisplayName>
 	<Logo>Assets\Logos\StoreLogo.png</Logo>
   </Properties>
 
