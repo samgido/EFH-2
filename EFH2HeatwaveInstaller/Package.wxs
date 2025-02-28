@@ -2,6 +2,9 @@
   <Package Name="EFH-2" Manufacturer="USDA" Version="2.0.14.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 
+	  <Icon Id="EFH2.ico" SourceFile="EFH2.ico"/>
+	  <Property Id="ARPPRODUCTICON" Value="EFH2.ico"/>
+
 	  <ui:WixUI Id="WixUI_InstallDir_NoLicense" InstallDirectory="INSTALLFOLDER">
 	  </ui:WixUI>
 
