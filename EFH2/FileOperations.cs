@@ -62,6 +62,7 @@ namespace EFH2
 			LogFileExistance("COVER.txt", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
 			LogFileExistance("SOILS.hg", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
 
+			// Check Rainfall Distributions directory and files for existence
 			string rainfallDistributionsDirectory = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "RainfallDistributions");
 			if (Directory.Exists(rainfallDistributionsDirectory))
 			{
@@ -78,6 +79,7 @@ namespace EFH2
 				App.LogMessage("RainfallDistributions directory not found at " + rainfallDistributionsDirectory);
 			}
 
+			// Check DUH directory and files for existence
 			string duhDirectory = Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs");
 			if (Directory.Exists(duhDirectory))
 			{
@@ -92,6 +94,21 @@ namespace EFH2
 			else
 			{
 				App.LogMessage("DimensionlessUnitHydrographs directory not found at " + duhDirectory);
+			}
+
+			// Check help directory and files for existence
+			if (Directory.Exists(HelpFileDirectory))
+			{
+				App.LogMessage("Assets/HelpFiles directory found at " + HelpFileDirectory);
+
+				int directoryItemsCount = Directory.GetFiles(HelpFileDirectory).Length + Directory.GetDirectories(HelpFileDirectory).Length;
+				int expected = 23; 
+
+				App.LogMessage("Assets/HelpFiles has " + directoryItemsCount + " files, expected " + expected);
+			}
+			else
+			{
+				App.LogMessage("Assets/HelpFiles directory not found at " + HelpFileDirectory);
 			}
 
 			return true;

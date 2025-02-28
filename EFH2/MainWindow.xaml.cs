@@ -399,34 +399,50 @@ namespace EFH2
 
 		private async void HelpContentsClick(object sender, RoutedEventArgs e)
         {
-            HelpControl helpControl = new HelpControl();
-            Window newWindow = new Window();
-            newWindow.Content = helpControl;
-            newWindow.Activate();
+            try
+            {
+                HelpControl helpControl = new HelpControl();
+                Window newWindow = new Window();
+                newWindow.Content = helpControl;
+                newWindow.Title = "EFH-2 Help";
+                newWindow.Activate();
 
-            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
-            var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = AppWindow.GetFromWindowId(windowId);
+                IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+                var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+                var appWindow = AppWindow.GetFromWindowId(windowId);
 
-            // Match title bar style with main window
-            appWindow.TitleBar.BackgroundColor = Colors.White;
-            appWindow.TitleBar.ForegroundColor = Colors.Black;
-			appWindow.TitleBar.ButtonBackgroundColor = Colors.White;
-			appWindow.TitleBar.ButtonForegroundColor = Colors.Black;
-			appWindow.TitleBar.ButtonHoverBackgroundColor = Colors.LightGray;
-			appWindow.TitleBar.ButtonHoverForegroundColor = Colors.Black;
-			appWindow.TitleBar.ButtonPressedBackgroundColor = Colors.DarkGray;
-			appWindow.TitleBar.ButtonPressedForegroundColor = Colors.Black;
+                // Match title bar style with main window
+                appWindow.TitleBar.BackgroundColor = Colors.White;
+                appWindow.TitleBar.ForegroundColor = Colors.Black;
+                appWindow.TitleBar.ButtonBackgroundColor = Colors.White;
+                appWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+                appWindow.TitleBar.ButtonHoverBackgroundColor = Colors.LightGray;
+                appWindow.TitleBar.ButtonHoverForegroundColor = Colors.Black;
+                appWindow.TitleBar.ButtonPressedBackgroundColor = Colors.DarkGray;
+                appWindow.TitleBar.ButtonPressedForegroundColor = Colors.Black;
 
-
-			appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 600, Width = 900 });
+                appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 600, Width = 900 });
+            }
+            catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+                App.LogException("HelpContentsClick", ex);
+			}
 		}
 
         private void UserManualClick(object sender, RoutedEventArgs e)
 		{
-            string pdfPath = Path.Combine(FileOperations.ProgramFilesDirectory, FileOperations.companyName, "EFH2", "EFH-2 Users Manual.pdf");
+            string pdfPath = Path.Combine(FileOperations.HelpFileDirectory, "EFH-2 Users Manual.pdf");
+            Task _ = LaunchFileAsync(pdfPath);
+		}
 
-            Process.Start(new ProcessStartInfo(pdfPath) { UseShellExecute = true });
+        private async Task LaunchFileAsync(string path)
+        {
+            try
+            {
+				await Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(path));
+            }
+            catch (Exception ex) { App.LogException("LaunchFileAsync, path: " + path, ex); }
 		}
 
 		private async void AboutClick(object sender, RoutedEventArgs e)
