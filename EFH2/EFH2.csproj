@@ -55,8 +55,8 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<TargetPath>.\WinTR20_V32.exe</TargetPath>
 		</None>
-		<None Update="Assets\HelpFiles\*">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>	
+		<None Update="Assets\HelpFiles\**\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
 	</ItemGroup>
 
@@ -190,7 +190,7 @@
   </PropertyGroup>
 
 	<Target Name="RemoveExcessLanguageFiles" AfterTargets="Publish">
-		<Message Importance="high" Text="Removing excess language files"/>
+		<Message Importance="high" Text="Removing excess language files" />
 
 		<ItemGroup>
 			<RemovingFiles Include="$(PublishDir)*\*.mui" Exclude="$(PublishDir)en-us\*.mui;$(PublishDir)es-ES\*.mui" />

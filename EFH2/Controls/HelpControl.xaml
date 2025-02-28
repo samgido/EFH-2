@@ -23,9 +23,9 @@
             </TreeView.ItemTemplate> 
         </TreeView>     
 
-        <Frame Grid.Column="1" Background="Transparent">
-            <ScrollViewer>
-                <community:MarkdownTextBlock x:Name="MainTextBlock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LinkClicked="MainTextBlock_LinkClicked"/>
+        <Frame Grid.Column="1">
+            <ScrollViewer Padding="10">
+                <community:MarkdownTextBlock Background="Transparent" x:Name="MainTextBlock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LinkClicked="MainTextBlock_LinkClicked"/>
             </ScrollViewer>
         </Frame>
     </Grid>

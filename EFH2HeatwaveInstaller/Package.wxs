@@ -9,7 +9,7 @@
 		  <DirectorySearch Id="PreviousInstallDir" Path="C:\Program Files (x86)\USDA\EFH2" Depth="0"/>
 	  </Property>
 
-	  <Launch Condition="NOT OLDVERSIONFOUND" Message="Old version of EFH-2 still installed on this system. Please uninstall it and re-run this installer."/>
+	  <Launch Condition="NOT OLDVERSIONFOUND" Message="An older, 32-bit version of EFH-2 is installed on this system. Please uninstall it and re-run this installer."/>
 
 	  <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
 
