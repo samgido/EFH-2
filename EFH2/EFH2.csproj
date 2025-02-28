@@ -57,7 +57,7 @@
 		</None>
 		<None Update="Assets\HelpFiles\**\*">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
+		</None>
 	</ItemGroup>
 
   <ItemGroup>

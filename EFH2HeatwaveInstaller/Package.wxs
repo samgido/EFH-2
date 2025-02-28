@@ -1,15 +1,15 @@
 ﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui" xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal">
-  <Package Name="EFH-2" Manufacturer="USDA" Version="1.0.0.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
+  <Package Name="EFH-2" Manufacturer="USDA" Version="2.0.14.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 
 	  <ui:WixUI Id="WixUI_InstallDir_NoLicense" InstallDirectory="INSTALLFOLDER">
 	  </ui:WixUI>
 
-	  <Property Id="OLDVERSIONFOUND">
-		  <DirectorySearch Id="PreviousInstallDir" Path="C:\Program Files (x86)\USDA\EFH2" Depth="0"/>
+	  <Property Id="OLDVERSIONFOUND_DEFAULTLOCATION">
+		  <DirectorySearch Id="DefaultLocationSearch" Path="C:\Program Files (x86)\USDA\EFH2"/>
 	  </Property>
 
-	  <Launch Condition="NOT OLDVERSIONFOUND" Message="An older, 32-bit version of EFH-2 is installed on this system. Please uninstall it and re-run this installer."/>
+	  <Launch Condition="NOT OLDVERSIONFOUND_DEFAULTLOCATION" Message="An older, 32-bit version of EFH-2 is installed on this system. Please uninstall it and re-run this installer."/>
 
 	  <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
 
@@ -20,7 +20,7 @@
 	  <Feature Id="ProgramData" AllowAbsent="no" Description="Data used by EFH-2">
 		  <ComponentGroupRef Id="programdatacomp"/>
 	  </Feature>
-
+	  
 	  <Feature Id="Shortcut">
 		  <Component Id="ShortcutComponent" Guid="EFF3A4CF-F09A-4D8F-A33A-0506ACDB76B6">
 			  <Shortcut Id="ApplicationStartMenuShortcut"

@@ -26,7 +26,7 @@ namespace EFH2
 		public static string ProgramFilesDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
 		public static string MainExecutableDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Replace(@"file:\", "");
-		public static string HelpFileDirectory => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "Assets", "HelpFiles").Replace(@"file:\", "");
+		public static string HelpFileDirectory => Path.Combine(MainExecutableDirectory, "Assets", "HelpFiles");
 
 		private static string WinTr20Path => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "WinTR20_V32.exe").Replace(@"file:\", "");		
 		private static string InputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.inp");
@@ -102,7 +102,7 @@ namespace EFH2
 				App.LogMessage("Assets/HelpFiles directory found at " + HelpFileDirectory);
 
 				int directoryItemsCount = Directory.GetFiles(HelpFileDirectory).Length + Directory.GetDirectories(HelpFileDirectory).Length;
-				int expected = 23; 
+				int expected = 24; 
 
 				App.LogMessage("Assets/HelpFiles has " + directoryItemsCount + " files, expected " + expected);
 			}

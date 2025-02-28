@@ -1,6 +1,6 @@
 ﻿<Project Sdk="WixToolset.Sdk/5.0.2">
   <PropertyGroup>
-    <DefineConstants>ProgramDataDir=EFH2ProgramData;DeployDir=Deploy</DefineConstants>
+    <DefineConstants>ProgramDataDir=EFH2ProgramData;DeployDir=Deploy;AppDataDir=EFH2AppData</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WixToolset.Heat" Version="5.0.2" />

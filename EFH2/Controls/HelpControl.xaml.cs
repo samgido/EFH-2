@@ -24,14 +24,12 @@ namespace EFH2
 	public sealed partial class HelpControl : UserControl
 	{
 		// These files in the initial markdown file need to be replaced with their full path
-		private List<string> replacedFiles = new List<string>() { };
 		private List<string> unqualifiedImageNames = new List<string>();
 
 		private Dictionary<string, string> realToDisplayFileNames = new Dictionary<string, string>();
 
 		public HelpControl()
 		{
-			// Qualify image paths
 			foreach (FileInfo f in new DirectoryInfo(FileOperations.HelpFileDirectory).GetFiles())
 			{
 				if (f.Extension == ".png")
@@ -39,8 +37,6 @@ namespace EFH2
 					unqualifiedImageNames.Add(f.Name);
 				}
 			}
-
-			QualifyImagePaths(FileOperations.HelpFileDirectory);
 
 			Debug.WriteLine("HelpControl created");
 
@@ -80,36 +76,6 @@ namespace EFH2
 			LoadFilesFromFolder(FileOperations.HelpFileDirectory);
 
 			ExpandAll(HelpFilesTreeView.RootNodes[0]);
-		}
-
-		private void QualifyImagePaths(string path)
-		{
-			DirectoryInfo dirInfo = new DirectoryInfo(path);
-
-			foreach (FileInfo file in dirInfo.GetFiles())
-			{
-				if (file.Extension != ".md") { continue; }
-
-				using (StreamReader sr = new StreamReader(file.FullName))
-				{
-					string content = sr.ReadToEnd();
-					foreach (string image in unqualifiedImageNames)
-					{
-						if (content.Contains(image))
-						{
-							content = content.Replace(image, Path.Combine(FileOperations.HelpFileDirectory, image));
-						}
-					}
-
-					sr.Close();
-					File.WriteAllText(file.FullName, content);
-				}
-			}
-
-			foreach (DirectoryInfo dir in dirInfo.GetDirectories())
-			{
-				QualifyImagePaths(dir.FullName);
-			}
 		}
 
 		private void ExpandAll(TreeViewNode node)
@@ -167,7 +133,7 @@ namespace EFH2
 
 				string content = await File.ReadAllTextAsync(path);
 
-				foreach (string image in replacedFiles)
+				foreach (string image in unqualifiedImageNames)
 				{
 					content = content.Replace(image, Path.Combine(FileOperations.HelpFileDirectory, image));
 				}
