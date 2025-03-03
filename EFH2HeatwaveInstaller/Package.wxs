@@ -11,7 +11,13 @@
 	  </ui:WixUI>
 
 	  <Property Id="OLDVERSIONFOUND_DEFAULTLOCATION">
-		  <DirectorySearch Id="DefaultLocationSearch" Path="C:\Program Files (x86)\USDA\EFH2"/>
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{B384647C-9850-418D-8E33-EFDBDA225768}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
 	  </Property>
 
 	  <Launch Condition="NOT OLDVERSIONFOUND_DEFAULTLOCATION" Message="An older, 32-bit version of EFH-2 is installed on this system. Please uninstall it and re-run this installer."/>
