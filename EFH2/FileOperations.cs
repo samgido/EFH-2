@@ -22,6 +22,10 @@ namespace EFH2
 	public static class FileOperations
     {
 		private static string ProgramDataDirectory => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+		private static string RainfallDistributionTypesDirectory => Path.Combine(ProgramDataDirectory, "USDA", "Shared Engineering Data", "EFH2", "RainfallDistributions");
+		private static string DuhTypesDirectory => Path.Combine(ProgramDataDirectory, "USDA", "Shared Engineering Data", "EFH2", "DimensionlessUnitHydrographs");
+
 		private static string AppDataDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string ProgramFilesDirectory => Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
@@ -1009,6 +1013,61 @@ namespace EFH2
 		public static bool IsWinTr20ExecutableFound()
 		{
 			return File.Exists(WinTr20Path);
+		}
+
+		public static List<float> GetRainfallDistributionData(string type)
+		{
+			if (type == "AM SAMOA")
+			{
+				type = "Am_samoa";
+			}
+
+			string filePath = Path.Combine(RainfallDistributionTypesDirectory, "Type " + type + ".tbl");
+
+			if (!File.Exists(filePath))
+			{
+				Debug.WriteLine("Rainfall distribution file not found at " + filePath);	
+				return new List<float>();
+			}
+
+			string[] lines = File.ReadAllLines(filePath);
+			return GetDataFromStrings(lines);
+		}
+
+		public static List<float> GetDuhData(string type)
+		{
+			string filePath = Path.Combine(DuhTypesDirectory, type + ".duh");
+
+			if (!File.Exists(filePath))
+			{
+				Debug.WriteLine("Duh file not found at " + filePath);	
+				return new List<float>();
+			}
+
+			string[] lines = File.ReadAllLines(filePath);
+			return GetDataFromStrings(lines);
+		}
+
+		private static List<float> GetDataFromStrings(string[] lines)
+		{
+			List<float> data = new List<float>();
+
+			for (int i = 1; i < lines.Count(); i++)
+			{
+				string line = lines[i].Trim();
+
+				string[] lineElements = line.Split(' ');
+
+				foreach (string element in lineElements)
+				{
+					if (float.TryParse(element, out float value))
+					{
+						data.Add(value);
+					}
+				}
+			}
+
+			return data;
 		}
 	}
 

@@ -40,6 +40,7 @@
     <None Remove="Controls\RCNDataControl.xaml" />
     <None Remove="Controls\RcnRowsControl.xaml" />
     <None Remove="HelpContents.xaml" />
+    <None Remove="Pages\BasicPlotPage.xaml" />
     <None Remove="Pages\HsgPage.xaml" />
     <None Remove="Pages\RCNDataConversionPage.xaml" />
     <None Remove="Pages\ShowHydrographPage.xaml" />
@@ -87,6 +88,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Page Update="Pages\BasicPlotPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\HelpControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

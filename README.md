@@ -1,0 +1,1 @@
+To build installer, you need to deploy the WinUI3 project. There is already a publish profile in the project already, but the installer project will expect it the deploy output in EFH2HeatwaveInstaller\Deploy

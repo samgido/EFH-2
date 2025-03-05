@@ -22,6 +22,9 @@ using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 using EFH2.Models;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -66,6 +69,8 @@ namespace EFH2
 
             RainfallDischargeDataControl.DataContext = MainViewModel.RainfallDischargeDataViewModel;
 			RainfallDischargeDataControl.CreateHydrograph += CreateHydrograph;
+			RainfallDischargeDataControl.PlotRainfallDistribution += PlotRainfallDistribution;
+			RainfallDischargeDataControl.PlotDuh += PlotDuh;
 
             RcnDataControl.DataContext = MainViewModel.RcnDataViewModel;
             RcnDataControl.UnitsChanged += ChangeRcnUnits;
@@ -151,12 +156,124 @@ namespace EFH2
             appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 800, Width = 1000 });
         }
 
+		private void PlotRainfallDistribution(object sender, EventArgs e)
+		{
+            string type = MainViewModel.RainfallDischargeDataViewModel.selectedRainfallDistributionType;
+            List<float> data = FileOperations.GetRainfallDistributionData(type);
+
+            // Make series for plotModel
+            LineSeries line = new LineSeries
+            {
+                Title = "",
+                MarkerType = MarkerType.None,
+            };
+
+            double step = 24.0 / (float)(data.Count-1);
+			for (int i = 0; i < data.Count; i++)
+			{
+				line.Points.Add(new DataPoint(i * step, data[i]));
+			}
+
+			PlotModel plotModel = new PlotModel()
+            {
+                Title = type,
+                Axes =
+                {
+                    new LinearAxis { Position = AxisPosition.Bottom, Title = "Time (hr)" },
+                    new LinearAxis { Position = AxisPosition.Left },
+                },
+            };
+
+            plotModel.Series.Add(line);
+
+            // Make window for plot
+            Window newWindow = new Window();
+            newWindow.ExtendsContentIntoTitleBar = true;
+            BasicPlotPage page = new BasicPlotPage(plotModel);
+            page.Close += (o, e) => newWindow.Close();
+            newWindow.Content = page;
+            newWindow.Title = "Rainfall Distribution";
+            newWindow.Activate();
+
+			IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+			var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+			var appWindow = AppWindow.GetFromWindowId(windowId);
+
+			// Match title bar style with main window
+			appWindow.TitleBar.BackgroundColor = Colors.White;
+			appWindow.TitleBar.ForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+			appWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonHoverBackgroundColor = Colors.LightGray;
+			appWindow.TitleBar.ButtonHoverForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonPressedBackgroundColor = Colors.DarkGray;
+			appWindow.TitleBar.ButtonPressedForegroundColor = Colors.Black;
+
+			appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 600, Width = 900 });
+		}
+
+		private void PlotDuh(object sender, EventArgs e)
+		{
+            string type = MainViewModel.RainfallDischargeDataViewModel.selectedDuhType;
+            List<float> data = FileOperations.GetDuhData(type);
+
+            // Make series for plotModel
+            LineSeries line = new LineSeries
+            {
+                Title = "",
+                MarkerType = MarkerType.None,
+            };
+
+            double step = 24.0 / (float)(data.Count-1);
+			for (int i = 0; i < data.Count; i++)
+			{
+				line.Points.Add(new DataPoint(i * step, data[i]));
+			}
+
+			PlotModel plotModel = new PlotModel()
+            {
+                Title = type,
+                Axes =
+                {
+                    new LinearAxis { Position = AxisPosition.Bottom, Title = "Time (hr)" },
+                    new LinearAxis { Position = AxisPosition.Left },
+                },
+            };
+
+            plotModel.Series.Add(line);
+
+            // Make window for plot
+            Window newWindow = new Window();
+            newWindow.ExtendsContentIntoTitleBar = true;
+            BasicPlotPage page = new BasicPlotPage(plotModel);
+            page.Close += (o, e) => newWindow.Close();
+            newWindow.Content = page;
+            newWindow.Title = "Dimensionless Unit Hydrograph";
+            newWindow.Activate();
+
+			IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(newWindow);
+			var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+			var appWindow = AppWindow.GetFromWindowId(windowId);
+
+			// Match title bar style with main window
+			appWindow.TitleBar.BackgroundColor = Colors.White;
+			appWindow.TitleBar.ForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+			appWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonHoverBackgroundColor = Colors.LightGray;
+			appWindow.TitleBar.ButtonHoverForegroundColor = Colors.Black;
+			appWindow.TitleBar.ButtonPressedBackgroundColor = Colors.DarkGray;
+			appWindow.TitleBar.ButtonPressedForegroundColor = Colors.Black;
+
+			appWindow.Resize(new Windows.Graphics.SizeInt32 { Height = 600, Width = 900 });
+		}
+
 		private void ChangeRcnUnits(object sender, RoutedEventArgs e)
         {
             if (MainViewModel.RcnDataViewModel.AccumulatedArea.Equals(0)) return;
 
             RcnDataControl.CreateUnitChangePopup(MainViewModel);
-        }
+		}
 
         private void AcceptRcnValues(object sender, AcceptRcnValuesEventArgs e)
         {

@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,13 +20,21 @@ using Windows.Foundation.Collections;
 namespace EFH2
 {
 	/// <summary>
-	/// An empty window that can be used on its own or navigated to within a Frame.
+	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class HelpContents : Window
+	public sealed partial class BasicPlotPage : Page
 	{
-		public HelpContents()
+		public event EventHandler? Close;
+
+		public PlotModel Model { get; private set; }
+
+		public BasicPlotPage(PlotModel model)
 		{
 			this.InitializeComponent();
+
+			this.Model = model;
 		}
+
+		private void Button_Click(object sender, RoutedEventArgs e) { this.Close?.Invoke(this, EventArgs.Empty); }
 	}
 }

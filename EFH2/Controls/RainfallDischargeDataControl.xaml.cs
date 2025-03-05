@@ -22,16 +22,35 @@ namespace EFH2
     {
 		public event EventHandler? CreateHydrograph;
 
+        public event EventHandler? PlotRainfallDistribution;
+
+        public event EventHandler? PlotDuh;
+
         public Button PlotSelectedHydrographsButton => this.PlotHydrograph;
 
         public RainfallDischargeDataControl()
         {
             this.InitializeComponent();
+
+            this.RainfallDistributionType.SelectionChanged += (sender, e) =>
+            {
+                this.RainfallDistributionTypePlotButton.IsEnabled = this.RainfallDistributionType.SelectedIndex != 0;
+            };
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void PlotHydrographClick(object sender, RoutedEventArgs e)
         {
             this.CreateHydrograph?.Invoke(this, EventArgs.Empty);
         }
-    }
+
+		private void PlotRainfallDistributionClick(object sender, RoutedEventArgs e)
+		{
+            this.PlotRainfallDistribution?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void PlotDuhClick(object sender, RoutedEventArgs e)
+		{
+            this.PlotDuh?.Invoke(this, EventArgs.Empty);
+		}
+	}
 }
