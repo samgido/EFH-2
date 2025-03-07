@@ -86,7 +86,11 @@ namespace EFH2
 				FileOperations.RunWinTr20Async();
 
 				string outputContents = FileOperations.ReadOutputFile();
-                FileOperations.ParseOutput(outputContents, RainfallDischargeDataViewModel.Storms);
+
+                if (!FileOperations.DidWinTr20HaveError())
+                {
+					FileOperations.ParseOutput(outputContents, RainfallDischargeDataViewModel.Storms);
+                }
             }
         }
 

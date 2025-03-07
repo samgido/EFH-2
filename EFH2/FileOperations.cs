@@ -1074,6 +1074,30 @@ namespace EFH2
 
 			return data;
 		}
+
+		public static bool DidWinTr20HaveError()
+		{
+			string errorPath = Path.Combine(AppDataDirectory, "EFH2", "tr20.err");
+
+			if (!File.Exists(errorPath))
+			{
+				App.LogMessage("FileOperations.DidWinTr20HaveError() ran without error file present");
+				return true;
+			}
+
+			string errorMessage = File.ReadAllText(errorPath);
+			bool error = errorMessage != "";
+
+			if (error)
+			{
+				App.LogMessage("WinTR20 had error:\n" + errorMessage);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 
 	public delegate int? GetSelectedIndexDelegate(string type);
