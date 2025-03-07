@@ -1,6 +1,6 @@
 ﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui" xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal">
-  <Package Name="EFH-2" Manufacturer="USDA" Version="2.0.14.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a">
-    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+  <Package Name="EFH-2" Manufacturer="USDA" Version="2.0.14.0" UpgradeCode="f1184f64-bad2-4f94-baaf-7820040c142a" ProductCode="F22DB572-3DD9-4B1E-843D-25AD72833FC7">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)"/>
 
 	  <WixVariable Id="WixUILicenseRtf" Value="license.rtf"/>
 
@@ -10,9 +10,68 @@
 	  <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER">
 	  </ui:WixUI>
 
-	  <Property Id="OLDVERSIONFOUND_DEFAULTLOCATION">
+		<!-- Month/Year : {PRODUCTCODE}
+		9/19 : {D35459E0-5033-4066-B55C-9EB0EB035D48}
+		10/20 : {0DD91540-1C44-4818-83CA-BC2D29F57278}
+		1/21 : {84F26624-7066-4ABF-9E80-36E0FB564A71}
+		5/21 : {30112CB3-54E0-4959-8A1A-5838F120C949}
+		7/22 : {B384647C-9850-418D-8E33-EFDBDA225768}
+		10/22 : {B384647C-9850-418D-8E33-EFDBDA225768}
+		6/24 : {B384647C-9850-418D-8E33-EFDBDA225768}
+		3/21 : {2648F4CD-50C4-40D5-BFE2-31A6DBD49530}-->
+
+	  <Property Id="OLDVERSIONFOUND_PRODUCTCODE">
 		  <RegistrySearch 
-			  Id="CheckFor32BitApp" 
+			  Id="CheckFor32BitApp_6.24" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{B384647C-9850-418D-8E33-EFDBDA225768}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_3.21" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{2648F4CD-50C4-40D5-BFE2-31A6DBD49530}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_9.19" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{D35459E0-5033-4066-B55C-9EB0EB035D48}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_10.20" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{0DD91540-1C44-4818-83CA-BC2D29F57278}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_1.21" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{2648F4CD-50C4-40D5-BFE2-31A6DBD49530}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_5.21" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{30112CB3-54E0-4959-8A1A-5838F120C949}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_7.22" 
+			  Root="HKLM" 
+			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{B384647C-9850-418D-8E33-EFDBDA225768}" 
+			  Type="raw"
+			  Name="DisplayName"
+			  Bitness="always32" />
+		  <RegistrySearch 
+			  Id="CheckFor32BitApp_10.22" 
 			  Root="HKLM" 
 			  Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{B384647C-9850-418D-8E33-EFDBDA225768}" 
 			  Type="raw"
@@ -20,11 +79,16 @@
 			  Bitness="always32" />
 	  </Property>
 
+	  <Property Id="OLDVERSIONFOUND_DEFAULTINSTALLLOCATION">
+		  <DirectorySearch Id="DefaultLocationSearch" Path="C:\Program Files (x86)\USDA\EFH2"/>
+	  </Property>
+
+	  <Launch Condition="NOT OLDVERSIONFOUND_PRODUCTCODE" Message="An older, 32-bit version of EFH-2 is installed on this system. Please uninstall it and re-run this installer."/>
 	  <Launch Condition="NOT OLDVERSIONFOUND_DEFAULTLOCATION" Message="An older, 32-bit version of EFH-2 is installed on this system. Please uninstall it and re-run this installer."/>
 
 	  <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
 
-    <Feature Id="Main" AllowAbsent="no" Description="The main components of the application, including WinTr20">
+    <Feature Id="Main" AllowAbsent="no" Description="The main components of the application, includes WinTr20">
       <ComponentGroupRef Id="maincomp"/>
     </Feature>
 

@@ -4,3 +4,6 @@ EFH2/bin/*
 EFH2HeatwaveInstaller/bin/*
 EFH2HeatwaveInstaller/obj/*
 EFH2HeatwaveInstaller/Deploy/*
+
+.vs/*
+.vs/

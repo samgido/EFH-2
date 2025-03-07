@@ -1036,6 +1036,11 @@ namespace EFH2
 
 		public static List<float> GetDuhData(string type)
 		{
+			if (type == "<standard>")
+			{
+				type = "standard";
+			}
+
 			string filePath = Path.Combine(DuhTypesDirectory, type + ".duh");
 
 			if (!File.Exists(filePath))
