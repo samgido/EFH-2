@@ -46,7 +46,7 @@
                 </MenuBarItem>
 
                 <MenuBarItem Title="View" AccessKey="V">
-                    <ToggleMenuFlyoutItem Text="Toolbar" x:Name="ToolbarToggle" AccessKey="T" Click="ToggleToolbar"/>
+                    <ToggleMenuFlyoutItem Text="Toolbar" x:Name="ToolbarToggle" AccessKey="T" Click="ToggleToolbar" IsChecked="True"/>
                 </MenuBarItem>
 
                 <MenuBarItem Title="Tools" AccessKey="T">

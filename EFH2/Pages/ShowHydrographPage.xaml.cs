@@ -34,7 +34,6 @@ namespace EFH2
 		public PlotController Controller = new PlotController();
 
 		public event EventHandler PrintHydrographPdf;
-		public event EventHandler PrintHydrographPng;
 		public event EventHandler CloseWindow;
 
 		public OxyPlot.PlotView Plot => this.PlottedHydrograph;
