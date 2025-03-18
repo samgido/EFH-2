@@ -32,7 +32,8 @@ namespace EFH2
 		public static string MainExecutableDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Replace(@"file:\", "");
 		public static string HelpFileDirectory => Path.Combine(MainExecutableDirectory, "Assets", "HelpFiles");
 
-		private static string WinTr20Path => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), "WinTR20_V32.exe").Replace(@"file:\", "");		
+		private static string WinTr20ExecutableName => "WinTR20_V64.exe";
+		private static string WinTr20Path => Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase), WinTr20ExecutableName).Replace(@"file:\", "");		
 		private static string InputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.inp");
 		private static string OutputFilePath => Path.Combine(AppDataDirectory, "EFH2", "tr20.out");
 
@@ -59,7 +60,7 @@ namespace EFH2
 				App.LogMessage($"Created blank input file at: {InputFilePath}");
 			}
 
-			LogFileExistance("WinTR20_V32.exe", Directory.GetParent(WinTr20Path).FullName);
+			LogFileExistance(WinTr20ExecutableName, Directory.GetParent(WinTr20Path).FullName);
 			LogFileExistance("Rainfall_data.csv", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
 			LogFileExistance("rftype.txt", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));
 			LogFileExistance("duh.txt", Path.Combine(ProgramDataDirectory, companyName, "Shared Engineering Data", "EFH2"));

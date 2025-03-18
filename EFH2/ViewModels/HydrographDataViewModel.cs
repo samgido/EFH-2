@@ -69,6 +69,7 @@ namespace EFH2
 			LineSeries series = new LineSeries()
 			{
 				Title = model.Frequency + "-Yr",
+				TrackerFormatString = "{0}\n{1}: {2:0.00}\n{3}: {4:0.00}",
 			};
 
 			for (int i = 0; i < model.Values.Count; i++)

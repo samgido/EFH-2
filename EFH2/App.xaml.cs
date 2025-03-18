@@ -49,12 +49,27 @@ namespace EFH2
 			if (!Directory.Exists(logFileDirectory))
             {
                 Directory.CreateDirectory(logFileDirectory);
-			}
+            }
 
-            foreach (string file in Directory.GetFiles(logFileDirectory))
-			{
-                if ((File.GetLastWriteTime(file) - DateTime.Now).TotalDays > 30)
-					File.Delete(file);
+            try
+            {
+                int maxFileCount = 10;
+                FileInfo[] files = new DirectoryInfo(logFileDirectory).GetFiles();
+
+                if (files.Length > maxFileCount)
+                {
+                    // Files to delete
+                    files = files.OrderByDescending(f => f.LastWriteTime).ToArray().Skip(maxFileCount).ToArray();
+
+                    foreach (FileInfo file in files)
+					{
+						file.Delete();
+					}
+				}
+            }
+            catch (Exception e)
+            {
+				LogException("Log File Cleanup", e);
 			}
 
             // Temporary solution for issue 8810

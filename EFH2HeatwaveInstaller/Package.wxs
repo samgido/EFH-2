@@ -10,6 +10,7 @@
 	  <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER">
 	  </ui:WixUI>
 
+		<!-- Guide for old EFH-2 ProductCodes -->
 		<!-- Month/Year : {PRODUCTCODE}
 		9/19 : {D35459E0-5033-4066-B55C-9EB0EB035D48}
 		10/20 : {0DD91540-1C44-4818-83CA-BC2D29F57278}
@@ -88,7 +89,7 @@
 
 	  <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes"/>
 
-    <Feature Id="Main" AllowAbsent="no" Description="The main components of the application, includes WinTr20">
+    <Feature Id="Main" AllowAbsent="no" Description="The main components of the application, includes WinTr20 simulator">
       <ComponentGroupRef Id="maincomp"/>
     </Feature>
 
